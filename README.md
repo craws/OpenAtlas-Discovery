@@ -49,7 +49,7 @@ for more information.
 
 # Licensing
 All code unless otherwise noted is licensed under the terms of the MIT License
-(MIT). Please refer to the file License.txt in the root directory of this
+(MIT). Please refer to the file LICENSE in the root directory of this
 repository.
 
 All documentation and images unless otherwise noted are licensed under the
