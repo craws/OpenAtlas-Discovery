@@ -1,5 +1,6 @@
 {
     "hello": "Hallo, {name}!",
-    "language": "Sprache"
+    "language": "Sprache",
+    "of":"von"
   }
   

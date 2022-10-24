@@ -275,7 +275,7 @@ export interface WhenModel {
   timespans?: TimespansModel;
 }
 
-export type InlineResponse200 = OutputModelLPF | OutputModelGeojson;
+export type InlineResponse200 = OutputModelLPF;
 
 export type InlineResponse2001 = LinkedPlaceModel;
 
@@ -903,7 +903,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         /** Need to be a entity class code of the CIDOC CRM (e.g. E21, E18, E33). For further information visit https://redmine.craws.net/projects/uni/wiki/OpenAtlas_and_CIDOC_CRM_class_mapping */
         cidoc_classes?: string;
         /** Need to be an OpenAtlas menu items */
-        view_classes?: "actor" | "event" | "place" | "reference" | "source" | "object";
+        view_classes?: ["actor" | "event" | "place" | "reference" | "source" | "object"];
         /** Need to be an OpenAtlas system class */
         system_classes?:
           | "acquisition"
