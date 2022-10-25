@@ -28,11 +28,11 @@ const icons = {
 
 <template>
     <data-table :loading="pending" height="calc(100vh - 64px)" density="compact" :headers="headers"
-        :items="data?.data?.results" :options="options">
+        :items="data?.data?.results ?? []" :options="options">
         <template #features[0].systemClass="{value}">
             <v-tooltip :text="value">
                 <template v-slot:activator="{ props }">
-                    <v-icon v-bind="props">{{classes.find(x => x.systemClass === value)?.icon || 'sadf'}}</v-icon>
+                    <v-icon v-bind="props">{{classes.find(x => x.systemClass === value)?.icon}}</v-icon>
                 </template>
             </v-tooltip>
         </template>

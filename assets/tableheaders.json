@@ -1,23 +1,23 @@
 [
     {
-        "text": "Class",
+        "text": "class",
         "value": "features[0].systemClass"
     },
     {
-        "text": "Name",
+        "text": "name",
         "value": "features[0].properties.title"
 
     },
     {
-        "text": "Description",
+        "text": "description",
         "value": "features[0].descriptions[0].value"
     },
     {
-        "text": "Begin/From",
+        "text": "begin",
         "value": "features[0].when.timespans[0].start.earliest"
     },
     {
-        "text": "End/To",
+        "text": "end",
         "value": "features[0].when.timespans[0].end.earliest"
     }
 ]

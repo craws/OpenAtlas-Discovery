@@ -25,11 +25,11 @@ const props = defineProps<{
 <template>
     <div>
         <v-progress-linear :active="loading" indeterminate></v-progress-linear>
-        <v-table :height="`calc( ${height} - 48px)`" fixed-header>
+        <v-table :height="`calc( ${height} - 84px)`" fixed-header>
             <thead>
                 <tr>
-                    <th v-for="header in headers" :key="header.value" :class="`text-${header.align || 'left'}`">
-                        {{header.text}}
+                    <th v-for="header in headers" :key="header.value" class="text-capitalize" :class="`text-${header.align || 'left'}`">
+                        {{$t(header.text)}}
                     </th>
                 </tr>
             </thead>

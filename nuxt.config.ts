@@ -8,7 +8,7 @@ export default defineNuxtConfig({
         config => config?.plugins?.push(vuetify()))
     },],
   css: ['vuetify/styles',
-    'mdi/css/materialdesignicons.min.css'],
+    '@mdi/font/css/materialdesignicons.min.css'],
   build: {
     transpile: ['vuetify'],
   },

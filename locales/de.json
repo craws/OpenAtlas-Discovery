@@ -1,6 +1,11 @@
 {
     "hello": "Hallo, {name}!",
     "language": "Sprache",
-    "of":"von"
+    "of":"von",
+    "class":"Klasse",
+    "name":"Name",
+    "description":"Beschreibung",
+    "begin":"Beginn",
+    "end":"Ende"
   }
   
