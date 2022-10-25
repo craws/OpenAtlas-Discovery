@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { LinkedPlaceModel } from '../composables/api'
 
 interface Header {
     text: string

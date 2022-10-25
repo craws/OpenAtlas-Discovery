@@ -6,6 +6,27 @@
     "name":"Name",
     "description":"Beschreibung",
     "begin":"Beginn",
-    "end":"Ende"
+    "end":"Ende",
+    "acquisition":"Erwerb",
+    "activity":"Aktivität",
+    "actor_appellation":"Akteursbezeichnung",
+    "administrative_unit":"administrative Einheit",
+    "appellation":"Bezeichnung",
+    "artifact":"Artefakt",
+    "bibliography":"Bibliographie",
+    "edition":"Auflage",
+    "external_reference":"externe Referenz",
+    "feature":"Merkmal",
+    "group":"Gruppe",
+    "human_remains":"menschliche Überreste",
+    "move":"Verschiebung",
+    "object_location":"Objektstandort",
+    "person":"Person",
+    "place":"Ort",
+    "referenceSystem":"Referenzsystem",
+    "source":"Quelle",
+    "stratigraphic_unit":"stratigraphische Einheit",
+    "source_translation":"Quellenübersetzung",
+    "type":"Typ"
   }
   

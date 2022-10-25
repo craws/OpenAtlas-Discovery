@@ -29,21 +29,21 @@ const icons = {
 <template>
     <data-table :loading="pending" height="calc(100vh - 64px)" density="compact" :headers="headers"
         :items="data?.data?.results ?? []" :options="options">
-        <template #features[0].systemClass="{value}">
-            <v-tooltip :text="value">
+        <template #features[0].systemClass="{ value }">
+            <v-tooltip :text="$t(value)">
                 <template v-slot:activator="{ props }">
-                    <v-icon v-bind="props">{{classes.find(x => x.systemClass === value)?.icon}}</v-icon>
+                    <v-icon v-bind="props">{{ classes.find(x => x.systemClass === value)?.icon }}</v-icon>
                 </template>
             </v-tooltip>
         </template>
-        <template #features[0].properties.title="{item,value}">
-            <nuxt-link :to="`/entity/${item.features[0]['@id'].split('/').at(-1)}`">{{value}} </nuxt-link>
+        <template #features[0].properties.title="{ item, value }">
+            <nuxt-link :to="`/entity/${item.features[0]['@id'].split('/').at(-1)}`">{{ value }} </nuxt-link>
         </template>
-        <template #features[0].when.timespans[0].start.earliest="{value}">
-            {{useFormatDateTime(value)}}
+        <template #features[0].when.timespans[0].start.earliest="{ value }">
+            {{ useFormatDateTime(value) }}
         </template>
-        <template #features[0].when.timespans[0].end.earliest="{value}">
-            {{useFormatDateTime(value)}}
+        <template #features[0].when.timespans[0].end.earliest="{ value }">
+            {{ useFormatDateTime(value) }}
         </template>
     </data-table>
 </template>
