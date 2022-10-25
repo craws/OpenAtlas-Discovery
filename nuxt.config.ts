@@ -8,7 +8,8 @@ export default defineNuxtConfig({
         config => config?.plugins?.push(vuetify()))
     },],
   css: ['vuetify/styles',
-    '@mdi/font/css/materialdesignicons.min.css'],
+    '@mdi/font/css/materialdesignicons.min.css',
+    'leaflet/dist/leaflet.css'],
   build: {
     transpile: ['vuetify'],
   },
@@ -16,11 +17,11 @@ export default defineNuxtConfig({
     // @ts-ignore
     // curently this will lead to a type error, but hopefully will be fixed soon #justBetaThings
     ssr: {
-      
-        noExternal: ['vuetify'], // add the vuetify vite plugin
+
+      noExternal: ['vuetify'], // add the vuetify vite plugin
     },
     define: {
       'process.env.DEBUG': false,
+    },
   },
-},
 })

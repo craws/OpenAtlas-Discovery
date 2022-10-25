@@ -6,9 +6,7 @@ interface Header {
     sortable?: boolean
     value: string
 }
-const emit = defineEmits<{
-    (e: 'pageUpdate', page: number): void
-}>()
+
 const props = defineProps<{
     headers: Header[];
     items: Object[];

@@ -27,6 +27,9 @@
     "source":"Quelle",
     "stratigraphic_unit":"stratigraphische Einheit",
     "source_translation":"Quellenübersetzung",
-    "type":"Typ"
+    "type":"Typ",
+    "map":"Karte",
+    "more details":"weitere Infos"
+    
   }
   
