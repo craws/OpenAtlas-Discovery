@@ -4,8 +4,7 @@ import { rest } from 'msw'
 import { setupServer } from 'msw/node'
 import { setup, fetch, createTestContext } from '@nuxt/test-utils-edge'
 describe('Test if Api is available', async () => {
-    await setTestContext();
-    global.fetch = fetch;
+    await setup({});
     const result = {
         "results": [
             {
