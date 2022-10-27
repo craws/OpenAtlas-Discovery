@@ -1,29 +1,48 @@
 <template>
     <div>
-        <div class="text-center" v-if="pending">
+        <div
+        v-if="pending || !wasMounted"
+        style="
+            width: 100%;
+            min-height: 100vh;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center ">
             <v-progress-circular
             indeterminate
             color="primary"
             ></v-progress-circular>
         </div>
-        <v-row
-        :align-self="'center'"
-        class="pt-3 pl-3"
-        v-else>
-            <v-col>
-                <h2>
-                    {{  title }}
-                </h2>
-                <v-text>
-                    {{primaryDescription}}
-                </v-text>
-            </v-col>
-        </v-row>
+        <v-card
+        v-else
+        class="mx-2 mt-2 px-4 py-2 basecard"
+        >
+            <v-row>
+                <v-col>
+                    <h2>
+                        {{  title }}
+                    </h2>
+                </v-col>
+                <v-col>
+                </v-col>
+            </v-row>
+            <v-row
+            :align-self="'center'">
+                <v-col>
+                    <v-text>
+                        {{primaryDescription}}
+                    </v-text>
+                </v-col>
+                <v-col>
 
+                </v-col>
+            </v-row>
+        </v-card>
     </div>
 </template>
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useI18n} from 'vue-i18n';
 
 const { $api } = useNuxtApp();
@@ -31,6 +50,8 @@ const route = useRoute();
 const { t } = useI18n();
 
 const entityID = Number(route.params.id);
+let wasMounted = ref(false);
+
 const { data, pending, error, refresh } = await useAsyncData(() => $api.entity.entityDetail( entityID, {
     download: false,
 }))
@@ -52,6 +73,7 @@ const primaryDescription = computed(() => {
 // Basic Functions
 
 onMounted(() => {
+    wasMounted.value = true;
     refresh();
 });
 
@@ -61,13 +83,7 @@ function logBasicEntityInfo() {
 }
 
 </script>
+<style scoped lang="scss">
 
 
-
-function $t(arg0: string): any {
-  throw new Error('Function not implemented.');
-}
-
-function $t(arg0: string): any {
-  throw new Error('Function not implemented.');
-}
+</style>
