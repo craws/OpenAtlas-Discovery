@@ -6,8 +6,7 @@ interface Header {
     sortable?: boolean
     value: string
 }
-
-const props = defineProps<{
+interface Props {
     headers: Header[];
     items: Object[];
     loading?: Boolean;
@@ -17,7 +16,11 @@ const props = defineProps<{
         itemsPerPage: number,
         itemsLength: number,
     }
-}>()
+}
+const props = withDefaults(defineProps<Props>(),
+    {
+        loading: () => false
+    })
 </script>
 <template>
     <div>
