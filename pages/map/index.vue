@@ -1,50 +1,78 @@
-<script setup lang="ts">
+<script setup lang="ts">import { Query } from '~~/types/query';
+
 const { $api } = useNuxtApp();
-const { data, pending, error, refresh } = await useAsyncData(() => $api.geometricEntities.geometricEntitiesList());
-onMounted(() => refresh());
 
-interface CardContent {
-    title: string
+const query = ref({
+    view_classes: ["actor", "event", "place", "reference", "source"],
+    limit: 0,
+    format: 'geojson',
+    search: undefined
+})
+const { data, pending, error, refresh } = await useAsyncData(() => $api.query.queryList(query.value));
+onMounted(() => {
+    refresh();
+});
+
+interface FeatureContent {
+    locationTitle: string
+    objectTitle: string
+    locationDescription: string
+    objectDescription: string
     id?: number
-    subtitle?: string
-    text?: string
 }
-const cardContent = reactive<CardContent>({ title: '' })
+const featureContent = reactive<FeatureContent>({
+    locationTitle: '',
+    objectTitle: '',
+    locationDescription: '',
+    objectDescription: '',
+});
 
+const items = computed(() => data?.value?.data?.results?.[0].features || [])
 function handlePopup(e: L.LeafletMouseEvent) {
-    cardContent.title = e?.target?.feature?.properties?.name ?? ''
-    cardContent.subtitle = e?.target?.feature?.properties?.objectType
-    cardContent.id = e?.target?.feature?.properties?.objectId;
-    cardContent.text = e?.target?.feature?.properties?.objectDescription
+    featureContent.objectTitle = e?.target?.feature?.properties?.name ?? ''
+    featureContent.objectDescription = e?.target?.feature?.properties?.description ?? ''
+    featureContent.locationTitle = e?.target?.feature?.geometry?.title ?? ''
+    featureContent.locationDescription = e?.target?.feature?.geometry?.description ?? ''
+    featureContent.id = e?.target?.feature?.properties?.['@id'];
+}
+
+function updateQuery(newQuery: Query) {
+    query.value.search = newQuery.search.map(x => JSON.stringify(x));
+    refresh();
 }
 </script>
 <template>
     <div>
         <div style="position:relative; overflow: hidden;">
-            <v-card width="300px" class="popup" :class="{ move: !cardContent.id }" position="absolute" top="10px"
-                style="right:20px; top:20px;z-index:500">
-                <v-card-title>
+            <search-field class="search" :loading="pending" @search="updateQuery"></search-field>
+            <v-card width="300px" class="popup" :class="{ move: !featureContent.id }" position="absolute">
+                <v-btn @click="featureContent.id = undefined" class="close-btn" icon="mdi-close" variant="text"
+                    size="small" color="grey"></v-btn>
+                <v-card-subtitle class="mt-3">
                     <div class="d-flex justify-space-between">
-                        <p class="text-wrap">
-                            {{ cardContent.title }}
-                        </p>
-                        <v-btn @click="cardContent.id = undefined" icon="mdi-close" variant="text" size="small" color="grey"></v-btn>
+                        <span>{{ featureContent.locationTitle }}</span>
+
                     </div>
-                </v-card-title>
-                <v-card-subtitle>
-                    <span>{{ cardContent.subtitle }}</span>
                 </v-card-subtitle>
-                <v-card-text style="max-height:70vh;white-space: pre-line" class="scroll">
+                <v-card-title class="pt-0">
+                    <span class="text-wrap">
+                        {{ featureContent.objectTitle }}
+                    </span>
+
+                </v-card-title>
+
+                <v-card-text style="max-height:calc(100vh - 320px);white-space: pre-line" class="scroll">
                     <div>
-                        {{ cardContent.text }}
+                        <p v-if="!!featureContent.locationDescription">{{ featureContent.locationDescription }}</p>
+                        <p v-else>{{ featureContent.objectDescription }}</p>
+
                     </div>
                 </v-card-text>
                 <v-card-actions>
-                    <v-btn :to="`/entity/${cardContent.id}`" variant="text">{{ $t('more details') }}</v-btn>
+                    <v-btn :to="`/entity/${featureContent.id}`" variant="text">{{ $t('more details') }}</v-btn>
                 </v-card-actions>
             </v-card>
-            <data-map @item-clicked="handlePopup" :items="data?.data?.features || []"
-                style="height:calc(100vh - 64px);">
+            <data-map @item-clicked="handlePopup" :items="items" style="height:calc(100vh - 64px);">
             </data-map>
 
         </div>
@@ -56,7 +84,7 @@ function handlePopup(e: L.LeafletMouseEvent) {
 .popup {
     transition: all 100ms ease-in-out;
     right: 20px;
-    top: 20px;
+    top: 100px;
     z-index: 500
 }
 
@@ -66,5 +94,22 @@ function handlePopup(e: L.LeafletMouseEvent) {
 
 .scroll {
     overflow-y: auto
+}
+
+.search {
+    position: absolute;
+    z-index: 500;
+    width: 60%;
+    left: 0;
+    right: 0;
+    margin: auto;
+    top: 20px
+}
+
+.close-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 5;
 }
 </style>
