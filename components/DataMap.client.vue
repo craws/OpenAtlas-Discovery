@@ -9,6 +9,7 @@ const emit = defineEmits<{
 
 const mapContainer = ref()
 let map:L.Map;
+let geoJsonLayer: L.GeoJSON<any>;
 onMounted( () => initMap())
 
 
@@ -31,10 +32,12 @@ async function initMap() {
 }
 
 function placeGeoJson(items: GeoJsonObject | GeoJsonObject[]){
-    if(!map) return
-    L.geoJSON(items,{
+    if(!map) return;
+    if(!!geoJsonLayer) map.removeLayer(geoJsonLayer);
+    geoJsonLayer = L.geoJSON(items,{
         onEachFeature: onEachFeature
-    }).addTo(map);
+    });
+    geoJsonLayer.addTo(map);
 
 }
 

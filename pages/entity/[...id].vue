@@ -61,10 +61,10 @@ const type = computed(() => data.value?.data?.type);
 
 const features = computed( () => data?.value?.data?.features ?? void 0);
 
-const title = computed(() => features.value?.[0]?.properties?.title ?? t('entity.title'));
+const title = computed(() => features.value?.[0]?.properties?.title ?? t('global.basics.title'));
 
 const primaryDescription = computed(() => {
-        return features.value?.[0]?.descriptions?.[0]?.value ?? t('entity.prim_description_missing');
+        return features.value?.[0]?.descriptions?.[0]?.value ?? t('components.entity.prim_description_missing');
         // Using the Optional check operator '?' to make sure every element of the chain exists, instead of lengthy if clause.
         // (?. is needed for arrays before specifying the index)
 })

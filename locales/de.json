@@ -1,37 +1,63 @@
 {
-  "entity": {
-    "title": "Titel",
-    "prim_description_missing": "Primäre Beschreibung fehlt."
+  "global": {
+    "basics": {
+      "hello": "Hallo, {name}!",
+      "language": "Sprache",
+      "of": "von",
+      "map": "Karte",
+      "more details": "weitere Infos",
+      "search": "Suche",
+      "title": "Titel"
+    },
+    "entity": {
+      "class": "Klasse",
+      "name": "Name",
+      "description": "Beschreibung",
+      "begin": "Beginn",
+      "end": "Ende",
+      "system_classes": {
+        "acquisition": "Erwerb",
+        "activity": "Aktivität",
+        "actor_appellation": "Akteursbezeichnung",
+        "administrative_unit": "administrative Einheit",
+        "appellation": "Bezeichnung",
+        "artifact": "Artefakt",
+        "bibliography": "Bibliographie",
+        "edition": "Auflage",
+        "external_reference": "externe Referenz",
+        "feature": "Merkmal",
+        "group": "Gruppe",
+        "human_remains": "menschliche Überreste",
+        "move": "Verschiebung",
+        "object_location": "Objektstandort",
+        "person": "Person",
+        "place": "Ort",
+        "referenceSystem": "Referenzsystem",
+        "source": "Quelle",
+        "stratigraphic_unit": "stratigraphische Einheit",
+        "source_translation": "Quellenübersetzung",
+        "type": "Typ"
+      },
+      "alias":"Alias",
+      "cidoc class": "Cidoc Klasse",
+      "system class": "System Klasse",
+      "type id":"Typ-ID",
+      "value type id":"Werttyp-ID",
+      "type id with subs":"Typ-ID mit Subtypen",
+      "type name":"Typname",
+      "begin from":"Beginn von",
+      "begin to":"Beginn bis",
+      "end from":"Ende von",
+      "end to":"Ende bis",
+      "realation to id":"Beziehung-ID",
+      "id": "ID"
+    }
   },
-  "hello": "Hallo, {name}!",
-  "language": "Sprache",
-  "of": "von",
-  "class": "Klasse",
-  "name": "Name",
-  "description": "Beschreibung",
-  "begin": "Beginn",
-  "end": "Ende",
-  "acquisition": "Erwerb",
-  "activity": "Aktivität",
-  "actor_appellation": "Akteursbezeichnung",
-  "administrative_unit": "administrative Einheit",
-  "appellation": "Bezeichnung",
-  "artifact": "Artefakt",
-  "bibliography": "Bibliographie",
-  "edition": "Auflage",
-  "external_reference": "externe Referenz",
-  "feature": "Merkmal",
-  "group": "Gruppe",
-  "human_remains": "menschliche Überreste",
-  "move": "Verschiebung",
-  "object_location": "Objektstandort",
-  "person": "Person",
-  "place": "Ort",
-  "referenceSystem": "Referenzsystem",
-  "source": "Quelle",
-  "stratigraphic_unit": "stratigraphische Einheit",
-  "source_translation": "Quellenübersetzung",
-  "type": "Typ",
-  "map": "Karte",
-  "more details": "weitere Infos"
+  "components":
+  {
+    "entity": {
+      "prim_description_missing": "Primäre Beschreibung fehlt."
+    }
+  }
+
 }

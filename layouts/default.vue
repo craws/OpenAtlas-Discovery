@@ -14,7 +14,7 @@ const flags = {
           <v-img src="/OpenAtlasDiscovery_logo.png" width="200px"></v-img>
         </nuxt-link>
         <v-spacer />
-        <nuxt-link class="mr-1" to="/map">{{$t('map')}}</nuxt-link>
+        <nuxt-link class="mr-1" to="/map">{{$t('global.basics.map')}}</nuxt-link>
         <nuxt-link to="/data">Data</nuxt-link>
         <div>
           <country-flag class="ml-1" role="button" @click="$i18n.locale = $i18n.locale ==='en' ? 'de' : 'en'"
