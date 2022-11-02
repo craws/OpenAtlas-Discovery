@@ -17,26 +17,26 @@
       "end": "end",
       "system_classes": {
         "acquisition": "acquisition",
-      "activity": "activity",
-      "actor_appellation": "actor appellation",
-      "administrative_unit": "administrative unit",
-      "appellation": "appellation",
-      "artifact": "artifact",
-      "bibliography": "bibliography",
-      "edition": "edition",
-      "external_reference": "external reference",
-      "feature": "feature",
-      "group": "group",
-      "human_remains": "human remains",
-      "move": "move",
-      "object_location": "object location",
-      "person": "person",
-      "place": "place",
-      "referenceSystem": "reference system",
-      "source": "source",
-      "stratigraphic_unit": "stratigraphic unit",
-      "source_translation": "source translation",
-      "type": "type"
+        "activity": "activity",
+        "actor_appellation": "actor appellation",
+        "administrative_unit": "administrative unit",
+        "appellation": "appellation",
+        "artifact": "artifact",
+        "bibliography": "bibliography",
+        "edition": "edition",
+        "external_reference": "external reference",
+        "feature": "feature",
+        "group": "group",
+        "human_remains": "human remains",
+        "move": "move",
+        "object_location": "object location",
+        "person": "person",
+        "place": "place",
+        "referenceSystem": "reference system",
+        "source": "source",
+        "stratigraphic_unit": "stratigraphic unit",
+        "source_translation": "source translation",
+        "type": "type"
       },
       "alias": "alias",
       "cidoc class": "cidoc class",
@@ -52,12 +52,12 @@
       "realation to id": "realation to id",
       "id": "id"
     }
-
   },
-  "components":
-  {
+  "components": {
     "entity": {
-      "prim_description_missing": "Primary Description missing."
+      "prim_description_missing": "Primary Description missing.",
+      "class_missing": "Missing Class",
+      "details_header": "Details"
     }
   }
 }

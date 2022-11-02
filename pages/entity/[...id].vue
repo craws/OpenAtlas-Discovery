@@ -3,11 +3,10 @@
         <div
         v-if="pending || !wasMounted"
         style="
-            width: 100%;
+            width: 100%,
             min-height: 100vh;
             height: 100%;
             display: flex;
-            align-items: center;
             justify-content: center ">
             <v-progress-circular
             indeterminate
@@ -16,34 +15,34 @@
         </div>
         <v-card
         v-else
-        class="mx-2 mt-2 px-4 py-2 basecard"
+        class="mx-2 mt-4"
         >
-            <v-row>
-                <v-col>
-                    <h2>
-                        {{  title }}
-                    </h2>
+            <v-row class="primary-background-light">
+                <v-col cols="6">
+                    <EntityBasics
+                    class="pa-6"
+                    :loading="pending"
+                    :descriptions="descriptions"
+                    :title="title"
+                    :system-class="features[0].crmClass"></EntityBasics>
                 </v-col>
-                <v-col>
-                </v-col>
-            </v-row>
-            <v-row
-            :align-self="'center'">
-                <v-col>
-                    <v-text>
-                        {{primaryDescription}}
-                    </v-text>
-                </v-col>
-                <v-col>
+                <v-col cols="6">
 
                 </v-col>
             </v-row>
+
+            <v-divider class="mt-3"/>
+
+            <EntityDetails class="px-2" :relations="relationsGroupedByType"></EntityDetails>
         </v-card>
     </div>
 </template>
 <script setup lang="ts">
-import { computed, ref } from 'vue';
-import { useI18n} from 'vue-i18n';
+
+
+import { useI18n } from 'vue-i18n';
+import { relationGroup } from '~~/components/Entity/EntityDetails.vue';
+import { RelationModel } from '~~/composables/api';
 
 const { $api } = useNuxtApp();
 const route = useRoute();
@@ -52,9 +51,7 @@ const { t } = useI18n();
 const entityID = Number(route.params.id);
 let wasMounted = ref(false);
 
-const { data, pending, error, refresh } = await useAsyncData(() => $api.entity.entityDetail( entityID, {
-    download: false,
-}))
+const { data, pending, error, refresh } = await useAsyncData(() => $api.entity.entityDetail( entityID))
 
 // Entity Variables
 const type = computed(() => data.value?.data?.type);
@@ -63,11 +60,42 @@ const features = computed( () => data?.value?.data?.features ?? void 0);
 
 const title = computed(() => features.value?.[0]?.properties?.title ?? t('global.basics.title'));
 
-const primaryDescription = computed(() => {
-        return features.value?.[0]?.descriptions?.[0]?.value ?? t('components.entity.prim_description_missing');
-        // Using the Optional check operator '?' to make sure every element of the chain exists, instead of lengthy if clause.
-        // (?. is needed for arrays before specifying the index)
+const descriptions = computed(() => features.value?.[0]?.descriptions);
+
+const relationsGroupedByType = computed( () => {
+    if(!features.value?.[0]?.relations){
+        console.log('no relations', features.value[0].relations)
+        return null;
+    }
+
+    let relations: relationGroup[] = [];
+
+    for (let i = 0; i < features.value?.[0]?.relations.length; i++) {
+        const element = features.value?.[0]?.relations[i];
+
+
+        let typeExists = false;
+        for (let i = 0; i < relations.length; i++) {
+            const type = relations[i];
+
+            if(type.relationType === element.relationType) {
+                type.relations.push(element);
+                typeExists = true;
+                break;
+            }
+        }
+        if(!typeExists) {
+            relations.push({
+                relationType: element.relationType,
+                relations: [element]
+            })
+        }
+    }
+
+    return relations;
 })
+
+
 
 
 // Basic Functions
@@ -79,11 +107,23 @@ onMounted(() => {
 
 function logBasicEntityInfo() {
     console.log('ID: ', route.params.id);
-    console.log('Data: ', data.value);
+    console.log('Data: ', relationsGroupedByType.value);
 }
 
+watch(
+    () => pending.value,
+    (pend) => {
+        if(pend === false) {
+            logBasicEntityInfo();
+        } else {
+            console.log('pending true');
+        }
+    }
+ )
+
 </script>
-<style scoped lang="scss">
-
-
+<style scoped>
+.primary-background-light {
+  background-color: rgba(var(--v-theme-primary-lighten-1), 0.2);
+}
 </style>

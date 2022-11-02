@@ -38,26 +38,26 @@
         "source_translation": "Quellenübersetzung",
         "type": "Typ"
       },
-      "alias":"Alias",
+      "alias": "Alias",
       "cidoc class": "Cidoc Klasse",
       "system class": "System Klasse",
-      "type id":"Typ-ID",
-      "value type id":"Werttyp-ID",
-      "type id with subs":"Typ-ID mit Subtypen",
-      "type name":"Typname",
-      "begin from":"Beginn von",
-      "begin to":"Beginn bis",
-      "end from":"Ende von",
-      "end to":"Ende bis",
-      "realation to id":"Beziehung-ID",
+      "type id": "Typ-ID",
+      "value type id": "Werttyp-ID",
+      "type id with subs": "Typ-ID mit Subtypen",
+      "type name": "Typname",
+      "begin from": "Beginn von",
+      "begin to": "Beginn bis",
+      "end from": "Ende von",
+      "end to": "Ende bis",
+      "realation to id": "Beziehung-ID",
       "id": "ID"
     }
   },
-  "components":
-  {
+  "components": {
     "entity": {
-      "prim_description_missing": "Primäre Beschreibung fehlt."
+      "prim_description_missing": "Primäre Beschreibung fehlt.",
+      "class_missing": "Klasse fehlt",
+      "details_header": "Details"
     }
   }
-
 }
