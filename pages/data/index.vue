@@ -31,7 +31,7 @@ function updateQuery(newQuery: Query) {
 <template>
     <v-container>
         <search-field @search="updateQuery" :loading="pending"></search-field>
-        <data-table height="calc(100vh - 150px)" density="compact" :headers="headers" :items="data?.data?.results ?? []"
+        <data-table class="mt-10" height="calc(100vh - 150px)" density="compact" :headers="headers" :items="data?.data?.results ?? []"
             :options="options">
             <template #features[0].systemClass="{ value }">
                 <v-tooltip :text="$t(value)">

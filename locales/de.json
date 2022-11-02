@@ -30,5 +30,18 @@
   "type": "Typ",
   "map": "Karte",
   "more details": "mehr Details",
-  "search": "Suche"
+  "search": "Suche",
+  "alias":"Alias",
+  "cidoc class": "Cidoc Klasse",
+  "system class": "System Klasse",
+  "type id":"Typ-ID",
+  "value type id":"Werttyp-ID",
+  "type id with subs":"Typ-ID mit Subtypen",
+  "type name":"Typname",
+  "begin from":"Beginn von",
+  "begin to":"Beginn bis",
+  "end from":"Ende von",
+  "end to":"Ende bis",
+  "realation to id":"Beziehung-ID",
+  "id": "ID"
 }
