@@ -19,12 +19,12 @@ const logoHeight = computed(() => smAndUp.value ? '350px' : '250px');
       <v-row justify="center">
         <v-col cols="auto">
           <v-btn size="large" to="/map" min-width="150px"  color="primary" width="100px" prepend-icon="mdi-map-marker">
-            {{ $t('map') }}
+            {{ $t('global.basics.map') }}
           </v-btn>
         </v-col>
         <v-col cols="auto">
           <v-btn size="large" to="/data" min-width="150px" variant="outlined" color="primary" width="100px" prepend-icon="mdi-database">
-            {{ $t('data') }}
+            {{ $t('global.basics.data') }}
           </v-btn>
         </v-col>
       </v-row>

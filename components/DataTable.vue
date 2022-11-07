@@ -29,7 +29,7 @@ const props = withDefaults(defineProps<Props>(),
             <thead>
                 <tr>
                     <th v-for="header in headers" :key="header.value" class="text-capitalize" :class="`text-${header.align || 'left'}`">
-                        {{$t(header.text)}}
+                        {{$t(`global.entity.${header.text}`)}}
                     </th>
                 </tr>
             </thead>
@@ -47,7 +47,7 @@ const props = withDefaults(defineProps<Props>(),
         <div class="d-flex align-center justify-end">
             <div class="text-caption">
                 {{options.itemsPerPage * options.page - options.itemsPerPage + 1 }}-{{options.itemsPerPage *
-                options.page}} {{$t("of")}} {{options.itemsLength}}
+                options.page}} {{$t("global.basics.of")}} {{options.itemsLength}}
             </div>
             <div>
                 <v-btn @click="options.page--" :disabled="options.page===1" size="small" variant="plain" icon>

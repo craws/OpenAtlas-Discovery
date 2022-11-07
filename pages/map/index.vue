@@ -69,7 +69,7 @@ function updateQuery(newQuery: Query) {
                     </div>
                 </v-card-text>
                 <v-card-actions>
-                    <v-btn :to="`/entity/${featureContent.id}`" variant="text">{{ $t('more details') }}</v-btn>
+                    <v-btn :to="`/entity/${featureContent.id}`" variant="text">{{ $t('global.basics.more details') }}</v-btn>
                 </v-card-actions>
             </v-card>
             <data-map @item-clicked="handlePopup" :items="items" style="height:calc(100vh - 64px);">
