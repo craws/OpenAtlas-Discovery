@@ -9,7 +9,7 @@ const flags = {
 <template>
   <v-app>
     <v-main>
-      <v-app-bar class="px-5">
+      <v-app-bar flat class="px-5">
         <nuxt-link to="/">
           <v-img src="/OpenAtlasDiscovery_logo.png" width="200px"></v-img>
         </nuxt-link>
@@ -22,12 +22,13 @@ const flags = {
         </nuxt-link>
         <v-divider vertical></v-divider>
 
-        <v-menu class="language-menu" bottom transition="scale-transition" start>
+        <v-menu   open-on-hover open-on-click >
           <template v-slot:activator="{ props }">
-            <div role="button" v-bind="props"
-              class="text-body-1 nav-item h-100 d-flex align-center justify-center px-2 text-grey">
+            <v-btn role="button" v-bind="props"
+              class="text-body-1  h-100 d-flex align-center justify-center px-2 text-grey">
               <v-icon>mdi-translate</v-icon>
-            </div>
+              <v-icon size="small">mdi-chevron-down</v-icon>
+            </v-btn>
           </template>
 
           <v-list>
@@ -43,6 +44,7 @@ const flags = {
           </v-list>
         </v-menu>
       </v-app-bar>
+      <v-divider></v-divider>
       <nuxt-page />
     </v-main>
   </v-app>

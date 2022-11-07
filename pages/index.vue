@@ -1,14 +1,16 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
-
+import { useDisplay } from 'vuetify';
+const { smAndUp } = useDisplay()
 const t = useI18n();
 const { data, refresh } = await useAsyncData('page-data', () => queryContent(`/${t.locale.value}`).findOne());
 
 onMounted(() => refresh())
 watch(() => t.locale.value, () => refresh())
+const logoHeight = computed(() => smAndUp.value ? '350px' : '250px');
 </script>
 <template>
-  <v-sheet height="calc(100vh - 64px)" class=" landing-page d-flex justify-center align-center">
+  <v-sheet height="calc(100vh - 65px)" class=" landing-page d-flex justify-center pt-5">
     <v-container class="text-center">
       <ContentRenderer>
         <ContentRendererMarkdown :value="data" />
@@ -16,15 +18,12 @@ watch(() => t.locale.value, () => refresh())
       <br />
       <v-row justify="center">
         <v-col cols="auto">
-          <v-btn to="/map" min-width="150px" variant="outlined" color="primary" width="100px">
-            <v-icon>mdi-map-marker</v-icon>
+          <v-btn size="large" to="/map" min-width="150px"  color="primary" width="100px" prepend-icon="mdi-map-marker">
             {{ $t('map') }}
           </v-btn>
         </v-col>
         <v-col cols="auto">
-          <v-btn to="/data" min-width="150px" variant="outlined" color="primary" width="100px">
-            <v-icon>mdi-database</v-icon>
-
+          <v-btn size="large" to="/data" min-width="150px" variant="outlined" color="primary" width="100px" prepend-icon="mdi-database">
             {{ $t('data') }}
           </v-btn>
         </v-col>
@@ -38,5 +37,10 @@ watch(() => t.locale.value, () => refresh())
 .landing-page p {
   max-width: 568px;
   margin-inline: auto;
+}
+
+.landing-page img{
+  width:80%;
+  max-height: v-bind(logoHeight);
 }
 </style>
