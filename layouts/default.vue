@@ -14,15 +14,28 @@ const flags = {
           <v-img src="/OpenAtlasDiscovery_logo.png" width="200px"></v-img>
         </nuxt-link>
         <v-spacer />
-        <nuxt-link class="text-body-1 nav-item h-100 d-flex align-center justify-center px-2 text-grey" to="/map">
-          <v-icon>mdi-map-marker</v-icon>
-        </nuxt-link>
-        <nuxt-link class="text-body-1 nav-item h-100 d-flex align-center justify-center px-2 text-grey" to="/data">
-          <v-icon>mdi-database</v-icon>
-        </nuxt-link>
+        <client-only>
+          <v-tooltip :text="$t('map')" location="bottom">
+            <template v-slot:activator="{ props }">
+              <nuxt-link v-bind="props"
+                class="text-body-1 nav-item h-100 d-flex align-center justify-center px-2 text-grey" to="/map">
+                <v-icon>mdi-map-marker</v-icon>
+              </nuxt-link>
+            </template>
+          </v-tooltip>
+          <v-tooltip :text="$t('data')" location="bottom">
+            <template v-slot:activator="{ props }">
+              <nuxt-link v-bind="props"
+                class="text-body-1 nav-item h-100 d-flex align-center justify-center px-2 text-grey" to="/data">
+                <v-icon>mdi-database</v-icon>
+              </nuxt-link>
+            </template>
+          </v-tooltip>
+        </client-only>
+
         <v-divider vertical></v-divider>
 
-        <v-menu   open-on-hover open-on-click >
+        <v-menu open-on-hover open-on-click>
           <template v-slot:activator="{ props }">
             <v-btn role="button" v-bind="props"
               class="text-body-1  h-100 d-flex align-center justify-center px-2 text-grey">
