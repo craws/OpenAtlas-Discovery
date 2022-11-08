@@ -57,7 +57,10 @@
     "entity": {
       "prim_description_missing": "Primäre Beschreibung fehlt.",
       "class_missing": "Klasse fehlt",
-      "details_header": "Details"
+      "details_header": "Details",
+      "detail": {
+        "more": "weitere"
+      }
     }
   }
 }
