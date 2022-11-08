@@ -1,29 +1,38 @@
 <template>
   <div>
     <v-row>
-      <v-col cols="1">
-        <v-avatar
+      <v-col >
+        <div style="position: relative;
+        display:flex;
+        justify-content: left;
+        align-items: center; "
+        class="mt-3 py-4 mb-6">
+          <v-avatar
           color="primary"
           size="56"
           icon="mdi-account"
-        >
-        </v-avatar>
-      </v-col>
-      <v-col>
-        <v-row no-gutters>
-          <v-col>
-            <h1>
-              {{  title || $t('global.basics.title')}}
-            </h1>
-          </v-col>
-        </v-row>
-        <v-row no-gutters>
-          <v-col>
-            <p>
-              {{ systemClassName }}
-            </p>
-          </v-col>
-        </v-row>
+          style="position: absolute;"
+          />
+          <v-content
+          style="position: absolute;
+          transform: translate(75px)">
+            <v-row>
+              <v-col>
+                <h1>
+                  {{  title || $t('global.basics.title')}}
+                </h1>
+              </v-col>
+            </v-row>
+            <v-row no-gutters>
+              <v-col>
+                <p>
+                  {{ systemClassName }}
+                </p>
+              </v-col>
+            </v-row>
+          </v-content>
+        </div>
+
       </v-col>
     </v-row>
     <v-row
