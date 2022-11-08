@@ -72,7 +72,7 @@ const props = defineProps({
 const showDetails = ref(false);
 
 const showExpandable = computed(() => {
-  if(props.details && Array.isArray(props.details) && props.details.length > 2) {
+  if(props.details && Array.isArray(props.details) && props.details.length > 3) {
     return true;
   }
   else {
