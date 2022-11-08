@@ -10,12 +10,14 @@
           <v-avatar
           color="primary"
           size="56"
-          icon="mdi-account"
           style="position: absolute;"
-          />
-          <v-content
+          >
+            <v-icon>{{ classIcon }}</v-icon>
+          </v-avatar>
+          <div
           style="position: absolute;
-          transform: translate(75px)">
+          transform: translate(75px)"
+          class="py-2">
             <v-row>
               <v-col>
                 <h1>
@@ -30,7 +32,7 @@
                 </p>
               </v-col>
             </v-row>
-          </v-content>
+          </div>
         </div>
 
       </v-col>
@@ -53,7 +55,9 @@
 </template>
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n';
+import classes from "../../assets/classes.json";
 import type { DescriptionModel } from '~~/composables/api';
+
 
 const { t } = useI18n();
 
@@ -76,6 +80,16 @@ const props = defineProps({
   }
 })
 
+const classIcon = computed(() => {
+  console.log(crmClass.value);
+  if(systemClassName.value === t('components.entity.class_missing')){
+    return 'mdi-help';
+  } else {
+    console.log(classes.find(x => x.crmClass === crmClass.value)?.icon);
+    return (classes.find(x => x.crmClass === crmClass.value)?.icon) ?? 'mdi-help';
+  }
+});
+
 const primaryDescription = computed(
   () => {
     if(props.descriptions)
@@ -85,10 +99,12 @@ const primaryDescription = computed(
   }
 )
 
+const crmClass = computed(() => props.systemClass.substring(props.systemClass.indexOf(':') + 1, props.systemClass.indexOf(' ')))
+
 const systemClassName = computed(
   () => {
     if(props.systemClass){
-      return props.systemClass.substring(props.systemClass.indexOf(' '))
+      return classes.find(x => x.crmClass === crmClass.value)?.en
     }
     return t('components.entity.class_missing');
   }
