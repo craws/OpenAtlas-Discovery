@@ -9,20 +9,12 @@
             <v-icon>{{ classIcon }}</v-icon>
           </v-avatar>
           <div class="py-2">
-            <v-row>
-              <v-col>
                 <h1 class="text-h4 text-md-h3">
                   {{ title || $t('global.basics.title') }}
                 </h1>
-              </v-col>
-            </v-row>
-            <v-row no-gutters>
-              <v-col>
                 <p class="text-overline">
                   {{ systemClassName }}
                 </p>
-              </v-col>
-            </v-row>
           </div>
         </div>
         <v-content v-for="(description, index) in descriptions">
