@@ -1,56 +1,40 @@
 <template>
   <div>
     <v-row>
-      <v-col >
-        <div style="position: relative;
-        display:flex;
-        justify-content: left;
-        align-items: center; "
-        class="mt-3 py-4 mb-6">
-          <v-avatar
-          color="primary"
-          size="56"
-          style="position: absolute;"
-          >
+
+      <v-col>
+        <div class="mt-3 py-4 mb-6">
+          <v-avatar color="primary" size="56"
+            style="position:absolute; z-index: -1; scale:5; left:40px; top:40px; opacity: 0.2;">
             <v-icon>{{ classIcon }}</v-icon>
           </v-avatar>
-          <div
-          style="position: absolute;
-          transform: translate(75px)"
-          class="py-2">
+          <div class="py-2">
             <v-row>
               <v-col>
-                <h1>
-                  {{  title || $t('global.basics.title')}}
+                <h1 class="text-h4 text-md-h3">
+                  {{ title || $t('global.basics.title') }}
                 </h1>
               </v-col>
             </v-row>
             <v-row no-gutters>
               <v-col>
-                <p>
+                <p class="text-overline">
                   {{ systemClassName }}
                 </p>
               </v-col>
             </v-row>
           </div>
         </div>
-
+        <v-content v-for="(description, index) in descriptions">
+          <v-divider v-if="index > 0"></v-divider>
+          <v-text class="text-body-1">
+            {{ description.value }}
+          </v-text>
+        </v-content>
       </v-col>
     </v-row>
-    <v-row
-    :align-self="'center'">
-        <v-col>
-          <v-content v-for="(description, index) in descriptions">
-            <v-divider v-if="index > 0" ></v-divider>
-            <v-text >
-              {{ description.value }}
-            </v-text>
-          </v-content>
-        </v-col>
-        <v-col>
 
-        </v-col>
-    </v-row>
+
   </div>
 </template>
 <script lang="ts" setup>
@@ -82,7 +66,7 @@ const props = defineProps({
 
 const classIcon = computed(() => {
   console.log(crmClass.value);
-  if(systemClassName.value === t('components.entity.class_missing')){
+  if (systemClassName.value === t('components.entity.class_missing')) {
     return 'mdi-help';
   } else {
     console.log(classes.find(x => x.crmClass === crmClass.value)?.icon);
@@ -92,7 +76,7 @@ const classIcon = computed(() => {
 
 const primaryDescription = computed(
   () => {
-    if(props.descriptions)
+    if (props.descriptions)
       return props.descriptions[0].value ?? t('components.entity.prim_description_missing');
     else
       return t('components.entity.prim_description_missing');
@@ -103,7 +87,7 @@ const crmClass = computed(() => props.systemClass.substring(props.systemClass.in
 
 const systemClassName = computed(
   () => {
-    if(props.systemClass){
+    if (props.systemClass) {
       return classes.find(x => x.crmClass === crmClass.value)?.en
     }
     return t('components.entity.class_missing');
