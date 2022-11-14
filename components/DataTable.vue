@@ -29,7 +29,7 @@ const props = withDefaults(defineProps<Props>(),
             <thead>
                 <tr>
                     <th v-for="header in headers" :key="header.value" class="text-capitalize" :class="`text-${header.align || 'left'}`">
-                        {{$t(header.text)}}
+                        {{$t(`global.entity.${header.text}`)}}
                     </th>
                 </tr>
             </thead>

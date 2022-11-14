@@ -55,18 +55,18 @@ function handleSearch() {
                     }">
                     <template #item="{ item }">
                         <v-list-item @click="filterOperator = item" #default="{ active }">
-                            <span class="text-capitalize"> {{ $t(item.title) }}</span>
+                            <span class="text-capitalize"> {{$t(`global.entity.${item.title}`) }}</span>
                         </v-list-item>
                     </template>
                     <template #selection="{ item }" class="text-capitalize">
-                        <span class="text-capitalize">{{ $t(item.title) }}</span>
+                        <span class="text-capitalize">{{ $t(`global.entity.${item.title}`) }}</span>
                     </template>
                 </v-select>
             </v-col>
             <v-col cols="">
                 <v-text-field hide-details id="search-field" class="search-field text-capitalize" clearable
                     v-model="search" prepend-inner-icon="mdi-magnify" @change="handleSearch" @click:clear="handleSearch"
-                    :label="$t('global.basics.search')" variant="solo">
+                    :label="$t(`global.basics.${'global.basics.search'}`)" variant="solo">
                 </v-text-field>
             </v-col>
             <v-progress-linear :active="props.loading" class="search-progress" indeterminate></v-progress-linear>

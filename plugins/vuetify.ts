@@ -19,7 +19,8 @@ export default defineNuxtPlugin(nuxtApp => {
               lighten: 1,
               darken: 2,
             },
-          }
+          },
+        ssr:true
     })
 
     nuxtApp.vueApp.use(vuetify)

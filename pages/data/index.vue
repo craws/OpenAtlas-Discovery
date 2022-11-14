@@ -34,7 +34,7 @@ function updateQuery(newQuery: Query) {
         <data-table class="mt-10" height="calc(100vh - 150px)" density="compact" :headers="headers" :items="data?.data?.results ?? []"
             :options="options">
             <template #features[0].systemClass="{ value }">
-                <v-tooltip :text="$t(value)">
+                <v-tooltip content-class="text-capitalize" :text="$t(`global.entity.system_classes.${value}`)">
                     <template v-slot:activator="{ props }">
                         <v-icon v-bind="props">{{ classes.find(x => x.systemClass === value)?.icon }}</v-icon>
                     </template>

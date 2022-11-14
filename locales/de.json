@@ -8,7 +8,10 @@
       "more details": "weitere Infos",
       "search": "Suche",
       "title": "Titel",
-      "unknown": "Unbekannt"
+      "unknown": "Unbekannt",
+      "data": "Daten",
+      "de": "deutsch",
+      "en": "englisch"
     },
     "entity": {
       "class": "Klasse",
@@ -68,7 +71,8 @@
       }
     },
     "when-display": {
-      "no-dates": "Keine Kalenderdaten bekannt"
+      "no-dates": "Keine Kalenderdaten bekannt",
+      "details_header": "Details"
     }
   }
 }
