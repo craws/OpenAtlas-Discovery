@@ -1,4 +1,5 @@
 <script setup lang="ts">import { Query } from '~~/types/query';
+import { GeoJsonObject } from "geojson";
 
 const { $api } = useNuxtApp();
 
@@ -72,7 +73,7 @@ function updateQuery(newQuery: Query) {
                     <v-btn :to="`/entity/${featureContent.id}`" variant="text">{{ $t('global.basics.more details') }}</v-btn>
                 </v-card-actions>
             </v-card>
-            <data-map @item-clicked="handlePopup" :items="items" style="height:calc(100vh - 64px);">
+            <data-map @item-clicked="handlePopup" :items="items as GeoJsonObject[]" style="height:calc(100vh - 64px);">
             </data-map>
 
         </div>

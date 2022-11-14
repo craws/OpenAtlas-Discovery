@@ -28,7 +28,7 @@
                     :when="features[0].when"></EntityBasics>
                 </v-col>
                 <v-col cols="6">
-
+                    <entity-map :geo-data="features[0].geometry"></entity-map>
                 </v-col>
             </v-row>
 

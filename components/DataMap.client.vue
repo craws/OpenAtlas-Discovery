@@ -14,7 +14,7 @@ onMounted( () => initMap())
 
 
 const props = defineProps<{
-    items: GeometricEntry[];
+    items: GeoJsonObject | GeoJsonObject[];
 }>();
 
 watch(() => props.items, () =>placeGeoJson(props.items), {immediate:true})
@@ -29,6 +29,7 @@ async function initMap() {
     }).addTo(map);
     map.invalidateSize();
     setTimeout(function(){ map.setView([40,30],6);},50);
+    placeGeoJson(props.items)
 }
 
 function placeGeoJson(items: GeoJsonObject | GeoJsonObject[]){
