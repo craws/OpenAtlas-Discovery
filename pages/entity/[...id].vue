@@ -15,7 +15,7 @@
         </div>
         <v-card
         v-else
-        class="mx-2 mt-4"
+        class="mx-2 mt-4 mb-2 pb-2"
         >
             <v-row
             class="primary-background-light">
@@ -36,7 +36,10 @@
 
             <v-divider class="mt-3"/>
 
-            <EntityDetails class="px-2" :relations="relationsGroupedByType"></EntityDetails>
+            <EntityDetails
+            class="px-2"
+            :relations="relationsGroupedByType"
+            :types="types"></EntityDetails>
         </v-card>
     </div>
 </template>
@@ -56,7 +59,6 @@ let wasMounted = ref(false);
 const { data, pending, error, refresh } = await useAsyncData(() => $api.entity.entityDetail( entityID))
 
 // Entity Variables
-const type = computed(() => data.value?.data?.type);
 
 const features = computed( () => data?.value?.data?.features ?? void 0);
 
@@ -64,9 +66,10 @@ const title = computed(() => features.value?.[0]?.properties?.title ?? t('global
 
 const descriptions = computed(() => features.value?.[0]?.descriptions);
 
+const types = computed( () => features.value[0]?.types);
+
 const relationsGroupedByType = computed( () => {
     if(!features.value?.[0]?.relations){
-        console.log('no relations', features.value[0].relations)
         return null;
     }
 
@@ -111,17 +114,6 @@ function logBasicEntityInfo() {
     console.log('ID: ', route.params.id);
     console.log('Data: ', relationsGroupedByType.value);
 }
-
-watch(
-    () => pending.value,
-    (pend) => {
-        if(pend === false) {
-            logBasicEntityInfo();
-        } else {
-            console.log('pending true');
-        }
-    }
- )
 
 </script>
 <style scoped>

@@ -1,11 +1,10 @@
 <template>
   <v-card
-  class="mx-auto my-3"
-  max-width="30vw">
-    <v-card-title>
+  class="mx-auto"
+  >
+    <v-card-title class="detail-title">
       {{ props.title }}
     </v-card-title>
-
 
     <v-divider/>
     <v-card-text class="mb-0 pb-0">
@@ -15,7 +14,7 @@
             <v-divider v-if="index > 0"/>
             <p
             :key="item.label">
-              <nuxt-link :to="`/entity/${item.relationTo.split('/').at(-1)}`">{{ item.label }} </nuxt-link>
+              <nuxt-link :to="`/entity/${item?.relationTo?.split('/').at(-1)}`">{{ item.label }} </nuxt-link>
             </p>
           </template>
         </template>
@@ -27,6 +26,7 @@
 
         <v-expand-transition>
           <div v-show="showDetails">
+
             <template v-for="(item, index) in details" >
               <template v-if="item && index >= 3">
                 <v-divider/>
@@ -58,7 +58,10 @@
 
 </template>
 <script setup lang="ts">
-
+export interface DetailItem{
+  id:string,
+  text:string
+}
 const props = defineProps({
   title: {
     type: String,
@@ -80,16 +83,13 @@ const showExpandable = computed(() => {
   }
 })
 
-onMounted(
-  () =>{
-    console.log('details', props.details)
-  }
-)
-
 </script>
 <style scoped>
 .closed-divider {
   transform: translate(0px,30px);
+}
+.detail-title::first-letter {
+  text-transform: capitalize;
 }
 
 </style>

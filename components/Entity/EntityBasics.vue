@@ -51,11 +51,9 @@ interface Props {
 const props = defineProps<Props>()
 
 const classIcon = computed(() => {
-  console.log(crmClass.value);
   if (systemClassName.value === t('components.entity.class_missing')) {
     return 'mdi-help';
   } else {
-    console.log(classes.find(x => x.crmClass === crmClass.value)?.icon);
     return (classes.find(x => x.crmClass === crmClass.value)?.icon) ?? 'mdi-help';
   }
 });

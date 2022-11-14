@@ -10,7 +10,7 @@
     <v-spacer/>
     <v-spacer/>
   </v-row>
-  <div v-else>
+  <div v-else-if="props.displayOptions?.time?.showUnknownIfMissing">
     <p> {{ $t('components.when-display.no-dates')}}</p>
   </div>
 </template>

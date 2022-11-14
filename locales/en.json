@@ -68,6 +68,9 @@
       "basics": {
         "start": "Begin",
         "end": "End"
+      },
+      "details": {
+        "types": "Types"
       }
     },
     "when-display": {
