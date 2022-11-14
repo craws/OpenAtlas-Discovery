@@ -1,8 +1,8 @@
 <template>
     <v-card
     class="mx-auto my-6"
-    style="width: 500px; height:500px;">
-        <data-map :items="geoData" style="width:500px; height:500px;"></data-map>
+    style="min-width: 400px; min-height: 400px; max-width: 600px; max-height:750;">
+        <data-map :items="geoData" style="min-width: 400px; min-height: 400px; max-width: 600px; max-height:500;"></data-map>
     </v-card>
 </template>
 <script lang="ts" setup>
