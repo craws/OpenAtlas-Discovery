@@ -1,4 +1,4 @@
-![my image](/OpenAtlas_Logo.svg)
+![logo](/OpenAtlasDiscovery_logo.jpg)
 
 # OpenAtlas Discovery
 

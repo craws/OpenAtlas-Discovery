@@ -11,7 +11,7 @@ const flags = {
     <v-main>
       <v-app-bar flat class="px-5">
         <nuxt-link to="/">
-          <v-img src="/OpenAtlasDiscovery_logo.png" width="200px"></v-img>
+          <v-img class="pa-5" src="/OpenAtlas_Discovery_landscape.svg" width="150px"></v-img>
         </nuxt-link>
         <v-spacer />
         <client-only>

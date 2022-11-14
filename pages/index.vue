@@ -42,5 +42,7 @@ const logoHeight = computed(() => smAndUp.value ? '350px' : '250px');
 .landing-page img{
   width:80%;
   max-height: v-bind(logoHeight);
+  object-fit: contain;
+
 }
 </style>
