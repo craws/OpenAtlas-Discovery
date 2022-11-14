@@ -2,6 +2,7 @@
 import { Feature, GeoJsonObject, Geometry } from "geojson";
 import L from "leaflet";
 import { GeometricEntry } from "~~/composables/api";
+import config from "~~/assets/config.json";
 
 const emit = defineEmits<{
   (e: 'itemClicked', event: L.LeafletMouseEvent): void
@@ -28,7 +29,7 @@ async function initMap() {
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(map);
     map.invalidateSize();
-    setTimeout(function(){ map.setView([40,30],6);},50);
+    setTimeout(function(){ map.setView(config.map.view, config.map.zoomLvl);},50);
 }
 
 function placeGeoJson(items: GeoJsonObject | GeoJsonObject[]){
