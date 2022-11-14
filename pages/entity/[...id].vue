@@ -17,7 +17,8 @@
         v-else
         class="mx-2 mt-4"
         >
-            <v-row class="primary-background-light">
+            <v-row
+            class="primary-background-light">
                 <v-col cols="6">
                     <EntityBasics
                     class="pa-6"
@@ -27,7 +28,8 @@
                     :system-class="features[0].crmClass"
                     :when="features[0].when"></EntityBasics>
                 </v-col>
-                <v-col cols="6">
+                <v-col
+                >
                     <entity-map :geo-data="features[0].geometry"></entity-map>
                 </v-col>
             </v-row>
