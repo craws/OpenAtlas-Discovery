@@ -24,7 +24,8 @@
                     :loading="pending"
                     :descriptions="descriptions"
                     :title="title"
-                    :system-class="features[0].crmClass"></EntityBasics>
+                    :system-class="features[0].crmClass"
+                    :when="features[0].when"></EntityBasics>
                 </v-col>
                 <v-col cols="6">
 
@@ -42,7 +43,6 @@
 
 import { useI18n } from 'vue-i18n';
 import { relationGroup } from '~~/components/Entity/EntityDetails.vue';
-import { RelationModel } from '~~/composables/api';
 
 const { $api } = useNuxtApp();
 const route = useRoute();

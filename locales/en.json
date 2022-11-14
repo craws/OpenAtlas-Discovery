@@ -7,7 +7,8 @@
       "map": "map",
       "more details": "more details",
       "search": "search",
-      "title": "Titel"
+      "title": "Titel",
+      "unknown": "unknown"
     },
     "entity": {
       "class": "class",
@@ -60,6 +61,10 @@
       "details_header": "Details",
       "detail": {
         "more": "others"
+      },
+      "basics": {
+        "start": "Begin",
+        "end": "End"
       }
     }
   }
