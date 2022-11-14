@@ -1,5 +1,5 @@
 <template>
-  <v-row>
+  <v-row v-if="start || end">
     <v-col>
       <p> {{$t('components.entity.basics.start')}}: {{ start }} </p>
     </v-col>
@@ -10,10 +10,14 @@
     <v-spacer/>
     <v-spacer/>
   </v-row>
+  <div v-else>
+    <p> {{ $t('components.when-display.no-dates')}}</p>
+  </div>
 </template>
 <script lang="ts" setup>
+import { DateTimeFormatOptions } from '@intlify/core-base';
 import { useI18n } from 'vue-i18n';
-import type { WhenModel } from '~~/composables/api';
+import type { TimeDetailModel, WhenModel } from '~~/composables/api';
 
 const { t } = useI18n();
 
@@ -25,7 +29,6 @@ interface displayOptions {
     showUnknownIfMissing: boolean,
   }
 }
-
 
 interface Props {
   loading?: boolean,
@@ -40,65 +43,52 @@ const start = computed(() => {
   if(!timespan || !timespan.start){
     return t('global.basics.unknown');
   }
-  return (timespan.start.earliest ?? '?') + ' - ' + (timespan.start.latest ?? '?');
+  const { earliest, latest } = getEarliestAndLatestDateFromTimeDetail(timespan.start);
+
+  return generateCombinedDateString(earliest, latest);
 } )
 const end = computed(() => {
   const timespan = props?.when?.timespans[0];
   if(!timespan || !timespan.end){
     return t('global.basics.unknown');
   }
-  return (timespan.end.earliest ?? '?') + ' - ' + (timespan.end.latest ?? '?');
+
+  const { earliest, latest } = getEarliestAndLatestDateFromTimeDetail(timespan.end);
+
+  return generateCombinedDateString(earliest, latest);
 })
 
-interface Moment {
-  date?: {
-    year?: string,
-    month?: string,
-    day?: string,
-  }
-  time?: {
-    hour?: string,
-    minute?: string,
-    second?: string,
+function getEarliestAndLatestDateFromTimeDetail(td: TimeDetailModel) : {earliest?: string, latest?: string} {
+  const options: DateTimeFormatOptions = { year: 'numeric', month: '2-digit', day: 'numeric' };
+  return {
+    earliest: convertStringToDate(td.earliest)?.toLocaleString(undefined, options),
+    latest: convertStringToDate(td.latest)?.toLocaleString(undefined, options),
   }
 }
 
-const moment: Moment = {};
+function generateCombinedDateString(earliest?: string, latest?: string, seperator = '-'): string {
+  if(earliest && latest) {
+    return earliest + ' ' + seperator + ' ' + latest;
+  } else if(earliest) {
+    return earliest;
+  } else if(latest) {
+    return latest;
+  }
 
+  return null;
+}
 
-function convertStringToDate(dateStr?:string) {
+function convertStringToDate(dateStr?:string) : Date {
   if(!dateStr) {
     return null;
   }
 
-  console.log('test');
-
-  const jsDate = new Date()
-
-  const datePart = dateStr.split('T')[0].split('-');
+  const date = dateStr.split('T')[0].split('-');
   const time = dateStr.split('T')[1].split(':');
 
-  console.log(datePart);
-  console.log(time);
-
-  moment.date.year = datePart[0];
-  moment.date.month = datePart[1];
-  moment.date.day = datePart[2];
-
-  moment.time.hour = time[0];
-  moment.time.minute = time[1];
-  moment.time.second = time[2];
-
-  return moment;
-
-  //  return new Date(datePart[0], datePart[1], datePart[2], time[0], time[1], time[2]);
+  return new Date(+date[0], +date[1], +date[2], +time[0], +time[1], +time[2]);
 }
 
-function getStringDateFromMoment(moment: Moment, seperator?: string, format?:string){
-  let dateString = '';
-
-  return moment.date.year;
-}
 
 
 </script>

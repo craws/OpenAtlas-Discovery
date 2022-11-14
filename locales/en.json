@@ -66,6 +66,9 @@
         "start": "Begin",
         "end": "End"
       }
+    },
+    "when-display": {
+      "no-dates": "No known Calendar Dates"
     }
   }
 }

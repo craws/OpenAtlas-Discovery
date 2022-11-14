@@ -66,6 +66,9 @@
         "start": "Anfang",
         "end": "Ende"
       }
+    },
+    "when-display": {
+      "no-dates": "Keine Kalenderdaten bekannt"
     }
   }
 }
