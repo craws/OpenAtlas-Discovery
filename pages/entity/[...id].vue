@@ -25,12 +25,12 @@
                     :loading="pending"
                     :descriptions="descriptions"
                     :title="title"
-                    :system-class="features[0].crmClass"
-                    :when="features[0].when"></EntityBasics>
+                    :system-class="features[0]?.crmClass"
+                    :when="features[0]?.when"></EntityBasics>
                 </v-col>
                 <v-col
                 >
-                    <entity-map v-if="features[0]?.geometry" class="mr-4" :geo-data="features[0].geometry"></entity-map>
+                    <entity-map v-if="features[0]?.geometry" class="mr-4" :geo-data="features[0]?.geometry"></entity-map>
                 </v-col>
             </v-row>
 
@@ -62,21 +62,23 @@ const { data, pending, error, refresh } = await useAsyncData(() => $api.entity.e
 
 const features = computed( () => data?.value?.data?.features ?? void 0);
 
-const title = computed(() => features.value?.[0]?.properties?.title ?? t('global.basics.title'));
+const title = computed(() => features?.value?.[0]?.properties?.title ?? t('global.basics.title'));
 
-const descriptions = computed(() => features.value?.[0]?.descriptions);
+const descriptions = computed(() => features?.value?.[0]?.descriptions);
 
-const types = computed( () => features.value[0]?.types);
+const types = computed( () => features?.value[0]?.types);
 
 const relationsGroupedByType = computed( () => {
-    if(!features.value?.[0]?.relations){
+    if(!features?.value?.[0]?.relations){
         return null;
     }
 
+
+
     let relations: relationGroup[] = [];
 
-    for (let i = 0; i < features.value?.[0]?.relations.length; i++) {
-        const element = features.value?.[0]?.relations[i];
+    for (let i = 0; i < features?.value?.[0]?.relations.length; i++) {
+        const element = features?.value?.[0]?.relations[i];
 
 
         let typeExists = false;
@@ -107,9 +109,15 @@ onMounted(() => {
     refresh();
 });
 
+// const watcherOnLoaded = watch(pending, () => {
+//     logBasicEntityInfo();
+// });
+
 function logBasicEntityInfo() {
+    console.log('Logging Basic entity info...');
     console.log('ID: ', route.params.id);
-    console.log('Data: ', relationsGroupedByType.value);
+    console.log('Data: ', data?.value);
+    console.log('Done');
 }
 
 </script>
