@@ -1,5 +1,7 @@
 <script setup lang="ts">import { Query } from '~~/types/query';
 import { GeoJsonObject } from "geojson";
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 
 const { $api } = useNuxtApp();
 
@@ -41,6 +43,10 @@ function updateQuery(newQuery: Query) {
     query.value.search = newQuery.search.map(x => JSON.stringify(x));
     refresh();
 }
+
+useHead({
+    title: t('global.basics.map')
+})
 </script>
 <template>
     <div>
