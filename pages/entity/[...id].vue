@@ -30,7 +30,7 @@
                 </v-col>
                 <v-col
                 >
-                    <entity-map :geo-data="features[0].geometry"></entity-map>
+                    <entity-map class="mr-4" :geo-data="features[0].geometry"></entity-map>
                 </v-col>
             </v-row>
 
