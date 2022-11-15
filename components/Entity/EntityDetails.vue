@@ -12,6 +12,7 @@
   </div>
 </template>
 <script setup lang="ts">
+import { useDisplay } from 'vuetify';
 import { RelationModel } from '~~/composables/api';
 
 export interface relationGroup {
@@ -23,11 +24,22 @@ const props = defineProps<{
   relations?: relationGroup[]
 }>()
 
+const {name} = useDisplay();
+
+const columnCount = computed(() => {
+  // name is reactive and
+  // must use .value
+  switch (name.value) {
+    case 'xs': return 1
+    case 'sm': return 2
+  }
+  return 3;
+});
 
 </script>
 
 <style scoped>
 .details{
-  column-count: 3;
+  column-count: v-bind(columnCount);
 }
 </style>
