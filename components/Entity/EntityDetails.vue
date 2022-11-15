@@ -5,7 +5,8 @@
       <EntityDetail
       v-for="relation in props.relations"
       :title="relation.relationType"
-      :details="relation.relations">
+      :details="relation.relations"
+      class="mb-3">
       </EntityDetail>
     </div>
   </div>

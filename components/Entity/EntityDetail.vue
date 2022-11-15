@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mb-3">
+  <v-card class="mx-auto">
     <v-card-title>
       {{ props.title }}
     </v-card-title>
