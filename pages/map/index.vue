@@ -1,11 +1,12 @@
-<script setup lang="ts">import { Query } from '~~/types/query';
+<script setup lang="ts">
+import { GeometricEntry } from '~~/composables/api';
+import { Query } from '~~/types/query';
 
 const { $api } = useNuxtApp();
-
-const query = ref({
+type ViewClasses = ("actor" | "event" | "place" | "reference" | "source")[]
+const query = ref<{view_classes:ViewClasses,limit:number,search?:string[]}>({
     view_classes: ["actor", "event", "place", "reference", "source"],
     limit: 0,
-    format: 'geojson',
     search: undefined
 })
 const { data, pending, error, refresh } = await useAsyncData(() => $api.query.queryList(query.value));
@@ -72,7 +73,7 @@ function updateQuery(newQuery: Query) {
                     <v-btn :to="`/entity/${featureContent.id}`" variant="text">{{ $t('global.basics.more details') }}</v-btn>
                 </v-card-actions>
             </v-card>
-            <data-map @item-clicked="handlePopup" :items="items" style="height:calc(100vh - 64px);">
+            <data-map @item-clicked="handlePopup" :items="items as GeometricEntry[]" style="height:calc(100vh - 64px);">
             </data-map>
 
         </div>

@@ -1,54 +1,64 @@
 <script setup lang="ts">
-import headers from "../../assets/tableheaders.json";
-import classes from "../../assets/classes.json";
-import { Query } from "~~/types/query";
-const { $api } = useNuxtApp();
+import headers from '../../assets/tableheaders.json'
+import classes from '../../assets/classes.json'
+import { Query } from '~~/types/query'
+const { $api } = useNuxtApp()
 
-const itemsLength = computed(() => data?.value?.data.pagination.entities);
+const itemsLength = computed(() => data?.value?.data.pagination.entities)
 const options = reactive({ page: 1, itemsPerPage: 20, itemsLength })
-const search = ref<string[]>([]);
+const search = ref<string[]>([])
 const query = computed(() => ({
-    view_classes: ["actor", "event", "place", "reference", "source"],
-    page: options.page,
-    limit: options.itemsPerPage,
-    search: search.value
-}));
+  view_classes: ['actor', 'event', 'place', 'reference', 'source'],
+  page: options.page,
+  limit: options.itemsPerPage,
+  search: search.value
+}))
 
-const { data, pending, error, refresh } = await useAsyncData(() => $api.query.queryList(query.value));
+const { data, pending, refresh } = await useAsyncData(() => $api.query.queryList(query.value))
 
-watch(() => options.page, () => refresh());
+watch(() => options.page, () => refresh())
 
 onMounted(() => {
-    refresh();
+  refresh()
 })
 
-function updateQuery(newQuery: Query) {
-    search.value = newQuery.search.map(x => JSON.stringify(x));
-    refresh();
+function updateQuery (newQuery: Query) {
+  search.value = newQuery.search.map(x => JSON.stringify(x))
+  refresh()
 }
 </script>
 
 <template>
-    <v-container>
-        <search-field @search="updateQuery" :loading="pending"></search-field>
-        <data-table class="mt-10" height="calc(100vh - 150px)" density="compact" :headers="headers" :items="data?.data?.results ?? []"
-            :options="options">
-            <template #features[0].systemClass="{ value }">
-                <v-tooltip content-class="text-capitalize" :text="$t(`global.entity.system_classes.${value}`)">
-                    <template v-slot:activator="{ props }">
-                        <v-icon v-bind="props">{{ classes.find(x => x.systemClass === value)?.icon }}</v-icon>
-                    </template>
-                </v-tooltip>
-            </template>
-            <template #features[0].properties.title="{ item, value }">
-                <nuxt-link :to="`/entity/${item.features[0]['@id'].split('/').at(-1)}`">{{ value }} </nuxt-link>
-            </template>
-            <template #features[0].when.timespans[0].start.earliest="{ value }">
-                {{ useFormatDateTime(value) }}
-            </template>
-            <template #features[0].when.timespans[0].end.earliest="{ value }">
-                {{ useFormatDateTime(value) }}
-            </template>
-        </data-table>
-    </v-container>
+  <v-container>
+    <search-field :loading="pending" @search="updateQuery" />
+    <data-table
+      class="mt-10"
+      height="calc(100vh - 150px)"
+      density="compact"
+      :headers="headers"
+      :items="data?.data?.results ?? []"
+      :options="options"
+    >
+      <template #features[0].systemClass="{ value }">
+        <v-tooltip content-class="text-capitalize" :text="$t(`global.entity.system_classes.${value}`)">
+          <template #activator="{ props }">
+            <v-icon v-bind="props">
+              {{ classes.find(x => x.systemClass === value)?.icon }}
+            </v-icon>
+          </template>
+        </v-tooltip>
+      </template>
+      <template #features[0].properties.title="{ item, value }">
+        <nuxt-link :to="`/entity/${item.features[0]['@id'].split('/').at(-1)}`">
+          {{ value }}
+        </nuxt-link>
+      </template>
+      <template #features[0].when.timespans[0].start.earliest="{ value }">
+        {{ useFormatDateTime(value) }}
+      </template>
+      <template #features[0].when.timespans[0].end.earliest="{ value }">
+        {{ useFormatDateTime(value) }}
+      </template>
+    </data-table>
+  </v-container>
 </template>

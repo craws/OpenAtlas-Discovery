@@ -3,5 +3,19 @@
     "i18n-ally.localesPaths": [
         "locales"
     ],
-    "i18n-ally.keystyle": "nested"
+    "i18n-ally.keystyle": "nested",
+    "editor.tabSize": 2,
+    "editor.detectIndentation": false,
+    "eslint.format.enable": true,
+    "eslint.codeActionsOnSave.rules": null,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.eslint": true
+  },
+  "cSpell.words": [
+    "composables",
+    "Nuxt",
+    "nuxtjs",
+    "tableheaders",
+    "timespans"
+  ],
 }

@@ -2,6 +2,7 @@ import vuetify from 'vite-plugin-vuetify'
 import { resolve, dirname } from 'node:path'
 import { fileURLToPath } from 'url'
 import VueI18nVitePlugin from '@intlify/unplugin-vue-i18n/vite'
+import eslintPlugin from "vite-plugin-eslint";
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
   modules: ['@nuxt/content',
@@ -26,6 +27,7 @@ export default defineNuxtConfig({
       'process.env.DEBUG': false,
     },
     plugins: [
+      eslintPlugin(),
       VueI18nVitePlugin({
         include: [
           resolve(dirname(fileURLToPath(import.meta.url)), './locales/*.json')
