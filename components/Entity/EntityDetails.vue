@@ -38,7 +38,7 @@ const detailsLists = computed(() => {
 
     props.types.forEach(type => {
       detailItems.push({
-        id: type.identifier,
+        id: type.identifier.substring(type.identifier.lastIndexOf('/')+1, type.identifier.length),
         label: type.label,
         subheader: type.hierarchy.split(' > ', 2)[0]
       })
@@ -55,8 +55,9 @@ const detailsLists = computed(() => {
       let detailItems: DetailItem[] = [];
 
       // We skip the Types Relation as we use the Type Property to get that info if present
-      if(!relationType.relationType.includes('crm:P2') && props.types) {
+      if(relationType.relationType.includes('crm:P2') && props.types) {
 
+      } else {
         relationType.relations.forEach(relation => {
           detailItems.push({
               id: relation.relationTo.split('/').at(-1),
@@ -68,9 +69,9 @@ const detailsLists = computed(() => {
           title: relationType.relationType.substring(relationType.relationType.indexOf(' '), relationType.relationType.length),
           detailItems: detailItems,
         });
-      };
-    });
+      }
 
+    });
   }
   return detailLists;
 })
