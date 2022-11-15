@@ -8,6 +8,7 @@
       "more details": "weitere Infos",
       "search": "Suche",
       "title": "Titel",
+      "unknown": "Unbekannt",
       "data": "Daten",
       "de": "deutsch",
       "en": "englisch"
@@ -60,6 +61,20 @@
     "entity": {
       "prim_description_missing": "Primäre Beschreibung fehlt.",
       "class_missing": "Klasse fehlt",
+      "details_header": "Details",
+      "detail": {
+        "more": "weitere"
+      },
+      "basics": {
+        "start": "Anfang",
+        "end": "Ende"
+      },
+      "details": {
+        "types": "Typen"
+      }
+    },
+    "when-display": {
+      "no-dates": "Keine Kalenderdaten bekannt",
       "details_header": "Details"
     }
   }

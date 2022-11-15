@@ -10,7 +10,7 @@ watch(() => t.locale.value, () => refresh())
 const logoHeight = computed(() => smAndUp.value ? '350px' : '250px');
 </script>
 <template>
-  <v-sheet height="calc(100vh - 65px)" class=" landing-page d-flex justify-center pt-5">
+ <v-sheet height="calc(100vh - 65px)" class=" landing-page d-flex justify-center pt-5">
     <v-container class="text-center">
       <ContentRenderer>
         <ContentRendererMarkdown :value="data" />
