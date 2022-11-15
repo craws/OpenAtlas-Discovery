@@ -40,7 +40,7 @@ export interface FeatureGeoJSON {
   "@id": string;
   crmClass?: string;
   depictions?: DepictionModel[];
-  description?: DescriptionModel[];
+  descriptions?: DescriptionModel[];
   geometry: GeometryModel;
   links?: LinkModel[];
   names?: NamesModel[];

@@ -6,10 +6,7 @@ interface Header {
     sortable?: boolean
     value: string
 }
-const emit = defineEmits<{
-    (e: 'pageUpdate', page: number): void
-}>()
-const props = defineProps<{
+interface Props {
     headers: Header[];
     items: Object[];
     loading?: Boolean;
@@ -19,7 +16,11 @@ const props = defineProps<{
         itemsPerPage: number,
         itemsLength: number,
     }
-}>()
+}
+const props = withDefaults(defineProps<Props>(),
+    {
+        loading: () => false
+    })
 </script>
 <template>
     <div>
@@ -28,7 +29,7 @@ const props = defineProps<{
             <thead>
                 <tr>
                     <th v-for="header in headers" :key="header.value" class="text-capitalize" :class="`text-${header.align || 'left'}`">
-                        {{$t(header.text)}}
+                        {{$t(`global.entity.${header.text}`)}}
                     </th>
                 </tr>
             </thead>
@@ -46,7 +47,7 @@ const props = defineProps<{
         <div class="d-flex align-center justify-end">
             <div class="text-caption">
                 {{options.itemsPerPage * options.page - options.itemsPerPage + 1 }}-{{options.itemsPerPage *
-                options.page}} {{$t("of")}} {{options.itemsLength}}
+                options.page}} {{$t("global.basics.of")}} {{options.itemsLength}}
             </div>
             <div>
                 <v-btn @click="options.page--" :disabled="options.page===1" size="small" variant="plain" icon>
