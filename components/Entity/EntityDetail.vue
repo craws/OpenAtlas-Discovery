@@ -1,7 +1,5 @@
 <template>
-  <v-card
-  class="mx-auto my-3"
-  max-width="30vw">
+  <v-card class="mb-3">
     <v-card-title>
       {{ props.title }}
     </v-card-title>
