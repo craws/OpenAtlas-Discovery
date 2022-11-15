@@ -13,8 +13,9 @@
           <template v-if="item && index < 3">
             <v-divider v-if="index > 0"/>
             <p
-            :key="item.label">
-              <nuxt-link :to="`/entity/${item?.relationTo?.split('/').at(-1)}`">{{ item.label }} </nuxt-link>
+            :key="item.id">
+              <b v-if="item?.subheader"> {{ item?.subheader }}: </b>
+              <nuxt-link :to="`/entity/${item?.id}`">{{ item.label }} </nuxt-link>
             </p>
           </template>
         </template>
@@ -26,13 +27,13 @@
 
         <v-expand-transition>
           <div v-show="showDetails">
-
             <template v-for="(item, index) in details" >
               <template v-if="item && index >= 3">
                 <v-divider/>
                 <p
-                :key="item.label">
-                  <nuxt-link :to="`/entity/${item.relationTo.split('/').at(-1)}`">{{ item.label }} </nuxt-link>
+                :key="item.id">
+                  <b v-if="item?.subheader"> {{ item?.subheader }}: </b>
+                  <nuxt-link :to="`/entity/${item?.id}`">{{ item.label }} </nuxt-link>
                 </p>
               </template>
             </template>
@@ -40,8 +41,6 @@
         </v-expand-transition>
       </v-list>
     </v-card-text>
-
-
 
     <v-divider v-if="showExpandable" v-show="!showDetails" class="closed-divider" transition="fade-transition"/>
     <v-card-actions>
@@ -60,7 +59,8 @@
 <script setup lang="ts">
 export interface DetailItem{
   id:string,
-  text:string
+  label:string,
+  subheader?:string
 }
 const props = defineProps({
   title: {
@@ -68,7 +68,8 @@ const props = defineProps({
     default: 'Detail'
   },
   details: {
-    default: undefined,
+    type: Array<DetailItem>,
+    default: null,
   }
 })
 

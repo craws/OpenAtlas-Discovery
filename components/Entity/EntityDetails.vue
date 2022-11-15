@@ -3,9 +3,6 @@
     <h3 class="pl-4"> {{ $t('components.entity.details_header') }}</h3>
     <div class="details py-2 px-4">
         <EntityDetail
-        :title="$t('components.entity.details.types')"
-        :details="props.types"></EntityDetail>
-        <EntityDetail
         v-for="detail in detailsLists"
         :title="detail.title"
         :details="detail.detailItems"
@@ -42,7 +39,8 @@ const detailsLists = computed(() => {
     props.types.forEach(type => {
       detailItems.push({
         id: type.identifier,
-        text: type.label,
+        label: type.label,
+        subheader: type.hierarchy.split(' > ', 2)[0]
       })
     });
 
@@ -56,16 +54,21 @@ const detailsLists = computed(() => {
     props.relations.forEach(relationType => {
       let detailItems: DetailItem[] = [];
 
-      relationType.relations.forEach(relation => {
-        detailItems.push({
-          id: relation.relationTo.split('/').at(-1),
-          text: relation.label,
+      // We skip the Types Relation as we use the Type Property to get that info if present
+      if(!relationType.relationType.includes('crm:P2') && props.types) {
+
+        relationType.relations.forEach(relation => {
+          detailItems.push({
+              id: relation.relationTo.split('/').at(-1),
+              label: relation.label,
+            });
         });
-      });
-      detailLists.push({
-        title: relationType.relationType,
-        detailItems: detailItems,
-      });
+
+        detailLists.push({
+          title: relationType.relationType.substring(relationType.relationType.indexOf(' '), relationType.relationType.length),
+          detailItems: detailItems,
+        });
+      };
     });
 
   }
