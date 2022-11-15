@@ -15,7 +15,6 @@
 </template>
 <script setup lang="ts">
 import { useDisplay } from 'vuetify';
-import { EntityDetail } from '~~/.nuxt/components';
 import { RelationModel, TypeModel } from '~~/composables/api';
 import { DetailItem } from './EntityDetail.vue';
 
