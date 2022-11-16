@@ -1,11 +1,8 @@
 # About
 
 OpenAtlas Discovery is a presentation web application for
-[OpenAtlas](https://openatlas.eu) projects.
-
-At the moment we are in the concept phase and this is just a basic start point
-for further development.
-
+[OpenAtlas](https://openatlas.eu) projects,
+which is still in early development.
 
 # Setup
 Make sure to install the dependencies:
@@ -46,8 +43,9 @@ for more information.
 
 # Configuration
 ## Content
-The content managment is handled by [Content V2](https://content.nuxtjs.org/).
-The content of the landing page is defined by the files in `/content` + language e.g. `/en` + `index.md`.
+The content management is handled by [Content V2](https://content.nuxtjs.org/).
+The content of the landing page is defined by the files in 
+`/content` + language e.g. `/en` + `index.md`.
 
 # Licensing
 All code unless otherwise noted is licensed under the terms of the MIT License
