@@ -5,6 +5,17 @@ import VueI18nVitePlugin from '@intlify/unplugin-vue-i18n/vite'
 import eslintPlugin from "vite-plugin-eslint";
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
+  meta: {
+    title: 'OpenAtlas Discovery',
+    link: [
+      {
+        rel: 'icon',
+        type: 'image/svg+xml',
+        href: '/favicon.svg',
+        sizes: 'any'
+      }
+    ]
+  },
   modules: ['@nuxt/content',
     async (options, nuxt) => {
       nuxt.hooks.hook('vite:extendConfig',

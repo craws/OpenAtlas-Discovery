@@ -1,6 +1,7 @@
-<script setup lang="ts">
-import { GeometricEntry } from '~~/composables/api';
-import { Query } from '~~/types/query';
+<script setup lang="ts">import { Query } from '~~/types/query';
+import { GeoJsonObject } from "geojson";
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
 
 const { $api } = useNuxtApp();
 type ViewClasses = ("actor" | "event" | "place" | "reference" | "source")[]
@@ -41,6 +42,10 @@ function updateQuery(newQuery: Query) {
     query.value.search = newQuery.search.map(x => JSON.stringify(x));
     refresh();
 }
+
+useHead({
+    title: t('global.basics.map')
+})
 </script>
 <template>
     <div>
@@ -73,7 +78,7 @@ function updateQuery(newQuery: Query) {
                     <v-btn :to="`/entity/${featureContent.id}`" variant="text">{{ $t('global.basics.more details') }}</v-btn>
                 </v-card-actions>
             </v-card>
-            <data-map @item-clicked="handlePopup" :items="items as GeometricEntry[]" style="height:calc(100vh - 64px);">
+            <data-map @item-clicked="handlePopup" :items="items as GeoJsonObject[]" style="height:calc(100vh - 64px);">
             </data-map>
 
         </div>

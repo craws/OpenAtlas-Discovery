@@ -5,7 +5,7 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "test": "vitest"
+    "test": "vitest run --coverage"
   },
   "devDependencies": {
     "@intlify/unplugin-vue-i18n": "^0.7.0",
@@ -17,6 +17,12 @@
     "@typescript-eslint/parser": "^5.43.0",
     "eslint": "^8.27.0",
     "eslint-plugin-vue": "^9.7.0",
+    "@vitejs/plugin-vue": "^3.2.0",
+    "@vitest/coverage-c8": "^0.24.5",
+    "@vue/test-utils": "^2.2.0",
+    "c8": "^7.12.0",
+    "jsdom": "^20.0.1",
+    "msw": "^0.47.4",
     "nuxt": "^3.0.0-rc.12",
     "swagger-typescript-api": "^10.0.3",
     "typescript": "^4.8.4",
@@ -30,7 +36,6 @@
     "@nuxt/test-utils-edge": "^3.0.0-rc.13-27769806.418b567",
     "@types/leaflet": "^1.9.0",
     "leaflet": "^1.9.2",
-    "mdi": "^2.2.43",
     "sass": "^1.55.0",
     "vue-country-flag-next": "^2.3.2"
   }

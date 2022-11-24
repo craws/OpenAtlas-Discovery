@@ -1,8 +1,10 @@
 <script setup lang="ts">
-import headers from '../../assets/tableheaders.json'
-import classes from '../../assets/classes.json'
-import { Query } from '~~/types/query'
-const { $api } = useNuxtApp()
+import headers from "../../assets/tableheaders.json";
+import classes from "../../assets/classes.json";
+import { Query } from "~~/types/query";
+import { useI18n } from 'vue-i18n';
+const { t } = useI18n();
+const { $api } = useNuxtApp();
 
 const itemsLength = computed(() => data?.value?.data.pagination.entities)
 const options = reactive({ page: 1, itemsPerPage: 20, itemsLength })
@@ -26,6 +28,10 @@ function updateQuery (newQuery: Query) {
   search.value = newQuery.search.map(x => JSON.stringify(x))
   refresh()
 }
+
+useHead({
+    title: t('global.basics.data')
+})
 </script>
 
 <template>
