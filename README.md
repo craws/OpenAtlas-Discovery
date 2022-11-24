@@ -3,8 +3,10 @@
 OpenAtlas Discovery is a presentation web application for
 [OpenAtlas](https://openatlas.eu) projects.
 
-At the moment we are in the concept phase and this is just a basic start point
-for further development.
+At the moment we are in early development.
+* [Demo](https://frontend-demo-dev.openatlas.eu/)
+* [Wiki](https://redmine.openatlas.eu/projects/openatlas-discovery/wiki/Wiki)
+* [Issues](https://redmine.openatlas.eu/projects/openatlas-discovery/issues)
 
 # Content v2 Minimal Starter
 Look at the [Content documentation](https://content-v2.nuxtjs.org/) to learn
