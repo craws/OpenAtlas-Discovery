@@ -9,134 +9,9 @@
  * ---------------------------------------------------------------
  */
 
-export interface ClassMappingModel {
-  crmClass?: string;
-  en?: string;
-  icon?: string;
-  systemClass?: string;
-  view?: string;
-}
-
-export interface ContentModel {
-  contact?: string;
-  imageSized?: ContentModelImageSized;
-  intro?: string;
-  legalNotice?: string;
-  siteName?: string;
-}
-
-export interface DepictionModel {
-  "@id"?: string;
-  license?: string;
-  title?: string;
-  url?: string;
-}
-
-export interface DescriptionModel {
-  value?: string;
-}
-
-export interface FeatureGeoJSON {
-  "@id": string;
-  crmClass?: string;
-  depictions?: DepictionModel[];
-  descriptions?: DescriptionModel[];
-  geometry: GeometryModel;
-  links?: LinkModel[];
-  names?: NamesModel[];
-  properties?: FeatureGeoJSONProperties;
-  relations?: RelationModel[];
-  systemClass?: string;
-  type: string;
-  types?: TypeModel[];
-  when?: WhenModel;
-}
-
-export interface GeometricEntries {
-  features?: GeometricEntry[];
-  type?: string;
-}
-
-export interface GeometricEntry {
-  geometry?: GeometricEntryGeometry;
-  properties?: GeometricEntryProperties;
-  type?: string;
-}
-
-export interface Geometries {
-  geometry?: GeometricEntryGeometry;
-  properties?: GeometriesProperties;
-  type?: string;
-}
-
-export interface GeometryModel {
-  coordinates?: (number | number[])[];
-  description?: string;
-  title?: string;
-  type?: string;
-}
-
-export interface GeometryOutModel {
-  features?: Geometries[];
-  type?: string;
-}
-
-export interface LinkModel {
-  identifier?: string;
-  referenceSystem?: string;
-  type?: string;
-}
-
-export interface LinkedPlaceModel {
-  "@context"?: string;
-  features: FeatureGeoJSON[];
-  type: string;
-}
-
-export interface NamesModel {
-  alias?: string;
-}
-
-export interface NodeAllModel {
-  nodes?: NodeModel[];
-}
-
-export interface NodeCategoryModel {
-  custom?: string[];
-  places?: string[];
-  standard?: string[];
-  system?: string[];
-  value?: string[];
-}
-
-export interface NodeModel {
-  id?: number;
-  label?: string;
-  url?: string;
-}
-
-export interface NodeOverviewModel {
-  types?: NodeCategoryModel;
-}
-
-export interface OutputModelGeojson {
+export interface EntitiesOutputModel {
   pagination?: PaginationModel;
-  results?: GeometryOutModel[];
-}
-
-export interface OutputModelLPF {
-  pagination?: PaginationModel;
-  results?: LinkedPlaceModel[];
-}
-
-export interface OverviewCountModel {
-  count?: number;
-  systemClass?: string;
-}
-
-export interface PaginationIndexModel {
-  page?: number;
-  startId?: number;
+  results?: LinkedPlacesModel[]; //results?: (LinkedPlacesModel | GeoJSONModel)[];
 }
 
 export interface PaginationModel {
@@ -146,105 +21,89 @@ export interface PaginationModel {
   totalPages?: number;
 }
 
-export interface RelationModel {
-  label?: string;
-  relationDescription?: string;
-  relationSystemClass?: string;
-  relationTo?: string;
-  relationType?: string;
+export interface PaginationIndexModel {
+  page?: number;
+  startId?: number;
+}
+
+export interface LinkedPlacesModel {
+  "@context"?: string;
   type?: string;
-  when?: WhenModel;
+  features?: LinkedPlacesModelFeatures[];
 }
 
-export interface SubunitsModel {
-  children?: number[];
-  created?: string;
-  crmClass?: string;
-  geometry?: SubunitsModelGeometry;
-  id?: number;
-  latestModRec?: string;
-  modified?: string;
-  openatlasClassName?: string;
-  parentId?: number;
-  properties?: SubunitsModelProperties;
-  rootId?: number;
+export interface GeoJSONModel {
+  type?: "FeatureCollection";
+  features?: GeoJSONModelFeatures[];
 }
 
-export interface SystemClassCountModel {
-  acquisition?: number;
-  activity?: number;
-  administrative_unit?: number;
-  artifact?: number;
-  bibliography?: number;
-  edition?: number;
-  feature?: number;
-  file?: number;
-  group?: number;
-  move?: number;
-  person?: number;
-  place?: number;
-  reference_system?: number;
-  source?: number;
-  source_translation?: number;
-  stratigraphic_unit?: number;
-  type?: number;
-}
-
-export interface TimeDetailModel {
-  earliest?: string;
-  latest?: string;
-}
-
-export interface TimeStartEndModel {
-  end?: TimeDetailModel;
-  start?: TimeDetailModel;
-}
-
-export type TimespansModel = TimeStartEndModel[];
-
-export interface TypeModel {
+export interface Point {
+  type: "Point";
+  coordinates: Position;
+  title?: string;
   description?: string;
-  hierarchy?: string;
-  identifier?: string;
-  label?: string;
-  unit?: number;
-  value?: number;
+  shapeType?: "centerpoint";
 }
 
-export interface TypeOverviewChildren {
-  id?: string;
-  label?: string;
-  url?: string;
+export type Position = number[];
+
+export interface LineString {
+  type: "LineString";
+  coordinates: LineStringCoordinates;
+  title?: string;
+  description?: string;
+  shapeType?: "polyline";
 }
 
-export interface TypeOverviewEntry {
-  children?: TypeOverviewChildren[];
+export type LineStringCoordinates = Position[];
+
+export type LinearRing = Position[];
+
+export interface Polygon {
+  type: "Polygon";
+  "coordinates'"?: LinearRing[];
+  title?: string;
+  description?: string;
+  shapeType?: "area" | "shape";
+}
+
+export interface GeometryCollection {
+  type: "GeometryCollection";
+  geometries?: (Polygon | Point | LineString | (Polygon & Point & LineString))[];
+}
+
+export interface TypeOverviewEntryModel {
+  /** @format int32 */
   id?: number;
   name?: string;
   viewClass?: string[];
+  children?: TypeOverviewEntryModel[];
 }
 
 export interface TypeOverviewModel {
-  custom?: TypeOverviewEntry[];
-  places?: TypeOverviewEntry[];
-  standard?: TypeOverviewEntry[];
-  system?: TypeOverviewEntry[];
-  value?: TypeOverviewEntry[];
+  standard?: TypeOverviewEntryModel[];
+  place?: TypeOverviewEntryModel[];
+  custom?: TypeOverviewEntryModel[];
+  value?: TypeOverviewEntryModel[];
+  system?: TypeOverviewEntryModel[];
 }
 
 export interface TypeTreeModel {
-  type_tree?: TypeTreeSubModel[];
+  type_tree?: TypeTreeModelTypeTree;
 }
 
-export interface TypeTreeSubModel {
-  Type_IDs?: TypeTreeSubModelTypeIDs;
+export interface TypeViewClassChildren {
+  id?: string;
+  label?: string;
+  url?: string;
+  children?: TypeViewClassChildren[];
 }
 
 export interface TypesByViewClassEntry {
-  children?: TypeOverviewChildren[];
+  children?: TypeViewClassChildren[];
   id?: number;
   name?: string;
-  viewClass?: string[];
+  category?: string;
 }
 
 export interface TypesByViewClassModel {
@@ -271,137 +130,303 @@ export interface TypesByViewClassModel {
   stratigraphic_unit?: TypesByViewClassEntry[];
 }
 
-export interface WhenModel {
-  timespans?: TimespansModel;
+export type ClassesModel = ClassesModelInner[];
+
+export interface ContentModel {
+  intro?: string;
+  contact?: string;
+  legalNotice?: string;
+  siteName?: string;
+  imageSizes?: ContentModelImageSizes;
 }
 
-export type InlineResponse200 = OutputModelLPF;
-
-export type InlineResponse2001 = LinkedPlaceModel;
-
-export interface ContentModelImageSized {
-  table?: string;
-  thumbnail?: string;
+export interface SystemClassCountModel {
+  /** @format int32 */
+  move?: number;
+  /** @format int32 */
+  bibliography?: number;
+  /** @format int32 */
+  person?: number;
+  /** @format int32 */
+  acquisition?: number;
+  /** @format int32 */
+  reference_system?: number;
+  /** @format int32 */
+  feature?: number;
+  /** @format int32 */
+  file?: number;
+  /** @format int32 */
+  activity?: number;
+  /** @format int32 */
+  type?: number;
+  /** @format int32 */
+  administrative_unit?: number;
+  /** @format int32 */
+  artifact?: number;
+  /** @format int32 */
+  source_translation?: number;
+  /** @format int32 */
+  place?: number;
+  /** @format int32 */
+  stratigraphic_unit?: number;
+  /** @format int32 */
+  edition?: number;
+  /** @format int32 */
+  group?: number;
+  /** @format int32 */
+  source?: number;
 }
 
-export interface FeatureGeoJSONProperties {
+export type SubunitsModel = SubunitsModelInner[];
+
+export interface GeometricEntitiesModel {
+  type?: string;
+  features?: GeometricEntitiesModelFeatures[];
+}
+
+export type InlineResponse200 = LinkedPlacesModel; //export type InlineResponse200 = LinkedPlacesModel | GeoJSONModel;
+
+export interface LinkedPlacesModelProperties {
   title?: string;
 }
 
-export interface GeometricEntryGeometry {
-  coordinates?: number[][];
+export interface LinkedPlacesModelDescriptions {
+  value?: string;
+}
+
+export interface LinkedPlacesModelWhenStart {
+  /** @format nullable */
+  earliest?: string;
+  /** @format nullable */
+  latest?: string;
+  /** @format nullable */
+  comment?: string;
+}
+
+export interface LinkedPlacesModelWhenTimespans {
+  start?: LinkedPlacesModelWhenStart;
+  end?: LinkedPlacesModelWhenStart;
+}
+
+export interface LinkedPlacesModelWhen {
+  timespans?: LinkedPlacesModelWhenTimespans[];
+}
+
+export interface LinkedPlacesModelTypes {
+  identifier?: string;
+  label?: string;
+  /** @format nullable */
+  descriptions?: string;
+  hierarchy?: string;
+  /** @format float */
+  value?: number;
+  /** @format nullable */
+  unit?: string;
+}
+
+export interface LinkedPlacesModelRelations {
+  label?: string;
+  relationTo?: string;
+  relationType?: string;
+  relationSystemClass?: string;
+  /** @format nullable */
+  relationDescription?: string;
+  /** @format nullable */
+  type?: string;
+  when?: LinkedPlacesModelWhen;
+}
+
+export interface LinkedPlacesModelFeatures {
+  "@id"?: string;
+  type?: string;
+  crmClass?: string;
+  systemClass?: string;
+  properties?: LinkedPlacesModelProperties;
+  descriptions?: LinkedPlacesModelDescriptions[];
+  when?: LinkedPlacesModelWhen;
+  types?: LinkedPlacesModelTypes[];
+  relations?: LinkedPlacesModelRelations[];
+  /** @format nullable */
+  names?: string;
+  /** @format nullable */
+  links?: string;
+  /** @format nullable */
+  depictions?: string;
+  geometry?: Polygon | Point | LineString | GeometryCollection;
+}
+
+export interface GeoJSONModelPropertiesTypes {
+  typeName?: string;
+  typeId?: number;
+}
+
+export interface GeoJSONModelProperties {
+  "@id"?: number;
+  systemClass?: string;
+  name?: string;
+  description?: string;
+  begin_earliest?: string;
+  /** @format nullable */
+  begin_latest?: string;
+  /** @format nullable */
+  begin_comment?: string;
+  end_earliest?: string;
+  /** @format nullable */
+  end_latest?: string;
+  /** @format nullable */
+  end_comment?: string;
+  types?: GeoJSONModelPropertiesTypes[];
+}
+
+export interface GeoJSONModelFeatures {
+  type?: string;
+  geometry?: Polygon | Point | LineString | GeometryCollection;
+  properties?: GeoJSONModelProperties;
+}
+
+export interface TypeTreeModelTypeTreeTypeIds {
+  id?: number;
+  name?: string;
+  description?: string;
+  origin_id?: number;
+  first?: number;
+  last?: number;
+  root?: number[];
+  subs?: number[];
+  count?: number;
+  count_subs?: number;
+  category?: string;
+}
+
+export interface TypeTreeModelTypeTree {
+  type_ids?: TypeTreeModelTypeTreeTypeIds;
+}
+
+export interface ClassesModelInner {
+  systemClass?: string;
+  crmClass?: string;
+  view?: string;
+  icon?: string;
+  en?: string;
+}
+
+export interface ContentModelImageSizes {
+  thumbnail?: string;
+  table?: string;
+}
+
+export interface SubunitsModelInner {
+  /** @format int32 */
+  id?: number;
+  /** @format int32 */
+  parentId?: number;
+  /** @format int32 */
+  rootId?: number;
+  openatlasClassName?: string;
+  crmClass?: string;
+  created?: string;
+  modified?: string;
+  latestModRec?: string;
+  geometry?: {
+    type?: string;
+    coordinates?: number[];
+    title?: string;
+    description?: string;
+    shapeType?: string;
+  };
+  children?: number[];
+  properties?: {
+    name?: string;
+    /** @format nullable */
+    aliases?: string;
+    description?: string;
+    standardType?: {
+      name?: string;
+      /** @format int32 */
+      id?: number;
+      /** @format int32 */
+      rootId?: number;
+      path?: string;
+      externalReferences?: {
+        type?: string;
+        identifier?: string;
+        referenceSystem?: string;
+        resolverURL?: string;
+        referenceURL?: string;
+        id?: string;
+      }[];
+    };
+    timespan?: {
+      earliestBegin?: string;
+      latestBegin?: string;
+      earliestEnd?: string;
+      latestEnd?: string;
+    };
+    externalReferences?: {
+      type?: string;
+      identifier?: string;
+      referenceSystem?: string;
+      resolverURL?: string;
+      referenceURL?: string;
+      id?: string;
+    }[];
+    references?: {
+      /** @format int32 */
+      id?: number;
+      abbreviation?: string;
+      title?: string;
+      /** @format nullable */
+      pages?: string;
+    }[];
+    /** @format nullable */
+    files?: string;
+    types?: {
+      /** @format int32 */
+      id?: number;
+      /** @format int32 */
+      rootId?: number;
+      name?: string;
+      path?: string;
+      /** @format nullable */
+      value?: string;
+      /** @format nullable */
+      unit?: string;
+      externalReferences?: {
+        type?: string;
+        identifier?: string;
+        referenceSystem?: string;
+        resolverURL?: string;
+        referenceURL?: string;
+        id?: string;
+      }[];
+    }[];
+  };
+}
+
+export interface GeometricEntitiesModelGeometry {
+  coordinates?: number[];
   type?: string;
 }
 
-export interface GeometricEntryProperties {
-  description?: string;
+export interface GeometricEntitiesModelProperties {
+  /** @format int32 */
   id?: number;
   name?: string;
-  objectDescription?: string;
+  description?: string;
+  /** @format int32 */
+  locationId?: number;
+  /** @format int32 */
   objectId?: number;
+  objectDescription?: string;
   objectName?: string;
   objectType?: string;
   shapeType?: string;
 }
 
-export interface GeometriesPropertiesPlaceTypes {
-  id?: number;
-  name?: string;
-}
-
-export interface GeometriesPropertiesPlace {
-  id?: number;
-  name?: string;
-  types?: GeometriesPropertiesPlaceTypes[];
-}
-
-export interface GeometriesProperties {
-  begin_from?: string;
-  begin_to?: string;
-  description?: string;
-  end_from?: string;
-  end_to?: string;
-  id?: number;
-  name?: string;
-  place?: GeometriesPropertiesPlace;
+export interface GeometricEntitiesModelFeatures {
   type?: string;
-}
-
-export interface SubunitsModelGeometry {
-  geometries?: GeometryModel;
-  type?: string;
-}
-
-export interface SubunitsModelPropertiesExternalReferences {
-  identifier?: string;
-  referenceSystem?: string;
-  type?: string;
-}
-
-export interface SubunitsModelPropertiesFiles {
-  fileName?: string;
-  id?: number;
-  license?: string;
-  name?: string;
-  source?: string;
-}
-
-export interface SubunitsModelPropertiesReferences {
-  abbreviation?: string;
-  id?: number;
-  pages?: string;
-  title?: string;
-}
-
-export interface SubunitsModelPropertiesStandardType {
-  id?: number;
-  name?: string;
-  path?: string;
-  rootId?: number;
-}
-
-export interface SubunitsModelPropertiesTimespan {
-  earliestBegin?: string;
-  earliestEnd?: string;
-  latestBegin?: string;
-  latestEnd?: string;
-}
-
-export interface SubunitsModelPropertiesTypes {
-  id?: number;
-  name?: string;
-  path?: string;
-  rootId?: number;
-  unit?: string;
-  value?: number;
-}
-
-export interface SubunitsModelProperties {
-  aliases?: string[];
-  description?: string;
-  externalReferences?: SubunitsModelPropertiesExternalReferences[];
-  files?: SubunitsModelPropertiesFiles[];
-  name?: string;
-  references?: SubunitsModelPropertiesReferences[];
-  standardType?: SubunitsModelPropertiesStandardType;
-  timespan?: SubunitsModelPropertiesTimespan;
-  types?: SubunitsModelPropertiesTypes[];
-}
-
-export interface TypeTreeSubModelTypeIDs {
-  count?: number;
-  count_subs?: number;
-  description?: string;
-  first?: number;
-  id?: number;
-  last?: number;
-  locked?: boolean;
-  name?: string;
-  note?: string;
-  origin_id?: number;
-  root?: number[];
-  standard?: boolean;
-  subs?: number[];
+  geometry?: GeometricEntitiesModelGeometry;
+  properties?: GeometricEntitiesModelProperties;
 }
 
 export type QueryParamsType = Record<string | number, any>;
@@ -449,7 +474,7 @@ export enum ContentType {
 }
 
 export class HttpClient<SecurityDataType = unknown> {
-  public baseUrl: string = "https://demo-dev.openatlas.eu/api/0.3/";
+  public baseUrl: string = "https://demo-dev.openatlas.eu/api/";
   private securityData: SecurityDataType | null = null;
   private securityWorker?: ApiConfig<SecurityDataType>["securityWorker"];
   private abortControllers = new Map<CancelToken, AbortController>();
@@ -562,7 +587,7 @@ export class HttpClient<SecurityDataType = unknown> {
     baseUrl,
     cancelToken,
     ...params
-  }: FullRequestParams): Promise<HttpResponse<T, E>> => {
+  }: FullRequestParams): Promise<T> => {
     const secureParams =
       ((typeof secure === "boolean" ? secure : this.baseApiParams.secure) &&
         this.securityWorker &&
@@ -572,7 +597,8 @@ export class HttpClient<SecurityDataType = unknown> {
     const queryString = query && this.toQueryString(query);
     const payloadFormatter = this.contentFormatters[type || ContentType.Json];
     const responseFormat = format || requestParams.format;
-
+    return $fetch(`${baseUrl || this.baseUrl || ""}${path}${queryString ? `?${queryString}` : ""}`)
+    /*
     return this.customFetch(`${baseUrl || this.baseUrl || ""}${path}${queryString ? `?${queryString}` : ""}`, {
       ...requestParams,
       headers: {
@@ -608,279 +634,60 @@ export class HttpClient<SecurityDataType = unknown> {
 
       if (!response.ok) throw data;
       return data;
-    });
+    });*/
   };
 }
 
 /**
- * @title OpenAtlas Api
- * @version 0.3
- * @termsOfService https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html
- * @baseUrl https://demo-dev.openatlas.eu/api/0.3/
+ * @title OpenAtlas API
+ * @version 0.4.1
+ * @license GPL-2.0 (https://www.gnu.org/licenses/old-licenses/gpl-2.0.en.html)
+ * @baseUrl https://demo.openatlas.eu/api/{version}
+ * @externalDocs https://manual.openatlas.eu/
+ * @contact OpenAtlas <bernhard.koschicek-krombholz@oeaw.ac.at> (https://openatlas.eu)
  *
- * This is the stable version of the OpenAtlas API
+ * An API that allows user to access data from an OpenAtlas instance.
  */
 export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDataType> {
-  cidocClass = {
-    /**
-     * @description Retrieves a json with a list of entities based on their CIDOC CRM class code. The json contains a **result** and **pagination** key. All in OpenAtlas available codes can be found under `https://redmine.craws.net/projects/uni/wiki/OpenAtlas_and_CIDOC_CRM_class_mapping`. The result can also be filtered, ordered and manipulated through different parameters. By default results are orderd alphabetically and 20 entities are shown.
-     *
-     * @tags Entities
-     * @name CidocClassDetail
-     * @summary Cidoc_Class endpoint
-     * @request GET:/cidoc_class/{cidoc_class}
-     */
-    cidocClassDetail: (
-      cidocClass: string,
-      query?: {
-        /** Integer of entities returned per page. 0 means no limit is set. Default is 20. */
-        limit?: number;
-        /** The result will be sorted by the given column */
-        column?:
-          | "id"
-          | "classCode"
-          | "name"
-          | "description"
-          | "created"
-          | "modified"
-          | "systemClass"
-          | "beginFrom"
-          | "beginTo"
-          | "endFrom"
-          | "endTo";
-        /** Result will be sorted asc/desc (default column is name) */
-        sort?: "asc" | "desc";
-        /** Search request with AND/OR logic. Confer https://redmine.craws.net/projects/uni/wiki/API_03#Search */
-        search?: string;
-        /** List of results start with given ID */
-        first?: number;
-        /** List of results start with entity after given ID */
-        last?: number;
-        /** Select which key should be shown. If 'not' is used, no other keys will be shown */
-        show?: "when" | "types" | "relations" | "names" | "links" | "geometry" | "depictions" | "not";
-        /**
-         * Select which relations are shown
-         * @example P2
-         */
-        relation_type?: string;
-        /** The output will be filtered by the type_id. Only entities with this type ids will be display. The relation is in logical OR. */
-        type_id?: number;
-        /** Returns a integer which represents the total count of the result */
-        count?: boolean;
-        /** Triggers the file download of the given request */
-        download?: boolean;
-        /** Select to which output format is prefered */
-        format?: "linked_places" | "geojson";
-        /** Result will be downloaded in the given format. */
-        export?: "csv" | "csvNetwork";
-        /** Jump to given page */
-        page?: number;
-      },
-      params: RequestParams = {},
-    ) =>
-      this.request<InlineResponse200, void>({
-        path: `/cidoc_class/${cidocClass}`,
-        method: "GET",
-        query: query,
-        format: "json",
-        ...params,
-      }),
-  };
-  classes = {
-    /**
-     * @description Provides a list of all available system classes, their CIDOC CRM mapping, which view they belong, which icon is used and the englisch name
-     *
-     * @tags Content
-     * @name ClassesList
-     * @summary Class Mapping endpoint
-     * @request GET:/classes/
-     */
-    classesList: (params: RequestParams = {}) =>
-      this.request<ClassMappingModel[], void>({
-        path: `/classes/`,
-        method: "GET",
-        format: "json",
-        ...params,
-      }),
-  };
-  content = {
-    /**
-     * @description Retrieves a json of the content (Intro, Legal Notice, Contact and the size for processed images) from the OpenAtlas instance. The language can be choosen with the **lang** parameter (en or de).
-     *
-     * @tags Content
-     * @name ContentList
-     * @summary Content endpoint
-     * @request GET:/content/
-     */
-    contentList: (
-      query?: {
-        /** Select output language */
-        lang?: "en" | "de";
-        /** Triggers the file download of the given request */
-        download?: boolean;
-      },
-      params: RequestParams = {},
-    ) =>
-      this.request<ContentModel, void>({
-        path: `/content/`,
-        method: "GET",
-        query: query,
-        format: "json",
-        ...params,
-      }),
-  };
-  entitiesLinkedToEntity = {
-    /**
-     * @description Retrieves a json with a list of entities, which are linked to the entered entity. The result can also be filtered, ordered and manipulated through different parameters. By default results are orderd alphabetically and 20 entities are shown.
-     *
-     * @tags Entities
-     * @name EntitiesLinkedToEntityDetail
-     * @summary Linked Entities endpoint
-     * @request GET:/entities_linked_to_entity/{id_}
-     */
-    entitiesLinkedToEntityDetail: (
-      id: number,
-      query?: {
-        /** Integer of entities returned per page. 0 means no limit is set. Default is 20. */
-        limit?: number;
-        /** The result will be sorted by the given column */
-        column?:
-          | "id"
-          | "classCode"
-          | "name"
-          | "description"
-          | "created"
-          | "modified"
-          | "systemClass"
-          | "beginFrom"
-          | "beginTo"
-          | "endFrom"
-          | "endTo";
-        /** Result will be sorted asc/desc (default column is name) */
-        sort?: "asc" | "desc";
-        /** Search request with AND/OR logic. Confer https://redmine.craws.net/projects/uni/wiki/API_03#Search */
-        search?: string;
-        /** List of results start with given ID */
-        first?: number;
-        /** List of results start with entity after given ID */
-        last?: number;
-        /** Select which key should be shown. If 'not' is used, no other keys will be shown */
-        show?: "when" | "types" | "relations" | "names" | "links" | "geometry" | "depictions" | "not";
-        /**
-         * Select which relations are shown
-         * @example P2
-         */
-        relation_type?: string;
-        /** The output will be filtered by the type_id. Only entities with this type ids will be display. The relation is in logical OR. */
-        type_id?: number;
-        /** Returns a integer which represents the total count of the result */
-        count?: boolean;
-        /** Triggers the file download of the given request */
-        download?: boolean;
-        /** Select to which output format is prefered */
-        format?: "linked_places" | "geojson";
-        /** Result will be downloaded in the given format. */
-        export?: "csv" | "csvNetwork";
-        /** Jump to given page */
-        page?: number;
-      },
-      params: RequestParams = {},
-    ) =>
-      this.request<InlineResponse200, void>({
-        path: `/entities_linked_to_entity/${id}`,
-        method: "GET",
-        query: query,
-        format: "json",
-        ...params,
-      }),
-  };
   entity = {
     /**
-     * @description Retrieves a geojson representations of an entity through the **id**.
+     * @description Retrieves all information about a single entity
      *
-     * @tags Entities
-     * @name EntityDetail
-     * @summary Entity endpoint
-     * @request GET:/entity/{id_}
+     * @tags Entity Endpoint
+     * @name GetEntity
+     * @summary Get entity by ID
+     * @request GET:/entity/{entityId}
      */
-    entityDetail: (
-      id: number,
+    getEntity: (
+      entityId: number,
       query?: {
-        /** Select which key should be shown. If 'not' is used, no other keys will be shown */
-        show?: "when" | "types" | "relations" | "names" | "links" | "geometry" | "depictions" | "not";
-        /** Triggers the file download of the given request */
+        /** Download results */
         download?: boolean;
-        /** Result will be downloaded in the given format. */
-        export?: "csv" | "csvNetwork";
-        /** Select to which output format is prefered */
-        format?: "linked_places" | "geojson";
-      },
-      params: RequestParams = {},
-    ) =>
-      this.request<InlineResponse2001, void>({
-        path: `/entity/${id}`,
-        method: "GET",
-        query: query,
-        format: "json",
-        ...params,
-      }),
-  };
-  geometricEntities = {
-    /**
-     * @description Retrieves a list of all selected geometries in the database in a standard Geojson format. This is implimentended for map usage.
-     *
-     * @tags Content
-     * @name GeometricEntitiesList
-     * @summary Geometries Endpoint
-     * @request GET:/geometric_entities/
-     */
-    geometricEntitiesList: (
-      query?: {
-        /** Returns a integer which represents the total count of the result */
-        count?: boolean;
-        /** Triggers the file download of the given request */
-        download?: boolean;
-      },
-      params: RequestParams = {},
-    ) =>
-      this.request<GeometricEntries, void>({
-        path: `/geometric_entities/`,
-        method: "GET",
-        query: query,
-        format: "json",
-        ...params,
-      }),
-  };
-  latest = {
-    /**
-     * @description Retrieves a json of latest entries made in the OpenAtlas database. The number **latest** represents the amount of entities retrieved. **latest** can be any number between and including 1 and 100. The pagination information is alway `null`
-     *
-     * @tags Entities
-     * @name LatestDetail
-     * @summary Latest endpoint
-     * @request GET:/latest/{latest}
-     */
-    latestDetail: (
-      latest: number,
-      query?: {
-        /** Select which key should be shown. If 'not' is used, no other keys will be shown */
-        show?: "when" | "types" | "relations" | "names" | "links" | "geometry" | "depictions" | "not";
+        /** Select which keys should not be displayed. This can improve performance */
+        show?: (
+          | "when"
+          | "types"
+          | "relations"
+          | "names"
+          | "links"
+          | "geometry"
+          | "depictions"
+          | "geonames"
+          | "description"
+          | "none"
+        )[];
         /**
-         * Select which relations are shown
-         * @example P2
+         * Choose the format for the results.
+         * @example lp
          */
-        relation_type?: string;
-        /** Triggers the file download of the given request */
-        download?: boolean;
-        /** Select to which output format is prefered */
-        format?: "linked_places" | "geojson";
-        /** Result will be downloaded in the given format. */
+        format?: "lp" | "geojson" | "geojson-v2" | "pretty-xml" | "n3" | "turtle" | "nt" | "xml";
+        /** Export the entities into either a simple CSV representation or a zip file of CSV's especially designed for network analyses. */
         export?: "csv" | "csvNetwork";
       },
       params: RequestParams = {},
     ) =>
       this.request<InlineResponse200, void>({
-        path: `/latest/${latest}`,
+        path: `/entity/${entityId}`,
         method: "GET",
         query: query,
         format: "json",
@@ -889,23 +696,37 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
   };
   query = {
     /**
-     * @description Retrieves a list of Geojson representations by entity id, CIDOC CRM code or menu item
+     * @description Retrieves a list with entity ID, CIDOC CRM code, system class, or menu item. Combine up to four of the Entities Endpoints in a single query. Each request has to be a new parameter.
      *
-     * @tags Entities
-     * @name QueryList
-     * @summary Query endpoint
+     * @tags Entities Endpoint, Entity Query Endpoint
+     * @name GetQuery
+     * @summary Combine several or all entities endpoints in one query
      * @request GET:/query/
      */
-    queryList: (
+    getQuery: (
       query?: {
-        /** Specific entity ID */
-        entities?: number;
-        /** Need to be a entity class code of the CIDOC CRM (e.g. E21, E18, E33). For further information visit https://redmine.craws.net/projects/uni/wiki/OpenAtlas_and_CIDOC_CRM_class_mapping */
-        cidoc_classes?: string;
-        /** Need to be an OpenAtlas menu items */
-        view_classes?: ["actor" | "event" | "place" | "reference" | "source" | "object"];
-        /** Need to be an OpenAtlas system class */
-        system_classes?:
+        /** Entity ids which will be requested */
+        entities?: number[];
+        /**
+         * View classes to be requested
+         * @example actor
+         */
+        view_classes?: (
+          | "all"
+          | "actor"
+          | "artifact"
+          | "event"
+          | "place"
+          | "reference"
+          | "source"
+          | "type"
+          | "file"
+          | "source_translation"
+          | "reference_system"
+        )[];
+        /** System classes to be requested */
+        system_classes?: (
+          | "all"
           | "acquisition"
           | "activity"
           | "administrative_unit"
@@ -913,6 +734,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
           | "artifact"
           | "bibliography"
           | "edition"
+          | "event"
           | "external_reference"
           | "feature"
           | "file"
@@ -922,87 +744,90 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
           | "object_location"
           | "person"
           | "place"
-          | "source"
+          | "production"
           | "reference_system"
-          | "stratigraphic_unit"
+          | "source"
           | "source_translation"
-          | "type";
-        /** Integer of entities returned per page. 0 means no limit is set. Default is 20. */
-        limit?: number;
-        /** The result will be sorted by the given column */
-        column?:
-          | "id"
-          | "classCode"
-          | "name"
-          | "description"
-          | "created"
-          | "modified"
-          | "systemClass"
-          | "beginFrom"
-          | "beginTo"
-          | "endFrom"
-          | "endTo";
-        /** Result will be sorted asc/desc (default column is name) */
-        sort?: "asc" | "desc";
-        /** Search request with AND/OR logic. Confer https://redmine.craws.net/projects/uni/wiki/API_03#Search */
-        search?: string;
-        /** List of results start with given ID */
-        first?: number;
-        /** List of results start with entity after given ID */
-        last?: number;
-        /** Select which key should be shown. If 'not' is used, no other keys will be shown */
-        show?: "when" | "types" | "relations" | "names" | "links" | "geometry" | "depictions" | "not";
+          | "stratigraphic_unit"
+          | "type"
+          | "type_anthropology"
+        )[];
         /**
-         * Select which relations are shown
-         * @example P2
+         * CIDOC classes to be requested
+         * @example E18
          */
-        relation_type?: string;
-        /** The output will be filtered by the type_id. Only entities with this type ids will be display. The relation is in logical OR. */
-        type_id?: number;
-        /** Returns a integer which represents the total count of the result */
-        count?: boolean;
-        /** Triggers the file download of the given request */
+        cidoc_classes?: (
+          | "E6"
+          | "E7"
+          | "E8"
+          | "E9"
+          | "E12"
+          | "E18"
+          | "E20"
+          | "E21"
+          | "E22"
+          | "E31"
+          | "E32"
+          | "E33"
+          | "E41"
+          | "E53"
+          | "E54"
+          | "E55"
+          | "E74"
+        )[];
+        /** Download results */
         download?: boolean;
-        /** Select to which output format is prefered */
-        format?: "linked_places" | "geojson";
-        /** Result will be downloaded in the given format. */
+        /** Just show count of how many entities would the result give back */
+        count?: boolean;
+        /** Select which keys should not be displayed. This can improve performance */
+        show?: (
+          | "when"
+          | "types"
+          | "relations"
+          | "names"
+          | "links"
+          | "geometry"
+          | "depictions"
+          | "geonames"
+          | "description"
+          | "none"
+        )[];
+        /**
+         * Choose the format for the results.
+         * @example lp
+         */
+        format?: "lp" | "geojson" | "geojson-v2" | "pretty-xml" | "n3" | "turtle" | "nt" | "xml";
+        /** Export the entities into either a simple CSV representation or a zip file of CSV's especially designed for network analyses. */
         export?: "csv" | "csvNetwork";
-        /** Jump to given page */
+        /**
+         * Choose one column to sort the results by. Default value is name.
+         * @example name
+         */
+        column?: "id" | "name" | "cidoc_class" | "system_class" | "begin_from" | "begin_to" | "end_from" | "end_to";
+        /**
+         * Sorting result ascending or descending of the given column. Default value is asc.
+         * @example asc
+         */
+        sort?: "asc" | "desc";
+        /** Search query for specific results. */
+        search?: string[];
+        /** Begin results at the given entity id. */
+        first?: number;
+        /** Begin results after the given entity id. */
+        last?: number;
+        /** Jump to page number. */
         page?: number;
+        /** Limits the entities displayed. Influences the performance of the request. Default value is 20. 0 means all available entities will be displayed. */
+        limit?: number;
+        /** Show only entities with the given type id. */
+        type_id?: number[];
+        /** Displays only connections connected by the selected CIDOC CRM code. */
+        relation_type?: string[];
       },
       params: RequestParams = {},
     ) =>
-      this.request<InlineResponse200, void>({
+      this.request<EntitiesOutputModel, void>({
         path: `/query/`,
-        method: "GET",
-        query: query,
-        format: "json",
-        ...params,
-      }),
-  };
-  subunits = {
-    /**
-     * @description Displays all subunits of a place in a special Thanados format
-     *
-     * @tags Nodes
-     * @name SubunitsDetail
-     * @summary Node endpoint
-     * @request GET:/subunits/{id_}
-     */
-    subunitsDetail: (
-      id: number,
-      query?: {
-        /** Returns a integer which represents the total count of the result */
-        count?: boolean;
-        /** Triggers the file download of the given request */
-        download?: boolean;
-        /** Select to which output format is prefered */
-        format?: "linked_places" | "geojson";
-      },
-      params: RequestParams = {},
-    ) =>
-      this.request<SubunitsModel, void>({
-        path: `/subunits/${id}`,
         method: "GET",
         query: query,
         format: "json",
@@ -1011,31 +836,28 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
   };
   systemClass = {
     /**
-     * @description Retrieves a json with a list of entities based on their OpenAtlas system class. Available categories are **acquisition**, **activity**, **actor_appellation**, **administrative_unit**, **appellation**, **artifact**, **bibliography**, **edition**, **external_reference**, **feature**, **file**, , **group**, **human_remains**, **move**, **object_location**, **person**, **place**, **source**, **reference_system**, **stratigraphic_unit**, **source_translation**, **type**,  The result can also be filtered, ordered and manipulated through different parameters.  By default results are orderd alphabetically and 20 entities are shown.
+     * @description Retrieves a list of entities, based on their OpenAtlas class name.
      *
-     * @tags Entities
-     * @name SystemClassDetail
-     * @summary System Class endpoint
+     * @tags Entities Endpoint
+     * @name GetBySystemClass
      * @request GET:/system_class/{system_class}
      */
-    systemClassDetail: (
+    getBySystemClass: (
       systemClass:
         | "all"
-        | "administrative_unit"
-        | "type"
         | "acquisition"
         | "activity"
-        | "actor_actor_relation"
-        | "actor_function"
+        | "administrative_unit"
         | "appellation"
         | "artifact"
         | "bibliography"
         | "edition"
+        | "event"
         | "external_reference"
-        | "feature file"
+        | "feature"
+        | "file"
         | "group"
         | "human_remains"
-        | "involvement"
         | "move"
         | "object_location"
         | "person"
@@ -1044,52 +866,62 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         | "reference_system"
         | "source"
         | "source_translation"
-        | "stratigraphic_unit",
+        | "stratigraphic_unit"
+        | "type"
+        | "type_anthropology",
       query?: {
-        /** Integer of entities returned per page. 0 means no limit is set. Default is 20. */
-        limit?: number;
-        /** The result will be sorted by the given column */
-        column?:
-          | "id"
-          | "classCode"
-          | "name"
-          | "description"
-          | "created"
-          | "modified"
-          | "systemClass"
-          | "beginFrom"
-          | "beginTo"
-          | "endFrom"
-          | "endTo";
-        /** Result will be sorted asc/desc (default column is name) */
-        sort?: "asc" | "desc";
-        /** Search request with AND/OR logic. Confer https://redmine.craws.net/projects/uni/wiki/API_03#Search */
-        search?: string;
-        /** List of results start with given ID */
-        first?: number;
-        /** List of results start with entity after given ID */
-        last?: number;
-        /** Select which key should be shown. If 'not' is used, no other keys will be shown */
-        show?: "when" | "types" | "relations" | "names" | "links" | "geometry" | "depictions" | "not";
-        /**
-         * Select which relations are shown
-         * @example P2
-         */
-        relation_type?: string;
-        /** Returns a integer which represents the total count of the result */
-        count?: boolean;
-        /** Triggers the file download of the given request */
+        /** Download results */
         download?: boolean;
-        /** Select to which output format is prefered */
-        format?: "linked_places" | "geojson";
-        /** Result will be downloaded in the given format. */
+        /** Just show count of how many entities would the result give back */
+        count?: boolean;
+        /** Select which keys should not be displayed. This can improve performance */
+        show?: (
+          | "when"
+          | "types"
+          | "relations"
+          | "names"
+          | "links"
+          | "geometry"
+          | "depictions"
+          | "geonames"
+          | "description"
+          | "none"
+        )[];
+        /**
+         * Choose the format for the results.
+         * @example lp
+         */
+        format?: "lp" | "geojson" | "geojson-v2" | "pretty-xml" | "n3" | "turtle" | "nt" | "xml";
+        /** Export the entities into either a simple CSV representation or a zip file of CSV's especially designed for network analyses. */
         export?: "csv" | "csvNetwork";
-        /** Jump to given page */
+        /**
+         * Choose one column to sort the results by. Default value is name.
+         * @example name
+         */
+        column?: "id" | "name" | "cidoc_class" | "system_class" | "begin_from" | "begin_to" | "end_from" | "end_to";
+        /**
+         * Sorting result ascending or descending of the given column. Default value is asc.
+         * @example asc
+         */
+        sort?: "asc" | "desc";
+        /** Search query for specific results. */
+        search?: string[];
+        /** Begin results at the given entity id. */
+        first?: number;
+        /** Begin results after the given entity id. */
+        last?: number;
+        /** Jump to page number. */
         page?: number;
+        /** Limits the entities displayed. Influences the performance of the request. Default value is 20. 0 means all available entities will be displayed. */
+        limit?: number;
+        /** Show only entities with the given type id. */
+        type_id?: number[];
+        /** Displays only connections connected by the selected CIDOC CRM code. */
+        relation_type?: string[];
       },
       params: RequestParams = {},
     ) =>
-      this.request<InlineResponse200, void>({
+      this.request<EntitiesOutputModel, void>({
         path: `/system_class/${systemClass}`,
         method: "GET",
         query: query,
@@ -1097,41 +929,228 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         ...params,
       }),
   };
-  systemClassCount = {
+  viewClass = {
     /**
-     * No description
+     * @description Retrieves a list of entities based on their OpenAtlas menu items.
      *
-     * @tags Content
-     * @name SystemClassCountList
-     * @summary System Class Count endpoint
-     * @request GET:/system_class_count/
+     * @tags Entities Endpoint
+     * @name GetByViewClass
+     * @request GET:/view_class/{view_class}
      */
-    systemClassCountList: (params: RequestParams = {}) =>
-      this.request<SystemClassCountModel, void>({
-        path: `/system_class_count/`,
+    getByViewClass: (
+      viewClass:
+        | "all"
+        | "actor"
+        | "artifact"
+        | "event"
+        | "place"
+        | "reference"
+        | "source"
+        | "type"
+        | "file"
+        | "source_translation"
+        | "reference_system",
+      query?: {
+        /** Download results */
+        download?: boolean;
+        /** Just show count of how many entities would the result give back */
+        count?: boolean;
+        /** Select which keys should not be displayed. This can improve performance */
+        show?: (
+          | "when"
+          | "types"
+          | "relations"
+          | "names"
+          | "links"
+          | "geometry"
+          | "depictions"
+          | "geonames"
+          | "description"
+          | "none"
+        )[];
+        /**
+         * Choose the format for the results.
+         * @example lp
+         */
+        format?: "lp" | "geojson" | "geojson-v2" | "pretty-xml" | "n3" | "turtle" | "nt" | "xml";
+        /** Export the entities into either a simple CSV representation or a zip file of CSV's especially designed for network analyses. */
+        export?: "csv" | "csvNetwork";
+        /**
+         * Choose one column to sort the results by. Default value is name.
+         * @example name
+         */
+        column?: "id" | "name" | "cidoc_class" | "system_class" | "begin_from" | "begin_to" | "end_from" | "end_to";
+        /**
+         * Sorting result ascending or descending of the given column. Default value is asc.
+         * @example asc
+         */
+        sort?: "asc" | "desc";
+        /** Search query for specific results. */
+        search?: string[];
+        /** Begin results at the given entity id. */
+        first?: number;
+        /** Begin results after the given entity id. */
+        last?: number;
+        /** Jump to page number. */
+        page?: number;
+        /** Limits the entities displayed. Influences the performance of the request. Default value is 20. 0 means all available entities will be displayed. */
+        limit?: number;
+        /** Show only entities with the given type id. */
+        type_id?: number[];
+        /** Displays only connections connected by the selected CIDOC CRM code. */
+        relation_type?: string[];
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<EntitiesOutputModel, void>({
+        path: `/view_class/${viewClass}`,
         method: "GET",
+        query: query,
         format: "json",
         ...params,
       }),
   };
-  typeByViewClass = {
+  cidocClass = {
     /**
-     * @description Retrieves a json list of all types sorted by view class
+     * @description Retrieve a list of entities, based on their CIDOC CRM class code.
      *
-     * @tags Nodes
-     * @name TypeByViewClassList
-     * @summary Node endpoint
-     * @request GET:/type_by_view_class/
+     * @tags Entities Endpoint
+     * @name GetByCidocClass
+     * @request GET:/cidoc_class/{cidoc_class}
      */
-    typeByViewClassList: (
+    getByCidocClass: (
+      cidocClass:
+        | "E6"
+        | "E7"
+        | "E8"
+        | "E9"
+        | "E12"
+        | "E18"
+        | "E20"
+        | "E21"
+        | "E22"
+        | "E31"
+        | "E32"
+        | "E33"
+        | "E41"
+        | "E53"
+        | "E54"
+        | "E55"
+        | "E74",
       query?: {
-        /** Triggers the file download of the given request */
+        /** Download results */
         download?: boolean;
+        /** Just show count of how many entities would the result give back */
+        count?: boolean;
+        /** Select which keys should not be displayed. This can improve performance */
+        show?: (
+          | "when"
+          | "types"
+          | "relations"
+          | "names"
+          | "links"
+          | "geometry"
+          | "depictions"
+          | "geonames"
+          | "description"
+          | "none"
+        )[];
+        /**
+         * Choose the format for the results.
+         * @example lp
+         */
+        format?: "lp" | "geojson" | "geojson-v2" | "pretty-xml" | "n3" | "turtle" | "nt" | "xml";
+        /** Export the entities into either a simple CSV representation or a zip file of CSV's especially designed for network analyses. */
+        export?: "csv" | "csvNetwork";
+        /**
+         * Choose one column to sort the results by. Default value is name.
+         * @example name
+         */
+        column?: "id" | "name" | "cidoc_class" | "system_class" | "begin_from" | "begin_to" | "end_from" | "end_to";
+        /**
+         * Sorting result ascending or descending of the given column. Default value is asc.
+         * @example asc
+         */
+        sort?: "asc" | "desc";
+        /** Search query for specific results. */
+        search?: string[];
+        /** Begin results at the given entity id. */
+        first?: number;
+        /** Begin results after the given entity id. */
+        last?: number;
+        /** Jump to page number. */
+        page?: number;
+        /** Limits the entities displayed. Influences the performance of the request. Default value is 20. 0 means all available entities will be displayed. */
+        limit?: number;
+        /** Show only entities with the given type id. */
+        type_id?: number[];
+        /** Displays only connections connected by the selected CIDOC CRM code. */
+        relation_type?: string[];
       },
       params: RequestParams = {},
     ) =>
-      this.request<TypesByViewClassModel, void>({
-        path: `/type_by_view_class/`,
+      this.request<EntitiesOutputModel, void>({
+        path: `/cidoc_class/${cidocClass}`,
+        method: "GET",
+        query: query,
+        format: "json",
+        ...params,
+      }),
+  };
+  latest = {
+    /**
+     * @description Retrieve the last entered entities. n represents the amount of entities retrieved (between 1 and 100). The pagination information is always null.
+     *
+     * @tags Entities Endpoint
+     * @name GetLatest
+     * @request GET:/latest/{limit}
+     */
+    getLatest: (
+      limit: number,
+      query?: {
+        /** Download results */
+        download?: boolean;
+        /** Select which keys should not be displayed. This can improve performance */
+        show?: (
+          | "when"
+          | "types"
+          | "relations"
+          | "names"
+          | "links"
+          | "geometry"
+          | "depictions"
+          | "geonames"
+          | "description"
+          | "none"
+        )[];
+        /**
+         * Choose the format for the results.
+         * @example lp
+         */
+        format?: "lp" | "geojson" | "geojson-v2" | "pretty-xml" | "n3" | "turtle" | "nt" | "xml";
+        /** Export the entities into either a simple CSV representation or a zip file of CSV's especially designed for network analyses. */
+        export?: "csv" | "csvNetwork";
+        /**
+         * Choose one column to sort the results by. Default value is name.
+         * @example name
+         */
+        column?: "id" | "name" | "cidoc_class" | "system_class" | "begin_from" | "begin_to" | "end_from" | "end_to";
+        /**
+         * Sorting result ascending or descending of the given column. Default value is asc.
+         * @example asc
+         */
+        sort?: "asc" | "desc";
+        /** Search query for specific results. */
+        search?: string[];
+        /** Show only entities with the given type id. */
+        type_id?: number[];
+        /** Displays only connections connected by the selected CIDOC CRM code. */
+        relation_type?: string[];
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<EntitiesOutputModel, void>({
+        path: `/latest/${limit}`,
         method: "GET",
         query: query,
         format: "json",
@@ -1140,63 +1159,68 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
   };
   typeEntities = {
     /**
-     * @description Retrieves a json with a list of entities based on their OpenAtlas type. A possible *id* can be obtained by the *type_tree* or *node_overview* endpoint. The result can also be filtered, ordered and manipulated through different parameters. By default results are orderd alphabetically and 20 entities are shown.
+     * @description Used to retrieve a list of entities, based on their OpenAtlas type ID. For an endpoint that lists all available types click confer Types Endpoints
      *
-     * @tags Entities
-     * @name TypeEntitiesDetail
-     * @summary Type Entities Endpoint
-     * @request GET:/type_entities/{id_}
+     * @tags Entities Endpoint
+     * @name GetTypeEntities
+     * @request GET:/type_entities/{entityId}
      */
-    typeEntitiesDetail: (
-      id: number,
+    getTypeEntities: (
+      entityId: number,
       query?: {
-        /** Integer of entities returned per page. 0 means no limit is set. Default is 20. */
-        limit?: number;
-        /** The result will be sorted by the given column */
-        column?:
-          | "id"
-          | "classCode"
-          | "name"
-          | "description"
-          | "created"
-          | "modified"
-          | "systemClass"
-          | "beginFrom"
-          | "beginTo"
-          | "endFrom"
-          | "endTo";
-        /** Result will be sorted asc/desc (default column is name) */
-        sort?: "asc" | "desc";
-        /** Search request with AND/OR logic. Confer https://redmine.craws.net/projects/uni/wiki/API_03#Search */
-        search?: string;
-        /** List of results start with given ID */
-        first?: number;
-        /** List of results start with entity after given ID */
-        last?: number;
-        /** Select which key should be shown. If 'not' is used, no other keys will be shown */
-        show?: "when" | "types" | "relations" | "names" | "links" | "geometry" | "depictions" | "not";
-        /**
-         * Select which relations are shown
-         * @example P2
-         */
-        relation_type?: string;
-        /** The output will be filtered by the type_id. Only entities with this type ids will be display. The relation is in logical OR. */
-        type_id?: number;
-        /** Returns a integer which represents the total count of the result */
-        count?: boolean;
-        /** Triggers the file download of the given request */
+        /** Download results */
         download?: boolean;
-        /** Select to which output format is prefered */
-        format?: "linked_places" | "geojson";
-        /** Result will be downloaded in the given format. */
+        /** Just show count of how many entities would the result give back */
+        count?: boolean;
+        /** Select which keys should not be displayed. This can improve performance */
+        show?: (
+          | "when"
+          | "types"
+          | "relations"
+          | "names"
+          | "links"
+          | "geometry"
+          | "depictions"
+          | "geonames"
+          | "description"
+          | "none"
+        )[];
+        /**
+         * Choose the format for the results.
+         * @example lp
+         */
+        format?: "lp" | "geojson" | "geojson-v2" | "pretty-xml" | "n3" | "turtle" | "nt" | "xml";
+        /** Export the entities into either a simple CSV representation or a zip file of CSV's especially designed for network analyses. */
         export?: "csv" | "csvNetwork";
-        /** Jump to given page */
+        /**
+         * Choose one column to sort the results by. Default value is name.
+         * @example name
+         */
+        column?: "id" | "name" | "cidoc_class" | "system_class" | "begin_from" | "begin_to" | "end_from" | "end_to";
+        /**
+         * Sorting result ascending or descending of the given column. Default value is asc.
+         * @example asc
+         */
+        sort?: "asc" | "desc";
+        /** Search query for specific results. */
+        search?: string[];
+        /** Begin results at the given entity id. */
+        first?: number;
+        /** Begin results after the given entity id. */
+        last?: number;
+        /** Jump to page number. */
         page?: number;
+        /** Limits the entities displayed. Influences the performance of the request. Default value is 20. 0 means all available entities will be displayed. */
+        limit?: number;
+        /** Show only entities with the given type id. */
+        type_id?: number[];
+        /** Displays only connections connected by the selected CIDOC CRM code. */
+        relation_type?: string[];
       },
       params: RequestParams = {},
     ) =>
-      this.request<InlineResponse200, void>({
-        path: `/type_entities/${id}`,
+      this.request<EntitiesOutputModel, void>({
+        path: `/type_entities/${entityId}`,
         method: "GET",
         query: query,
         format: "json",
@@ -1205,63 +1229,138 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
   };
   typeEntitiesAll = {
     /**
-     * @description Retrieves a json with a list of entities based on their OpenAtlas type. This endpoint also includes all entities, which are connected to an subtype. A possible *id* can be obtained by the *type_tree* or *node_overview* endpoint. The result can also be filtered, ordered and manipulated through different parameters. By default results are orderd alphabetically and 20 entities are shown.
+     * @description Used to retrieve a list of entities, based on their OpenAtlas type ID including all connected subtypes.. For an endpoint that lists all available types click confer Type Endpoints
      *
-     * @tags Entities
-     * @name TypeEntitiesAllDetail
-     * @summary Type Entities All Endpoint
-     * @request GET:/type_entities_all/{id_}
+     * @tags Entities Endpoint
+     * @name GetTypeEntitiesAll
+     * @request GET:/type_entities_all/{entityId}
      */
-    typeEntitiesAllDetail: (
-      id: number,
+    getTypeEntitiesAll: (
+      entityId: number,
       query?: {
-        /** Integer of entities returned per page. 0 means no limit is set. Default is 20. */
-        limit?: number;
-        /** The result will be sorted by the given column */
-        column?:
-          | "id"
-          | "classCode"
-          | "name"
-          | "description"
-          | "created"
-          | "modified"
-          | "systemClass"
-          | "beginFrom"
-          | "beginTo"
-          | "endFrom"
-          | "endTo";
-        /** Result will be sorted asc/desc (default column is name) */
-        sort?: "asc" | "desc";
-        /** Search request with AND/OR logic. Confer https://redmine.craws.net/projects/uni/wiki/API_03#Search */
-        search?: string;
-        /** List of results start with given ID */
-        first?: number;
-        /** List of results start with entity after given ID */
-        last?: number;
-        /** Select which key should be shown. If 'not' is used, no other keys will be shown */
-        show?: "when" | "types" | "relations" | "names" | "links" | "geometry" | "depictions" | "not";
-        /**
-         * Select which relations are shown
-         * @example P2
-         */
-        relation_type?: string;
-        /** The output will be filtered by the type_id. Only entities with this type ids will be display. The relation is in logical OR. */
-        type_id?: number;
-        /** Returns a integer which represents the total count of the result */
-        count?: boolean;
-        /** Triggers the file download of the given request */
+        /** Download results */
         download?: boolean;
-        /** Select to which output format is prefered */
-        format?: "linked_places" | "geojson";
-        /** Result will be downloaded in the given format. */
+        /** Just show count of how many entities would the result give back */
+        count?: boolean;
+        /** Select which keys should not be displayed. This can improve performance */
+        show?: (
+          | "when"
+          | "types"
+          | "relations"
+          | "names"
+          | "links"
+          | "geometry"
+          | "depictions"
+          | "geonames"
+          | "description"
+          | "none"
+        )[];
+        /**
+         * Choose the format for the results.
+         * @example lp
+         */
+        format?: "lp" | "geojson" | "geojson-v2" | "pretty-xml" | "n3" | "turtle" | "nt" | "xml";
+        /** Export the entities into either a simple CSV representation or a zip file of CSV's especially designed for network analyses. */
         export?: "csv" | "csvNetwork";
-        /** Jump to given page */
+        /**
+         * Choose one column to sort the results by. Default value is name.
+         * @example name
+         */
+        column?: "id" | "name" | "cidoc_class" | "system_class" | "begin_from" | "begin_to" | "end_from" | "end_to";
+        /**
+         * Sorting result ascending or descending of the given column. Default value is asc.
+         * @example asc
+         */
+        sort?: "asc" | "desc";
+        /** Search query for specific results. */
+        search?: string[];
+        /** Begin results at the given entity id. */
+        first?: number;
+        /** Begin results after the given entity id. */
+        last?: number;
+        /** Jump to page number. */
         page?: number;
+        /** Limits the entities displayed. Influences the performance of the request. Default value is 20. 0 means all available entities will be displayed. */
+        limit?: number;
+        /** Show only entities with the given type id. */
+        type_id?: number[];
+        /** Displays only connections connected by the selected CIDOC CRM code. */
+        relation_type?: string[];
       },
       params: RequestParams = {},
     ) =>
-      this.request<InlineResponse200, void>({
-        path: `/type_entities_all/${id}`,
+      this.request<EntitiesOutputModel, void>({
+        path: `/type_entities_all/${entityId}`,
+        method: "GET",
+        query: query,
+        format: "json",
+        ...params,
+      }),
+  };
+  entitiesLinkedToEntity = {
+    /**
+     * @description Retrieves a list of entities linked to the entity with the stated ID.
+     *
+     * @tags Entities Endpoint
+     * @name GetEntitiesLinkedToEntity
+     * @request GET:/entities_linked_to_entity/{entityId}
+     */
+    getEntitiesLinkedToEntity: (
+      entityId: number,
+      query?: {
+        /** Download results */
+        download?: boolean;
+        /** Just show count of how many entities would the result give back */
+        count?: boolean;
+        /** Select which keys should not be displayed. This can improve performance */
+        show?: (
+          | "when"
+          | "types"
+          | "relations"
+          | "names"
+          | "links"
+          | "geometry"
+          | "depictions"
+          | "geonames"
+          | "description"
+          | "none"
+        )[];
+        /**
+         * Choose the format for the results.
+         * @example lp
+         */
+        format?: "lp" | "geojson" | "geojson-v2" | "pretty-xml" | "n3" | "turtle" | "nt" | "xml";
+        /** Export the entities into either a simple CSV representation or a zip file of CSV's especially designed for network analyses. */
+        export?: "csv" | "csvNetwork";
+        /**
+         * Choose one column to sort the results by. Default value is name.
+         * @example name
+         */
+        column?: "id" | "name" | "cidoc_class" | "system_class" | "begin_from" | "begin_to" | "end_from" | "end_to";
+        /**
+         * Sorting result ascending or descending of the given column. Default value is asc.
+         * @example asc
+         */
+        sort?: "asc" | "desc";
+        /** Search query for specific results. */
+        search?: string[];
+        /** Begin results at the given entity id. */
+        first?: number;
+        /** Begin results after the given entity id. */
+        last?: number;
+        /** Jump to page number. */
+        page?: number;
+        /** Limits the entities displayed. Influences the performance of the request. Default value is 20. 0 means all available entities will be displayed. */
+        limit?: number;
+        /** Show only entities with the given type id. */
+        type_id?: number[];
+        /** Displays only connections connected by the selected CIDOC CRM code. */
+        relation_type?: string[];
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<EntitiesOutputModel, void>({
+        path: `/entities_linked_to_entity/${entityId}`,
         method: "GET",
         query: query,
         format: "json",
@@ -1270,16 +1369,15 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
   };
   typeOverview = {
     /**
-     * @description Retrieves a json list of all types
+     * @description Retrieves a list of all OpenAtlas types sorted by custom, places, standard and value
      *
-     * @tags Nodes
-     * @name TypeOverviewList
-     * @summary Node endpoint
+     * @tags Type Endpoints
+     * @name GetTypeOverview
      * @request GET:/type_overview/
      */
-    typeOverviewList: (
+    getTypeOverview: (
       query?: {
-        /** Triggers the file download of the given request */
+        /** Download results */
         download?: boolean;
       },
       params: RequestParams = {},
@@ -1294,16 +1392,15 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
   };
   typeTree = {
     /**
-     * @description Shows every *Type* in the OA instance, with its root and subs, so a tree can be build
+     * @description Retrieves a list of all OpenAtlas types, including their information sorted by their IDs
      *
-     * @tags Nodes
-     * @name TypeTreeList
-     * @summary Type Tree endpoint
+     * @tags Type Endpoints
+     * @name GetTypeTree
      * @request GET:/type_tree/
      */
-    typeTreeList: (
+    getTypeTree: (
       query?: {
-        /** Triggers the file download of the given request */
+        /** Download results */
         download?: boolean;
       },
       params: RequestParams = {},
@@ -1316,79 +1413,183 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         ...params,
       }),
   };
-  viewClass = {
+  typeByViewClass = {
     /**
-     * @description Retrieves a json with a list of entities based on their OpenAtlas view class. Available categories are **actor**, **event**, **place**, **source**, **reference**, **object**. The result can also be filtered, ordered and manipulated through different parameters. By default results are orderd alphabetically and 20 entities are shown.
+     * @description Retrieves a list of all system types
      *
-     * @tags Entities
-     * @name ViewClassDetail
-     * @summary View Class Endpoint
-     * @request GET:/view_class/{view_class}
+     * @tags Type Endpoints
+     * @name GetTypeByViewClass
+     * @request GET:/type_by_view_class/
      */
-    viewClassDetail: (
-      viewClass:
-        | "all"
-        | "actor"
-        | "artifact"
-        | "file"
-        | "event"
-        | "place"
-        | "reference"
-        | "reference_system"
-        | "source"
-        | "type"
-        | "source_translation",
+    getTypeByViewClass: (
       query?: {
-        /** Integer of entities returned per page. 0 means no limit is set. Default is 20. */
-        limit?: number;
-        /** The result will be sorted by the given column */
-        column?:
-          | "id"
-          | "classCode"
-          | "name"
-          | "description"
-          | "created"
-          | "modified"
-          | "systemClass"
-          | "beginFrom"
-          | "beginTo"
-          | "endFrom"
-          | "endTo";
-        /** Result will be sorted asc/desc (default column is name) */
-        sort?: "asc" | "desc";
-        /** Search request with AND/OR logic. Confer https://redmine.craws.net/projects/uni/wiki/API_03#Search */
-        search?: string;
-        /** List of results start with given ID */
-        first?: number;
-        /** List of results start with entity after given ID */
-        last?: number;
-        /** Select which key should be shown. If 'not' is used, no other keys will be shown */
-        show?: "when" | "types" | "relations" | "names" | "links" | "geometry" | "depictions" | "not";
-        /**
-         * Select which relations are shown
-         * @example P2
-         */
-        relation_type?: string;
-        /** The output will be filtered by the type_id. Only entities with this type ids will be display. The relation is in logical OR. */
-        type_id?: number;
-        /** Returns a integer which represents the total count of the result */
-        count?: boolean;
-        /** Triggers the file download of the given request */
+        /** Download results */
         download?: boolean;
-        /** Select to which output format is prefered */
-        format?: "linked_places" | "geojson";
-        /** Result will be downloaded in the given format. */
-        export?: "csv" | "csvNetwork";
-        /** Jump to given page */
-        page?: number;
       },
       params: RequestParams = {},
     ) =>
-      this.request<InlineResponse200, void>({
-        path: `/view_class/${viewClass}`,
+      this.request<TypesByViewClassModel, void>({
+        path: `/type_by_view_class/`,
         method: "GET",
         query: query,
         format: "json",
+        ...params,
+      }),
+  };
+  classes = {
+    /**
+     * @description Retrieves a list of all available classes, their CIDOC CRM mapping, their view, which icon can be used, if alias and references systems are allowed and which standard type it has.
+     *
+     * @tags Administrative Endpoints
+     * @name ClassMapping
+     * @request GET:/classes/
+     */
+    classMapping: (params: RequestParams = {}) =>
+      this.request<ClassesModel, void>({
+        path: `/classes/`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+  };
+  content = {
+    /**
+     * @description Retrieves a detailed list of information on available frontend content in an OpenAtlas instance - intro, legal notice, contact, and size of processed image
+     *
+     * @tags Administrative Endpoints
+     * @name GetContent
+     * @request GET:/content/
+     */
+    getContent: (
+      query?: {
+        /**
+         * Choose language
+         * @example de
+         */
+        lang?: "en" | "de";
+        /** Download results */
+        download?: boolean;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<ContentModel, void>({
+        path: `/content/`,
+        method: "GET",
+        query: query,
+        format: "json",
+        ...params,
+      }),
+  };
+  systemClassCount = {
+    /**
+     * @description Retrieves a detailed list of the numbers of entries connected to a system class
+     *
+     * @tags Administrative Endpoints
+     * @name SystemClassCount
+     * @request GET:/system_class_count/
+     */
+    systemClassCount: (params: RequestParams = {}) =>
+      this.request<SystemClassCountModel, void>({
+        path: `/system_class_count/`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+  };
+  subunits = {
+    /**
+     * @description Displays all subunits of a place in a special format as used by the THANADOS project. Can only be used for “places”. As format only XML can be chosen
+     *
+     * @tags Special Endpoints
+     * @name GetSubunits
+     * @request GET:/subunits/
+     */
+    getSubunits: (
+      query?: {
+        /**
+         * Choose the format for the results.
+         * @example lp
+         */
+        format?: "lp" | "geojson" | "geojson-v2" | "pretty-xml" | "n3" | "turtle" | "nt" | "xml";
+        /** Download results */
+        download?: boolean;
+        /** Just show count of how many entities would the result give back */
+        count?: boolean;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<SubunitsModel, void>({
+        path: `/subunits/`,
+        method: "GET",
+        query: query,
+        format: "json",
+        ...params,
+      }),
+  };
+  geometricEntities = {
+    /**
+     * @description Retrieve a GeoJSON of all chosen geometries in an OpenAtlas instance
+     *
+     * @tags Special Endpoints
+     * @name GetGeometricEntities
+     * @request GET:/geometric_entities/
+     */
+    getGeometricEntities: (
+      query?: {
+        /** Filters which geometries will be received. Default is gisAll */
+        geometry?: (
+          | "gisAll"
+          | "gisPointAll"
+          | "gisPointSupers"
+          | "gisPointSubs"
+          | "gisPointSibling"
+          | "gisLineAll"
+          | "gisPolygonAll"
+        )[];
+        /** Download results */
+        download?: boolean;
+        /** Just show count of how many entities would the result give back */
+        count?: boolean;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<GeometricEntitiesModel, void>({
+        path: `/geometric_entities/`,
+        method: "GET",
+        query: query,
+        format: "json",
+        ...params,
+      }),
+  };
+  exportDatabase = {
+    /**
+     * @description Downloads all information in an OpenAtlas instance as CSV, XML, or JSON.
+     *
+     * @tags Special Endpoints
+     * @name ExportDatabase
+     * @request GET:/export_database/{format}
+     */
+    exportDatabase: (format: "json" | "csv" | "xml", params: RequestParams = {}) =>
+      this.request<File, void>({
+        path: `/export_database/${format}`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+  };
+  display = {
+    /**
+     * @description Retrieves the respective image if it has a licence.
+     *
+     * @tags Image Endpoints
+     * @name DisplayImage
+     * @request GET:/display/{filename}
+     */
+    displayImage: (filename: string, params: RequestParams = {}) =>
+      this.request<File, void>({
+        path: `/display/${filename}`,
+        method: "GET",
+        format: "blob",
         ...params,
       }),
   };

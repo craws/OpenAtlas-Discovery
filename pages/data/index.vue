@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
-import headers from '../../assets/tableheaders.json'
+import headers from '../../assets/tableHeaders.json'
 import classes from '../../assets/classes.json'
 import { Query } from '~~/types/query'
 const { t } = useI18n()
 const { $api } = useNuxtApp()
 
-const itemsLength = computed(() => data?.value?.data.pagination.entities)
+const itemsLength = computed(() => data?.value?.pagination.entities)
 const options = reactive({ page: 1, itemsPerPage: 20, itemsLength })
 const search = ref<string[]>([])
 const query = computed(() => ({
@@ -15,11 +15,8 @@ const query = computed(() => ({
   limit: options.itemsPerPage,
   search: search.value
 }))
-
-const { data, pending, error, refresh } = await useAsyncData(() => $api.query.queryList(query.value))
-
+const { data, pending, error, refresh } = await useAsyncData(() => $api.query.getQuery(query.value))
 watch(() => options.page, () => refresh())
-
 onMounted(() => {
   refresh()
 })
@@ -42,7 +39,7 @@ useHead({
       height="calc(100vh - 150px)"
       density="compact"
       :headers="headers"
-      :items="data?.data?.results ?? []"
+      :items="data?.results ?? []"
       :options="options"
     >
       <template #features[0].systemClass="{ value }">

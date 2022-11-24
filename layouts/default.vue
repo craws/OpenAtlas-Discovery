@@ -1,10 +1,5 @@
 
 <script setup lang="ts">
-import CountryFlag from 'vue-country-flag-next'
-const flags = {
-  en: 'gb',
-  de: 'de'
-}
 </script>
 <template>
   <v-app>
@@ -61,12 +56,12 @@ const flags = {
                 {{ $t('global.basics.language') }}
               </p>
             </v-list-subheader>
-            <v-list-item densitiy="compact" @click="$i18n.locale = 'de'">
+            <v-list-item density="compact" @click="$i18n.locale = 'de'">
               <v-list-item-title class="text-body-2 text-capitalize px-2">
                 {{ $t('global.basics.de') }}
               </v-list-item-title>
             </v-list-item>
-            <v-list-item densitiy="compact" @click="$i18n.locale = 'en'">
+            <v-list-item density="compact" @click="$i18n.locale = 'en'">
               <v-list-item-title class="text-body-2 text-capitalize px-2">
                 {{ $t('global.basics.en') }}
               </v-list-item-title>

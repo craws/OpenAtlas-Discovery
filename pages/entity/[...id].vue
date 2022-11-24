@@ -45,11 +45,11 @@ const { t } = useI18n()
 const entityID = Number(route.params.id)
 const wasMounted = ref(false)
 
-const { data, pending, error, refresh } = await useAsyncData(() => $api.entity.entityDetail(entityID))
+const { data, pending, error, refresh } = await useAsyncData(() => $api.entity.getEntity(entityID))
 
 // Entity Variables
 
-const features = computed(() => data?.value?.data?.features ?? void 0)
+const features = computed(() => data?.value?.features ?? void 0)
 
 const title = computed(() => features?.value?.[0]?.properties?.title ?? t('global.basics.title'))
 

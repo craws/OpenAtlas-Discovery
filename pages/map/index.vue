@@ -1,17 +1,17 @@
 <script setup lang="ts">import { GeoJsonObject } from 'geojson'
 import { useI18n } from 'vue-i18n'
-import { Query } from '~~/types/query'
+import { Format, Query, ViewClasses } from '~~/types/query'
 const { t } = useI18n()
 
 const { $api } = useNuxtApp()
 
 const query = ref({
-  view_classes: ['actor', 'event', 'place', 'reference', 'source'],
+  view_classes: ['actor', 'event', 'place', 'reference', 'source'] as ViewClasses,
   limit: 0,
-  format: 'geojson',
+  format: 'geojson' as Format,
   search: undefined
 })
-const { data, pending, error, refresh } = await useAsyncData(() => $api.query.queryList(query.value))
+const { data, pending, error, refresh } = await useAsyncData(() => $api.query.getQuery(query.value))
 onMounted(() => {
   refresh()
 })
@@ -30,7 +30,7 @@ const featureContent = reactive<FeatureContent>({
   objectDescription: ''
 })
 
-const items = computed(() => data?.value?.data?.results?.[0].features || [])
+const items = computed(() => data?.value?.results?.[0].features || [])
 function handlePopup (e: L.LeafletMouseEvent) {
   featureContent.objectTitle = e?.target?.feature?.properties?.name ?? ''
   featureContent.objectDescription = e?.target?.feature?.properties?.description ?? ''
