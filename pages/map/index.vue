@@ -1,20 +1,20 @@
-<script setup lang="ts">import { Query } from '~~/types/query';
-import { GeoJsonObject } from "geojson";
-import { useI18n } from 'vue-i18n';
-const { t } = useI18n();
+<script setup lang="ts">import { GeoJsonObject } from 'geojson'
+import { useI18n } from 'vue-i18n'
+import { Query } from '~~/types/query'
+const { t } = useI18n()
 
-const { $api } = useNuxtApp();
+const { $api } = useNuxtApp()
 
 const query = ref({
-    view_classes: ["actor", "event", "place", "reference", "source"],
-    limit: 0,
-    format: 'geojson',
-    search: undefined
+  view_classes: ['actor', 'event', 'place', 'reference', 'source'],
+  limit: 0,
+  format: 'geojson',
+  search: undefined
 })
-const { data, pending, error, refresh } = await useAsyncData(() => $api.query.queryList(query.value));
+const { data, pending, error, refresh } = await useAsyncData(() => $api.query.queryList(query.value))
 onMounted(() => {
-    refresh();
-});
+  refresh()
+})
 
 interface FeatureContent {
     locationTitle: string
@@ -24,67 +24,73 @@ interface FeatureContent {
     id?: number
 }
 const featureContent = reactive<FeatureContent>({
-    locationTitle: '',
-    objectTitle: '',
-    locationDescription: '',
-    objectDescription: '',
-});
+  locationTitle: '',
+  objectTitle: '',
+  locationDescription: '',
+  objectDescription: ''
+})
 
 const items = computed(() => data?.value?.data?.results?.[0].features || [])
-function handlePopup(e: L.LeafletMouseEvent) {
-    featureContent.objectTitle = e?.target?.feature?.properties?.name ?? ''
-    featureContent.objectDescription = e?.target?.feature?.properties?.description ?? ''
-    featureContent.locationTitle = e?.target?.feature?.geometry?.title ?? ''
-    featureContent.locationDescription = e?.target?.feature?.geometry?.description ?? ''
-    featureContent.id = e?.target?.feature?.properties?.['@id'];
+function handlePopup (e: L.LeafletMouseEvent) {
+  featureContent.objectTitle = e?.target?.feature?.properties?.name ?? ''
+  featureContent.objectDescription = e?.target?.feature?.properties?.description ?? ''
+  featureContent.locationTitle = e?.target?.feature?.geometry?.title ?? ''
+  featureContent.locationDescription = e?.target?.feature?.geometry?.description ?? ''
+  featureContent.id = e?.target?.feature?.properties?.['@id']
 }
 
-function updateQuery(newQuery: Query) {
-    query.value.search = newQuery.search.map(x => JSON.stringify(x));
-    refresh();
+function updateQuery (newQuery: Query) {
+  query.value.search = newQuery.search.map(x => JSON.stringify(x))
+  refresh()
 }
 
 useHead({
-    title: t('global.basics.map')
+  title: t('global.basics.map')
 })
 </script>
 <template>
-    <div>
-        <div style="position:relative; overflow: hidden;">
-            <search-field class="search" :loading="pending" @search="updateQuery"></search-field>
-            <v-card width="300px" class="popup" :class="{ move: !featureContent.id }" position="absolute">
-                <v-btn @click="featureContent.id = undefined" class="close-btn" icon="mdi-close" variant="text"
-                    size="small" color="grey"></v-btn>
-                <v-card-subtitle class="mt-3">
-                    <div class="d-flex justify-space-between">
-                        <span>{{ featureContent.locationTitle }}</span>
+  <div>
+    <div style="position:relative; overflow: hidden;">
+      <search-field class="search" :loading="pending" @search="updateQuery" />
+      <v-card width="300px" class="popup" :class="{ move: !featureContent.id }" position="absolute">
+        <v-btn
+          class="close-btn"
+          icon="mdi-close"
+          variant="text"
+          size="small"
+          color="grey"
+          @click="featureContent.id = undefined"
+        />
+        <v-card-subtitle class="mt-3">
+          <div class="d-flex justify-space-between">
+            <span>{{ featureContent.locationTitle }}</span>
+          </div>
+        </v-card-subtitle>
+        <v-card-title class="pt-0">
+          <span class="text-wrap">
+            {{ featureContent.objectTitle }}
+          </span>
+        </v-card-title>
 
-                    </div>
-                </v-card-subtitle>
-                <v-card-title class="pt-0">
-                    <span class="text-wrap">
-                        {{ featureContent.objectTitle }}
-                    </span>
-
-                </v-card-title>
-
-                <v-card-text style="max-height:calc(100vh - 320px);white-space: pre-line" class="scroll">
-                    <div>
-                        <p v-if="!!featureContent.locationDescription">{{ featureContent.locationDescription }}</p>
-                        <p v-else>{{ featureContent.objectDescription }}</p>
-
-                    </div>
-                </v-card-text>
-                <v-card-actions>
-                    <v-btn :to="`/entity/${featureContent.id}`" variant="text">{{ $t('global.basics.more details') }}</v-btn>
-                </v-card-actions>
-            </v-card>
-            <data-map @item-clicked="handlePopup" :items="items as GeoJsonObject[]" style="height:calc(100vh - 64px);">
-            </data-map>
-
-        </div>
-
+        <v-card-text style="max-height:calc(100vh - 320px);white-space: pre-line" class="scroll">
+          <div>
+            <p v-if="!!featureContent.locationDescription">
+              {{ featureContent.locationDescription }}
+            </p>
+            <p v-else>
+              {{ featureContent.objectDescription }}
+            </p>
+          </div>
+        </v-card-text>
+        <v-card-actions>
+          <v-btn :to="`/entity/${featureContent.id}`" variant="text">
+            {{ $t('global.basics.more details') }}
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+      <data-map :items="items as GeoJsonObject[]" style="height:calc(100vh - 64px);" @item-clicked="handlePopup" />
     </div>
+  </div>
 </template>
 
 <style scoped>
