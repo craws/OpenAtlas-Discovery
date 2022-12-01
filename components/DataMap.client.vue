@@ -4,20 +4,20 @@ import L from "leaflet";
 import { GeometricEntry } from "~~/composables/api";
 
 const emit = defineEmits<{
-  (e: 'itemClicked', event: L.LeafletMouseEvent): void
+    (e: 'itemClicked', event: L.LeafletMouseEvent): void
 }>()
 
 const mapContainer = ref()
-let map:L.Map;
+let map: L.Map;
 let geoJsonLayer: L.GeoJSON<any>;
-onMounted( () => initMap())
+onMounted(() => initMap())
 
 
 const props = defineProps<{
     items: GeoJsonObject | GeoJsonObject[];
 }>();
 
-watch(() => props.items, () =>placeGeoJson(props.items), {immediate:true})
+watch(() => props.items, () => placeGeoJson(props.items), { immediate: true })
 
 
 async function initMap() {
@@ -28,15 +28,26 @@ async function initMap() {
         attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
     }).addTo(map);
     map.invalidateSize();
-    setTimeout(function(){ map.setView([40,30],6);},50);
+    setTimeout(function () { map.setView([40, 30], 6); }, 50);
     placeGeoJson(props.items)
 }
 
-function placeGeoJson(items: GeoJsonObject | GeoJsonObject[]){
-    if(!map) return;
-    if(!!geoJsonLayer) map.removeLayer(geoJsonLayer);
-    geoJsonLayer = L.geoJSON(items,{
-        onEachFeature: onEachFeature
+function placeGeoJson(items: GeoJsonObject | GeoJsonObject[]) {
+    if (!map) return;
+    if (!!geoJsonLayer) map.removeLayer(geoJsonLayer);
+    const myCircleStyle = {
+        color: "#000000",
+        weight: 1,
+        fillOpacity: 0.8,
+        fillColor: "#007bd9",
+        radius: 10,
+    };
+
+    geoJsonLayer = L.geoJSON(items, {
+        onEachFeature: onEachFeature,
+        pointToLayer: function (feature, latlng) {
+            return L.circleMarker(latlng, myCircleStyle);
+        },
     });
     geoJsonLayer.addTo(map);
 
@@ -49,7 +60,7 @@ function onEachFeature(feature: Feature<Geometry, any>, layer: L.Layer) {
     });
 }
 
-function handleClick(e:L.LeafletMouseEvent){
+function handleClick(e: L.LeafletMouseEvent) {
     emit('itemClicked', e);
 }
 
