@@ -34,14 +34,14 @@ npm run dev
 ```
 
 ## Production
-Build the application for production:
+To build the application for production run:
 
 ```bash
-npm run build
+npm run generate
 ```
+This will generate the folder `.output/public` which contains the files needed to serve the site on any webserver.
 
-Locally preview production build:
-
+For locally preview production build:
 ```bash
 npm run preview
 ```
