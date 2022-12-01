@@ -4,7 +4,17 @@ OpenAtlas Discovery is a presentation web application for
 [OpenAtlas](https://openatlas.eu) projects,
 which is still in early development.
 
-# Setup
+At the moment we are in the concept phase and this is just a basic start point
+for further development.
+* [Demo](https://frontend-demo-dev.openatlas.eu/)
+* [Wiki](https://redmine.openatlas.eu/projects/openatlas-discovery/wiki/Wiki)
+* [Issues](https://redmine.openatlas.eu/projects/openatlas-discovery/issues)
+
+# Content v2 Minimal Starter
+Look at the [Content documentation](https://content-v2.nuxtjs.org/) to learn
+more.
+
+## Setup
 Make sure to install the dependencies:
 
 ```bash
@@ -26,14 +36,14 @@ npm run dev
 ```
 
 ## Production
-Build the application for production:
+To build the application for production run:
 
 ```bash
-npm run build
+npm run generate
 ```
+This will generate the folder `.output/public` which contains the files needed to serve the site on any webserver.
 
-Locally preview production build:
-
+For locally preview production build:
 ```bash
 npm run preview
 ```

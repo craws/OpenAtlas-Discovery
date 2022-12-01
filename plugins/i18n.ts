@@ -5,11 +5,12 @@ import de from '../locales/de.json'
 export default defineNuxtPlugin(({ vueApp }) => {
   const i18n = createI18n({
     legacy: false,
+    allowComposition: true,
     globalInjection: true,
     locale: 'de',
     messages: {
         en,
-        de,  
+        de,
     }
   })
 
