@@ -1,22 +1,18 @@
 <script setup lang="ts">
+import { ParsedContent } from '@nuxt/content/dist/runtime/types'
 import { useI18n } from 'vue-i18n'
 import { useDisplay } from 'vuetify'
 const { smAndUp } = useDisplay()
 const t = useI18n()
-
-const data = await t.availableLocales.reduce(async (previousState, currentVal) => {
-  const { data: page } = await useAsyncData(`page-${currentVal}`, () => queryContent(`/${currentVal}`).findOne())
-  return {
-    ...previousState,
-    [currentVal]: page
-  }
-}, {})
+const data = reactive<{ [name: string]: ParsedContent }>({})
+t.availableLocales.forEach(async (locale) => {
+  data[locale] = await queryContent(`/${locale}`).findOne()
+})
 const logoHeight = computed(() => smAndUp.value ? '350px' : '250px')
 </script>
 <template>
   <v-sheet height="calc(100vh - 65px)" class=" landing-page d-flex justify-center pt-5">
     <v-container class="text-center">
-      {{ $i18n.availableLocales }}
       <ContentRenderer v-if="data[$i18n.locale]">
         <ContentRendererMarkdown :value="data[$i18n.locale]" />
       </ContentRenderer>
@@ -58,8 +54,8 @@ const logoHeight = computed(() => smAndUp.value ? '350px' : '250px')
   margin-inline: auto;
 }
 
-.landing-page img {
-  width: 80%;
+.landing-page img{
+  width:80%;
   max-height: v-bind(logoHeight);
   object-fit: contain;
 
