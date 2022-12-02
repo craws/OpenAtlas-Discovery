@@ -89,7 +89,7 @@ export interface TypeOverviewModel {
 }
 
 export interface TypeTreeModel {
-  type_tree?: TypeTreeModelTypeTree;
+  typeTree?: TypeTreeModelTypeTree;
 }
 
 export interface TypeViewClassChildren {

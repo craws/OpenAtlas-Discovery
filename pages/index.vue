@@ -13,6 +13,7 @@ const logoHeight = computed(() => smAndUp.value ? '350px' : '250px')
 <template>
   <v-sheet height="calc(100vh - 65px)" class=" landing-page d-flex justify-center pt-5">
     <v-container class="text-center">
+      <ChartType />
       <ContentRenderer v-if="data[$i18n.locale]">
         <ContentRendererMarkdown :value="data[$i18n.locale]" />
       </ContentRenderer>
