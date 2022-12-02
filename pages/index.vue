@@ -3,17 +3,22 @@ import { useI18n } from 'vue-i18n'
 import { useDisplay } from 'vuetify'
 const { smAndUp } = useDisplay()
 const t = useI18n()
-const { data, refresh } = await useAsyncData('page-data', () => queryContent(`/${t.locale.value}`).findOne())
 
-onMounted(() => refresh())
-watch(() => t.locale.value, () => refresh())
+const data = await t.availableLocales.reduce(async (previousState, currentVal) => {
+  const { data: page } = await useAsyncData(`page-${currentVal}`, () => queryContent(`/${currentVal}`).findOne())
+  return {
+    ...previousState,
+    [currentVal]: page
+  }
+}, {})
 const logoHeight = computed(() => smAndUp.value ? '350px' : '250px')
 </script>
 <template>
   <v-sheet height="calc(100vh - 65px)" class=" landing-page d-flex justify-center pt-5">
     <v-container class="text-center">
-      <ContentRenderer>
-        <ContentRendererMarkdown :value="data" />
+      {{ $i18n.availableLocales }}
+      <ContentRenderer v-if="data[$i18n.locale]">
+        <ContentRendererMarkdown :value="data[$i18n.locale]" />
       </ContentRenderer>
       <br>
       <v-row justify="center">
@@ -53,8 +58,8 @@ const logoHeight = computed(() => smAndUp.value ? '350px' : '250px')
   margin-inline: auto;
 }
 
-.landing-page img{
-  width:80%;
+.landing-page img {
+  width: 80%;
   max-height: v-bind(logoHeight);
   object-fit: contain;
 
