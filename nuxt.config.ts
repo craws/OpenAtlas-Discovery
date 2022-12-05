@@ -1,6 +1,6 @@
-import vuetify from 'vite-plugin-vuetify'
 import { resolve, dirname } from 'node:path'
 import { fileURLToPath } from 'url'
+import vuetify from 'vite-plugin-vuetify'
 import VueI18nVitePlugin from '@intlify/unplugin-vue-i18n/vite'
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
@@ -16,25 +16,25 @@ export default defineNuxtConfig({
     ]
   },
   modules: ['@nuxt/content',
-    async (options, nuxt) => {
+    async (_options, nuxt) => {
       nuxt.hooks.hook('vite:extendConfig',
         config => config?.plugins?.push(vuetify()))
-    },],
+    }],
   css: ['vuetify/styles',
     '@mdi/font/css/materialdesignicons.min.css',
     'leaflet/dist/leaflet.css'],
   build: {
-    transpile: ['vuetify'],
+    transpile: ['vuetify']
   },
   vite: {
     // @ts-ignore
     // curently this will lead to a type error, but hopefully will be fixed soon #justBetaThings
     ssr: {
 
-      noExternal: ['vuetify'], // add the vuetify vite plugin
+      noExternal: ['vuetify'] // add the vuetify vite plugin
     },
     define: {
-      'process.env.DEBUG': false,
+      'process.env.DEBUG': false
     },
     plugins: [
       VueI18nVitePlugin({
@@ -43,5 +43,5 @@ export default defineNuxtConfig({
         ]
       })
     ]
-  },
+  }
 })
