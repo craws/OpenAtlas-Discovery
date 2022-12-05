@@ -45,7 +45,7 @@ const { t } = useI18n()
 const entityID = Number(route.params.id)
 const wasMounted = ref(false)
 
-const { data, pending, error, refresh } = await useAsyncData(() => $api.entity.getEntity(entityID))
+const { data, pending, refresh } = await useAsyncData(() => $api.entity.getEntity(entityID))
 
 // Entity Variables
 
@@ -78,7 +78,7 @@ const relationsGroupedByType = computed(() => {
     }
     if (!typeExists) {
       relations.push({
-        relationType: element.relationType,
+        relationType: element.relationType ?? 'relationType',
         relations: [element]
       })
     }
