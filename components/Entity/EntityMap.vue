@@ -3,7 +3,7 @@
     class="mx-auto my-6"
     style="min-width: 400px; min-height: 400px; max-width: 1000px; max-height:750;"
   >
-    <data-map :items="props.geoData" style="min-width: 400px; min-height: 400px; max-width: 1000px; max-height:500;" />
+    <data-map :items="(props.geoData as GeoJsonObject)" style="min-width: 400px; min-height: 400px; max-width: 1000px; max-height:500;" />
     <v-card-actions justify="center">
       <v-spacer />
       <v-btn to="/map" prepend-icon="mdi-map-marker">
@@ -14,8 +14,8 @@
   </v-card>
 </template>
 <script lang="ts" setup>
-import { GeometricEntitiesModelGeometry } from '~~/composables/api'
+import { GeoJsonObject, GeometryCollection, LineString, Point, Polygon } from 'geojson'
 const props = defineProps<{
-    geoData: GeometricEntitiesModelGeometry;
+    geoData: Polygon | Point | LineString | GeometryCollection;
 }>()
 </script>

@@ -9,7 +9,7 @@ const query = ref({
   view_classes: ['actor', 'event', 'place', 'reference', 'source'] as ViewClasses,
   limit: 0,
   format: 'geojson' as Format,
-  search: undefined
+  search: undefined as string[] | undefined
 })
 const { data, pending, error, refresh } = await useAsyncData(() => $api.query.getQuery(query.value))
 onMounted(() => {
@@ -40,7 +40,7 @@ function handlePopup (e: L.LeafletMouseEvent) {
 }
 
 function updateQuery (newQuery: Query) {
-  query.value.search = newQuery.search.map(x => JSON.stringify(x))
+  query.value.search = newQuery.search?.map(x => JSON.stringify(x))
   refresh()
 }
 

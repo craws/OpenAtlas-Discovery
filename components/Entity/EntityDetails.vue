@@ -39,7 +39,6 @@ const detailsLists = computed(() => {
 
   if (props.types) {
     const detailItems: DetailItem[] = []
-
     props.types.forEach((type) => {
       detailItems.push({
         id: type.identifier?.substring(type.identifier?.lastIndexOf('/') + 1, type.identifier.length) ?? 'id',
@@ -55,26 +54,26 @@ const detailsLists = computed(() => {
   }
   if (props.relations) {
     props.relations.forEach((relationType) => {
-      const detailItems: DetailItem[] = []
-
       // We skip the Types Relation as we use the Type Property to get that info if present
-      if (!relationType.relationType.includes('crm:P2') && props.types) {
-        relationType.relations.forEach((relation) => {
-          detailItems.push({
-            id: relation.relationTo?.split('/').at(-1) ?? 'id',
-            label: relation.label ?? 'label'
-          })
-        })
-
+      if (!(relationType.relationType.includes('crm:P2') && props.types)) {
         detailLists.push({
           title: relationType.relationType.substring(relationType.relationType.indexOf(' '), relationType.relationType.length),
-          detailItems
+          detailItems: GetItemsFromRelation(relationType.relations)
         })
       }
     })
   }
   return detailLists
 })
+
+function GetItemsFromRelation (relations: LinkedPlacesModelRelations[]): DetailItem[] {
+  return relations.map((relation) => {
+    return {
+      id: relation.relationTo?.split('/').at(-1) ?? 'id',
+      label: relation.label ?? 'label'
+    }
+  })
+}
 
 const { name } = useDisplay()
 

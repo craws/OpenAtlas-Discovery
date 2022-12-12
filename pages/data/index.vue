@@ -1,14 +1,15 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n'
+import { ComputedRef } from 'vue'
 import headers from '../../assets/tableHeaders.json'
 import classes from '../../assets/classes.json'
 import { Query } from '~~/types/query'
 const { t } = useI18n()
 const { $api } = useNuxtApp()
 
-const itemsLength = computed(() => data?.value?.pagination.entities)
+const itemsLength: ComputedRef<number | undefined> = computed(() => data?.value?.pagination?.entities)
 const options = reactive({ page: 1, itemsPerPage: 20, itemsLength })
-const search = ref<string[]>([])
+const search = ref<string[] | undefined>([])
 const query = computed(() => ({
   view_classes: ['actor', 'event', 'place', 'reference', 'source'],
   page: options.page,
@@ -22,7 +23,7 @@ onMounted(() => {
 })
 
 function updateQuery (newQuery: Query) {
-  search.value = newQuery.search.map(x => JSON.stringify(x))
+  search.value = newQuery.search?.map(x => JSON.stringify(x))
   refresh()
 }
 

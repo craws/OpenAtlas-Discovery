@@ -3,11 +3,11 @@
     <div
       v-if="pending || !wasMounted"
       style="
-            width: 100%,
-            min-height: 100vh;
-            height: 100%;
-            display: flex;
-            justify-content: center "
+        width: 100%,
+        min-height: 100vh,
+        height: 100%,
+        display: flex,
+        justify-content: center "
     >
       <v-progress-circular indeterminate color="primary" />
     </div>
@@ -19,12 +19,12 @@
             :loading="pending"
             :descriptions="descriptions"
             :title="title"
-            :system-class="features[0]?.crmClass"
-            :when="features[0]?.when"
+            :system-class="features?.[0]?.crmClass"
+            :when="features?.[0]?.when"
           />
         </v-col>
         <v-col>
-          <entity-map v-if="features[0]?.geometry" class="mr-4" :geo-data="features[0]?.geometry" />
+          <entity-map v-if="features?.[0]?.geometry" class="mr-4" :geo-data="features[0]?.geometry" />
         </v-col>
       </v-row>
 
@@ -49,17 +49,19 @@ const { data, pending, refresh } = await useAsyncData(() => $api.entity.getEntit
 
 // Entity Variables
 
-const features = computed(() => data?.value?.features ?? void 0)
+const features = computed(() => data?.value?.features ?? undefined)
 
 const title = computed(() => features?.value?.[0]?.properties?.title ?? t('global.basics.title'))
 
 const descriptions = computed(() => features?.value?.[0]?.descriptions)
 
-const types = computed(() => features?.value[0]?.types)
+const types = computed(() => {
+  return features?.value?.[0]?.types
+})
 
 const relationsGroupedByType = computed(() => {
   if (!features?.value?.[0]?.relations) {
-    return null
+    return undefined
   }
   const relations: relationGroup[] = []
 
