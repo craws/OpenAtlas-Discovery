@@ -93,6 +93,9 @@ const relationsGroupedByType = computed(() => {
 
 onMounted(async () => {
   wasMounted.value = true
+  useHead({
+    title: t('global.basics.loading')
+  })
   await refresh()
   useHead({
     title: title.value

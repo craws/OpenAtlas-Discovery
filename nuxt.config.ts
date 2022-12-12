@@ -4,16 +4,20 @@ import vuetify from 'vite-plugin-vuetify'
 import VueI18nVitePlugin from '@intlify/unplugin-vue-i18n/vite'
 // https://v3.nuxtjs.org/api/configuration/nuxt.config
 export default defineNuxtConfig({
-  meta: {
-    title: 'OpenAtlas Discovery',
-    link: [
-      {
-        rel: 'icon',
-        type: 'image/svg+xml',
-        href: '/favicon.svg',
-        sizes: 'any'
-      }
-    ]
+  app: {
+    head: {
+      meta: [{
+        name: 'OpenAtlas Discovery'
+      }],
+      link: [
+        {
+          rel: 'icon',
+          type: 'image/svg+xml',
+          href: '/favicon.svg',
+          sizes: 'any'
+        }
+      ]
+    }
   },
   modules: ['@nuxt/content',
     async (_options, nuxt) => {

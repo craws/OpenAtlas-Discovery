@@ -11,7 +11,8 @@
       "unknown": "unknown",
       "data": "data",
       "de": "german",
-      "en": "english"
+      "en": "english",
+      "loading": "loading"
     },
     "entity": {
       "class": "class",
