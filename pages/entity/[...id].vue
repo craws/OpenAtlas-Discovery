@@ -11,7 +11,11 @@
     >
       <v-progress-circular indeterminate color="primary" />
     </div>
-    <v-card v-else class="mx-2 mt-4 mb-2 pb-2">
+    <v-card
+      v-else
+      class="mx-2 mt-4 mb-2 pb-2"
+      style="width: 100%"
+    >
       <v-row class="primary-background-light">
         <v-col cols="6">
           <EntityBasics

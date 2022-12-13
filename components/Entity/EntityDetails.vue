@@ -1,5 +1,5 @@
 <template>
-  <div class="mx-0 pt-4">
+  <div class="mx-0 pt-4 mb-1">
     <h3 class="pl-4">
       {{ $t('components.entity.details_header') }}
     </h3>
