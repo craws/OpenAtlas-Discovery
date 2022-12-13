@@ -5,7 +5,8 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "test": "vitest run --coverage"
+    "test": "vitest run --coverage",
+    "start": "nuxt start"
   },
   "devDependencies": {
     "@intlify/unplugin-vue-i18n": "^0.8.0",
