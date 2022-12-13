@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { Feature, GeoJsonObject, Geometry } from 'geojson'
-import L from 'leaflet'
+import * as L from 'leaflet'
 
-const emit = defineEmits<{
-    (e: 'itemClicked', event: L.LeafletMouseEvent): void
+const emit = defineEmits<{(e: 'itemClicked', event: L.LeafletMouseEvent): void
 }>()
 
 const mapContainer = ref()
