@@ -6,6 +6,7 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "test": "vitest run --coverage",
+    "test:watch": "vitest --reporter verbose --globals --coverage",
     "start": "nuxt start"
   },
   "devDependencies": {
