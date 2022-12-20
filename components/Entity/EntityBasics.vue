@@ -19,7 +19,8 @@
             </p>
           </div>
           <WhenDisplay
-            :loading="props.loading"
+            v-if="props?.when"
+            :loading="props.loading ?? undefined"
             :when="props.when"
           />
         </div>
@@ -34,11 +35,11 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { useI18n } from 'vue-i18n'
-import classes from '../../assets/classes.json'
-import type { LinkedPlacesModelDescriptions, LinkedPlacesModelWhen } from '~~/composables/api'
+import { useI18n } from 'vue-i18n';
+import classes from '../../assets/classes.json';
+import type { LinkedPlacesModelDescriptions, LinkedPlacesModelWhen } from '~~/composables/api';
 
-const { t } = useI18n()
+const { t } = useI18n();
 
 interface displayOptions {
 }
@@ -52,25 +53,25 @@ interface Props {
   displayOptions?: displayOptions
 }
 
-const props = defineProps<Props>()
+const props = defineProps<Props>();
 
 const classIcon = computed(() => {
   if (systemClassName.value === t('components.entity.class_missing')) {
-    return 'mdi-help'
+    return 'mdi-help';
   } else {
-    return (classes.find(x => x.crmClass === crmClass.value)?.icon) ?? 'mdi-help'
+    return (classes.find(x => x.crmClass === crmClass.value)?.icon) ?? 'mdi-help';
   }
-})
+});
 
-const crmClass = computed(() => props.systemClass?.substring(props.systemClass.indexOf(':') + 1, props.systemClass.indexOf(' ')))
+const crmClass = computed(() => props.systemClass?.substring(props.systemClass.indexOf(':') + 1, props.systemClass.indexOf(' ')));
 
 const systemClassName = computed(
   () => {
     if (props.systemClass) {
-      return classes.find(x => x.crmClass === crmClass.value)?.en
+      return classes.find(x => x.crmClass === crmClass.value)?.en;
     }
-    return t('components.entity.class_missing')
+    return t('components.entity.class_missing');
   }
-)
+);
 
 </script>

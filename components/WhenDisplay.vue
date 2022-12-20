@@ -15,11 +15,11 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { DateTimeFormatOptions } from '@intlify/core-base'
-import { useI18n } from 'vue-i18n'
-import type { LinkedPlacesModelWhenStart, LinkedPlacesModelWhen } from '~~/composables/api'
+import { DateTimeFormatOptions } from '@intlify/core-base';
+import { useI18n } from 'vue-i18n';
+import type { LinkedPlacesModelWhenStart, LinkedPlacesModelWhen } from '~~/composables/api';
 
-const { t } = useI18n()
+const { t } = useI18n();
 
 interface displayOptions {
   time: {
@@ -35,59 +35,59 @@ interface Props {
   displayOptions?: displayOptions
 }
 
-const props = defineProps<Props>()
+const props = defineProps<Props>();
 
 const start = computed(() => {
-  if (!props.when?.timespans) { return undefined }
-  const timespan = props.when?.timespans[0]
+  if (!props.when?.timespans) { return undefined; }
+  const timespan = props.when?.timespans[0];
   if (!timespan || !timespan.start) {
-    return t('global.basics.unknown')
+    return t('global.basics.unknown');
   }
-  const { earliest, latest } = getEarliestAndLatestDateFromTimeDetail(timespan.start)
+  const { earliest, latest } = getEarliestAndLatestDateFromTimeDetail(timespan.start);
 
-  return generateCombinedDateString(earliest, latest)
-})
+  return generateCombinedDateString(earliest, latest);
+});
 const end = computed(() => {
-  if (!props.when?.timespans) { return undefined }
-  const timespan = props?.when?.timespans[0]
+  if (!props.when?.timespans) { return undefined; }
+  const timespan = props?.when?.timespans[0];
   if (!timespan || !timespan.end) {
-    return t('global.basics.unknown')
+    return t('global.basics.unknown');
   }
 
-  const { earliest, latest } = getEarliestAndLatestDateFromTimeDetail(timespan.end)
+  const { earliest, latest } = getEarliestAndLatestDateFromTimeDetail(timespan.end);
 
-  return generateCombinedDateString(earliest, latest)
-})
+  return generateCombinedDateString(earliest, latest);
+});
 
 function getEarliestAndLatestDateFromTimeDetail (td: LinkedPlacesModelWhenStart) : {earliest?: string, latest?: string} {
-  const options: DateTimeFormatOptions = { year: 'numeric', month: '2-digit', day: 'numeric' }
+  const options: DateTimeFormatOptions = { year: 'numeric', month: '2-digit', day: 'numeric' };
   return {
     earliest: convertStringToDate(td.earliest)?.toLocaleString(undefined, options),
     latest: convertStringToDate(td.latest)?.toLocaleString(undefined, options)
-  }
+  };
 }
 
 function generateCombinedDateString (earliest?: string, latest?: string, seperator = '-'): string | null {
   if (earliest && latest) {
-    return earliest + ' ' + seperator + ' ' + latest
+    return earliest + ' ' + seperator + ' ' + latest;
   } else if (earliest) {
-    return earliest
+    return earliest;
   } else if (latest) {
-    return latest
+    return latest;
   }
 
-  return null
+  return null;
 }
 
 function convertStringToDate (dateStr?:string) : Date | null {
   if (!dateStr) {
-    return null
+    return null;
   }
 
-  const date = dateStr.split('T')[0].split('-')
-  const time = dateStr.split('T')[1].split(':')
+  const date = dateStr.split('T')[0].split('-');
+  const time = dateStr.split('T')[1].split(':');
 
-  return new Date(+date[0], +date[1], +date[2], +time[0], +time[1], +time[2])
+  return new Date(+date[0], +date[1], +date[2], +time[0], +time[1], +time[2]);
 }
 
 </script>
