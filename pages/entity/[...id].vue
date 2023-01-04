@@ -39,82 +39,82 @@
   </div>
 </template>
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n'
-import { relationGroup } from '~~/components/Entity/EntityDetails.vue'
+import { useI18n } from 'vue-i18n';
+import { relationGroup } from '~~/components/Entity/EntityDetails.vue';
 
-const { $api } = useNuxtApp()
-const route = useRoute()
-const { t } = useI18n()
+const { $api } = useNuxtApp();
+const route = useRoute();
+const { t } = useI18n();
 
-const entityID = Number(route.params.id)
-const wasMounted = ref(false)
+const entityID = Number(route.params.id);
+const wasMounted = ref(false);
 
-const { data, pending, refresh } = await useAsyncData(() => $api.entity.getEntity(entityID))
+const { data, pending, refresh } = await useAsyncData(() => $api.entity.getEntity(entityID));
 
 // Entity Variables
 
-const features = computed(() => data?.value?.features ?? undefined)
+const features = computed(() => data?.value?.features ?? undefined);
 
-const title = computed(() => features?.value?.[0]?.properties?.title ?? t('global.basics.title'))
+const title = computed(() => features?.value?.[0]?.properties?.title ?? t('global.basics.title'));
 
-const descriptions = computed(() => features?.value?.[0]?.descriptions)
+const descriptions = computed(() => features?.value?.[0]?.descriptions);
 
 const types = computed(() => {
-  return features?.value?.[0]?.types
-})
+  return features?.value?.[0]?.types;
+});
 
 const relationsGroupedByType = computed(() => {
   if (!features?.value?.[0]?.relations) {
-    return undefined
+    return undefined;
   }
-  const relations: relationGroup[] = []
+  const relations: relationGroup[] = [];
 
   for (let i = 0; i < features?.value?.[0]?.relations.length; i++) {
-    const element = features?.value?.[0]?.relations[i]
+    const element = features?.value?.[0]?.relations[i];
 
-    let typeExists = false
+    let typeExists = false;
     for (let i = 0; i < relations.length; i++) {
-      const type = relations[i]
+      const type = relations[i];
 
       if (type.relationType === element.relationType) {
-        type.relations.push(element)
-        typeExists = true
-        break
+        type.relations.push(element);
+        typeExists = true;
+        break;
       }
     }
     if (!typeExists) {
       relations.push({
         relationType: element.relationType ?? 'relationType',
         relations: [element]
-      })
+      });
     }
   }
 
-  return relations
-})
+  return relations;
+});
 
 // Basic Functions
 
 onMounted(async () => {
-  wasMounted.value = true
+  wasMounted.value = true;
   useHead({
     title: t('global.basics.loading')
-  })
-  await refresh()
+  });
+  await refresh();
   useHead({
     title: title.value
-  })
-})
+  });
+});
 
 // const watcherOnLoaded = watch(pending, () => {
 //     logBasicEntityInfo();
 // });
 
 function logBasicEntityInfo () {
-  console.log('Logging Basic entity info...')
-  console.log('ID: ', route.params.id)
-  console.log('Data: ', data?.value)
-  console.log('Done')
+  console.log('Logging Basic entity info...');
+  console.log('ID: ', route.params.id);
+  console.log('Data: ', data?.value);
+  console.log('Done');
 }
 
 </script>

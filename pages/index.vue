@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { ParsedContent } from '@nuxt/content/dist/runtime/types'
-import { useI18n } from 'vue-i18n'
-import { useDisplay } from 'vuetify'
-const { smAndUp } = useDisplay()
-const t = useI18n()
-const data = reactive<{ [name: string]: ParsedContent }>({})
+import { ParsedContent } from '@nuxt/content/dist/runtime/types';
+import { useI18n } from 'vue-i18n';
+import { useDisplay } from 'vuetify';
+const { smAndUp } = useDisplay();
+const t = useI18n();
+const data = reactive<{ [name: string]: ParsedContent }>({});
 t.availableLocales.forEach(async (locale) => {
-  data[locale] = await queryContent(`/${locale}`).findOne()
-})
-const logoHeight = computed(() => smAndUp.value ? '350px' : '250px')
+  data[locale] = await queryContent(`/${locale}`).findOne();
+});
+const logoHeight = computed(() => smAndUp.value ? '350px' : '250px');
 useHead({
   title: 'OpenAtlas Discovery'
-})
+});
 </script>
 <template>
   <v-sheet height="calc(100vh - 65px)" class=" landing-page d-flex justify-center pt-5">
