@@ -7,7 +7,9 @@
     "preview": "nuxt preview",
     "test": "vitest run --coverage",
     "test:watch": "vitest --reporter verbose --globals --coverage",
-    "start": "nuxt start"
+    "start": "nuxt start",
+    "lint-all": "eslint ./",
+    "lint-fix-all": "eslint ./ --fix"
   },
   "devDependencies": {
     "@intlify/unplugin-vue-i18n": "^0.8.0",
