@@ -1,20 +1,20 @@
-<script setup lang="ts">import { GeoJsonObject } from 'geojson'
-import { useI18n } from 'vue-i18n'
-import { Format, Query, ViewClasses } from '~~/types/query'
-const { t } = useI18n()
+<script setup lang="ts">import { GeoJsonObject } from 'geojson';
+import { useI18n } from 'vue-i18n';
+import { Format, Query, ViewClasses } from '~~/types/query';
+const { t } = useI18n();
 
-const { $api } = useNuxtApp()
+const { $api } = useNuxtApp();
 
 const query = ref({
   view_classes: ['actor', 'event', 'place', 'reference', 'source'] as ViewClasses,
   limit: 0,
   format: 'geojson' as Format,
   search: undefined as string[] | undefined
-})
-const { data, pending, error, refresh } = await useAsyncData(() => $api.query.getQuery(query.value))
+});
+const { data, pending, refresh } = await useAsyncData(() => $api.query.getQuery(query.value));
 onMounted(() => {
-  refresh()
-})
+  refresh();
+});
 
 interface FeatureContent {
     locationTitle: string
@@ -28,25 +28,25 @@ const featureContent = reactive<FeatureContent>({
   objectTitle: '',
   locationDescription: '',
   objectDescription: ''
-})
+});
 
-const items = computed(() => data?.value?.results?.[0].features || [])
+const items = computed(() => data?.value?.results?.[0].features || []);
 function handlePopup (e: L.LeafletMouseEvent) {
-  featureContent.objectTitle = e?.target?.feature?.properties?.name ?? ''
-  featureContent.objectDescription = e?.target?.feature?.properties?.description ?? ''
-  featureContent.locationTitle = e?.target?.feature?.geometry?.title ?? ''
-  featureContent.locationDescription = e?.target?.feature?.geometry?.description ?? ''
-  featureContent.id = e?.target?.feature?.properties?.['@id']
+  featureContent.objectTitle = e?.target?.feature?.properties?.name ?? '';
+  featureContent.objectDescription = e?.target?.feature?.properties?.description ?? '';
+  featureContent.locationTitle = e?.target?.feature?.geometry?.title ?? '';
+  featureContent.locationDescription = e?.target?.feature?.geometry?.description ?? '';
+  featureContent.id = e?.target?.feature?.properties?.['@id'];
 }
 
 function updateQuery (newQuery: Query) {
-  query.value.search = newQuery.search?.map(x => JSON.stringify(x))
-  refresh()
+  query.value.search = newQuery.search?.map(x => JSON.stringify(x));
+  refresh();
 }
 
 useHead({
   title: t('global.basics.map')
-})
+});
 </script>
 <template>
   <div>

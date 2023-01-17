@@ -1,35 +1,35 @@
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n'
-import { ComputedRef } from 'vue'
-import headers from '../../assets/tableHeaders.json'
-import classes from '../../assets/classes.json'
-import { Query } from '~~/types/query'
-const { t } = useI18n()
-const { $api } = useNuxtApp()
+import { useI18n } from 'vue-i18n';
+import { ComputedRef } from 'vue';
+import headers from '../../assets/tableHeaders.json';
+import classes from '../../assets/classes.json';
+import { Query } from '~~/types/query';
+const { t } = useI18n();
+const { $api } = useNuxtApp();
 
-const itemsLength: ComputedRef<number | undefined> = computed(() => data?.value?.pagination?.entities)
-const options = reactive({ page: 1, itemsPerPage: 20, itemsLength })
-const search = ref<string[] | undefined>([])
+const itemsLength: ComputedRef<number | undefined> = computed(() => data?.value?.pagination?.entities);
+const options = reactive({ page: 1, itemsPerPage: 20, itemsLength });
+const search = ref<string[] | undefined>([]);
 const query = computed(() => ({
   view_classes: ['actor', 'event', 'place', 'reference', 'source'],
   page: options.page,
   limit: options.itemsPerPage,
   search: search.value
-}))
-const { data, pending, error, refresh } = await useAsyncData(() => $api.query.getQuery(query.value))
-watch(() => options.page, () => refresh())
+}));
+const { data, pending, error, refresh } = await useAsyncData(() => $api.query.getQuery(query.value));
+watch(() => options.page, () => refresh());
 onMounted(() => {
-  refresh()
-})
+  refresh();
+});
 
 function updateQuery (newQuery: Query) {
-  search.value = newQuery.search?.map(x => JSON.stringify(x))
-  refresh()
+  search.value = newQuery.search?.map(x => JSON.stringify(x));
+  refresh();
 }
 
 useHead({
   title: t('global.basics.data')
-})
+});
 </script>
 
 <template>

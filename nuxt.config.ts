@@ -1,7 +1,7 @@
-import { resolve, dirname } from 'node:path'
-import { fileURLToPath } from 'url'
-import vuetify from 'vite-plugin-vuetify'
-import VueI18nVitePlugin from '@intlify/unplugin-vue-i18n/vite'
+import { resolve, dirname } from 'node:path';
+import { fileURLToPath } from 'url';
+import vuetify from 'vite-plugin-vuetify';
+import VueI18nVitePlugin from '@intlify/unplugin-vue-i18n/vite';
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   app: {
@@ -20,9 +20,9 @@ export default defineNuxtConfig({
     }
   },
   modules: ['@nuxt/content',
-    async (_options, nuxt) => {
+    (_options, nuxt) => {
       nuxt.hooks.hook('vite:extendConfig',
-        config => config?.plugins?.push(vuetify()))
+        config => config?.plugins?.push(vuetify()));
     }],
   css: ['vuetify/styles',
     '@mdi/font/css/materialdesignicons.min.css',
@@ -48,4 +48,4 @@ export default defineNuxtConfig({
       })
     ]
   }
-})
+});

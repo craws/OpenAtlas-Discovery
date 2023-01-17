@@ -1,6 +1,6 @@
-import { Api } from '../composables/api'
+import { Api } from '../composables/api';
 
 export default defineNuxtPlugin(() => {
-  const api = new Api()
-  return { provide: { api } }
-})
+  const api = new Api();
+  return { provide: { api } };
+});
