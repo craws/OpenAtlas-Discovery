@@ -106,17 +106,6 @@ onMounted(async () => {
   });
 });
 
-// const watcherOnLoaded = watch(pending, () => {
-//     logBasicEntityInfo();
-// });
-
-function logBasicEntityInfo () {
-  console.log('Logging Basic entity info...');
-  console.log('ID: ', route.params.id);
-  console.log('Data: ', data?.value);
-  console.log('Done');
-}
-
 </script>
 <style scoped>
 .primary-background-light {

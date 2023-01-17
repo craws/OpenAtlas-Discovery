@@ -16,7 +16,7 @@ const query = computed(() => ({
   limit: options.itemsPerPage,
   search: search.value
 }));
-const { data, pending, error, refresh } = await useAsyncData(() => $api.query.getQuery(query.value));
+const { data, pending, refresh } = await useAsyncData(() => $api.query.getQuery(query.value));
 watch(() => options.page, () => refresh());
 onMounted(() => {
   refresh();
