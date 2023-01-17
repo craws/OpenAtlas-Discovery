@@ -6,6 +6,10 @@
       "semi": [
         "error",
         "always"
-      ]
+      ],
+      "vue/valid-v-slot": [
+        "error", {
+        "allowModifiers": true
+      }]
     }
   }
