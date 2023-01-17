@@ -8,8 +8,12 @@
     "test": "vitest run --coverage",
     "test:watch": "vitest --reporter verbose --globals --coverage",
     "start": "nuxt start",
-    "lint-all": "eslint ./",
-    "lint-fix-all": "eslint ./ --fix"
+    "lint-all": "eslint .",
+    "lint-fix-all": "eslint . --fix",
+    "prepare": "husky install"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,vue}": "eslint --fix"
   },
   "devDependencies": {
     "@intlify/unplugin-vue-i18n": "^0.8.0",
@@ -23,7 +27,9 @@
     "@vue/test-utils": "^2.2.0",
     "c8": "^7.12.0",
     "eslint": "^8.28.0",
+    "husky": "^8.0.3",
     "jsdom": "^20.0.1",
+    "lint-staged": "^13.1.0",
     "msw": "^0.49.1",
     "nuxt": "^3.0.0",
     "swagger-typescript-api": "^12.0.2",

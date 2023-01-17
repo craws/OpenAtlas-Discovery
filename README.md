@@ -26,6 +26,14 @@ npm install
 pnpm install --shamefully-hoist
 ```
 
+#### Development Setup
+To make use of automatic linting on commit, initiate husky by running the command
+
+```bash
+# npm
+npm run prepare
+```
+
 ## Development Server
 Start the development server on http://localhost:3000
 
