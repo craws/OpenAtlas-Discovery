@@ -29,6 +29,7 @@ useHead({
             color="primary"
             width="100px"
             prepend-icon="mdi-map-marker"
+            data-test="main-map-btn"
           >
             {{ $t('global.basics.map') }}
           </v-btn>
@@ -42,6 +43,7 @@ useHead({
             color="primary"
             width="100px"
             prepend-icon="mdi-database"
+            data-test="main-data-btn"
           >
             {{ $t('global.basics.data') }}
           </v-btn>
