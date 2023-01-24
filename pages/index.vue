@@ -15,7 +15,7 @@ useHead({
 </script>
 <template>
   <v-sheet height="calc(100vh - 65px)" class=" landing-page d-flex justify-center pt-5">
-    <v-container class="text-center">
+    <v-container class="text-center" data-test="main-content-renderer">
       <ContentRenderer v-if="data[$i18n.locale]">
         <ContentRendererMarkdown :value="data[$i18n.locale]" />
       </ContentRenderer>
