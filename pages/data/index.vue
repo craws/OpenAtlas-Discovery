@@ -34,7 +34,7 @@ useHead({
 
 <template>
   <ClientOnly>
-    <v-container>
+    <v-container data-test="data-page-container">
       <search-field :loading="pending" @search="updateQuery" />
       <data-table
         class="mt-10"

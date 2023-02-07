@@ -57,6 +57,21 @@ npm run preview
 Checkout the [deployment documentation](https://v3.nuxtjs.org/docs/deployment)
 for more information.
 
+## Testing
+
+To test the frontend we use Cypress to run E2E tests.
+
+### Testing with Cypress
+
+1. To start the test with cypress, first start the nuxt server (`npm run dev`)
+2. To start the testing you have two options:
+	1. Start the UI with `npm run cy:open` this will open a new window that will allow you to run test individually, as well as inspect each of the steps during the test.
+	2. Run all the specs directly with `npm run cy:run`. This will run through all the tests and output the results in the console. If you run `npm run cy:run-record` cypress will also record videos of the tests and save them under `cypress/videos`.
+
+### Developing with and for Cypress
+
+- To enable tests to run properly even when changing component we should use selectors that are prone to stay the same. Therefore we should follow the [Best Practice](https://docs.cypress.io/guides/references/best-practices#Selecting-Elements) and add a `data-test` attribute to elements we intend to test.
+
 # Licensing
 All code unless otherwise noted is licensed under the terms of the MIT License
 (MIT). Please refer to the file LICENSE in the root directory of this

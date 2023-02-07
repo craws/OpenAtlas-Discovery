@@ -49,7 +49,7 @@ useHead({
 });
 </script>
 <template>
-  <div>
+  <div data-test="map-page-container">
     <div style="position:relative; overflow: hidden;">
       <search-field class="search" :loading="pending" @search="updateQuery" />
       <v-card width="300px" class="popup" :class="{ move: !featureContent.id }" position="absolute">

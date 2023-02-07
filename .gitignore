@@ -11,3 +11,5 @@ dist
 # IDE / Editor
 .idea/
 
+# Cypress
+cypress/videos/
