@@ -2,6 +2,7 @@ import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'url';
 import vuetify from 'vite-plugin-vuetify';
 import VueI18nVitePlugin from '@intlify/unplugin-vue-i18n/vite';
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   app: {
@@ -19,7 +20,9 @@ export default defineNuxtConfig({
       ]
     }
   },
-  modules: ['@nuxt/content',
+  modules: [
+    '@nuxt/image-edge',
+    '@nuxt/content',
     (_options, nuxt) => {
       nuxt.hooks.hook('vite:extendConfig',
         config => config?.plugins?.push(vuetify()));
@@ -46,6 +49,11 @@ export default defineNuxtConfig({
           resolve(dirname(fileURLToPath(import.meta.url)), './locales/*.json')
         ]
       })
+    ]
+  },
+  image: {
+    domains: [
+      process.env.NUXT_IMAGE_DOMAINS
     ]
   }
 });

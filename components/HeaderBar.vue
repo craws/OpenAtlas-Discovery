@@ -1,7 +1,11 @@
 <template>
   <v-app-bar flat class="px-5">
     <nuxt-link to="/">
-      <v-img class="pa-5" src="/OpenAtlas_Discovery_landscape.svg" width="150px" />
+      <nuxt-img
+        class="pt-2"
+        src="/OpenAtlas_Discovery_landscape.svg"
+        width="150px"
+      />
     </nuxt-link>
     <v-spacer />
     <client-only>
