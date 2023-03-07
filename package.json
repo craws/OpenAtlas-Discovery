@@ -1,4 +1,8 @@
 {
+  "engines": {
+    "node": "18.x",
+    "npm": "9.5.x"
+  },
   "private": true,
   "scripts": {
     "build": "nuxt build",
