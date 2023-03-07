@@ -8,7 +8,7 @@ jobs:
     outputs:
       environment: ${{ steps.get_environment_from_git_ref.outputs.environment }}
       image_name: openatlas-discovery
-      registry_root: ghcr.io/openatlas-discovery/
+      registry_root: ghcr.io/acdh-oeaw/openatlas-discovery/
       default_port: "5000"
       submodules: "true"
       herokuish_base_image: ghcr.io/acdh-oeaw/herokuish-for-cypress/main:latest-22
