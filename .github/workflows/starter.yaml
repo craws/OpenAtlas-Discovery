@@ -1,25 +1,18 @@
 name: workflows starter
-# env: is empty, see setup-env and the outputs there
 on:
   push: {}
   workflow_dispatch: {}
 jobs:
   setup_workflow_env:
     runs-on: ubuntu-latest
-# Optionally specify the environment that should be used on this branch
-    # environment: review/dev
     outputs:
-# It seems you have to specify the environment twice (passed to reusable workflow)
-# as there is no way yet to get the active environment
-      # environment: review/dev
-# or see the switch on ref_name script below
       environment: ${{ steps.get_environment_from_git_ref.outputs.environment }}
-      image_name: your-image-name
-      registry_root: ghcr.io/${{ github.repository }}/
+      image_name: openatlas-discovery
+      registry_root: ghcr.io/openatlas-discovery/
       default_port: "5000"
       submodules: "true"
-#      herokuish_base_image: ghcr.io/acdh-oeaw/herokuish-for-cypress/main:latest-22
-      APP_NAME: your-app-name
+      herokuish_base_image: ghcr.io/acdh-oeaw/herokuish-for-cypress/main:latest-22
+      APP_NAME: openatlas-discovery
 # This together with the branch name is also used as the namespace to deploy to
       APP_ROOT: "/"
       # SERVICE_ID: "99999" # Better use GtiHub environment variables for this
