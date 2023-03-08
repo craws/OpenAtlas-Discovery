@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 import { ComputedRef } from 'vue';
-import headers from '../../assets/tableHeaders.json';
-import classes from '../../assets/classes.json';
+import headers from '~/assets/tableheaders.json';
+import classes from '~/assets/classes.json';
 import { Query } from '~~/types/query';
 const { t } = useI18n();
 const { $api } = useNuxtApp();
