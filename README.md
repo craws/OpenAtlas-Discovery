@@ -26,6 +26,12 @@ npm install
 pnpm install --shamefully-hoist
 ```
 
+and to set the environment variables:
+
+```
+NUXT_IMAGE_DOMAINS = domain-url-for-images // See nuxt image documentation
+```
+
 #### Development Setup
 To make use of automatic linting on commit, initiate husky by running the command
 
