@@ -9,7 +9,7 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "test": "vitest run --coverage",
+    "test": "npm run cy:run",
     "test:watch": "vitest --reporter verbose --globals --coverage",
     "start": "nuxt start",
     "lint-all": "eslint .",
@@ -17,7 +17,8 @@
     "prepare": "husky install",
     "cy:open": "cypress open",
     "cy:run": "cypress run --config video=false",
-    "cy:run-record": "cypress run"
+    "cy:run-record": "cypress run",
+    "vitest:run": "vitest run --coverage"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,vue}": "eslint --fix"
