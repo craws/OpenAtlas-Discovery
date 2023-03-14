@@ -88,7 +88,7 @@ useHead({
           </v-btn>
         </v-card-actions>
       </v-card>
-      <data-map :items="items as GeoJsonObject[]" style="height:calc(100vh - 64px);" @item-clicked="handlePopup" />
+      <data-map :items="items as GeoJsonObject[]" :zoom-level="7" style="height:calc(100vh - 64px);" @item-clicked="handlePopup" />
     </div>
   </div>
 </template>
