@@ -19,9 +19,13 @@ describe('Main Page', () => {
       'de'
     ];
 
+    cy.wait(500); // Initial load time needed. Unsure why, potentially to load vuetify components.
+
     cy.get('[data-test="header-locale-menu"]')
       .should('exist')
-      .click();
+      .trigger('mouseenter');
+
+    cy.wait(500); // Await open animation
 
     cy.get('[data-test="locale-selector-list"]')
       .should('exist')
