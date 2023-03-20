@@ -9,15 +9,14 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "test": "concurrently --kill-others -s last \"npm run start\" \"npm run cy:run\"",
+    "test": "concurrently --kill-others -s first \"npm run start\" \"npm run cy:run\"",
     "test:watch": "vitest --reporter verbose --globals --coverage",
     "start": "nuxt start",
     "lint-all": "eslint .",
     "lint-fix-all": "eslint . --fix",
     "prepare": "husky install",
     "cy:open": "cypress open",
-    "cy:run": "cypress run --config video=false",
-    "cy:run-record": "cypress run",
+    "cy:run": "cypress run",
     "vitest:run": "vitest run --coverage"
   },
   "lint-staged": {
