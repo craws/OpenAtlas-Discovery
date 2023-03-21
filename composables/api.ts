@@ -473,8 +473,11 @@ export enum ContentType {
   UrlEncoded = "application/x-www-form-urlencoded",
 }
 
+const getBaseUrl = () => {
+  return useRuntimeConfig().public.openAtlasApiUrl;
+}
+
 export class HttpClient<SecurityDataType = unknown> {
-  public baseUrl: string = "https://demo-dev.openatlas.eu/api/";
   private securityData: SecurityDataType | null = null;
   private securityWorker?: ApiConfig<SecurityDataType>["securityWorker"];
   private abortControllers = new Map<CancelToken, AbortController>();
@@ -597,7 +600,7 @@ export class HttpClient<SecurityDataType = unknown> {
     const queryString = query && this.toQueryString(query);
     const payloadFormatter = this.contentFormatters[type || ContentType.Json];
     const responseFormat = format || requestParams.format;
-    return $fetch(`${baseUrl || this.baseUrl || ""}${path}${queryString ? `?${queryString}` : ""}`)
+    return $fetch(`${baseUrl || getBaseUrl() || ""}${path}${queryString ? `?${queryString}` : ""}`)
     /*
     return this.customFetch(`${baseUrl || this.baseUrl || ""}${path}${queryString ? `?${queryString}` : ""}`, {
       ...requestParams,

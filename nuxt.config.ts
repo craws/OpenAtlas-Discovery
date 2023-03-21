@@ -20,6 +20,12 @@ export default defineNuxtConfig({
       ]
     }
   },
+  runtimeConfig: {
+    // Keys within public, will be also exposed to the client-side
+    public: {
+      openAtlasApiUrl: process.env.OPENATLAS_DEV_API_URL || 'https://demo-dev.openatlas.eu/api/'
+    }
+  },
   modules: [
     '@nuxt/image-edge',
     '@nuxt/content',
