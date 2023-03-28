@@ -23,7 +23,11 @@ export default defineNuxtConfig({
   runtimeConfig: {
     // Keys within public, will be also exposed to the client-side
     public: {
-      openAtlasApiUrl: process.env.OPENATLAS_DEV_API_URL || 'https://demo-dev.openatlas.eu/api/'
+      openAtlasApiUrl:
+        (process.env.OPENATLAS_DEV_API_URL)?.startsWith('/\'')
+          ? (process.env.OPENATLAS_DEV_API_URL).substring(2, (process.env.OPENATLAS_DEV_API_URL).length - 1)
+          : process.env.OPENATLAS_DEV_API_URL ||
+        'https://demo-dev.openatlas.eu/api/'
     }
   },
   modules: [
