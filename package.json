@@ -6,12 +6,12 @@
   "private": true,
   "scripts": {
     "build": "nuxt build",
+    "start": "nuxt start",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "test": "concurrently --kill-others -s first \"npm run start\" \"npm run cy:run\"",
     "test:watch": "vitest --reporter verbose --globals --coverage",
-    "start": "nuxt start",
     "lint-all": "eslint .",
     "lint-fix-all": "eslint . --fix",
     "prepare": "husky install",
