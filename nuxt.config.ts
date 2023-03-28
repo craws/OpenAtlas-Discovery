@@ -23,10 +23,8 @@ export default defineNuxtConfig({
   runtimeConfig: {
     // Keys within public, will be also exposed to the client-side
     public: {
-      openAtlasApiUrl:
-        (process.env.OPENATLAS_DEV_API_URL)?.startsWith('/\'')
-          ? (process.env.OPENATLAS_DEV_API_URL).substring(2, (process.env.OPENATLAS_DEV_API_URL).length - 1)
-          : process.env.OPENATLAS_DEV_API_URL ||
+      apiBase:
+        process.env.NUXT_PUBLIC_API_BASE ||
         'https://demo-dev.openatlas.eu/api/'
     }
   },
@@ -63,7 +61,8 @@ export default defineNuxtConfig({
   },
   image: {
     domains: [
-      process.env.NUXT_IMAGE_DOMAINS
+      process.env.NUXT_PUBLIC_API_BASE
+      // TODO: Maybe this needs it's own env variable like process.env.NUXT_IMAGE_DOMAINS
     ]
   }
 });
