@@ -73,17 +73,17 @@ const props = defineProps({
     type: Array<DetailItem>,
     default: null
   }
-})
+});
 
-const showDetails = ref(false)
+const showDetails = ref(false);
 
 const showExpandable = computed(() => {
   if (props.details && Array.isArray(props.details) && props.details.length > 3) {
-    return true
+    return true;
   } else {
-    return false
+    return false;
   }
-})
+});
 
 </script>
 <style scoped>

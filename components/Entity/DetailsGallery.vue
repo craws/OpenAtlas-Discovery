@@ -15,9 +15,8 @@
   </div>
 </template>
 <script setup lang="ts">
-import { useDisplay } from 'vuetify'
-import { DetailItem } from './EntityDetail.vue'
-import { LinkedPlacesModelRelations, LinkedPlacesModelTypes } from '~~/composables/api'
+import { useDisplay } from 'vuetify';
+import { LinkedPlacesModelRelations, LinkedPlacesModelTypes } from '~~/composables/api';
 
 export interface relationGroup {
   relationType: string,
@@ -32,25 +31,25 @@ interface DetailList {
 const props = defineProps<{
   relations?: relationGroup[],
   types?: LinkedPlacesModelTypes[],
-}>()
+}>();
 
 const detailsLists = computed(() => {
-  const detailLists: DetailList[] = []
+  const detailLists: DetailList[] = [];
 
   if (props.types) {
-    const detailItems: DetailItem[] = []
+    const detailItems: DetailItem[] = [];
     props.types.forEach((type) => {
       detailItems.push({
         id: type.identifier?.substring(type.identifier?.lastIndexOf('/') + 1, type.identifier.length) ?? 'id',
         label: type.label ?? 'label',
         subheader: type.hierarchy?.split(' > ', 2)[0]
-      })
-    })
+      });
+    });
 
     detailLists.push({
       title: 'Types',
       detailItems
-    })
+    });
   }
   if (props.relations) {
     props.relations.forEach((relationType) => {
@@ -59,34 +58,34 @@ const detailsLists = computed(() => {
         detailLists.push({
           title: relationType.relationType.substring(relationType.relationType.indexOf(' '), relationType.relationType.length),
           detailItems: GetItemsFromRelation(relationType.relations)
-        })
+        });
       }
-    })
+    });
   }
-  return detailLists
-})
+  return detailLists;
+});
 
 function GetItemsFromRelation (relations: LinkedPlacesModelRelations[]): DetailItem[] {
   return relations.map((relation) => {
     return {
       id: relation.relationTo?.split('/').at(-1) ?? 'id',
       label: relation.label ?? 'label'
-    }
-  })
+    };
+  });
 }
 
-const { name } = useDisplay()
+const { name } = useDisplay();
 
 const columnCount = computed(() => {
   // name is reactive and
   // must use .value
   switch (name.value) {
-    case 'xs': return 1
-    case 'sm': return 2
+    case 'xs': return 1;
+    case 'sm': return 2;
   }
 
-  return 3
-})
+  return 3;
+});
 </script>
 
 <style scoped>

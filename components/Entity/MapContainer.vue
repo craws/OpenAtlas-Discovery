@@ -3,7 +3,14 @@
     class="mx-auto my-6"
     style="min-width: 400px; min-height: 400px; max-width: 1000px; max-height:750;"
   >
-    <data-map :items="(props.geoData as GeoJsonObject)" style="min-width: 400px; min-height: 400px; max-width: 1000px; max-height:500;" />
+    <data-map
+      :items="(props.geoData as GeoJsonObject)"
+      :style="{
+        'min-width': bounds?.minWidth ?? '400px,',
+        'min-height': bounds?.maxHeight ?? '400px',
+        'max-width': bounds?.maxWidth ?? '1000px',
+        'max-height': bounds?.maxHeight ?? '500px'}"
+    />
     <v-card-actions justify="center">
       <v-spacer />
       <v-btn to="/map" prepend-icon="mdi-map-marker">
@@ -14,8 +21,10 @@
   </v-card>
 </template>
 <script lang="ts" setup>
-import { GeoJsonObject, GeometryCollection, LineString, Point, Polygon } from 'geojson'
+import { GeoJsonObject, GeometryCollection, LineString, Point, Polygon } from 'geojson';
+import { SizeBounds } from '~~/types/layouts';
 const props = defineProps<{
     geoData: Polygon | Point | LineString | GeometryCollection;
-}>()
+    bounds?: SizeBounds;
+}>();
 </script>
