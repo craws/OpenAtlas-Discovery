@@ -4,7 +4,7 @@
       {{ $t('components.entity.details_header') }}
     </h3>
     <div class="details py-2 px-4">
-      <EntityDetail
+      <EntityDetailCard
         v-for="detail in detailsLists"
         :key="detail.title"
         :title="detail.title"
@@ -17,11 +17,7 @@
 <script setup lang="ts">
 import { useDisplay } from 'vuetify';
 import { LinkedPlacesModelRelations, LinkedPlacesModelTypes } from '~~/composables/api';
-
-export interface relationGroup {
-  relationType: string,
-  relations: LinkedPlacesModelRelations[]
-}
+import { DetailItem, relationGroup } from '~~/types/entityDetailTypes';
 
 interface DetailList {
   title: string,

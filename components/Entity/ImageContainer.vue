@@ -7,7 +7,7 @@
       'max-width': bounds?.maxWidth ?? '1000px',
       'max-height': bounds?.maxHeight ?? '500px'}"
   >
-    <nuxt-img :src="props.src" :alt="props.alt" :width="props.width" :height="props.height" />
+    <nuxt-img v-if="src" :src="props.src ?? ''" :alt="props.alt" :width="props.width" :height="props.height" />
   </v-card>
 </template>
 <script lang="ts" setup>import { SizeBounds } from '~~/types/layouts';
@@ -19,4 +19,5 @@ const props = defineProps<{
     height?: string;
     bounds?: SizeBounds;
 }>();
+
 </script>

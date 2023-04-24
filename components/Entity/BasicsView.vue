@@ -24,12 +24,12 @@
             :when="props.when"
           />
         </div>
-        <v-content v-for="(description, index) in descriptions" :key="(description.value ?? 'descr' + index)">
+        <v-main v-for="(description, index) in descriptions" :key="(description.value ?? 'descr' + index)">
           <v-divider v-if="index > 0" />
-          <v-text class="text-body-1">
+          <p class="text-body-1">
             {{ description.value }}
-          </v-text>
-        </v-content>
+          </p>
+        </v-main>
       </v-col>
     </v-row>
   </div>

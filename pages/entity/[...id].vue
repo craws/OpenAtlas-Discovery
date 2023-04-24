@@ -18,7 +18,7 @@
     >
       <v-row class="primary-background-light">
         <v-col cols="6">
-          <EntityBasics
+          <EntityBasicsView
             class="pa-6"
             :loading="pending"
             :descriptions="descriptions"
@@ -27,20 +27,40 @@
             :when="features?.[0]?.when"
           />
         </v-col>
+
         <v-col>
-          <entity-map v-if="features?.[0]?.geometry" class="mr-4" :geo-data="features[0]?.geometry" />
+          <v-tabs v-if="tabs.length > 1" v-model="activeTab">
+            <v-tab
+              v-for="(tab, index) in tabs"
+              :key="index"
+              :value="index"
+            >
+              {{ tab.title }}
+            </v-tab>
+          </v-tabs>
+          <v-window v-model="activeTab">
+            <v-window-item v-for="(tab, index) in tabs" :key="index" :value="index">
+              <component :is="tab.component" v-bind="tab.props" />
+            </v-window-item>
+          </v-window>
         </v-col>
+        <!-- <v-col>
+          <entity-image v-if="depictions" class="mr-4" :src="depictions[0].url" :alt="depictions[0].title" />
+        </v-col>
+        <v-col>
+          <entity-map v-if="geometry" class="mr-4" :geo-data="features[0]?.geometry" />
+        </v-col> -->
       </v-row>
 
       <v-divider class="mt-3" />
 
-      <EntityDetails class="px-2" :relations="relationsGroupedByType" :types="types" />
+      <EntityDetailsGallery class="px-2" :relations="relationsGroupedByType" :types="types" />
     </v-card>
   </div>
 </template>
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
-import { relationGroup } from '~~/components/Entity/EntityDetails.vue';
+import { DetailTab, relationGroup } from '~~/types/entityDetailTypes';
 
 const { $api } = useNuxtApp();
 const route = useRoute();
@@ -58,6 +78,41 @@ const features = computed(() => data?.value?.features ?? undefined);
 const title = computed(() => features?.value?.[0]?.properties?.title ?? t('global.basics.title'));
 
 const descriptions = computed(() => features?.value?.[0]?.descriptions);
+
+const depictions = computed(() => features?.value?.[0]?.depictions);
+
+const geometry = computed(() => features?.value?.[0]?.geometry);
+
+const activeTab = ref(0);
+
+const possibleTabs: DetailTab[] = [
+  {
+    title: 'Depictions',
+    component: resolveComponent('EntityImageContainer'),
+    props: {
+      src: depictions.value?.[0]?.url,
+      alt: depictions.value?.[0]?.title
+    }
+  },
+  {
+    title: 'Map',
+    component: resolveComponent('EntityMapContainer'),
+    props: {
+      'geo-data': geometry.value
+    }
+  }
+];
+
+const tabs = computed(() => {
+  const activeTabs: DetailTab[] = [];
+  if (depictions.value) {
+    activeTabs.push(possibleTabs[0]);
+  }
+  if (geometry.value) {
+    activeTabs.push(possibleTabs[1]);
+  }
+  return activeTabs;
+});
 
 const types = computed(() => {
   return features?.value?.[0]?.types;

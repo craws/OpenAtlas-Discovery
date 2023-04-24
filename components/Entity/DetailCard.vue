@@ -59,11 +59,8 @@
   </v-card>
 </template>
 <script setup lang="ts">
-export interface DetailItem{
-  id:string,
-  label:string,
-  subheader?:string
-}
+import { DetailItem } from '~~/types/entityDetailTypes';
+
 const props = defineProps({
   title: {
     type: String,
