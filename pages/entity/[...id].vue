@@ -29,27 +29,8 @@
         </v-col>
 
         <v-col>
-          <v-tabs v-if="tabs.length > 1" v-model="activeTab">
-            <v-tab
-              v-for="(tab, index) in tabs"
-              :key="index"
-              :value="index"
-            >
-              {{ tab.title }}
-            </v-tab>
-          </v-tabs>
-          <v-window v-model="activeTab">
-            <v-window-item v-for="(tab, index) in tabs" :key="index" :value="index">
-              <component :is="tab.component" v-bind="tab.props" />
-            </v-window-item>
-          </v-window>
+          <EntityFeatureTabs :geometry="geometry" :depictions="depictions" />
         </v-col>
-        <!-- <v-col>
-          <entity-image v-if="depictions" class="mr-4" :src="depictions[0].url" :alt="depictions[0].title" />
-        </v-col>
-        <v-col>
-          <entity-map v-if="geometry" class="mr-4" :geo-data="features[0]?.geometry" />
-        </v-col> -->
       </v-row>
 
       <v-divider class="mt-3" />
@@ -60,7 +41,7 @@
 </template>
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
-import { DetailTab, relationGroup } from '~~/types/entityDetailTypes';
+import { relationGroup } from '~~/types/entityDetailTypes';
 
 const { $api } = useNuxtApp();
 const route = useRoute();
@@ -82,37 +63,6 @@ const descriptions = computed(() => features?.value?.[0]?.descriptions);
 const depictions = computed(() => features?.value?.[0]?.depictions);
 
 const geometry = computed(() => features?.value?.[0]?.geometry);
-
-const activeTab = ref(0);
-
-const possibleTabs: DetailTab[] = [
-  {
-    title: 'Depictions',
-    component: resolveComponent('EntityImageContainer'),
-    props: {
-      src: depictions.value?.[0]?.url,
-      alt: depictions.value?.[0]?.title
-    }
-  },
-  {
-    title: 'Map',
-    component: resolveComponent('EntityMapContainer'),
-    props: {
-      'geo-data': geometry.value
-    }
-  }
-];
-
-const tabs = computed(() => {
-  const activeTabs: DetailTab[] = [];
-  if (depictions.value) {
-    activeTabs.push(possibleTabs[0]);
-  }
-  if (geometry.value) {
-    activeTabs.push(possibleTabs[1]);
-  }
-  return activeTabs;
-});
 
 const types = computed(() => {
   return features?.value?.[0]?.types;

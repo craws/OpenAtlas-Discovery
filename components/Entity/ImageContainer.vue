@@ -7,14 +7,26 @@
       'max-width': bounds?.maxWidth ?? '1000px',
       'max-height': bounds?.maxHeight ?? '500px'}"
   >
-    <nuxt-img v-if="src" :src="props.src ?? ''" :alt="props.alt" :width="props.width" :height="props.height" />
+    <nuxt-img
+      v-if="depictions && depictions.length > 0"
+      :src="depictions[0].url"
+      :alt="depictions[0].title"
+      :width="width"
+      :height="height"
+    />
+    <v-card-actions>
+      <p>
+        License: {{ depictions[0].licence }}
+      </p>
+    </v-card-actions>
   </v-card>
 </template>
-<script lang="ts" setup>import { SizeBounds } from '~~/types/layouts';
+<script lang="ts" setup>import { LinkedPlacesDepiction } from '~~/composables/api';
+import { SizeBounds } from '~~/types/layouts';
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const props = defineProps<{
-    src: string;
-    alt: string;
+    depictions: LinkedPlacesDepiction[]
     width?: string;
     height?: string;
     bounds?: SizeBounds;
