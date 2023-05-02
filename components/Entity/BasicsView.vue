@@ -2,7 +2,7 @@
   <div>
     <v-row>
       <v-col>
-        <div class="mt-3 py-4 mb-6">
+        <div class="py-4">
           <v-avatar
             color="primary"
             size="56"
@@ -24,12 +24,14 @@
             :when="props.when"
           />
         </div>
-        <v-main v-for="(description, index) in descriptions" :key="(description ?? 'descr' + index)">
-          <v-divider v-if="index > 0" />
-          <p class="text-body-1">
-            {{ description }}
-          </p>
-        </v-main>
+        <div>
+          <div v-for="(description, index) in descriptions" :key="(description ?? 'descr' + index)">
+            <v-divider v-if="index > 0" />
+            <p class="text-body-1">
+              {{ description }}
+            </p>
+          </div>
+        </div>
       </v-col>
     </v-row>
   </div>

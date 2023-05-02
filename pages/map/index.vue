@@ -77,7 +77,8 @@ useHead({
     <div style="position:relative; overflow: hidden;">
       <search-field class="search" :loading="pending" @search="updateQuery" />
       <v-card
-        width="300px"
+        min-width="300px"
+        max-width="350px"
         class="popup"
         :class="{ move: !featureContent.id }"
         position="absolute"
@@ -91,11 +92,12 @@ useHead({
           @click="featureContent.id = undefined"
         />
         <entity-basics-view
-          class="mx-4"
+          class="mx-4 mb-4 pt-3 overflow-y-auto overflow-x-hidden"
           :title="featureContent.objectTitle"
           :descriptions="[featureContent.objectDescription]"
           :system-class="featureContent.systemClass"
           :when="featureContent.when"
+          style="max-height: 400px;"
         />
         <v-card-actions>
           <v-btn :to="`/entity/${featureContent.id}`" variant="text">
@@ -135,9 +137,9 @@ useHead({
 }
 
 .close-btn {
-    position: absolute;
-    top: 0;
-    right: 0;
-    z-index: 5;
+  position: relative;
+  right: -88%;
+  top: 1%;
+  z-index: 5;
 }
 </style>
