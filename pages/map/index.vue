@@ -34,10 +34,6 @@ const featureContent = reactive<FeatureContent>({
   objectDescription: ''
 });
 
-const featureTest = reactive({
-  feature: {}
-});
-
 const items = computed(() => data?.value?.results?.[0].features || []);
 function handlePopup (e: L.LeafletMouseEvent) {
   featureContent.objectTitle = e?.target?.feature?.properties?.name ?? '';
@@ -65,7 +61,6 @@ function handlePopup (e: L.LeafletMouseEvent) {
   };
 
   featureContent.when = when;
-  featureTest.feature = e?.target?.feature;
 }
 
 function updateQuery (newQuery: Query) {
