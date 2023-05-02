@@ -1,5 +1,6 @@
 <script setup lang="ts">import { GeoJsonObject } from 'geojson';
 import { useI18n } from 'vue-i18n';
+import { LinkedPlacesModelDescriptions, LinkedPlacesModelWhen } from '~~/composables/api';
 import { Format, Query, ViewClasses } from '~~/types/query';
 const { t } = useI18n();
 
@@ -21,6 +22,9 @@ interface FeatureContent {
     objectTitle: string
     locationDescription: string
     objectDescription: string
+    systemClass?: string
+    when?: LinkedPlacesModelWhen
+    descriptions?: LinkedPlacesModelDescriptions[]
     id?: number
 }
 const featureContent = reactive<FeatureContent>({
@@ -30,6 +34,10 @@ const featureContent = reactive<FeatureContent>({
   objectDescription: ''
 });
 
+const featureTest = reactive({
+  feature: {}
+});
+
 const items = computed(() => data?.value?.results?.[0].features || []);
 function handlePopup (e: L.LeafletMouseEvent) {
   featureContent.objectTitle = e?.target?.feature?.properties?.name ?? '';
@@ -37,6 +45,27 @@ function handlePopup (e: L.LeafletMouseEvent) {
   featureContent.locationTitle = e?.target?.feature?.geometry?.title ?? '';
   featureContent.locationDescription = e?.target?.feature?.geometry?.description ?? '';
   featureContent.id = e?.target?.feature?.properties?.['@id'];
+
+  featureContent.descriptions = e?.target?.feature?.descriptions;
+  featureContent.systemClass = e?.target?.feature?.properties.systemClass;
+
+  const when: LinkedPlacesModelWhen = {
+    timespans: [
+      {
+        start: {
+          earliest: e?.target?.feature?.properties.begin_earliest,
+          latest: e?.target?.feature?.properties.begin_latest
+        },
+        end: {
+          earliest: e?.target?.feature?.properties.end_earliest,
+          latest: e?.target?.feature?.properties.end_latest
+        }
+      }
+    ]
+  };
+
+  featureContent.when = when;
+  featureTest.feature = e?.target?.feature;
 }
 
 function updateQuery (newQuery: Query) {
@@ -52,7 +81,12 @@ useHead({
   <div data-test="map-page-container">
     <div style="position:relative; overflow: hidden;">
       <search-field class="search" :loading="pending" @search="updateQuery" />
-      <v-card width="300px" class="popup" :class="{ move: !featureContent.id }" position="absolute">
+      <v-card
+        width="300px"
+        class="popup"
+        :class="{ move: !featureContent.id }"
+        position="absolute"
+      >
         <v-btn
           class="close-btn"
           icon="mdi-close"
@@ -61,27 +95,13 @@ useHead({
           color="grey"
           @click="featureContent.id = undefined"
         />
-        <v-card-subtitle class="mt-3">
-          <div class="d-flex justify-space-between">
-            <span>{{ featureContent.locationTitle }}</span>
-          </div>
-        </v-card-subtitle>
-        <v-card-title class="pt-0">
-          <span class="text-wrap">
-            {{ featureContent.objectTitle }}
-          </span>
-        </v-card-title>
-
-        <v-card-text style="max-height:calc(100vh - 320px);white-space: pre-line" class="scroll">
-          <div>
-            <p v-if="!!featureContent.locationDescription">
-              {{ featureContent.locationDescription }}
-            </p>
-            <p v-else>
-              {{ featureContent.objectDescription }}
-            </p>
-          </div>
-        </v-card-text>
+        <entity-basics-view
+          class="mx-4"
+          :title="featureContent.objectTitle"
+          :descriptions="[featureContent.objectDescription]"
+          :system-class="featureContent.systemClass"
+          :when="featureContent.when"
+        />
         <v-card-actions>
           <v-btn :to="`/entity/${featureContent.id}`" variant="text">
             {{ $t('global.basics.more details') }}

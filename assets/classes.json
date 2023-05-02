@@ -108,7 +108,7 @@
       "systemClass": "object_location",
       "crmClass": "E53",
       "view": null,
-      "icon": null,
+      "icon": "mdi-map-marker",
       "en": "Place"
     },
     {

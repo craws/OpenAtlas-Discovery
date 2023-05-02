@@ -10,7 +10,7 @@
           :loading="pending"
           :descriptions="descriptions"
           :title="title"
-          :system-class="features?.[0]?.crmClass"
+          :system-class="features?.[0]?.systemClass"
           :when="features?.[0]?.when"
         />
       </v-col>
@@ -44,7 +44,14 @@ const features = computed(() => data?.value?.features ?? undefined);
 
 const title = computed(() => features?.value?.[0]?.properties?.title ?? t('global.basics.title'));
 
-const descriptions = computed(() => features?.value?.[0]?.descriptions);
+const descriptions = computed((): string[] => {
+  if (features?.value?.[0]?.descriptions) {
+    return features?.value?.[0]?.descriptions
+      .map(description => description.value ?? '').filter(val => val !== '');
+  }
+
+  return [];
+});
 
 const depictions = computed(() => features?.value?.[0]?.depictions);
 

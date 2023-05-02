@@ -24,10 +24,10 @@
             :when="props.when"
           />
         </div>
-        <v-main v-for="(description, index) in descriptions" :key="(description.value ?? 'descr' + index)">
+        <v-main v-for="(description, index) in descriptions" :key="(description ?? 'descr' + index)">
           <v-divider v-if="index > 0" />
           <p class="text-body-1">
-            {{ description.value }}
+            {{ description }}
           </p>
         </v-main>
       </v-col>
@@ -37,7 +37,7 @@
 <script lang="ts" setup>
 import { useI18n } from 'vue-i18n';
 import classes from '../../assets/classes.json';
-import type { LinkedPlacesModelDescriptions, LinkedPlacesModelWhen } from '~~/composables/api';
+import type { LinkedPlacesModelWhen } from '~~/composables/api';
 
 const { t } = useI18n();
 
@@ -47,8 +47,8 @@ interface displayOptions {
 interface Props {
   loading?: boolean,
   title?: string,
-  descriptions?: Array<LinkedPlacesModelDescriptions>,
-  systemClass?: String,
+  descriptions?: string[],
+  systemClass?: string,
   when?: LinkedPlacesModelWhen,
   displayOptions?: displayOptions
 }
@@ -58,17 +58,16 @@ const props = defineProps<Props>();
 const classIcon = computed(() => {
   if (systemClassName.value === t('components.entity.class_missing')) {
     return 'mdi-help';
-  } else {
-    return (classes.find(x => x.crmClass === crmClass.value)?.icon) ?? 'mdi-help';
+  }
+  if (props.systemClass) {
+    return (classes.find(x => x.systemClass === props.systemClass)?.icon) ?? 'mdi-help';
   }
 });
-
-const crmClass = computed(() => props.systemClass?.substring(props.systemClass.indexOf(':') + 1, props.systemClass.indexOf(' ')));
 
 const systemClassName = computed(
   () => {
     if (props.systemClass) {
-      return classes.find(x => x.crmClass === crmClass.value)?.en;
+      return classes.find(x => x.systemClass === props.systemClass)?.en;
     }
     return t('components.entity.class_missing');
   }
