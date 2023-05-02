@@ -21,10 +21,14 @@
   </v-card>
 </template>
 <script lang="ts" setup>
-import { GeoJsonObject, GeometryCollection, LineString, Point, Polygon } from 'geojson';
+import { GeoJsonObject } from 'geojson';
+import { GeometryCollection, LineString, Point, Polygon } from '~~/composables/api';
 import { SizeBounds } from '~~/types/layouts';
-const props = defineProps<{
+
+export interface EntityMapContainerProps {
     geoData: Polygon | Point | LineString | GeometryCollection;
     bounds?: SizeBounds;
-}>();
+}
+
+const props = defineProps<EntityMapContainerProps>();
 </script>

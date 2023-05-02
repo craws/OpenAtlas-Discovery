@@ -24,12 +24,14 @@
 <script lang="ts" setup>import { LinkedPlacesDepiction } from '~~/composables/api';
 import { SizeBounds } from '~~/types/layouts';
 
+export interface EntityImageContainerProps {
+  depictions: LinkedPlacesDepiction[]
+  width?: string;
+  height?: string;
+  bounds?: SizeBounds;
+}
+
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const props = defineProps<{
-    depictions: LinkedPlacesDepiction[]
-    width?: string;
-    height?: string;
-    bounds?: SizeBounds;
-}>();
+const props = defineProps<EntityImageContainerProps>();
 
 </script>

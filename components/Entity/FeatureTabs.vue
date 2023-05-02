@@ -15,39 +15,53 @@
   </v-window>
 </template>
 <script setup lang="ts">
+import { EntityImageContainerProps } from './ImageContainer.vue';
+import { EntityMapContainerProps } from './MapContainer.vue';
 import { GeometryCollection, LineString, LinkedPlacesDepiction, Point, Polygon } from '~~/composables/api';
 import { DetailTab } from '~~/types/entityDetailTypes';
 
 const props = defineProps<{
-    depictions: LinkedPlacesDepiction[] | undefined,
-    geometry: Polygon | Point | LineString | GeometryCollection | undefined
+    depictions?: LinkedPlacesDepiction[],
+    geometry?: Polygon | Point | LineString | GeometryCollection
 }>();
 
 const activeTab = ref(0);
 
-const depictionTab: DetailTab = {
-  title: 'Depictions',
-  component: resolveComponent('EntityImageContainer'),
-  props: {
-    depictions: props.depictions
-  }
-};
+const depictionTab = computed(() : DetailTab | undefined => {
+  if (!props.depictions) { return undefined; }
 
-const mapTab: DetailTab = {
-  title: 'Map',
-  component: resolveComponent('EntityMapContainer'),
-  props: {
-    'geo-data': props.geometry
-  }
-};
+  const imageProps: EntityImageContainerProps = {
+    depictions: props.depictions
+  };
+
+  return {
+    title: 'Depictions',
+    component: resolveComponent('EntityImageContainer'),
+    props: imageProps
+  };
+});
+
+const mapTab = computed(() : DetailTab | undefined => {
+  if (!props.geometry) { return undefined; }
+
+  const mapProps: EntityMapContainerProps = {
+    geoData: props.geometry
+  };
+
+  return {
+    title: 'Map',
+    component: resolveComponent('EntityMapContainer'),
+    props: mapProps
+  };
+});
 
 const tabs = computed(() => {
   const activeTabs: DetailTab[] = [];
-  if (props.depictions) {
-    activeTabs.push(depictionTab);
+  if (depictionTab.value) {
+    activeTabs.push(depictionTab.value);
   }
-  if (props.geometry) {
-    activeTabs.push(mapTab);
+  if (mapTab.value) {
+    activeTabs.push(mapTab.value);
   }
   return activeTabs;
 });
