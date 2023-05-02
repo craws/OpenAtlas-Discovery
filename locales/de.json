@@ -22,7 +22,9 @@
       "data": "Daten",
       "de": "deutsch",
       "en": "englisch",
-      "loading": "Laden"
+      "loading": "Laden",
+      "license": "Lizenz",
+      "depictions": "Darstellungen"
     },
     "entity": {
       "class": "Klasse",

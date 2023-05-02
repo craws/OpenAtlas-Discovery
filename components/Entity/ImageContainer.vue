@@ -14,7 +14,7 @@
     />
     <v-card-actions>
       <p>
-        License: {{ depictions[0].license }}
+        {{ $t('global.basics.license') + ': ' + depictions[0].license }}
       </p>
     </v-card-actions>
   </v-card>

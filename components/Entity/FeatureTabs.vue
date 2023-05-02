@@ -9,7 +9,7 @@
       :key="index"
       :value="index"
     >
-      {{ tab.title }}
+      {{ $t(tab.title) }}
     </v-tab>
   </v-tabs>
   <v-window v-model="activeTab">
@@ -39,7 +39,7 @@ const depictionTab = computed(() : DetailTab | undefined => {
   };
 
   return {
-    title: 'Depictions',
+    title: 'global.basics.depictions',
     component: resolveComponent('EntityImageContainer'),
     props: imageProps
   };
@@ -53,7 +53,7 @@ const mapTab = computed(() : DetailTab | undefined => {
   };
 
   return {
-    title: 'Map',
+    title: 'global.basics.map',
     component: resolveComponent('EntityMapContainer'),
     props: mapProps
   };

@@ -22,7 +22,9 @@
       "data": "data",
       "de": "german",
       "en": "english",
-      "loading": "loading"
+      "loading": "loading",
+      "license": "License",
+      "depictions": "Depictions"
     },
     "entity": {
       "class": "class",
