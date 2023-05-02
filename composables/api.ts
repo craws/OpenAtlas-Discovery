@@ -258,7 +258,7 @@ export interface LinkedPlacesModelFeatures {
 export interface LinkedPlacesDepiction{
   '@id': string,
   title: string,
-  licence: string,
+  license: string,
   url: string,
 }
 

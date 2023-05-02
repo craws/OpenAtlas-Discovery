@@ -1,22 +1,20 @@
 <template>
   <v-card
-    class="mx-auto my-6"
     :style="{
-      'min-width': bounds?.minWidth ?? '300px,',
-      'min-height': bounds?.minHeight ?? '300px',
+      'min-width': bounds?.minWidth ?? '400px',
       'max-width': bounds?.maxWidth ?? '1000px',
       'max-height': bounds?.maxHeight ?? '500px'}"
   >
     <nuxt-img
-      v-if="depictions && depictions.length > 0"
+      v-if="props.depictions && depictions.length > 0"
       :src="depictions[0].url"
       :alt="depictions[0].title"
-      :width="width"
-      :height="height"
+      :placeholder="[300, , 10]"
+      style="width:100%"
     />
     <v-card-actions>
       <p>
-        License: {{ depictions[0].licence }}
+        License: {{ depictions[0].license }}
       </p>
     </v-card-actions>
   </v-card>
@@ -26,12 +24,9 @@ import { SizeBounds } from '~~/types/layouts';
 
 export interface EntityImageContainerProps {
   depictions: LinkedPlacesDepiction[]
-  width?: string;
-  height?: string;
   bounds?: SizeBounds;
 }
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const props = defineProps<EntityImageContainerProps>();
 
 </script>

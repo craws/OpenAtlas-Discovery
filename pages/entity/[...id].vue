@@ -1,40 +1,28 @@
 <template>
   <v-card
     class="mx-2 mt-4 mb-2 pb-2 px-2"
+    :loading="pending || !wasMounted"
   >
-    <div
-      v-if="pending || !wasMounted"
-      style="
-        width: 100%,
-        min-height: 100vh,
-        height: 100%,
-        display: flex,
-        justify-content: center "
-    >
-      <v-progress-circular indeterminate color="primary" />
-    </div>
-    <div v-else>
-      <v-row class="primary-background-light pt-2">
-        <v-col cols="6">
-          <EntityBasicsView
-            class="pa-4"
-            :loading="pending"
-            :descriptions="descriptions"
-            :title="title"
-            :system-class="features?.[0]?.crmClass"
-            :when="features?.[0]?.when"
-          />
-        </v-col>
+    <v-row class="primary-background-light pt-2">
+      <v-col cols="6">
+        <EntityBasicsView
+          class="pa-4"
+          :loading="pending"
+          :descriptions="descriptions"
+          :title="title"
+          :system-class="features?.[0]?.crmClass"
+          :when="features?.[0]?.when"
+        />
+      </v-col>
 
-        <v-col>
-          <EntityFeatureTabs :geometry="geometry" :depictions="depictions" />
-        </v-col>
-      </v-row>
+      <v-col>
+        <EntityFeatureTabs :geometry="geometry" :depictions="depictions" />
+      </v-col>
+    </v-row>
 
-      <v-divider class="mt-3" />
+    <v-divider class="mt-3" />
 
-      <EntityDetailsGallery class="px-4" :relations="relationsGroupedByType" :types="types" />
-    </div>
+    <EntityDetailsGallery class="px-4" :relations="relationsGroupedByType" :types="types" />
   </v-card>
 </template>
 <script setup lang="ts">

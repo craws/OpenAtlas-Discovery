@@ -1,6 +1,5 @@
 <template>
   <v-card
-    class="mx-auto my-6"
     style="min-width: 400px; min-height: 400px; max-width: 1000px; max-height:750;"
   >
     <data-map

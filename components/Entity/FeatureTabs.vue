@@ -14,7 +14,7 @@
   </v-tabs>
   <v-window v-model="activeTab">
     <v-window-item v-for="(tab, index) in tabs" :key="index" :value="index">
-      <component :is="tab.component" v-bind="tab.props" />
+      <component :is="tab.component" v-bind="tab.props" class="mx-auto my-6" />
     </v-window-item>
   </v-window>
 </template>
