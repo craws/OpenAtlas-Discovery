@@ -1,5 +1,9 @@
 <template>
-  <v-tabs v-if="tabs.length > 1" v-model="activeTab">
+  <v-tabs
+    v-if="tabs.length > 1"
+    v-model="activeTab"
+    align-tabs="center"
+  >
     <v-tab
       v-for="(tab, index) in tabs"
       :key="index"

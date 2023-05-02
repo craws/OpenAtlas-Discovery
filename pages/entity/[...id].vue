@@ -1,5 +1,7 @@
 <template>
-  <div>
+  <v-card
+    class="mx-2 mt-4 mb-2 pb-2 px-2"
+  >
     <div
       v-if="pending || !wasMounted"
       style="
@@ -11,15 +13,11 @@
     >
       <v-progress-circular indeterminate color="primary" />
     </div>
-    <v-card
-      v-else
-      class="mx-2 mt-4 mb-2 pb-2"
-      style="width: 100%"
-    >
-      <v-row class="primary-background-light">
+    <div v-else>
+      <v-row class="primary-background-light pt-2">
         <v-col cols="6">
           <EntityBasicsView
-            class="pa-6"
+            class="pa-4"
             :loading="pending"
             :descriptions="descriptions"
             :title="title"
@@ -35,9 +33,9 @@
 
       <v-divider class="mt-3" />
 
-      <EntityDetailsGallery class="px-2" :relations="relationsGroupedByType" :types="types" />
-    </v-card>
-  </div>
+      <EntityDetailsGallery class="px-4" :relations="relationsGroupedByType" :types="types" />
+    </div>
+  </v-card>
 </template>
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
