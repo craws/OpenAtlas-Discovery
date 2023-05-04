@@ -16,7 +16,10 @@
       </v-col>
 
       <v-col>
-        <EntityFeatureTabs :geometry="geometry" :depictions="depictions" />
+        <EntityFeatureTabs
+          :geometry="geometry"
+          :depictions="depictions"
+        />
       </v-col>
     </v-row>
 

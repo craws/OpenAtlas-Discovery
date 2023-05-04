@@ -5,18 +5,25 @@
       'max-width': bounds?.maxWidth ?? '1000px',
       'max-height': bounds?.maxHeight ?? '500px'}"
   >
-    <nuxt-img
-      v-if="props.depictions && depictions.length > 0"
-      :src="depictions[0].url"
-      :alt="depictions[0].title"
-      :placeholder="[300, , 10]"
-      style="width:100%"
+    <v-carousel
+      v-if="depictions && depictions.length > 1"
+      height="100%"
+      hide-delimiter-background
+    >
+      <v-carousel-item
+        v-for="(depiction, i) in depictions"
+        :key="i"
+      >
+        <entity-image-depiction
+          :depiction="depiction"
+        />
+      </v-carousel-item>
+    </v-carousel>
+
+    <entity-image-depiction
+      v-else-if="depictions && depictions.length == 1"
+      :depiction="depictions[0]"
     />
-    <v-card-actions>
-      <p>
-        {{ $t('global.basics.license') + ': ' + depictions[0].license }}
-      </p>
-    </v-card-actions>
   </v-card>
 </template>
 <script lang="ts" setup>import { LinkedPlacesDepiction } from '~~/composables/api';
@@ -27,6 +34,7 @@ export interface EntityImageContainerProps {
   bounds?: SizeBounds;
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const props = defineProps<EntityImageContainerProps>();
 
 </script>
