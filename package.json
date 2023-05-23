@@ -14,7 +14,6 @@
     "test:watch": "vitest --reporter verbose --globals --coverage",
     "lint-all": "eslint .",
     "lint-fix-all": "eslint . --fix",
-    "prepare": "husky install",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
     "vitest:run": "vitest run --coverage",
@@ -24,7 +23,8 @@
     "lint:code:check": "eslint . --cache --ext .js,.ts,.vue --ignore-path ./.gitignore",
     "lint:code:fix": "pnpm run lint:code:check --fix",
     "lint:styles:check": "stylelint \"./**/*.@(css|vue)\" --allow-empty-input --cache --ignore-path ./.gitignore",
-    "lint:styles:fix": "pnpm run lint:styles:check --fix"
+    "lint:styles:fix": "pnpm run lint:styles:check --fix",
+    "prepare": "simple-git-hooks || exit 0"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,vue}": "eslint --fix"
@@ -59,7 +59,8 @@
     "vue-i18n": "^9.2.2",
     "sass": "^1.60.0",
     "vuetify": "^3.1.12",
-    "prettier": "^2.8.8"
+    "prettier": "^2.8.8",
+    "simple-git-hooks": "^2.8.1"
   },
   "dependencies": {
     "@types/leaflet": "^1.9.0",
@@ -72,5 +73,9 @@
       "@acdh-oeaw/eslint-config-vue",
       "@acdh-oeaw/eslint-config-nuxt"
     ]
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm exec lint-staged",
+    "pre-push": "pnpm run validate"
   }
 }
