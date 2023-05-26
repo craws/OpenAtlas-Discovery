@@ -3,15 +3,15 @@
 // and thus available to other plugins in the project.
 // See: https://nuxt.com/docs/guide/directory-structure/plugins#plugin-registration-order
 // =========================================================================================
-import discoveryConfig from '../discoveryConfig.json';
+import discoveryConfig from "../discoveryConfig.json";
 
 interface GlobalConfig {
-  defaultLocale: string,
-  dateTimeFormat?: string
+  defaultLocale: string;
+  dateTimeFormat?: string;
 }
 
 export interface DiscoveryConfig {
-  global: GlobalConfig
+  global: GlobalConfig;
 }
 
 export default defineNuxtPlugin(() => {
@@ -19,19 +19,19 @@ export default defineNuxtPlugin(() => {
 
   return {
     provide: {
-      discoveryConfig: config
-    }
+      discoveryConfig: config,
+    },
   };
 });
 
-declare module '#app' {
+declare module "#app" {
   interface NuxtApp {
-    $discoveryConfig : DiscoveryConfig
+    $discoveryConfig: DiscoveryConfig;
   }
 }
-declare module '@vue/runtime-core' {
+declare module "@vue/runtime-core" {
   interface ComponentCustomProperties {
-    $discoveryConfig: DiscoveryConfig
+    $discoveryConfig: DiscoveryConfig;
   }
 }
-export { };
+export {};

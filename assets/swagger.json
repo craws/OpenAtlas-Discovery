@@ -25,9 +25,7 @@
       "variables": {
         "version": {
           "default": "0.3",
-          "enum": [
-            "0.3"
-          ]
+          "enum": ["0.3"]
         }
       }
     },
@@ -37,9 +35,7 @@
       "variables": {
         "version": {
           "default": "0.3",
-          "enum": [
-            "0.3"
-          ]
+          "enum": ["0.3"]
         }
       }
     },
@@ -49,9 +45,7 @@
       "variables": {
         "version": {
           "default": "0.3",
-          "enum": [
-            "0.3"
-          ]
+          "enum": ["0.3"]
         }
       }
     }
@@ -89,9 +83,7 @@
   "paths": {
     "/entity/{entityId}": {
       "get": {
-        "tags": [
-          "Entity Endpoint"
-        ],
+        "tags": ["Entity Endpoint"],
         "summary": "Get entity by ID",
         "description": "Retrieves all information about a single entity",
         "operationId": "GetEntity",
@@ -176,10 +168,7 @@
             "explode": true,
             "schema": {
               "type": "string",
-              "enum": [
-                "csv",
-                "csvNetwork"
-              ]
+              "enum": ["csv", "csvNetwork"]
             }
           }
         ],
@@ -202,10 +191,7 @@
     },
     "/query/": {
       "get": {
-        "tags": [
-          "Entities Endpoint",
-          "Entity Query Endpoint"
-        ],
+        "tags": ["Entities Endpoint", "Entity Query Endpoint"],
         "summary": "Combine several or all entities endpoints in one query",
         "description": "Retrieves a list with entity ID, CIDOC CRM code, system class, or menu item. Combine up to four of the Entities Endpoints in a single query. Each request has to be a new parameter.",
         "operationId": "GetQuery",
@@ -407,10 +393,7 @@
             "explode": true,
             "schema": {
               "type": "string",
-              "enum": [
-                "csv",
-                "csvNetwork"
-              ]
+              "enum": ["csv", "csvNetwork"]
             }
           },
           {
@@ -444,10 +427,7 @@
             "explode": true,
             "schema": {
               "type": "string",
-              "enum": [
-                "asc",
-                "desc"
-              ]
+              "enum": ["asc", "desc"]
             },
             "example": "asc"
           },
@@ -557,9 +537,7 @@
     },
     "/system_class/{system_class}": {
       "get": {
-        "tags": [
-          "Entities Endpoint"
-        ],
+        "tags": ["Entities Endpoint"],
         "description": "Retrieves a list of entities, based on their OpenAtlas class name.",
         "operationId": "GetBySystemClass",
         "parameters": [
@@ -681,10 +659,7 @@
             "explode": true,
             "schema": {
               "type": "string",
-              "enum": [
-                "csv",
-                "csvNetwork"
-              ]
+              "enum": ["csv", "csvNetwork"]
             }
           },
           {
@@ -718,10 +693,7 @@
             "explode": true,
             "schema": {
               "type": "string",
-              "enum": [
-                "asc",
-                "desc"
-              ]
+              "enum": ["asc", "desc"]
             },
             "example": "asc"
           },
@@ -831,9 +803,7 @@
     },
     "/view_class/{view_class}": {
       "get": {
-        "tags": [
-          "Entities Endpoint"
-        ],
+        "tags": ["Entities Endpoint"],
         "description": "Retrieves a list of entities based on their OpenAtlas menu items.",
         "operationId": "GetByViewClass",
         "parameters": [
@@ -942,10 +912,7 @@
             "explode": true,
             "schema": {
               "type": "string",
-              "enum": [
-                "csv",
-                "csvNetwork"
-              ]
+              "enum": ["csv", "csvNetwork"]
             }
           },
           {
@@ -979,10 +946,7 @@
             "explode": true,
             "schema": {
               "type": "string",
-              "enum": [
-                "asc",
-                "desc"
-              ]
+              "enum": ["asc", "desc"]
             },
             "example": "asc"
           },
@@ -1092,9 +1056,7 @@
     },
     "/cidoc_class/{cidoc_class}": {
       "get": {
-        "tags": [
-          "Entities Endpoint"
-        ],
+        "tags": ["Entities Endpoint"],
         "description": "Retrieve a list of entities, based on their CIDOC CRM class code.",
         "operationId": "GetByCidocClass",
         "parameters": [
@@ -1208,10 +1170,7 @@
             "explode": true,
             "schema": {
               "type": "string",
-              "enum": [
-                "csv",
-                "csvNetwork"
-              ]
+              "enum": ["csv", "csvNetwork"]
             }
           },
           {
@@ -1245,10 +1204,7 @@
             "explode": true,
             "schema": {
               "type": "string",
-              "enum": [
-                "asc",
-                "desc"
-              ]
+              "enum": ["asc", "desc"]
             },
             "example": "asc"
           },
@@ -1358,9 +1314,7 @@
     },
     "/latest/{limit}": {
       "get": {
-        "tags": [
-          "Entities Endpoint"
-        ],
+        "tags": ["Entities Endpoint"],
         "description": "Retrieve the last entered entities. n represents the amount of entities retrieved (between 1 and 100). The pagination information is always null.",
         "operationId": "GetLatest",
         "parameters": [
@@ -1444,10 +1398,7 @@
             "explode": true,
             "schema": {
               "type": "string",
-              "enum": [
-                "csv",
-                "csvNetwork"
-              ]
+              "enum": ["csv", "csvNetwork"]
             }
           },
           {
@@ -1481,10 +1432,7 @@
             "explode": true,
             "schema": {
               "type": "string",
-              "enum": [
-                "asc",
-                "desc"
-              ]
+              "enum": ["asc", "desc"]
             },
             "example": "asc"
           },
@@ -1550,9 +1498,7 @@
     },
     "/type_entities/{entityId}": {
       "get": {
-        "tags": [
-          "Entities Endpoint"
-        ],
+        "tags": ["Entities Endpoint"],
         "description": "Used to retrieve a list of entities, based on their OpenAtlas type ID. For an endpoint that lists all available types click confer Types Endpoints",
         "operationId": "GetTypeEntities",
         "parameters": [
@@ -1647,10 +1593,7 @@
             "explode": true,
             "schema": {
               "type": "string",
-              "enum": [
-                "csv",
-                "csvNetwork"
-              ]
+              "enum": ["csv", "csvNetwork"]
             }
           },
           {
@@ -1684,10 +1627,7 @@
             "explode": true,
             "schema": {
               "type": "string",
-              "enum": [
-                "asc",
-                "desc"
-              ]
+              "enum": ["asc", "desc"]
             },
             "example": "asc"
           },
@@ -1797,9 +1737,7 @@
     },
     "/type_entities_all/{entityId}": {
       "get": {
-        "tags": [
-          "Entities Endpoint"
-        ],
+        "tags": ["Entities Endpoint"],
         "description": "Used to retrieve a list of entities, based on their OpenAtlas type ID including all connected subtypes.. For an endpoint that lists all available types click confer Type Endpoints",
         "operationId": "GetTypeEntitiesAll",
         "parameters": [
@@ -1894,10 +1832,7 @@
             "explode": true,
             "schema": {
               "type": "string",
-              "enum": [
-                "csv",
-                "csvNetwork"
-              ]
+              "enum": ["csv", "csvNetwork"]
             }
           },
           {
@@ -1931,10 +1866,7 @@
             "explode": true,
             "schema": {
               "type": "string",
-              "enum": [
-                "asc",
-                "desc"
-              ]
+              "enum": ["asc", "desc"]
             },
             "example": "asc"
           },
@@ -2044,9 +1976,7 @@
     },
     "/entities_linked_to_entity/{entityId}": {
       "get": {
-        "tags": [
-          "Entities Endpoint"
-        ],
+        "tags": ["Entities Endpoint"],
         "description": "Retrieves a list of entities linked to the entity with the stated ID.",
         "operationId": "GetEntitiesLinkedToEntity",
         "parameters": [
@@ -2141,10 +2071,7 @@
             "explode": true,
             "schema": {
               "type": "string",
-              "enum": [
-                "csv",
-                "csvNetwork"
-              ]
+              "enum": ["csv", "csvNetwork"]
             }
           },
           {
@@ -2178,10 +2105,7 @@
             "explode": true,
             "schema": {
               "type": "string",
-              "enum": [
-                "asc",
-                "desc"
-              ]
+              "enum": ["asc", "desc"]
             },
             "example": "asc"
           },
@@ -2291,9 +2215,7 @@
     },
     "/type_overview/": {
       "get": {
-        "tags": [
-          "Type Endpoints"
-        ],
+        "tags": ["Type Endpoints"],
         "description": "Retrieves a list of all OpenAtlas types sorted by custom, places, standard and value",
         "operationId": "GetTypeOverview",
         "parameters": [
@@ -2328,9 +2250,7 @@
     },
     "/type_tree/": {
       "get": {
-        "tags": [
-          "Type Endpoints"
-        ],
+        "tags": ["Type Endpoints"],
         "description": "Retrieves a list of all OpenAtlas types, including their information sorted by their IDs",
         "operationId": "GetTypeTree",
         "parameters": [
@@ -2365,9 +2285,7 @@
     },
     "/type_by_view_class/": {
       "get": {
-        "tags": [
-          "Type Endpoints"
-        ],
+        "tags": ["Type Endpoints"],
         "description": "Retrieves a list of all system types",
         "operationId": "GetTypeByViewClass",
         "parameters": [
@@ -2402,9 +2320,7 @@
     },
     "/classes/": {
       "get": {
-        "tags": [
-          "Administrative Endpoints"
-        ],
+        "tags": ["Administrative Endpoints"],
         "description": "Retrieves a list of all available classes, their CIDOC CRM mapping, their view, which icon can be used, if alias and references systems are allowed and which standard type it has.",
         "operationId": "ClassMapping",
         "responses": {
@@ -2426,9 +2342,7 @@
     },
     "/content/": {
       "get": {
-        "tags": [
-          "Administrative Endpoints"
-        ],
+        "tags": ["Administrative Endpoints"],
         "description": "Retrieves a detailed list of information on available frontend content in an OpenAtlas instance - intro, legal notice, contact, and size of processed image",
         "operationId": "GetContent",
         "parameters": [
@@ -2442,10 +2356,7 @@
             "schema": {
               "type": "string",
               "example": "de",
-              "enum": [
-                "en",
-                "de"
-              ]
+              "enum": ["en", "de"]
             }
           },
           {
@@ -2479,9 +2390,7 @@
     },
     "/system_class_count/": {
       "get": {
-        "tags": [
-          "Administrative Endpoints"
-        ],
+        "tags": ["Administrative Endpoints"],
         "description": "Retrieves a detailed list of the numbers of entries connected to a system class",
         "operationId": "SystemClassCount",
         "responses": {
@@ -2503,9 +2412,7 @@
     },
     "/subunits/": {
       "get": {
-        "tags": [
-          "Special Endpoints"
-        ],
+        "tags": ["Special Endpoints"],
         "description": "Displays all subunits of a place in a special format as used by the THANADOS project. Can only be used for “places”. As format only XML can be chosen",
         "operationId": "GetSubunits",
         "parameters": [
@@ -2573,9 +2480,7 @@
     },
     "/geometric_entities/": {
       "get": {
-        "tags": [
-          "Special Endpoints"
-        ],
+        "tags": ["Special Endpoints"],
         "description": "Retrieve a GeoJSON of all chosen geometries in an OpenAtlas instance",
         "operationId": "GetGeometricEntities",
         "parameters": [
@@ -2644,9 +2549,7 @@
     },
     "/export_database/{format}": {
       "get": {
-        "tags": [
-          "Special Endpoints"
-        ],
+        "tags": ["Special Endpoints"],
         "description": "Downloads all information in an OpenAtlas instance as CSV, XML, or JSON.",
         "operationId": "ExportDatabase",
         "parameters": [
@@ -2658,11 +2561,7 @@
             "explode": false,
             "schema": {
               "type": "string",
-              "enum": [
-                "json",
-                "csv",
-                "xml"
-              ]
+              "enum": ["json", "csv", "xml"]
             },
             "example": "json"
           }
@@ -2687,9 +2586,7 @@
     },
     "/display/{filename}": {
       "get": {
-        "tags": [
-          "Image Endpoints"
-        ],
+        "tags": ["Image Endpoints"],
         "description": "Retrieves the respective image if it has a licence.",
         "operationId": "DisplayImage",
         "parameters": [
@@ -2804,9 +2701,7 @@
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "FeatureCollection"
-            ]
+            "enum": ["FeatureCollection"]
           },
           "features": {
             "type": "array",
@@ -2817,17 +2712,12 @@
         }
       },
       "Point": {
-        "required": [
-          "coordinates",
-          "type"
-        ],
+        "required": ["coordinates", "type"],
         "type": "object",
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "Point"
-            ]
+            "enum": ["Point"]
           },
           "coordinates": {
             "$ref": "#/components/schemas/Position"
@@ -2840,9 +2730,7 @@
           },
           "shapeType": {
             "type": "string",
-            "enum": [
-              "centerpoint"
-            ]
+            "enum": ["centerpoint"]
           }
         }
       },
@@ -2855,17 +2743,12 @@
         }
       },
       "LineString": {
-        "required": [
-          "coordinates",
-          "type"
-        ],
+        "required": ["coordinates", "type"],
         "type": "object",
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "LineString"
-            ]
+            "enum": ["LineString"]
           },
           "coordinates": {
             "$ref": "#/components/schemas/LineStringCoordinates"
@@ -2878,9 +2761,7 @@
           },
           "shapeType": {
             "type": "string",
-            "enum": [
-              "polyline"
-            ]
+            "enum": ["polyline"]
           }
         }
       },
@@ -2899,17 +2780,12 @@
         }
       },
       "Polygon": {
-        "required": [
-          "coordinates",
-          "type"
-        ],
+        "required": ["coordinates", "type"],
         "type": "object",
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "Polygon"
-            ]
+            "enum": ["Polygon"]
           },
           "coordinates'": {
             "type": "array",
@@ -2925,24 +2801,17 @@
           },
           "shapeType": {
             "type": "string",
-            "enum": [
-              "area",
-              "shape"
-            ]
+            "enum": ["area", "shape"]
           }
         }
       },
       "GeometryCollection": {
-        "required": [
-          "type"
-        ],
+        "required": ["type"],
         "type": "object",
         "properties": {
           "type": {
             "type": "string",
-            "enum": [
-              "GeometryCollection"
-            ]
+            "enum": ["GeometryCollection"]
           },
           "geometries": {
             "type": "array",
@@ -4128,10 +3997,7 @@
         "schema": {
           "type": "string",
           "example": "de",
-          "enum": [
-            "en",
-            "de"
-          ]
+          "enum": ["en", "de"]
         }
       },
       "show": {
@@ -4169,10 +4035,7 @@
         "explode": true,
         "schema": {
           "type": "string",
-          "enum": [
-            "asc",
-            "desc"
-          ]
+          "enum": ["asc", "desc"]
         },
         "example": "asc"
       },
@@ -4265,10 +4128,7 @@
         "explode": true,
         "schema": {
           "type": "string",
-          "enum": [
-            "csv",
-            "csvNetwork"
-          ]
+          "enum": ["csv", "csvNetwork"]
         }
       },
       "format": {
@@ -4471,10 +4331,7 @@
         "explode": true,
         "schema": {
           "type": "string",
-          "enum": [
-            "thumbnail",
-            "table"
-          ]
+          "enum": ["thumbnail", "table"]
         },
         "example": "table"
       }

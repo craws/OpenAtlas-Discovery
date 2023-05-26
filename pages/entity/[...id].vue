@@ -1,8 +1,5 @@
 <template>
-  <v-card
-    class="mx-2 mt-4 mb-2 pb-2 px-2"
-    :loading="pending || !wasMounted"
-  >
+  <v-card class="mx-2 mt-4 mb-2 pb-2 px-2" :loading="pending || !wasMounted">
     <v-row class="primary-background-light pt-2">
       <v-col cols="6">
         <EntityBasicsView
@@ -16,21 +13,24 @@
       </v-col>
 
       <v-col>
-        <EntityFeatureTabs
-          :geometry="geometry"
-          :depictions="depictions"
-        />
+        <EntityFeatureTabs :geometry="geometry" :depictions="depictions" />
       </v-col>
     </v-row>
 
     <v-divider class="mt-3" />
 
-    <EntityDetailsGallery class="px-4" :relations="relationsGroupedByType" :types="types" />
+    <EntityDetailsGallery
+      class="px-4"
+      :relations="relationsGroupedByType"
+      :types="types"
+    />
   </v-card>
 </template>
+
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n';
-import { relationGroup } from '~~/types/entityDetailTypes';
+import { useI18n } from "vue-i18n";
+
+import { type relationGroup } from "~~/types/entityDetailTypes";
 
 const { $api } = useNuxtApp();
 const route = useRoute();
@@ -39,18 +39,23 @@ const { t } = useI18n();
 const entityID = Number(route.params.id);
 const wasMounted = ref(false);
 
-const { data, pending, refresh } = await useAsyncData(() => $api.entity.getEntity(entityID));
+const { data, pending, refresh } = await useAsyncData(() =>
+  $api.entity.getEntity(entityID)
+);
 
 // Entity Variables
 
-const features = computed(() => data?.value?.features ?? undefined);
+const features = computed(() => data.value?.features ?? undefined);
 
-const title = computed(() => features?.value?.[0]?.properties?.title ?? t('global.basics.title'));
+const title = computed(
+  () => features?.value?.[0]?.properties?.title ?? t("global.basics.title")
+);
 
-const descriptions = computed((): string[] => {
+const descriptions = computed((): Array<string> => {
   if (features?.value?.[0]?.descriptions) {
     return features?.value?.[0]?.descriptions
-      .map(description => description.value ?? '').filter(val => val !== '');
+      .map((description) => description.value ?? "")
+      .filter((val) => val !== "");
   }
 
   return [];
@@ -68,7 +73,7 @@ const relationsGroupedByType = computed(() => {
   if (!features?.value?.[0]?.relations) {
     return undefined;
   }
-  const relations: relationGroup[] = [];
+  const relations: Array<relationGroup> = [];
 
   for (let i = 0; i < features?.value?.[0]?.relations.length; i++) {
     const element = features?.value?.[0]?.relations[i];
@@ -85,8 +90,8 @@ const relationsGroupedByType = computed(() => {
     }
     if (!typeExists) {
       relations.push({
-        relationType: element.relationType ?? 'relationType',
-        relations: [element]
+        relationType: element.relationType ?? "relationType",
+        relations: [element],
       });
     }
   }
@@ -99,17 +104,17 @@ const relationsGroupedByType = computed(() => {
 onMounted(async () => {
   wasMounted.value = true;
   useHead({
-    title: t('global.basics.loading')
+    title: t("global.basics.loading"),
   });
   await refresh();
   useHead({
-    title: title.value
+    title: title.value,
   });
 });
-
 </script>
+
 <style scoped>
 .primary-background-light {
-    background-color: rgba(var(--v-theme-primary-lighten-1), 0.2);
+  background-color: rgba(var(--v-theme-primary-lighten-1), 0.2);
 }
 </style>

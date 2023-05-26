@@ -14,12 +14,14 @@
     </template>
   </v-tooltip>
 </template>
-<script lang="ts" setup>import { LinkedPlacesDepiction } from '~~/composables/api';
+
+<script lang="ts" setup>
+import { type LinkedPlacesDepiction } from "~~/composables/api";
+
 export interface DepictionProps {
-  depiction: LinkedPlacesDepiction
+  depiction: LinkedPlacesDepiction;
 }
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const props = defineProps<DepictionProps>();
-
 </script>

@@ -1,51 +1,63 @@
-export type ViewClasses = (
-  | 'all'
-  | 'actor'
-  | 'artifact'
-  | 'event'
-  | 'place'
-  | 'reference'
-  | 'source'
-  | 'type'
-  | 'file'
-  | 'source_translation'
-  | 'reference_system'
-)[]
-export type Format = 'lp' | 'geojson' | 'geojson-v2' | 'pretty-xml' | 'n3' | 'turtle' | 'nt' | 'xml';
+export type ViewClasses = Array<
+  | "actor"
+  | "all"
+  | "artifact"
+  | "event"
+  | "file"
+  | "place"
+  | "reference_system"
+  | "reference"
+  | "source_translation"
+  | "source"
+  | "type"
+>;
+export type Format =
+  | "geojson-v2"
+  | "geojson"
+  | "lp"
+  | "n3"
+  | "nt"
+  | "pretty-xml"
+  | "turtle"
+  | "xml";
 export interface Filter {
-    operator: 'equal'
-    values: number[] | string[]
-    logicalOperator: 'or' | 'and'
+  operator: "equal";
+  values: Array<number> | Array<string>;
+  logicalOperator: "and" | "or";
 }
 export interface OrderFilter {
-    operator: 'greaterThan' | 'greaterThanEqual' | 'lesserThan' | 'lesserThanEqual'
-    values: number[] | string[]
-    logicalOperator: 'or' | 'and'
+  operator:
+    | "greaterThan"
+    | "greaterThanEqual"
+    | "lesserThan"
+    | "lesserThanEqual";
+  values: Array<number> | Array<string>;
+  logicalOperator: "and" | "or";
 }
 
 export interface StringFilter {
-    operator: 'like'
-    values: string[]
-    logicalOperator: 'or' | 'and'
+  operator: "like";
+  values: Array<string>;
+  logicalOperator: "and" | "or";
 }
 export interface Search {
-  entityName?: (Filter | StringFilter)[]
-  entityDescription?: (Filter | StringFilter)[]
-  entityAliases?: (Filter | StringFilter)[]
-  entityCidocClass?: (Filter | StringFilter)[]
-  entitySystemClass?: (Filter | StringFilter)[]
-  entityID?: Filter[]
-  typeID?: Filter[]
-  valueTypeID?: (Filter | OrderFilter)[]
-  typeIDWithSubs?: Filter[]
-  typeName?: (Filter | StringFilter)[]
-  beginFrom?: (Filter | OrderFilter)[]
-  beginTo?: (Filter | OrderFilter)[]
-  endFrom?: (Filter | OrderFilter)[]
-  endTo?: (Filter | OrderFilter)[]
-  relationToID?: Filter[]
+  entityName?: Array<Filter | StringFilter>;
+  entityDescription?: Array<Filter | StringFilter>;
+  entityAliases?: Array<Filter | StringFilter>;
+  entityCidocClass?: Array<Filter | StringFilter>;
+  entitySystemClass?: Array<Filter | StringFilter>;
+  entityID?: Array<Filter>;
+  typeID?: Array<Filter>;
+  valueTypeID?: Array<Filter | OrderFilter>;
+  typeIDWithSubs?: Array<Filter>;
+  typeName?: Array<Filter | StringFilter>;
+  beginFrom?: Array<Filter | OrderFilter>;
+  beginTo?: Array<Filter | OrderFilter>;
+  endFrom?: Array<Filter | OrderFilter>;
+  endTo?: Array<Filter | OrderFilter>;
+  relationToID?: Array<Filter>;
 }
 export interface Query {
-  search?: Search[],
-  view_classes: ('actor' | 'event' | 'place' | 'reference' | 'source')[]
+  search?: Array<Search>;
+  view_classes: Array<"actor" | "event" | "place" | "reference" | "source">;
 }

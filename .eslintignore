@@ -4,3 +4,5 @@
 /.output
 /.vscode
 /node_modules
+/.pnpm-store
+/coverage

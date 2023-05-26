@@ -1,6 +1,7 @@
-import { createI18n } from 'vue-i18n';
-import en from '../locales/en.json';
-import de from '../locales/de.json';
+import { createI18n } from "vue-i18n";
+
+import de from "../locales/de.json";
+import en from "../locales/en.json";
 
 export default defineNuxtPlugin(({ vueApp }) => {
   const { $discoveryConfig } = useNuxtApp();
@@ -14,8 +15,8 @@ export default defineNuxtPlugin(({ vueApp }) => {
     locale: defaultLocale,
     messages: {
       en,
-      de
-    }
+      de,
+    },
   });
 
   vueApp.use(i18n);

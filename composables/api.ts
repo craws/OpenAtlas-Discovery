@@ -69,7 +69,12 @@ export interface Polygon {
 
 export interface GeometryCollection {
   type: "GeometryCollection";
-  geometries?: (Polygon | Point | LineString | (Polygon & Point & LineString))[];
+  geometries?: (
+    | Polygon
+    | Point
+    | LineString
+    | (Polygon & Point & LineString)
+  )[];
 }
 
 export interface TypeOverviewEntryModel {
@@ -255,11 +260,11 @@ export interface LinkedPlacesModelFeatures {
   geometry?: Polygon | Point | LineString | GeometryCollection;
 }
 
-export interface LinkedPlacesDepiction{
-  '@id': string,
-  title: string,
-  license: string,
-  url: string,
+export interface LinkedPlacesDepiction {
+  "@id": string;
+  title: string;
+  license: string;
+  url: string;
 }
 
 export interface GeoJSONModelPropertiesTypes {
@@ -458,16 +463,22 @@ export interface FullRequestParams extends Omit<RequestInit, "body"> {
   cancelToken?: CancelToken;
 }
 
-export type RequestParams = Omit<FullRequestParams, "body" | "method" | "query" | "path">;
+export type RequestParams = Omit<
+  FullRequestParams,
+  "body" | "method" | "query" | "path"
+>;
 
 export interface ApiConfig<SecurityDataType = unknown> {
   baseUrl?: string;
   baseApiParams?: Omit<RequestParams, "baseUrl" | "cancelToken" | "signal">;
-  securityWorker?: (securityData: SecurityDataType | null) => Promise<RequestParams | void> | RequestParams | void;
+  securityWorker?: (
+    securityData: SecurityDataType | null
+  ) => Promise<RequestParams | void> | RequestParams | void;
   customFetch?: typeof fetch;
 }
 
-export interface HttpResponse<D extends unknown, E extends unknown = unknown> extends Response {
+export interface HttpResponse<D extends unknown, E extends unknown = unknown>
+  extends Response {
   data: D;
   error: E;
 }
@@ -485,7 +496,8 @@ export class HttpClient<SecurityDataType = unknown> {
   private securityData: SecurityDataType | null = null;
   private securityWorker?: ApiConfig<SecurityDataType>["securityWorker"];
   private abortControllers = new Map<CancelToken, AbortController>();
-  private customFetch = (...fetchParams: Parameters<typeof fetch>) => fetch(...fetchParams);
+  private customFetch = (...fetchParams: Parameters<typeof fetch>) =>
+    fetch(...fetchParams);
 
   private baseApiParams: RequestParams = {
     credentials: "same-origin",
@@ -504,7 +516,9 @@ export class HttpClient<SecurityDataType = unknown> {
 
   protected encodeQueryParam(key: string, value: any) {
     const encodedKey = encodeURIComponent(key);
-    return `${encodedKey}=${encodeURIComponent(typeof value === "number" ? value : `${value}`)}`;
+    return `${encodedKey}=${encodeURIComponent(
+      typeof value === "number" ? value : `${value}`
+    )}`;
   }
 
   protected addQueryParam(query: QueryParamsType, key: string) {
@@ -518,9 +532,15 @@ export class HttpClient<SecurityDataType = unknown> {
 
   protected toQueryString(rawQuery?: QueryParamsType): string {
     const query = rawQuery || {};
-    const keys = Object.keys(query).filter((key) => "undefined" !== typeof query[key]);
+    const keys = Object.keys(query).filter(
+      (key) => "undefined" !== typeof query[key]
+    );
     return keys
-      .map((key) => (Array.isArray(query[key]) ? this.addArrayQueryParam(query, key) : this.addQueryParam(query, key)))
+      .map((key) =>
+        Array.isArray(query[key])
+          ? this.addArrayQueryParam(query, key)
+          : this.addQueryParam(query, key)
+      )
       .join("&");
   }
 
@@ -531,7 +551,9 @@ export class HttpClient<SecurityDataType = unknown> {
 
   private contentFormatters: Record<ContentType, (input: any) => any> = {
     [ContentType.Json]: (input: any) =>
-      input !== null && (typeof input === "object" || typeof input === "string") ? JSON.stringify(input) : input,
+      input !== null && (typeof input === "object" || typeof input === "string")
+        ? JSON.stringify(input)
+        : input,
     [ContentType.FormData]: (input: any) =>
       Object.keys(input || {}).reduce((formData, key) => {
         const property = input[key];
@@ -541,14 +563,17 @@ export class HttpClient<SecurityDataType = unknown> {
             ? property
             : typeof property === "object" && property !== null
             ? JSON.stringify(property)
-            : `${property}`,
+            : `${property}`
         );
         return formData;
       }, new FormData()),
     [ContentType.UrlEncoded]: (input: any) => this.toQueryString(input),
   };
 
-  protected mergeRequestParams(params1: RequestParams, params2?: RequestParams): RequestParams {
+  protected mergeRequestParams(
+    params1: RequestParams,
+    params2?: RequestParams
+  ): RequestParams {
     return {
       ...this.baseApiParams,
       ...params1,
@@ -561,7 +586,9 @@ export class HttpClient<SecurityDataType = unknown> {
     };
   }
 
-  protected createAbortSignal = (cancelToken: CancelToken): AbortSignal | undefined => {
+  protected createAbortSignal = (
+    cancelToken: CancelToken
+  ): AbortSignal | undefined => {
     if (this.abortControllers.has(cancelToken)) {
       const abortController = this.abortControllers.get(cancelToken);
       if (abortController) {
@@ -604,7 +631,11 @@ export class HttpClient<SecurityDataType = unknown> {
     const queryString = query && this.toQueryString(query);
     const payloadFormatter = this.contentFormatters[type || ContentType.Json];
     const responseFormat = format || requestParams.format;
-    return $fetch(`${baseUrl || this.baseUrl || ""}${path}${queryString ? `?${queryString}` : ""}`)
+    return $fetch(
+      `${baseUrl || this.baseUrl || ""}${path}${
+        queryString ? `?${queryString}` : ""
+      }`
+    );
     /*
     return this.customFetch(`${baseUrl || this.baseUrl || ""}${path}${queryString ? `?${queryString}` : ""}`, {
       ...requestParams,
@@ -655,7 +686,9 @@ export class HttpClient<SecurityDataType = unknown> {
  *
  * An API that allows user to access data from an OpenAtlas instance.
  */
-export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDataType> {
+export class Api<
+  SecurityDataType extends unknown
+> extends HttpClient<SecurityDataType> {
   entity = {
     /**
      * @description Retrieves all information about a single entity
@@ -687,11 +720,19 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * Choose the format for the results.
          * @example lp
          */
-        format?: "lp" | "geojson" | "geojson-v2" | "pretty-xml" | "n3" | "turtle" | "nt" | "xml";
+        format?:
+          | "lp"
+          | "geojson"
+          | "geojson-v2"
+          | "pretty-xml"
+          | "n3"
+          | "turtle"
+          | "nt"
+          | "xml";
         /** Export the entities into either a simple CSV representation or a zip file of CSV's especially designed for network analyses. */
         export?: "csv" | "csvNetwork";
       },
-      params: RequestParams = {},
+      params: RequestParams = {}
     ) =>
       this.request<InlineResponse200, void>({
         path: `/entity/${entityId}`,
@@ -803,14 +844,30 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * Choose the format for the results.
          * @example lp
          */
-        format?: "lp" | "geojson" | "geojson-v2" | "pretty-xml" | "n3" | "turtle" | "nt" | "xml";
+        format?:
+          | "lp"
+          | "geojson"
+          | "geojson-v2"
+          | "pretty-xml"
+          | "n3"
+          | "turtle"
+          | "nt"
+          | "xml";
         /** Export the entities into either a simple CSV representation or a zip file of CSV's especially designed for network analyses. */
         export?: "csv" | "csvNetwork";
         /**
          * Choose one column to sort the results by. Default value is name.
          * @example name
          */
-        column?: "id" | "name" | "cidoc_class" | "system_class" | "begin_from" | "begin_to" | "end_from" | "end_to";
+        column?:
+          | "id"
+          | "name"
+          | "cidoc_class"
+          | "system_class"
+          | "begin_from"
+          | "begin_to"
+          | "end_from"
+          | "end_to";
         /**
          * Sorting result ascending or descending of the given column. Default value is asc.
          * @example asc
@@ -831,7 +888,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         /** Displays only connections connected by the selected CIDOC CRM code. */
         relation_type?: string[];
       },
-      params: RequestParams = {},
+      params: RequestParams = {}
     ) =>
       this.request<EntitiesOutputModel, void>({
         path: `/query/`,
@@ -898,14 +955,30 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * Choose the format for the results.
          * @example lp
          */
-        format?: "lp" | "geojson" | "geojson-v2" | "pretty-xml" | "n3" | "turtle" | "nt" | "xml";
+        format?:
+          | "lp"
+          | "geojson"
+          | "geojson-v2"
+          | "pretty-xml"
+          | "n3"
+          | "turtle"
+          | "nt"
+          | "xml";
         /** Export the entities into either a simple CSV representation or a zip file of CSV's especially designed for network analyses. */
         export?: "csv" | "csvNetwork";
         /**
          * Choose one column to sort the results by. Default value is name.
          * @example name
          */
-        column?: "id" | "name" | "cidoc_class" | "system_class" | "begin_from" | "begin_to" | "end_from" | "end_to";
+        column?:
+          | "id"
+          | "name"
+          | "cidoc_class"
+          | "system_class"
+          | "begin_from"
+          | "begin_to"
+          | "end_from"
+          | "end_to";
         /**
          * Sorting result ascending or descending of the given column. Default value is asc.
          * @example asc
@@ -926,7 +999,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         /** Displays only connections connected by the selected CIDOC CRM code. */
         relation_type?: string[];
       },
-      params: RequestParams = {},
+      params: RequestParams = {}
     ) =>
       this.request<EntitiesOutputModel, void>({
         path: `/system_class/${systemClass}`,
@@ -979,14 +1052,30 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * Choose the format for the results.
          * @example lp
          */
-        format?: "lp" | "geojson" | "geojson-v2" | "pretty-xml" | "n3" | "turtle" | "nt" | "xml";
+        format?:
+          | "lp"
+          | "geojson"
+          | "geojson-v2"
+          | "pretty-xml"
+          | "n3"
+          | "turtle"
+          | "nt"
+          | "xml";
         /** Export the entities into either a simple CSV representation or a zip file of CSV's especially designed for network analyses. */
         export?: "csv" | "csvNetwork";
         /**
          * Choose one column to sort the results by. Default value is name.
          * @example name
          */
-        column?: "id" | "name" | "cidoc_class" | "system_class" | "begin_from" | "begin_to" | "end_from" | "end_to";
+        column?:
+          | "id"
+          | "name"
+          | "cidoc_class"
+          | "system_class"
+          | "begin_from"
+          | "begin_to"
+          | "end_from"
+          | "end_to";
         /**
          * Sorting result ascending or descending of the given column. Default value is asc.
          * @example asc
@@ -1007,7 +1096,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         /** Displays only connections connected by the selected CIDOC CRM code. */
         relation_type?: string[];
       },
-      params: RequestParams = {},
+      params: RequestParams = {}
     ) =>
       this.request<EntitiesOutputModel, void>({
         path: `/view_class/${viewClass}`,
@@ -1066,14 +1155,30 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * Choose the format for the results.
          * @example lp
          */
-        format?: "lp" | "geojson" | "geojson-v2" | "pretty-xml" | "n3" | "turtle" | "nt" | "xml";
+        format?:
+          | "lp"
+          | "geojson"
+          | "geojson-v2"
+          | "pretty-xml"
+          | "n3"
+          | "turtle"
+          | "nt"
+          | "xml";
         /** Export the entities into either a simple CSV representation or a zip file of CSV's especially designed for network analyses. */
         export?: "csv" | "csvNetwork";
         /**
          * Choose one column to sort the results by. Default value is name.
          * @example name
          */
-        column?: "id" | "name" | "cidoc_class" | "system_class" | "begin_from" | "begin_to" | "end_from" | "end_to";
+        column?:
+          | "id"
+          | "name"
+          | "cidoc_class"
+          | "system_class"
+          | "begin_from"
+          | "begin_to"
+          | "end_from"
+          | "end_to";
         /**
          * Sorting result ascending or descending of the given column. Default value is asc.
          * @example asc
@@ -1094,7 +1199,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         /** Displays only connections connected by the selected CIDOC CRM code. */
         relation_type?: string[];
       },
-      params: RequestParams = {},
+      params: RequestParams = {}
     ) =>
       this.request<EntitiesOutputModel, void>({
         path: `/cidoc_class/${cidocClass}`,
@@ -1134,14 +1239,30 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * Choose the format for the results.
          * @example lp
          */
-        format?: "lp" | "geojson" | "geojson-v2" | "pretty-xml" | "n3" | "turtle" | "nt" | "xml";
+        format?:
+          | "lp"
+          | "geojson"
+          | "geojson-v2"
+          | "pretty-xml"
+          | "n3"
+          | "turtle"
+          | "nt"
+          | "xml";
         /** Export the entities into either a simple CSV representation or a zip file of CSV's especially designed for network analyses. */
         export?: "csv" | "csvNetwork";
         /**
          * Choose one column to sort the results by. Default value is name.
          * @example name
          */
-        column?: "id" | "name" | "cidoc_class" | "system_class" | "begin_from" | "begin_to" | "end_from" | "end_to";
+        column?:
+          | "id"
+          | "name"
+          | "cidoc_class"
+          | "system_class"
+          | "begin_from"
+          | "begin_to"
+          | "end_from"
+          | "end_to";
         /**
          * Sorting result ascending or descending of the given column. Default value is asc.
          * @example asc
@@ -1154,7 +1275,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         /** Displays only connections connected by the selected CIDOC CRM code. */
         relation_type?: string[];
       },
-      params: RequestParams = {},
+      params: RequestParams = {}
     ) =>
       this.request<EntitiesOutputModel, void>({
         path: `/latest/${limit}`,
@@ -1196,14 +1317,30 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * Choose the format for the results.
          * @example lp
          */
-        format?: "lp" | "geojson" | "geojson-v2" | "pretty-xml" | "n3" | "turtle" | "nt" | "xml";
+        format?:
+          | "lp"
+          | "geojson"
+          | "geojson-v2"
+          | "pretty-xml"
+          | "n3"
+          | "turtle"
+          | "nt"
+          | "xml";
         /** Export the entities into either a simple CSV representation or a zip file of CSV's especially designed for network analyses. */
         export?: "csv" | "csvNetwork";
         /**
          * Choose one column to sort the results by. Default value is name.
          * @example name
          */
-        column?: "id" | "name" | "cidoc_class" | "system_class" | "begin_from" | "begin_to" | "end_from" | "end_to";
+        column?:
+          | "id"
+          | "name"
+          | "cidoc_class"
+          | "system_class"
+          | "begin_from"
+          | "begin_to"
+          | "end_from"
+          | "end_to";
         /**
          * Sorting result ascending or descending of the given column. Default value is asc.
          * @example asc
@@ -1224,7 +1361,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         /** Displays only connections connected by the selected CIDOC CRM code. */
         relation_type?: string[];
       },
-      params: RequestParams = {},
+      params: RequestParams = {}
     ) =>
       this.request<EntitiesOutputModel, void>({
         path: `/type_entities/${entityId}`,
@@ -1266,14 +1403,30 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * Choose the format for the results.
          * @example lp
          */
-        format?: "lp" | "geojson" | "geojson-v2" | "pretty-xml" | "n3" | "turtle" | "nt" | "xml";
+        format?:
+          | "lp"
+          | "geojson"
+          | "geojson-v2"
+          | "pretty-xml"
+          | "n3"
+          | "turtle"
+          | "nt"
+          | "xml";
         /** Export the entities into either a simple CSV representation or a zip file of CSV's especially designed for network analyses. */
         export?: "csv" | "csvNetwork";
         /**
          * Choose one column to sort the results by. Default value is name.
          * @example name
          */
-        column?: "id" | "name" | "cidoc_class" | "system_class" | "begin_from" | "begin_to" | "end_from" | "end_to";
+        column?:
+          | "id"
+          | "name"
+          | "cidoc_class"
+          | "system_class"
+          | "begin_from"
+          | "begin_to"
+          | "end_from"
+          | "end_to";
         /**
          * Sorting result ascending or descending of the given column. Default value is asc.
          * @example asc
@@ -1294,7 +1447,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         /** Displays only connections connected by the selected CIDOC CRM code. */
         relation_type?: string[];
       },
-      params: RequestParams = {},
+      params: RequestParams = {}
     ) =>
       this.request<EntitiesOutputModel, void>({
         path: `/type_entities_all/${entityId}`,
@@ -1336,14 +1489,30 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * Choose the format for the results.
          * @example lp
          */
-        format?: "lp" | "geojson" | "geojson-v2" | "pretty-xml" | "n3" | "turtle" | "nt" | "xml";
+        format?:
+          | "lp"
+          | "geojson"
+          | "geojson-v2"
+          | "pretty-xml"
+          | "n3"
+          | "turtle"
+          | "nt"
+          | "xml";
         /** Export the entities into either a simple CSV representation or a zip file of CSV's especially designed for network analyses. */
         export?: "csv" | "csvNetwork";
         /**
          * Choose one column to sort the results by. Default value is name.
          * @example name
          */
-        column?: "id" | "name" | "cidoc_class" | "system_class" | "begin_from" | "begin_to" | "end_from" | "end_to";
+        column?:
+          | "id"
+          | "name"
+          | "cidoc_class"
+          | "system_class"
+          | "begin_from"
+          | "begin_to"
+          | "end_from"
+          | "end_to";
         /**
          * Sorting result ascending or descending of the given column. Default value is asc.
          * @example asc
@@ -1364,7 +1533,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         /** Displays only connections connected by the selected CIDOC CRM code. */
         relation_type?: string[];
       },
-      params: RequestParams = {},
+      params: RequestParams = {}
     ) =>
       this.request<EntitiesOutputModel, void>({
         path: `/entities_linked_to_entity/${entityId}`,
@@ -1387,7 +1556,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         /** Download results */
         download?: boolean;
       },
-      params: RequestParams = {},
+      params: RequestParams = {}
     ) =>
       this.request<TypeOverviewModel, void>({
         path: `/type_overview/`,
@@ -1410,7 +1579,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         /** Download results */
         download?: boolean;
       },
-      params: RequestParams = {},
+      params: RequestParams = {}
     ) =>
       this.request<TypeTreeModel, void>({
         path: `/type_tree/`,
@@ -1433,7 +1602,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         /** Download results */
         download?: boolean;
       },
-      params: RequestParams = {},
+      params: RequestParams = {}
     ) =>
       this.request<TypesByViewClassModel, void>({
         path: `/type_by_view_class/`,
@@ -1477,7 +1646,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         /** Download results */
         download?: boolean;
       },
-      params: RequestParams = {},
+      params: RequestParams = {}
     ) =>
       this.request<ContentModel, void>({
         path: `/content/`,
@@ -1517,13 +1686,21 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
          * Choose the format for the results.
          * @example lp
          */
-        format?: "lp" | "geojson" | "geojson-v2" | "pretty-xml" | "n3" | "turtle" | "nt" | "xml";
+        format?:
+          | "lp"
+          | "geojson"
+          | "geojson-v2"
+          | "pretty-xml"
+          | "n3"
+          | "turtle"
+          | "nt"
+          | "xml";
         /** Download results */
         download?: boolean;
         /** Just show count of how many entities would the result give back */
         count?: boolean;
       },
-      params: RequestParams = {},
+      params: RequestParams = {}
     ) =>
       this.request<SubunitsModel, void>({
         path: `/subunits/`,
@@ -1558,7 +1735,7 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
         /** Just show count of how many entities would the result give back */
         count?: boolean;
       },
-      params: RequestParams = {},
+      params: RequestParams = {}
     ) =>
       this.request<GeometricEntitiesModel, void>({
         path: `/geometric_entities/`,
@@ -1576,7 +1753,10 @@ export class Api<SecurityDataType extends unknown> extends HttpClient<SecurityDa
      * @name ExportDatabase
      * @request GET:/export_database/{format}
      */
-    exportDatabase: (format: "json" | "csv" | "xml", params: RequestParams = {}) =>
+    exportDatabase: (
+      format: "json" | "csv" | "xml",
+      params: RequestParams = {}
+    ) =>
       this.request<File, void>({
         path: `/export_database/${format}`,
         method: "GET",

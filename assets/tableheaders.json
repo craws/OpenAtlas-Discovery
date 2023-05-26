@@ -1,23 +1,22 @@
 [
-    {
-        "text": "class",
-        "value": "features[0].systemClass"
-    },
-    {
-        "text": "name",
-        "value": "features[0].properties.title"
-
-    },
-    {
-        "text": "description",
-        "value": "features[0].descriptions[0].value"
-    },
-    {
-        "text": "begin",
-        "value": "features[0].when.timespans[0].start.earliest"
-    },
-    {
-        "text": "end",
-        "value": "features[0].when.timespans[0].end.earliest"
-    }
+  {
+    "text": "class",
+    "value": "features[0].systemClass"
+  },
+  {
+    "text": "name",
+    "value": "features[0].properties.title"
+  },
+  {
+    "text": "description",
+    "value": "features[0].descriptions[0].value"
+  },
+  {
+    "text": "begin",
+    "value": "features[0].when.timespans[0].start.earliest"
+  },
+  {
+    "text": "end",
+    "value": "features[0].when.timespans[0].end.earliest"
+  }
 ]

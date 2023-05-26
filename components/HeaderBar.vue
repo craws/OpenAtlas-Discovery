@@ -9,7 +9,11 @@
     </nuxt-link>
     <v-spacer />
     <client-only>
-      <v-tooltip content-class="text-capitalize" :text="$t('global.basics.map')" location="bottom">
+      <v-tooltip
+        content-class="text-capitalize"
+        :text="$t('global.basics.map')"
+        location="bottom"
+      >
         <template #activator="{ props }">
           <nuxt-link
             v-bind="props"
@@ -20,7 +24,11 @@
           </nuxt-link>
         </template>
       </v-tooltip>
-      <v-tooltip content-class="text-capitalize" :text="$t('global.basics.data')" location="bottom">
+      <v-tooltip
+        content-class="text-capitalize"
+        :text="$t('global.basics.data')"
+        location="bottom"
+      >
         <template #activator="{ props }">
           <nuxt-link
             v-bind="props"
@@ -36,7 +44,7 @@
     <v-divider vertical />
 
     <v-menu open-on-hover open-on-click>
-      <template #activator="{ props}">
+      <template #activator="{ props }">
         <v-btn
           data-test="header-locale-menu"
           role="button"
@@ -44,16 +52,14 @@
           class="h-100 d-flex align-center justify-center px-2 text-grey"
         >
           <v-icon>mdi-translate</v-icon>
-          <v-icon size="small">
-            mdi-chevron-down
-          </v-icon>
+          <v-icon size="small"> mdi-chevron-down </v-icon>
         </v-btn>
       </template>
 
       <v-list data-test="locale-selector-list">
         <v-list-subheader>
           <p class="text-caption px-2">
-            {{ $t('global.basics.language') }}
+            {{ $t("global.basics.language") }}
           </p>
         </v-list-subheader>
         <!--
@@ -70,26 +76,31 @@
             class="text-body-2 text-capitalize px-2"
           >
             <b v-if="locale === Locale">
-              {{ $t('locales.' + locale + '.nativeName' ) }}
+              {{ $t("locales." + locale + ".nativeName") }}
             </b>
-            {{ locale !== Locale ? $t('locales.' + locale + '.nativeName' ) : '' }}
+            {{
+              locale !== Locale ? $t("locales." + locale + ".nativeName") : ""
+            }}
           </v-list-item-title>
         </v-list-item>
       </v-list>
     </v-menu>
   </v-app-bar>
 </template>
+
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n';
+import { useI18n } from "vue-i18n";
+
 const Locale = useI18n().locale;
 
-const selectedLocaleLocalStorageKey = 'oad-selected-locale';
+const selectedLocaleLocalStorageKey = "oad-selected-locale";
 
 onBeforeMount(() => {
-  Locale.value = window.localStorage.getItem(selectedLocaleLocalStorageKey) ?? Locale.value;
+  Locale.value =
+    window.localStorage.getItem(selectedLocaleLocalStorageKey) ?? Locale.value;
 });
 
-function setLanguage (locale: string) {
+function setLanguage(locale: string) {
   Locale.value = locale;
   window.localStorage.setItem(selectedLocaleLocalStorageKey, locale);
 }

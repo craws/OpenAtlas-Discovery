@@ -2,19 +2,17 @@
 
 // Configure Vitest (https://vitest.dev/config/)
 
-import { defineConfig } from 'vite';
+import { defineConfig } from "vite";
 
 export default defineConfig({
   test: {
     deps: {
-      inline: [/@nuxt\/test-utils/]
+      inline: [/@nuxt\/test-utils/],
     },
     globals: true,
-    environment: 'jsdom',
+    environment: "jsdom",
     coverage: {
-      exclude: [
-        'node_modules/'
-      ]
-    }
-  }
+      exclude: ["node_modules/"],
+    },
+  },
 });
