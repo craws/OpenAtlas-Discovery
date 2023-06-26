@@ -1,18 +1,20 @@
-// @ts-check
 import child_process from 'child_process';
 import { argv } from 'node:process';
-import fs from 'fs'
+import fs from 'fs-extra'
 
 const reposBasePath = 'temp';
 
 const repo = argv[2] ?? 'Mocca101/oad-content-test';
 const branch = argv[3] ?? 'main';
-const configPath = `${reposBasePath}/discoveryConfig.json`
+const configPath = `${reposBasePath}/discoveryConfig.json`;
+const contentSourcePath = `${reposBasePath}/content`;
+const contentDestPath = `content`;
 
 cloneRepo(reposBasePath, repo, branch);
 
 if(fs.existsSync(reposBasePath)) {
   handleConfig();
+  handleContent();
 
   fs.rmSync(reposBasePath, { recursive: true, force: true });
   console.log('Removed cloned repos');
@@ -46,5 +48,16 @@ function handleConfig() {
     fs.copyFile(configPath, 'discoveryConfig.json',  (err) => {
       err ? console.error(err) : 'Successfully set config from content repo';
     })
+  }
+}
+
+function handleContent() {
+  if(fs.existsSync(contentSourcePath)) {
+    try {
+      fs.copySync(contentSourcePath, contentDestPath, { overwrite: true })
+      console.log('Successfully set content from content repo!')
+    } catch (err) {
+      console.error(err)
+    }
   }
 }
