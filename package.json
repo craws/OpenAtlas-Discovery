@@ -17,7 +17,8 @@
     "prepare": "husky install",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
-    "vitest:run": "vitest run --coverage"
+    "vitest:run": "vitest run --coverage",
+    "load-content":"node deployment/loadContent.mjs"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,vue}": "eslint --fix"
