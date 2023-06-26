@@ -45,9 +45,12 @@ function getBranch(branch) {
 
 function handleConfig() {
   if(fs.existsSync(configPath)) {
-    fs.copyFile(configPath, 'discoveryConfig.json',  (err) => {
-      err ? console.error(err) : 'Successfully set config from content repo';
-    })
+    try {
+      fs.copyFile(configPath, 'discoveryConfig.json');
+      console.log('Successfully set config from content repo!');
+    } catch (err) {
+      console.error(err)
+    }
   }
 }
 
