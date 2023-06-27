@@ -5,7 +5,7 @@ import headers from '~/assets/tableheaders.json';
 import classes from '~/assets/classes.json';
 import { Query } from '~~/types/query';
 const { t } = useI18n();
-const { $api } = useNuxtApp();
+const { $discoveryConfig, $api } = useNuxtApp();
 
 const itemsLength: ComputedRef<number | undefined> = computed(() => data?.value?.pagination?.entities);
 const options = reactive({ page: 1, itemsPerPage: 20, itemsLength });
@@ -14,7 +14,8 @@ const query = computed(() => ({
   view_classes: ['actor', 'event', 'place', 'reference', 'source'],
   page: options.page,
   limit: options.itemsPerPage,
-  search: search.value
+  search: search.value,
+  type_id: $discoveryConfig.defaultFilters,
 }));
 const { data, pending, refresh } = await useAsyncData(() => $api.query.getQuery(query.value));
 watch(() => options.page, () => refresh());
