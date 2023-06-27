@@ -5,7 +5,7 @@
   },
   "private": true,
   "scripts": {
-    "build": "nuxt build",
+    "build": "load-content && nuxt build",
     "start": "nuxt start",
     "dev": "nuxt dev",
     "generate": "nuxt generate",

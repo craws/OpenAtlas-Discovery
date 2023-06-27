@@ -4,8 +4,8 @@ import fs from 'fs-extra'
 
 const reposBasePath = 'temp';
 
-const repo = argv[2] ?? 'Mocca101/oad-content-test';
-const branch = argv[3] ?? 'main';
+const repo = process.env["CONTENT_REPO"] ?? 'Mocca101/oad-content-test';
+const branch = process.env["CONTENT_BRANCH"] ?? 'main';
 const configSourcePath = `${reposBasePath}/discoveryConfig.json`;
 const configDestPath = `config/discoveryConfig.json`;
 
