@@ -6,9 +6,12 @@ const reposBasePath = 'temp';
 
 const repo = argv[2] ?? 'Mocca101/oad-content-test';
 const branch = argv[3] ?? 'main';
-const configPath = `${reposBasePath}/discoveryConfig.json`;
+const configSourcePath = `${reposBasePath}/discoveryConfig.json`;
+const configDestPath = `config/discoveryConfig.json`;
+
 const contentSourcePath = `${reposBasePath}/content`;
 const contentDestPath = `content`;
+
 const publicSourcePath = `${reposBasePath}/public`;
 const publicDestPath = `public`;
 
@@ -51,9 +54,9 @@ function getBranch(branch) {
 }
 
 function handleConfig() {
-  if(fs.existsSync(configPath)) {
+  if(fs.existsSync(configSourcePath)) {
     try {
-      fs.copyFile(configPath, 'discoveryConfig.json');
+      fs.copyFile(configSourcePath, configDestPath);
       console.log('Successfully set config from content repo!');
     } catch (err) {
       console.error(err)
