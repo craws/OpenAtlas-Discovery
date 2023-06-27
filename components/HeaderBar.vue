@@ -3,7 +3,7 @@
     <nuxt-link to="/">
       <nuxt-img
         class="pt-2"
-        src="/OpenAtlas_Discovery_landscape.svg"
+        src="/header_logo.svg"
         width="150px"
       />
     </nuxt-link>
