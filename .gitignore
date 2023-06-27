@@ -8,6 +8,8 @@ coverage
 .env
 dist
 
+temp
+
 # IDE / Editor
 .idea/
 

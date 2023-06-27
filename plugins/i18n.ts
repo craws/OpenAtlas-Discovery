@@ -5,7 +5,7 @@ import de from '../locales/de.json';
 export default defineNuxtPlugin(({ vueApp }) => {
   const { $discoveryConfig } = useNuxtApp();
 
-  const defaultLocale = $discoveryConfig.global.defaultLocale;
+  const defaultLocale:string = $discoveryConfig.defaultLocale;
 
   const i18n = createI18n({
     legacy: false,

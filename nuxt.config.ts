@@ -2,6 +2,11 @@ import { resolve, dirname } from 'node:path';
 import { fileURLToPath } from 'url';
 import vuetify from 'vite-plugin-vuetify';
 import VueI18nVitePlugin from '@intlify/unplugin-vue-i18n/vite';
+import { DiscoveryConfig } from './config/discoveryConfig';
+import discoveryConfig from './config/discoveryConfig.json';
+
+
+const config : DiscoveryConfig = (discoveryConfig as DiscoveryConfig)
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -22,11 +27,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     // Keys within public, will be also exposed to the client-side
-    public: {
-      apiBase:
-        process.env.NUXT_PUBLIC_API_BASE ||
-        'https://demo-dev.openatlas.eu'
-    }
+    public: {  }
   },
   modules: [
     '@nuxt/image-edge',
@@ -60,9 +61,6 @@ export default defineNuxtConfig({
     ]
   },
   image: {
-    domains: [
-      process.env.NUXT_PUBLIC_API_BASE
-      // TODO: Maybe this needs it's own env variable like process.env.NUXT_IMAGE_DOMAINS
-    ]
+    domains: config.imageDomains ?? ['openatlas.eu']
   }
 });
