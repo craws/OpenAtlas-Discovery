@@ -18,4 +18,8 @@ export interface DiscoveryConfig {
    * These filters are applied in the Overview and Search sections of the website but not in the detailed view.
    */
   defaultFilters?: number[];
+
+  APIbase?: string;
+
+  imageDomains?: string[];
 }
