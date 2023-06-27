@@ -19,7 +19,15 @@ export interface DiscoveryConfig {
    */
   defaultFilters?: number[];
 
+  /**
+     * The base URL for the Discovery website's API.
+     * If provided, it specifies the root URL that will be used for making API requests.
+     */
   APIbase?: string;
 
+  /**
+   * The list of allowed image domains.
+   * Specifies the domains from which images can be optimized via nuxt-img for the Discovery website.
+   */
   imageDomains?: string[];
 }

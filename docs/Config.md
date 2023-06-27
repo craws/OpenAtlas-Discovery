@@ -27,6 +27,20 @@ The `dateTimeFormat` option allows you to specify a custom format for displaying
 
 The `defaultFilters` option is a list of filters represented as numbers. It acts as a whitelist to allow only entities belonging to a certain type. These filters are applied in the Overview and Search sections of the website but are not applied in the detailed view. By specifying the desired filters in this list, you can control the types of entities that are displayed to users during their interactions with the website.
 
+#### `APIbase` (optional)
+
+- Type: `string`
+- Default value: _(none)_
+
+The `APIbase` option specifies the base URL for the Discovery website's API. If provided, it defines the root URL that will be used for making API requests. This allows you to customize the API endpoint according to your specific needs. If not provided, the default API URL defined by the website will be used.
+
+#### `imageDomains` (optional)
+
+- Type: `string[]`
+- Default value: _(none)_
+
+The `imageDomains` option is a list of allowed image domains. It specifies the domains from which images can be optimized via nuxt-img on the Discovery website.
+
 ### Usage
 
 Here's an example of how the `discoveryConfig` file can be used:
@@ -35,7 +49,10 @@ Here's an example of how the `discoveryConfig` file can be used:
 {
   "defaultLocale": "en",
   "dateTimeFormat": "yyyy-MM-dd HH:mm:ss",
-  "defaultFilters": [1, 2, 3]
+"defaultFilters": [1, 2, 3],
+"APIbase": "https://demo-dev.openatlas.eu",
+"imageDomains": ["openatlas.eu"]
+
 }
 ```
 
