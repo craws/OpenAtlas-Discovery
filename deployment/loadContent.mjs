@@ -31,7 +31,7 @@ if(fs.existsSync(reposBasePath)) {
  * @param {string} repo following then format "user/repositoryName"
  * @param {string} branch
  */
-function cloneRepo(targetpath, repo, branch) {
+function cloneRepo(targetpath, repo, branch, useHttp = true) {
   // From https://cheatcode.co/tutorials/how-to-clone-and-sync-a-github-repo-via-node-js
   // child_process.execSync(`git clone ${getBranch(branch)} https://${username}:${process.env.PERSONAL_ACCESS_TOKEN}@github.com/${username}/${repo}.git ${targetpath}`);
 
@@ -39,8 +39,14 @@ function cloneRepo(targetpath, repo, branch) {
     fs.rmSync(reposBasePath, { recursive: true, force: true });
   }
 
-  console.log(`Attempting to clone ${getBranch(branch)} on git@github.com:${repo}.git to ${targetpath}`);
-  child_process.execSync(`git clone ${getBranch(branch)} git@github.com:${repo}.git ${targetpath}`);
+  if(useHttp) {
+    console.log(`Attempting to clone ${getBranch(branch)} on https://github.com/${repo}.git to ${targetpath}`);
+    child_process.execSync(`git clone ${getBranch(branch)} https://github.com/${repo}.git ${targetpath}`);
+  } else {
+    console.log(`Attempting to clone ${getBranch(branch)} on git@github.com:${repo}.git to ${targetpath}`);
+    child_process.execSync(`git clone ${getBranch(branch)} git@github.com:${repo}.git ${targetpath}`);
+
+  }
   console.log('Clone successful');
 }
 
