@@ -113,7 +113,7 @@ jobs:
     with:
       environment: ${{ needs.setup_workflow_env.outputs.environment}}-mamems
       DOCKER_TAG: ${{ needs.setup_workflow_env.outputs.registry_root }}${{ needs.setup_workflow_env.outputs.image_tagged }}-mamems
-      APP_NAME: tunocent-app
+      APP_NAME: ${{ needs.setup_workflow_env.outputs.APP_NAME }}-${{ needs.setup_workflow_env.outputs.environment_short }}-mamems
       APP_ROOT: ${{ needs.setup_workflow_env.outputs.APP_ROOT }}
       SERVICE_ID: ${{ needs.setup_workflow_env.outputs.SERVICE_ID }}
       PUBLIC_URL: ${{ needs.setup_workflow_env.outputs.PUBLIC_URL }}
@@ -125,7 +125,7 @@ jobs:
     with:
       environment: ${{ needs.setup_workflow_env.outputs.environment}}-approaching-byzantium
       DOCKER_TAG: ${{ needs.setup_workflow_env.outputs.registry_root }}${{ needs.setup_workflow_env.outputs.image_tagged }}-approaching-byzantium
-      APP_NAME: tunocent-app
+      APP_NAME: ${{ needs.setup_workflow_env.outputs.APP_NAME }}-${{ needs.setup_workflow_env.outputs.environment_short }}-approaching-byzantium
       APP_ROOT: ${{ needs.setup_workflow_env.outputs.APP_ROOT }}
       SERVICE_ID: ${{ needs.setup_workflow_env.outputs.SERVICE_ID }}
       PUBLIC_URL: ${{ needs.setup_workflow_env.outputs.PUBLIC_URL }}
