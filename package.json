@@ -6,7 +6,7 @@
   "private": true,
   "scripts": {
     "build": "node deployment/loadContent.mjs && nuxt build",
-    "start": "nuxt start",
+    "start": "node_modules/nuxt/bin/nuxt.js start -c ./nuxt.config.js",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
