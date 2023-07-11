@@ -1,28 +1,27 @@
 import child_process from 'child_process';
-import { argv } from 'node:process';
 import fs from 'fs-extra'
 
-const reposBasePath = 'temp';
+const clonedContentPath = 'temp';
 
 const repo = process.env["CONTENT_REPO"] ?? 'Mocca101/oad-content-test';
 const branch = process.env["CONTENT_BRANCH"] ?? 'main';
-const configSourcePath = `${reposBasePath}/discoveryConfig.json`;
+const configSourcePath = `${clonedContentPath}/discoveryConfig.json`;
 const configDestPath = `config/discoveryConfig.json`;
 
-const contentSourcePath = `${reposBasePath}/content`;
+const contentSourcePath = `${clonedContentPath}/content`;
 const contentDestPath = `content`;
 
-const publicSourcePath = `${reposBasePath}/public`;
+const publicSourcePath = `${clonedContentPath}/public`;
 const publicDestPath = `public`;
 
-cloneRepo(reposBasePath, repo, branch);
+cloneRepo(clonedContentPath, repo, branch);
 
-if(fs.existsSync(reposBasePath)) {
+if(fs.existsSync(clonedContentPath)) {
   handleConfig();
   handleContent();
   handlePublic();
 
-  fs.rmSync(reposBasePath, { recursive: true, force: true });
+  fs.rmSync(clonedContentPath, { recursive: true, force: true });
   console.log('Removed cloned repos');
 }
 
@@ -36,7 +35,7 @@ function cloneRepo(targetpath, repo, branch, useHttp = true) {
   // child_process.execSync(`git clone ${getBranch(branch)} https://${username}:${process.env.PERSONAL_ACCESS_TOKEN}@github.com/${username}/${repo}.git ${targetpath}`);
 
   if(fs.existsSync(targetpath)) {
-    fs.rmSync(reposBasePath, { recursive: true, force: true });
+    fs.rmSync(clonedContentPath, { recursive: true, force: true });
   }
 
   if(useHttp) {
