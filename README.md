@@ -8,9 +8,8 @@ At the moment we are in early development.
 * [Wiki](https://redmine.openatlas.eu/projects/openatlas-discovery/wiki/Wiki)
 * [Issues](https://redmine.openatlas.eu/projects/openatlas-discovery/issues)
 
-# Content v2 Minimal Starter
-Look at the [Content documentation](https://content-v2.nuxtjs.org/) to learn
-more.
+# Content 
+The content can be managed either by placing the content into the `content` directory as well as the configuration file `discoveryConfig.json`
 
 ## Setup
 Make sure to install the dependencies:
