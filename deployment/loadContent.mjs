@@ -85,6 +85,7 @@ function handlePublic() {
     try {
       fs.copySync(publicSourcePath, publicDestPath, { overwrite: true })
       console.log('Successfully set public folder from content repo!')
+      console.log('Public folder contents: ', fs.readdirSync(publicDestPath))
     } catch (err) {
       console.error(err)
     }
