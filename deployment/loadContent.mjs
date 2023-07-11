@@ -15,6 +15,8 @@ const publicSourcePath = `${clonedContentPath}/public`;
 const publicDestPath = `public`;
 
 cloneRepo(clonedContentPath, repo, branch);
+// Log the commit hash of the content repo
+console.log('Content repo commit hash: ', child_process.execSync(`git -C ${clonedContentPath} rev-parse HEAD`).toString().trim());
 
 if(fs.existsSync(clonedContentPath)) {
   handleConfig();
