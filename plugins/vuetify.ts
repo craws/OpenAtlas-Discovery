@@ -8,6 +8,7 @@ const lightTheme: ThemeDefinition = {
 };
 
 export default defineNuxtPlugin((nuxtApp) => {
+  const { $discoveryConfig } = useNuxtApp();
   const vuetify = createVuetify({
     theme: {
       defaultTheme: 'lightTheme',

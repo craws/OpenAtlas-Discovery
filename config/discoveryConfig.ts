@@ -30,4 +30,31 @@ export interface DiscoveryConfig {
    * Specifies the domains from which images can be optimized via nuxt-img for the Discovery website.
    */
   imageDomains?: string[];
+
+  /**
+   * Hex color code for the primary color of the website.
+   */
+  primaryColor?: string;
+
+  /**
+   * Logo
+   * Specifies the logo that will be used for the Discovery website.
+   * @default logo.svg
+   */
+  logo?: string;
+
+  /**
+   * Header Logo
+   * Specifies the logo that will be used for the header of the Discovery website. Will default to logo if not provided.
+   * @default logo
+   * @see logo
+   */
+  headerLogo?: string;
+
+  /**
+   * The title of the website.
+   * Specifies the title that will be used for the Discovery website.
+   * @default OpenAtlas Discovery
+   */
+  title?: string;
 }

@@ -9,8 +9,10 @@ t.availableLocales.forEach(async (locale) => {
   data[locale] = await queryContent(`/${locale}`).findOne();
 });
 const logoHeight = computed(() => smAndUp.value ? '350px' : '250px');
+const { $discoveryConfig } = useNuxtApp();
+
 useHead({
-  title: 'OpenAtlas Discovery'
+  title: $discoveryConfig.title ?? 'OpenAtlas Discovery'
 });
 </script>
 <template>

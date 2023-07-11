@@ -3,7 +3,7 @@
     <nuxt-link to="/">
       <nuxt-img
         class="pt-2"
-        src="/header_logo.svg"
+        :src="logo"
         width="150px"
       />
     </nuxt-link>
@@ -83,7 +83,10 @@
 import { useI18n } from 'vue-i18n';
 const Locale = useI18n().locale;
 
+
 const selectedLocaleLocalStorageKey = 'oad-selected-locale';
+
+const logo = getLogo(true);
 
 onBeforeMount(() => {
   Locale.value = window.localStorage.getItem(selectedLocaleLocalStorageKey) ?? Locale.value;

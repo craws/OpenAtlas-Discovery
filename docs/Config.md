@@ -6,6 +6,13 @@ The `discoveryConfig` file is a JSON file used to set the base options for the O
 
 The following configuration options are available in the `discoveryConfig` file:
 
+#### `title` (optional)
+
+- Type: `string`
+- Default value: `"OpenAtlas Discovery"`
+
+The `title` option specifies the title of the website. It is displayed in the browser's title bar and can be used by search engines to identify the website.
+
 #### `defaultLocale`
 
 - Type: `string`
@@ -40,6 +47,29 @@ The `APIbase` option specifies the base URL for the Discovery website's API. If 
 - Default value: _(none)_
 
 The `imageDomains` option is a list of allowed image domains. It specifies the domains from which images can be optimized via nuxt-img on the Discovery website.
+
+#### `primaryColor` (optional)
+
+- Type: `string`
+- Default value: `"#b8cf5b"`
+
+The `primaryColor` option specifies the primary color of the website. It is used for various UI elements such as buttons, links, and backgrounds.
+
+#### `logo` (optional)
+
+- Type: `string`
+- Default value: `"\logo.svg"`
+
+
+The `logo` option specifies the logo that will be used for the Discovery website.
+
+#### `headerLogo` (optional)
+
+- Type: `string`
+- Default value: `"logo"` (if set)
+
+
+The `headerLogo` option specifies the logo that will be used for the header of the Discovery website. If not provided, the `logo` option will be used.
 
 ### Usage
 
