@@ -8,6 +8,30 @@
       />
     </nuxt-link>
     <v-spacer />
+
+    <ContentNavigation v-slot="{ navigation }" :query="navLocaleQuery">
+      <template v-for="el of navigation">
+        <NuxtLink
+          v-if="!el.children"
+          :key="el._path"
+          :to="el._path"
+        >
+          {{ el.navTitle || el.title }}
+        </NuxtLink>
+        <template v-else>
+          <NuxtLink
+            v-for="link of el.children"
+            :key="link._path"
+            :to="link._path"
+          >
+            <p class="text-decoration-none font-weight-medium">
+              {{ link.navTitle || link.title }}
+            </p>
+          </NuxtLink>
+        </template>
+      </template>
+    </ContentNavigation>
+
     <client-only>
       <v-tooltip content-class="text-capitalize" :text="$t('global.basics.map')" location="bottom">
         <template #activator="{ props }">
@@ -80,9 +104,22 @@
   </v-app-bar>
 </template>
 <script setup lang="ts">
+import { QueryBuilderParams } from '@nuxt/content/dist/runtime/types';
 import { useI18n } from 'vue-i18n';
 const Locale = useI18n().locale;
 
+const navLocaleQuery = computed(() : QueryBuilderParams => {
+  return {
+    where: [
+      {
+        // Create a regex pattern to match the locale in the path
+        _path: { $regex: `/^/${Locale.value}/` }
+      }
+    ]
+  };
+});
+
+// const { data: navigation } = await useAsyncData('navigation', () => fetchContentNavigation(navLocaleQuery.value))
 
 const selectedLocaleLocalStorageKey = 'oad-selected-locale';
 
