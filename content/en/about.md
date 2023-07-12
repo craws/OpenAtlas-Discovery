@@ -1,3 +1,9 @@
-# About Content v2
+---
+navigation:
+  title: 'About'
+---
+
+# About
+
 
 [Back home](/)
