@@ -9,7 +9,7 @@
     </nuxt-link>
     <v-spacer />
 
-    <ContentNavigation v-slot="{ navigation }" :query="navLocaleQuery">
+    <template v-if="navigation !== null">
       <template v-for="el of navigation">
         <NuxtLink
           v-if="!el.children"
@@ -23,14 +23,13 @@
             v-for="link of el.children"
             :key="link._path"
             :to="link._path"
+            class="text-decoration-none font-weight-bold"
           >
-            <p class="text-decoration-none font-weight-medium">
-              {{ link.navTitle || link.title }}
-            </p>
+            {{ link.navTitle || link.title }}
           </NuxtLink>
         </template>
       </template>
-    </ContentNavigation>
+    </template>
 
     <client-only>
       <v-tooltip content-class="text-capitalize" :text="$t('global.basics.map')" location="bottom">
@@ -118,8 +117,12 @@ const navLocaleQuery = computed(() : QueryBuilderParams => {
     ]
   };
 });
-
-// const { data: navigation } = await useAsyncData('navigation', () => fetchContentNavigation(navLocaleQuery.value))
+const { data: navigation } = await useAsyncData(
+  'navigation',
+  () => fetchContentNavigation(navLocaleQuery.value),
+  {
+    watch: [navLocaleQuery]
+  });
 
 const selectedLocaleLocalStorageKey = 'oad-selected-locale';
 
