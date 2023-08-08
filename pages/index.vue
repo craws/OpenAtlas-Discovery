@@ -6,10 +6,22 @@ const { smAndUp } = useDisplay();
 const t = useI18n();
 const data = reactive<{ [name: string]: ParsedContent }>({});
 t.availableLocales.forEach(async (locale) => {
-  data[locale] = await queryContent(`/${locale}`).findOne();
+  let content = null;
+  try {
+    content = await queryContent(`/${locale}`).findOne();
+  } catch (error: any) {
+    if (!error.message.includes('404 Document not found')) { throw error; }
+  }
+  if (content) { data[locale] = content; }
 });
 const logoHeight = computed(() => smAndUp.value ? '350px' : '250px');
 const { $discoveryConfig } = useNuxtApp();
+
+const contentToUse = computed(() => {
+  if (data[t.locale.value]) { return data[t.locale.value]; }
+  if (typeof t.fallbackLocale.value === 'string' && data[t.fallbackLocale.value]) { return data[t.fallbackLocale.value]; }
+  return null;
+});
 
 useHead({
   title: $discoveryConfig.title ?? 'OpenAtlas Discovery'
@@ -18,8 +30,8 @@ useHead({
 <template>
   <v-sheet height="calc(100vh - 65px)" class=" landing-page d-flex justify-center pt-5">
     <v-container class="text-center" data-test="main-content-renderer">
-      <ContentRenderer v-if="data[$i18n.locale]">
-        <ContentRendererMarkdown :value="data[$i18n.locale]" />
+      <ContentRenderer v-if="contentToUse">
+        <ContentRendererMarkdown :value="contentToUse" />
       </ContentRenderer>
       <br>
       <v-row justify="center">
