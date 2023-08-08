@@ -1,6 +1,6 @@
 <template>
   <template v-if="isDirectory">
-    <v-btn>
+    <v-btn variant="plain" :ripple="false">
       {{ navItem.title }}
       <v-menu activator="parent">
         <v-list>
@@ -16,9 +16,9 @@
     </v-btn>
   </template>
   <template v-else>
-    <v-list-item-title @click="navigateTo(navItem._path)">
-      {{ navItem.navTitle || navItem.title }}
-    </v-list-item-title>
+    <v-btn variant="plain" :ripple="false" :to="navItem._path">
+      {{ navItem.title || navItem.navTitle }}
+    </v-btn>
   </template>
 </template>
 <script setup lang="ts">
