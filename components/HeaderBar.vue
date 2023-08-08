@@ -8,6 +8,9 @@
       />
     </nuxt-link>
     <v-spacer />
+
+    <ContentNavigationCNCustom />
+
     <client-only>
       <v-tooltip content-class="text-capitalize" :text="$t('global.basics.map')" location="bottom">
         <template #activator="{ props }">
@@ -35,65 +38,17 @@
 
     <v-divider vertical />
 
-    <v-menu open-on-hover open-on-click>
-      <template #activator="{ props}">
-        <v-btn
-          data-test="header-locale-menu"
-          role="button"
-          v-bind="props"
-          class="h-100 d-flex align-center justify-center px-2 text-grey"
-        >
-          <v-icon>mdi-translate</v-icon>
-          <v-icon size="small">
-            mdi-chevron-down
-          </v-icon>
-        </v-btn>
-      </template>
-
-      <v-list data-test="locale-selector-list">
-        <v-list-subheader>
-          <p class="text-caption px-2">
-            {{ $t('global.basics.language') }}
-          </p>
-        </v-list-subheader>
-        <!--
-          To make sure there is a correct name for each locale, the locale
-          must have a list of locales with their corresponding natvieNames.
-         -->
-        <v-list-item
-          v-for="locale in $i18n.availableLocales"
-          :key="locale"
-          @click="setLanguage(locale)"
-        >
-          <v-list-item-title
-            :data-test="'locale-selector-' + locale"
-            class="text-body-2 text-capitalize px-2"
-          >
-            <b v-if="locale === Locale">
-              {{ $t('locales.' + locale + '.nativeName' ) }}
-            </b>
-            {{ locale !== Locale ? $t('locales.' + locale + '.nativeName' ) : '' }}
-          </v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-menu>
+    <LocaleDropDown />
   </v-app-bar>
 </template>
 <script setup lang="ts">
 import { useI18n } from 'vue-i18n';
 const Locale = useI18n().locale;
 
-
-const selectedLocaleLocalStorageKey = 'oad-selected-locale';
-
 const logo = getLogo(true);
 
 onBeforeMount(() => {
-  Locale.value = window.localStorage.getItem(selectedLocaleLocalStorageKey) ?? Locale.value;
+  Locale.value = localStorage.getItem(selectedLocaleLocalStorageKey) ?? Locale.value;
 });
 
-function setLanguage (locale: string) {
-  Locale.value = locale;
-  window.localStorage.setItem(selectedLocaleLocalStorageKey, locale);
-}
 </script>

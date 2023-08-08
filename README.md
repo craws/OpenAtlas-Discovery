@@ -40,6 +40,26 @@ To make use of automatic linting on commit, initiate husky by running the comman
 npm run prepare
 ```
 
+## Content Fetching
+
+If you want to fetch the content and configuration from a Content repository, you can do so by running the `..\deployment\loadContent.mjs` script.
+
+Set up the enviroment Variables `CONTENT_REPO` & `CONTENT_BRANCH`:
+
+```bash
+# Windows
+$env:CONTENT_REPO='link-to-clone-your-repository'
+
+$env:CONTENT_BRANCH='main'
+```
+
+Run the script:
+
+```bash
+# npm
+npm run load-content
+```
+
 ## Development Server
 Start the development server on http://localhost:3000
 

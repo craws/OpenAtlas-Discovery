@@ -24,7 +24,8 @@
       "en": "english",
       "loading": "loading",
       "license": "License",
-      "depictions": "Depictions"
+      "depictions": "Depictions",
+      "backHome": "Go back home"
     },
     "entity": {
       "class": "class",
