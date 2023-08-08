@@ -4,7 +4,7 @@
       v-for="el of navigation"
       :key="el._id"
     >
-      <ContentNavElement :nav-item="el" />
+      <ContentNavigationCNElement :nav-item="el" />
     </template>
   </template>
 </template>
@@ -12,6 +12,8 @@
 import { QueryBuilderParams } from '@nuxt/content/dist/runtime/types';
 import { useI18n } from 'vue-i18n';
 const Locale = useI18n().locale;
+
+const updateNaviagation = ref(false);
 
 const navLocaleQuery = computed(() : QueryBuilderParams => {
   return {
@@ -23,11 +25,28 @@ const navLocaleQuery = computed(() : QueryBuilderParams => {
     ]
   };
 });
-const { data: navigation } = await useAsyncData(
+
+const { data: fetchedNavigation } = await useAsyncData(
   'navigation',
-  () => fetchContentNavigation(navLocaleQuery.value),
+  () => {
+    const contentNav = fetchContentNavigation(navLocaleQuery.value);
+    return contentNav;
+  },
   {
-    watch: [navLocaleQuery]
+    watch: [
+      navLocaleQuery,
+      updateNaviagation
+    ]
   });
+
+onBeforeMount(() => {
+  if (!fetchedNavigation.value || !fetchedNavigation.value?.[0]?._path.includes(Locale.value)) {
+    updateNaviagation.value = true;
+  }
+});
+
+const navigation = computed(() => {
+  return fetchedNavigation.value?.[0]?.children ?? null;
+});
 
 </script>

@@ -9,7 +9,7 @@
             :key="index"
             :value="index"
           >
-            <ContentNavElement :nav-item="item" />
+            <ContentNavigationCNElement :nav-item="item" />
           </v-list-item>
         </v-list>
       </v-menu>

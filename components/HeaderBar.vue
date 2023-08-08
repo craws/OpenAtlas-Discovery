@@ -9,7 +9,7 @@
     </nuxt-link>
     <v-spacer />
 
-    <ContentNavigation />
+    <ContentNavigationCNCustom />
 
     <client-only>
       <v-tooltip content-class="text-capitalize" :text="$t('global.basics.map')" location="bottom">
@@ -48,7 +48,7 @@ const Locale = useI18n().locale;
 const logo = getLogo(true);
 
 onBeforeMount(() => {
-  Locale.value = window.localStorage.getItem(selectedLocaleLocalStorageKey) ?? Locale.value;
+  Locale.value = localStorage.getItem(selectedLocaleLocalStorageKey) ?? Locale.value;
 });
 
 </script>

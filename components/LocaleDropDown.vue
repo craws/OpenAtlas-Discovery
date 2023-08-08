@@ -1,5 +1,5 @@
 <template>
-  <v-menu open-on-hover open-on-click>
+  <v-menu open-on-click>
     <template #activator="{ props}">
       <v-btn
         data-test="header-locale-menu"
