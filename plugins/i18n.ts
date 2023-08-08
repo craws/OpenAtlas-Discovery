@@ -12,6 +12,7 @@ export default defineNuxtPlugin(({ vueApp }) => {
     allowComposition: true,
     globalInjection: true,
     locale: defaultLocale,
+    fallbackLocale: defaultLocale,
     messages: {
       en,
       de

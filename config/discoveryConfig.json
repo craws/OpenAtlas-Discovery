@@ -1,5 +1,5 @@
 {
-  "defaultLocale": "de",
+  "defaultLocale": "en",
   "APIbase": "https://demo-dev.openatlas.eu",
   "imageDomains": ["openatlas.eu"]
 }
