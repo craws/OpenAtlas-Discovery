@@ -2,6 +2,7 @@
 import { ParsedContent } from '@nuxt/content/dist/runtime/types';
 import { useI18n } from 'vue-i18n';
 import { useDisplay } from 'vuetify';
+
 const { smAndUp } = useDisplay();
 const t = useI18n();
 const data = reactive<{ [name: string]: ParsedContent }>({});
@@ -28,7 +29,7 @@ useHead({
 });
 </script>
 <template>
-  <v-sheet height="calc(100vh - 65px)" class=" landing-page d-flex justify-center pt-5">
+  <v-sheet height="calc(100vh - 65px)" class="landing-page d-flex justify-center pt-5">
     <v-container class="text-center" data-test="main-content-renderer">
       <ContentRenderer v-if="contentToUse">
         <ContentRendererMarkdown :value="contentToUse" class="w-50 mx-auto" />
@@ -66,3 +67,17 @@ useHead({
     </v-container>
   </v-sheet>
 </template>
+
+<style scoped>
+.landing-page :deep(p) {
+  max-width: 568px;
+  margin-inline: auto;
+}
+
+.landing-page :deep(img){
+  width:80%;
+  max-height: v-bind(logoHeight);
+  object-fit: contain;
+
+}
+</style>
