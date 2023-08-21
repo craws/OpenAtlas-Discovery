@@ -31,10 +31,10 @@ useHead({
   <v-sheet height="calc(100vh - 65px)" class=" landing-page d-flex justify-center pt-5">
     <v-container class="text-center" data-test="main-content-renderer">
       <ContentRenderer v-if="contentToUse">
-        <ContentRendererMarkdown :value="contentToUse" />
+        <ContentRendererMarkdown :value="contentToUse" class="w-50 mx-auto" />
       </ContentRenderer>
       <br>
-      <v-row justify="center">
+      <v-row v-if="$discoveryConfig.APIbase" justify="center">
         <v-col cols="auto">
           <v-btn
             size="large"
@@ -66,17 +66,3 @@ useHead({
     </v-container>
   </v-sheet>
 </template>
-
-<style>
-.landing-page p {
-  max-width: 568px;
-  margin-inline: auto;
-}
-
-.landing-page img{
-  width:80%;
-  max-height: v-bind(logoHeight);
-  object-fit: contain;
-
-}
-</style>
