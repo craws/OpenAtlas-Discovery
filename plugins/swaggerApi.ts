@@ -5,7 +5,7 @@ export default defineNuxtPlugin(() => {
 
   const baseUrl: string = ($discoveryConfig.APIbase ?? 'https://demo-dev.openatlas.eu') + '/api/';
   const api = new Api({
-    baseUrl: baseUrl
+    baseUrl
   });
   return { provide: { api } };
 });
