@@ -4,6 +4,13 @@ import { LinkedPlacesModelDescriptions, LinkedPlacesModelWhen } from '~~/composa
 import { Format, Query, ViewClasses } from '~~/types/query';
 const { t } = useI18n();
 
+definePageMeta({
+  middleware: ['api']
+});
+useHead({
+  title: t('global.basics.map') ?? 'Map'
+});
+
 const { $discoveryConfig, $api } = useNuxtApp();
 
 const query = ref({
@@ -11,7 +18,7 @@ const query = ref({
   limit: 0,
   format: 'geojson' as Format,
   search: undefined as string[] | undefined,
-  type_id: $discoveryConfig.defaultFilters,
+  type_id: $discoveryConfig.defaultFilters
 });
 const { data, pending, refresh } = await useAsyncData(() => $api.query.getQuery(query.value));
 onMounted(() => {
@@ -69,9 +76,6 @@ function updateQuery (newQuery: Query) {
   refresh();
 }
 
-useHead({
-  title: t('global.basics.map')
-});
 </script>
 <template>
   <div data-test="map-page-container">

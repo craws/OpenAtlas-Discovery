@@ -47,6 +47,13 @@ const features = computed(() => data?.value?.features ?? undefined);
 
 const title = computed(() => features?.value?.[0]?.properties?.title ?? t('global.basics.title'));
 
+definePageMeta({
+  middleware: ['api']
+});
+useHead({
+  title: title.value
+});
+
 const descriptions = computed((): string[] => {
   if (features?.value?.[0]?.descriptions) {
     return features?.value?.[0]?.descriptions

@@ -11,7 +11,7 @@
 
     <ContentNavigationCNCustom />
 
-    <client-only>
+    <client-only v-if="$discoveryConfig.APIbase">
       <v-tooltip content-class="text-capitalize" :text="$t('global.basics.map')" location="bottom">
         <template #activator="{ props }">
           <nuxt-link

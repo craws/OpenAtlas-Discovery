@@ -7,6 +7,13 @@ import { Query } from '~~/types/query';
 const { t } = useI18n();
 const { $discoveryConfig, $api } = useNuxtApp();
 
+definePageMeta({
+  middleware: ['api']
+});
+useHead({
+  title: t('global.basics.data') ?? 'Data'
+});
+
 const itemsLength: ComputedRef<number | undefined> = computed(() => data?.value?.pagination?.entities);
 const options = reactive({ page: 1, itemsPerPage: 20, itemsLength });
 const search = ref<string[] | undefined>([]);
@@ -15,12 +22,15 @@ const query = computed(() => ({
   page: options.page,
   limit: options.itemsPerPage,
   search: search.value,
-  type_id: $discoveryConfig.defaultFilters,
+  type_id: $discoveryConfig.defaultFilters
 }));
+
+const apiEnabled = computed(() => $discoveryConfig.APIbase !== undefined);
+
 const { data, pending, refresh } = await useAsyncData(() => $api.query.getQuery(query.value));
 watch(() => options.page, () => refresh());
 onMounted(() => {
-  refresh();
+  if (!apiEnabled) { refresh(); }
 });
 
 function updateQuery (newQuery: Query) {
@@ -28,9 +38,6 @@ function updateQuery (newQuery: Query) {
   refresh();
 }
 
-useHead({
-  title: t('global.basics.data')
-});
 </script>
 
 <template>
