@@ -48,7 +48,7 @@
     "vite-plugin-vuetify": "^1.0.0",
     "vitest": "^0.25.3",
     "vue-i18n": "^9.2.2",
-    "vuetify": "^3.1.12"
+    "vuetify": "^3.*"
   },
   "dependencies": {
     "nuxt": "3.1.*",
