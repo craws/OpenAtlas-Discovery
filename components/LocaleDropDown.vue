@@ -1,19 +1,16 @@
 <template>
-  <v-menu open-on-click>
-    <template #activator="{ props}">
-      <v-btn
-        data-test="header-locale-menu"
-        role="button"
-        v-bind="props"
-        class="h-100 d-flex align-center justify-center px-2 text-grey"
-      >
-        <v-icon>mdi-translate</v-icon>
-        <v-icon size="small">
-          mdi-chevron-down
-        </v-icon>
-      </v-btn>
-    </template>
-
+  <v-btn
+    id="locale-selector-button-activator"
+    data-test="header-locale-menu"
+    role="button"
+    class="h-100 d-flex align-center justify-center px-2 text-grey"
+  >
+    <v-icon>mdi-translate</v-icon>
+    <v-icon size="small">
+      mdi-chevron-down
+    </v-icon>
+  </v-btn>
+  <v-menu activator="#locale-selector-button-activator">
     <v-list data-test="locale-selector-list">
       <v-list-subheader>
         <p class="text-caption px-2">

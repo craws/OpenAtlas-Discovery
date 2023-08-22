@@ -23,7 +23,7 @@ describe('Main Page', () => {
 
     cy.get('[data-test="header-locale-menu"]')
       .should('exist')
-      .trigger('mouseenter');
+      .click();
 
     cy.wait(500); // Await open animation
 
