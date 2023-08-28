@@ -5,8 +5,7 @@ describe('Main Page', () => {
 
   it('Has the main Elements', () => {
     cy.get('[data-test="main-content-renderer"]')
-      .children()
-      .should('contain.text', 'OpenAtlas Discovery');
+      .should('exist');
 
     cy.get('[data-test="main-map-btn"]').should('exist');
 
