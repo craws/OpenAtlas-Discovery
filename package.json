@@ -18,7 +18,8 @@
     "cy:open": "cypress open",
     "cy:run": "cypress run",
     "vitest:run": "vitest run --coverage",
-    "load-content": "node deployment/loadContent.mjs"
+    "load-content": "node deployment/loadContent.mjs",
+    "build-and-test": "npm run build && npm run test"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,vue}": "eslint --fix"
