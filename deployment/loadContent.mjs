@@ -64,6 +64,7 @@ function handleConfig () {
     try {
       fs.copyFile(configSourcePath, configDestPath);
       console.log('Successfully set config from content repo!');
+      console.log('Config contents: ', fs.readFileSync(configDestPath, 'utf8'));
     } catch (err) {
       console.error(err);
     }
