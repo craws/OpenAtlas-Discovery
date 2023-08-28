@@ -1,7 +1,16 @@
+// Import discovery config
+import discoveryConfig from '../../config/discoveryConfig.json';
 
 describe('Navigation', () => {
-  it('From Main to Map', () => {
+  beforeEach(() => {
     cy.visit('/');
+  });
+
+  it('Main to Map', () => {
+    if (discoveryConfig.APIbase === undefined) {
+      cy.task('log', 'APIbase is undefined, skipping test');
+      this.skip();
+    }
 
     cy.get('[data-test="main-map-btn"]')
       .should('exist')
@@ -11,14 +20,17 @@ describe('Navigation', () => {
       .should('exist');
   });
 
-  it('From Main to Data', () => {
-    cy.visit('/');
+  it('Main to Data', () => {
+    if (discoveryConfig.APIbase === undefined) {
+      cy.get('[data-test="main-data-btn"]')
+        .should('not.exist');
+    } else {
+      cy.get('[data-test="main-data-btn"]')
+        .should('exist')
+        .click();
 
-    cy.get('[data-test="main-data-btn"]')
-      .should('exist')
-      .click();
-
-    cy.get('[data-test="data-page-container"]')
-      .should('exist');
+      cy.get('[data-test="data-page-container"]')
+        .should('exist');
+    }
   });
 });
