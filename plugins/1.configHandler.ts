@@ -4,8 +4,7 @@
 // See: https://nuxt.com/docs/guide/directory-structure/plugins#plugin-registration-order
 // =========================================================================================
 import { DiscoveryConfig } from '../config/discoveryConfig';
-import discoveryConfig from '../config/discoveryConfig.json'
-
+import discoveryConfig from '../config/discoveryConfig.json';
 
 export default defineNuxtPlugin(() => {
   const config: DiscoveryConfig = discoveryConfig as DiscoveryConfig;
