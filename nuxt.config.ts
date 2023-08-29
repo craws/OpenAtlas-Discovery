@@ -5,15 +5,14 @@ import VueI18nVitePlugin from '@intlify/unplugin-vue-i18n/vite';
 import { DiscoveryConfig } from './config/discoveryConfig';
 import discoveryConfig from './config/discoveryConfig.json';
 
-
-const config : DiscoveryConfig = (discoveryConfig as DiscoveryConfig)
+const config : DiscoveryConfig = (discoveryConfig as DiscoveryConfig);
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   app: {
     head: {
       meta: [{
-        name: 'OpenAtlas Discovery'
+        name: config.title ?? 'OpenAtlas Discovery'
       }],
       link: [
         {
@@ -27,7 +26,7 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     // Keys within public, will be also exposed to the client-side
-    public: {  }
+    public: { }
   },
   modules: [
     '@nuxt/image-edge',

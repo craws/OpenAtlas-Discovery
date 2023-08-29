@@ -24,9 +24,6 @@ const contentToUse = computed(() => {
   return null;
 });
 
-useHead({
-  title: $discoveryConfig.title ?? 'OpenAtlas Discovery'
-});
 </script>
 <template>
   <v-sheet height="calc(100vh - 65px)" class="landing-page d-flex justify-center pt-5">

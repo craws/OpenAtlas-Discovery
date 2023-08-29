@@ -41,7 +41,7 @@ export interface DiscoveryConfig {
    * Specifies the logo that will be used for the Discovery website.
    * @default logo.svg
    */
-  logo?: string;
+  logo: string;
 
   /**
    * Header Logo
@@ -56,5 +56,11 @@ export interface DiscoveryConfig {
    * Specifies the title that will be used for the Discovery website.
    * @default OpenAtlas Discovery
    */
-  title?: string;
+  title: string;
 }
+
+export const defaultDiscoveryConfig: DiscoveryConfig = {
+  defaultLocale: 'en',
+  logo: 'logo.svg',
+  title: 'OpenAtlas Discovery'
+};
