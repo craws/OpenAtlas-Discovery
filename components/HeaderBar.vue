@@ -4,7 +4,8 @@
       <nuxt-img
         class="pt-2"
         :src="logo"
-        width="150px"
+        max-height="150px"
+        height="60px"
       />
     </nuxt-link>
     <v-spacer />
@@ -45,7 +46,7 @@
 import { useI18n } from 'vue-i18n';
 const Locale = useI18n().locale;
 
-const logo = getLogo(true);
+const logo = getHeaderLogo();
 
 onBeforeMount(() => {
   Locale.value = localStorage.getItem(selectedLocaleLocalStorageKey) ?? Locale.value;
