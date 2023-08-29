@@ -51,12 +51,22 @@ export interface DiscoveryConfig {
    */
   headerLogo?: string;
 
+// Favicon
+
+  /**
+   * The favicon of the website.
+   * Specifies the favicon that will be used for the Discovery website.
+   * @supportedTypes image/svg+xml, image/x-icon
+   */
+  favicon?: string;
+
   /**
    * The title of the website.
    * Specifies the title that will be used for the Discovery website.
    * @default OpenAtlas Discovery
    */
   title: string;
+
 }
 
 export const defaultDiscoveryConfig: DiscoveryConfig = {

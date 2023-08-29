@@ -13,15 +13,7 @@ export default defineNuxtConfig({
     head: {
       meta: [{
         name: config.title ?? 'OpenAtlas Discovery'
-      }],
-      link: [
-        {
-          rel: 'icon',
-          type: 'image/svg+xml',
-          href: '/favicon.svg',
-          sizes: 'any'
-        }
-      ]
+      }]
     }
   },
   runtimeConfig: {

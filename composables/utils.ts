@@ -21,3 +21,23 @@ export function getHeaderLogo () : string {
 
   return ($discoveryConfig.headerLogo ?? $discoveryConfig.logo) ?? '/header_logo.svg';
 }
+
+export function getFavicon () : { rel: string; type: string; href: string; sizes: string } {
+  const { $discoveryConfig } = useNuxtApp();
+
+  const favicon = {
+    rel: 'icon',
+    type: 'image/svg+xml',
+    href: '/favicon.svg',
+    sizes: 'any'
+  };
+  const faviconExt = $discoveryConfig.favicon?.split('.').pop();
+
+  // Can Handle SVGs, .ico
+  if (faviconExt === 'ico') {
+    favicon.type = 'image/x-icon';
+    favicon.href = '/' + $discoveryConfig.favicon;
+  }
+
+  return favicon;
+}
