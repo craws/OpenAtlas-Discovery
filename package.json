@@ -19,7 +19,8 @@
     "cy:run": "cypress run",
     "vitest:run": "vitest run --coverage",
     "load-content": "node deployment/loadContent.mjs",
-    "build-and-test": "npm run build && npm run test"
+    "build-and-test": "npm run build && npm run test",
+    "static-export": "node deployment/loadContent.mjs && nuxt generate"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,vue}": "eslint --fix"
