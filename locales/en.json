@@ -1,4 +1,14 @@
 {
+  "locales": {
+    "de": {
+      "nativeName": "Deutsch",
+      "englishName": "German"
+    },
+    "en": {
+      "nativeName": "English",
+      "englishName": "English"
+    }
+  },
   "global": {
     "basics": {
       "hello": "Hello, {name}!",
@@ -11,7 +21,11 @@
       "unknown": "unknown",
       "data": "data",
       "de": "german",
-      "en": "english"
+      "en": "english",
+      "loading": "loading",
+      "license": "License",
+      "depictions": "Depictions",
+      "backHome": "Go back home"
     },
     "entity": {
       "class": "class",

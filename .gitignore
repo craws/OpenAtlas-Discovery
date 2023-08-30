@@ -8,6 +8,11 @@ coverage
 .env
 dist
 
+temp
+
 # IDE / Editor
 .idea/
 
+# Cypress
+cypress/videos/
+cypress/screenshots/

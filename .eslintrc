@@ -1,5 +1,15 @@
 {
     "extends": [
       "@nuxtjs/eslint-config-typescript"
-    ]
+    ],
+    "rules": {
+      "semi": [
+        "error",
+        "always"
+      ],
+      "vue/valid-v-slot": [
+        "error", {
+        "allowModifiers": true
+      }]
+    }
   }

@@ -1,37 +1,61 @@
 {
+  "engines": {
+    "node": "18.x",
+    "npm": "9.5.x"
+  },
   "private": true,
   "scripts": {
-    "build": "nuxt build",
+    "build": "node deployment/loadContent.mjs && nuxt build",
+    "start": "nuxt start",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "test": "vitest run --coverage"
+    "test": "concurrently -c \"auto\" --names \"RUN,TEST\" --kill-others -s first --hide \"0\" \"npm run start\" \"npm run cy:run\"",
+    "test:watch": "vitest --reporter verbose --globals --coverage",
+    "lint-all": "eslint .",
+    "lint-fix-all": "eslint . --fix",
+    "prepare": "husky install",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "vitest:run": "vitest run --coverage",
+    "load-content": "node deployment/loadContent.mjs",
+    "build-and-test": "npm run build && npm run test",
+    "static-export": "node deployment/loadContent.mjs && nuxt generate"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx,vue}": "eslint --fix"
   },
   "devDependencies": {
-    "@intlify/unplugin-vue-i18n": "^0.7.0",
+    "@intlify/unplugin-vue-i18n": "^0.8.0",
     "@mdi/font": "^7.0.96",
     "@mdi/js": "^7.0.96",
-    "@nuxt/content": "^2.2.0",
+    "@nuxt/content": "^2.2.2",
+    "@nuxt/image-edge": "^1.0.0-27919678.2f5b64b",
+    "@nuxt/test-utils": "^3.0.0",
     "@nuxtjs/eslint-config-typescript": "^12.0.0",
     "@vitejs/plugin-vue": "^3.2.0",
-    "@vitest/coverage-c8": "^0.24.5",
+    "@vitest/coverage-c8": "^0.25.3",
     "@vue/test-utils": "^2.2.0",
     "c8": "^7.12.0",
+    "concurrently": "^7.6.0",
+    "cypress": "^12.5.1",
     "eslint": "^8.28.0",
+    "fs-extra": "^11.1.1",
+    "husky": "^8.0.3",
     "jsdom": "^20.0.1",
-    "msw": "^0.47.4",
-    "nuxt": "^3.0.0-rc.12",
-    "swagger-typescript-api": "^10.0.3",
+    "lint-staged": "^13.1.0",
+    "msw": "^0.49.1",
+    "sass": "^1.60.0",
+    "swagger-typescript-api": "^12.0.2",
     "vite-plugin-vuetify": "^1.0.0",
-    "vitest": "^0.24.3",
+    "vitest": "^0.25.3",
     "vue-i18n": "^9.2.2",
-    "vuetify": "^3.0.0-beta.14"
+    "vuetify": "^3.*"
   },
   "dependencies": {
-    "@nuxt/test-utils-edge": "^3.0.0-rc.13-27769806.418b567",
+    "nuxt": "3.1.*",
     "@types/leaflet": "^1.9.0",
     "leaflet": "^1.9.2",
-    "sass": "^1.55.0",
     "vue-country-flag-next": "^2.3.2"
   }
 }

@@ -1,0 +1,6 @@
+# Ignore Directories
+
+/.nuxt
+/.output
+/.vscode
+/node_modules

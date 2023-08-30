@@ -1,18 +1,23 @@
-import { createI18n } from 'vue-i18n'
-import en from '../locales/en.json'
-import de from '../locales/de.json'
+import { createI18n } from 'vue-i18n';
+import en from '../locales/en.json';
+import de from '../locales/de.json';
 
 export default defineNuxtPlugin(({ vueApp }) => {
+  const { $discoveryConfig } = useNuxtApp();
+
+  const defaultLocale:string = $discoveryConfig.defaultLocale;
+
   const i18n = createI18n({
     legacy: false,
     allowComposition: true,
     globalInjection: true,
-    locale: 'de',
+    locale: defaultLocale,
+    fallbackLocale: defaultLocale,
     messages: {
-        en,
-        de,
+      en,
+      de
     }
-  })
+  });
 
-  vueApp.use(i18n)
-})
+  vueApp.use(i18n);
+});

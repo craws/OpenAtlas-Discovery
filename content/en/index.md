@@ -1,4 +1,4 @@
-![logo](/OpenAtlasDiscovery_logo.jpg)
+![logo](/logo.svg)
 
 # OpenAtlas Discovery
 

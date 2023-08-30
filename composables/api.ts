@@ -251,8 +251,15 @@ export interface LinkedPlacesModelFeatures {
   /** @format nullable */
   links?: string;
   /** @format nullable */
-  depictions?: string;
+  depictions?: LinkedPlacesDepiction[];
   geometry?: Polygon | Point | LineString | GeometryCollection;
+}
+
+export interface LinkedPlacesDepiction{
+  '@id': string,
+  title: string,
+  license: string,
+  url: string,
 }
 
 export interface GeoJSONModelPropertiesTypes {
