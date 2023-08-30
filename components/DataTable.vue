@@ -17,12 +17,14 @@ interface Props {
         itemsLength: number,
     }
 }
-const props = withDefaults(defineProps<Props>(),
+withDefaults(defineProps<Props>(),
   {
-    loading: () => false
-  })
+    loading: () => false,
+    height: () => '100%'
+  });
 </script>
 <template>
+  <!-- eslint-disable vue/no-mutating-props -->
   <div>
     <v-progress-linear :active="loading" indeterminate />
     <v-table :height="`calc( ${height} - 84px)`" fixed-header>

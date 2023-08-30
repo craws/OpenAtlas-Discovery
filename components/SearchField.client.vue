@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { Query, Search } from '~~/types/query'
+import { Query, Search } from '~~/types/query';
+// eslint-disable-next-line func-call-spacing
 const emit = defineEmits<{
-    (e: 'search', search: Query): void
-}>()
-const search = ref('')
+  (e: 'search', search: Query): void
+}>();
+const search = ref('');
 interface FilterOperator {
     value: keyof Search
     title: string
@@ -24,20 +25,20 @@ const filterOperators: FilterOperator[] = [
   { value: 'beginTo', title: 'begin to' },
   { value: 'endFrom', title: 'end from' },
   { value: 'endTo', title: 'end to' },
-  { value: 'relationToID', title: 'realation to id' }]
-const filterOperator = ref<FilterOperator>({ value: 'entityName', title: 'name' })
+  { value: 'relationToID', title: 'realation to id' }];
+const filterOperator = ref<FilterOperator>({ value: 'entityName', title: 'name' });
 const props = withDefaults(defineProps<{
     loading?: Boolean
 }>(), {
   loading: () => false
-})
+});
 
 function handleSearch () {
   const query: Query = {
     search: !search.value ? [] : [{ [filterOperator.value.value]: [{ operator: 'like', values: [search.value], logicalOperator: 'and' }] }],
     view_classes: ['actor', 'event', 'place', 'reference', 'source']
-  }
-  emit('search', query)
+  };
+  emit('search', query);
 }
 
 </script>
@@ -58,11 +59,11 @@ function handleSearch () {
           }"
         >
           <template #item="{ item }">
-            <v-list-item v-slot="{ active }" @click="filterOperator = item">
+            <v-list-item @click="filterOperator = item">
               <span class="text-capitalize"> {{ $t(`global.entity.${item.title}`) }}</span>
             </v-list-item>
           </template>
-          <template #selection="{ item }" class="text-capitalize">
+          <template #selection="{ item }">
             <span class="text-capitalize">{{ $t(`global.entity.${item.title}`) }}</span>
           </template>
         </v-select>

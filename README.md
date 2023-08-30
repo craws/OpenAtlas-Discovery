@@ -1,14 +1,16 @@
 # About
 
 OpenAtlas Discovery is a presentation web application for
-[OpenAtlas](https://openatlas.eu) projects.
+[OpenAtlas](https://openatlas.eu) projects,
+which is still in early development.
 
-At the moment we are in early development.
+At the moment we are in the concept phase and this is just a basic start point
+for further development.
 * [Demo](https://frontend-demo-dev.openatlas.eu/)
 * [Wiki](https://redmine.openatlas.eu/projects/openatlas-discovery/wiki/Wiki)
 * [Issues](https://redmine.openatlas.eu/projects/openatlas-discovery/issues)
 
-# Content 
+# Content
 The content can be managed either by placing the content into the `content` directory as well as the configuration file `discoveryConfig.json`
 
 ## Setup
@@ -106,3 +108,4 @@ All documentation and images unless otherwise noted are licensed under the
 terms of Creative Commons Attribution-ShareAlike 4.0 International License.
 To view a copy of this license, visit
 [http://creativecommons.org/licenses/by-sa/4.0/](http://creativecommons.org/licenses/by-sa/4.0/)
+

@@ -9,7 +9,7 @@ const lightTheme: ThemeDefinition = {
 
 export default defineNuxtPlugin((nuxtApp) => {
   const { $discoveryConfig } = useNuxtApp();
-  if($discoveryConfig.primaryColor) {
+  if ($discoveryConfig.primaryColor) {
     lightTheme.colors.primary = $discoveryConfig.primaryColor;
   }
   const vuetify = createVuetify({
