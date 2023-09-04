@@ -9,6 +9,7 @@
     <v-icon size="small">
       mdi-chevron-down
     </v-icon>
+    <span class="d-sr-only">{{ $t('global.basics.language-selection') }}</span>
   </v-btn>
   <v-menu activator="#locale-selector-button-activator">
     <v-list data-test="locale-selector-list">
