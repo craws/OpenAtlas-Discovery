@@ -25,7 +25,8 @@
       "loading": "loading",
       "license": "License",
       "depictions": "Depictions",
-      "backHome": "Go back home"
+      "backHome": "Go back home",
+      "language-selection": "Locale Selection"
     },
     "entity": {
       "class": "class",

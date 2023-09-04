@@ -25,7 +25,8 @@
       "loading": "Laden",
       "license": "Lizenz",
       "depictions": "Darstellungen",
-      "backHome": "Zurück zur Startseite"
+      "backHome": "Zurück zur Startseite",
+      "language-selection": "Sprach Auswahl"
     },
     "entity": {
       "class": "Klasse",
