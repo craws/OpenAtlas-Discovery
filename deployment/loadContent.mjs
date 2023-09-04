@@ -1,10 +1,12 @@
-import child_process from 'child_process';
+import childProcess from 'child_process';
 import fs from 'fs-extra';
 
 const clonedContentPath = 'temp';
 
-const repo = process.env.CONTENT_REPO ?? 'acdh-oeaw/OpenAtlas-Discovery-Content-Template';
-const branch = process.env.CONTENT_BRANCH ?? 'main';
+// from env variable or argument or default value
+const repo = process.env.CONTENT_REPO ?? process.argv[2] ?? 'acdh-oeaw/OpenAtlas-Discovery-Content-Template';
+const branch = process.env.CONTENT_BRANCH ?? process.argv[3] ?? 'main';
+
 const configSourcePath = `${clonedContentPath}/discoveryConfig.json`;
 const configDestPath = 'config/discoveryConfig.json';
 
@@ -16,7 +18,7 @@ const publicDestPath = 'public';
 
 cloneRepo(clonedContentPath, repo, branch);
 // Log the commit hash of the content repo
-console.log('Content repo commit hash: ', child_process.execSync(`git -C ${clonedContentPath} rev-parse HEAD`).toString().trim());
+console.log('Content repo commit hash: ', childProcess.execSync(`git -C ${clonedContentPath} rev-parse HEAD`).toString().trim());
 
 if (fs.existsSync(clonedContentPath)) {
   handleConfig();
@@ -42,10 +44,10 @@ function cloneRepo (targetpath, repo, branch, useHttp = true) {
 
   if (useHttp) {
     console.log(`Attempting to clone ${getBranch(branch)} on https://github.com/${repo}.git to ${targetpath}`);
-    child_process.execSync(`git clone ${getBranch(branch)} https://github.com/${repo}.git ${targetpath}`);
+    childProcess.execSync(`git clone ${getBranch(branch)} https://github.com/${repo}.git ${targetpath}`);
   } else {
     console.log(`Attempting to clone ${getBranch(branch)} on git@github.com:${repo}.git to ${targetpath}`);
-    child_process.execSync(`git clone ${getBranch(branch)} git@github.com:${repo}.git ${targetpath}`);
+    childProcess.execSync(`git clone ${getBranch(branch)} git@github.com:${repo}.git ${targetpath}`);
   }
   console.log('Clone successful');
 }
@@ -60,11 +62,14 @@ function getBranch (branch) {
 }
 
 function handleConfig () {
+  console.log('Checking for config file');
+  console.log('Config file path: ', configSourcePath);
+  console.log('Config file destination path: ', configDestPath);
   if (fs.existsSync(configSourcePath)) {
     try {
+      console.log('Attempting to set config from content repo');
       fs.copyFile(configSourcePath, configDestPath);
       console.log('Successfully set config from content repo!');
-      console.log('Config contents: ', fs.readFileSync(configDestPath, 'utf8'));
     } catch (err) {
       console.error(err);
     }
