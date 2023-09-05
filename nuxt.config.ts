@@ -1,7 +1,4 @@
-import { resolve, dirname } from 'node:path';
-import { fileURLToPath } from 'url';
 import vuetify from 'vite-plugin-vuetify';
-import VueI18nVitePlugin from '@intlify/unplugin-vue-i18n/vite';
 import { DiscoveryConfig } from './config/discoveryConfig';
 import discoveryConfig from './config/discoveryConfig.json';
 
@@ -24,18 +21,21 @@ export default defineNuxtConfig({
     public: { }
   },
   modules: [
+    '@nuxtjs/i18n',
     '@nuxt/image',
     '@nuxt/content',
     '@nuxt/devtools',
     (_options, nuxt) => {
       nuxt.hooks.hook('vite:extendConfig',
         config => config?.plugins?.push(vuetify()));
-    }],
+    }
+  ],
   devtools: {
     // Enable devtools (default: true)
     enabled: true
   },
-  css: ['vuetify/styles',
+  css: [
+    'vuetify/styles',
     '@mdi/font/css/materialdesignicons.min.css',
     'leaflet/dist/leaflet.css'],
   build: {
@@ -50,14 +50,7 @@ export default defineNuxtConfig({
     },
     define: {
       'process.env.DEBUG': false
-    },
-    plugins: [
-      VueI18nVitePlugin({
-        include: [
-          resolve(dirname(fileURLToPath(import.meta.url)), './locales/*.json')
-        ]
-      })
-    ]
+    }
   },
   image: {
     domains: config.imageDomains ?? ['openatlas.eu'],
