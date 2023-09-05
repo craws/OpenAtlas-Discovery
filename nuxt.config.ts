@@ -26,10 +26,15 @@ export default defineNuxtConfig({
   modules: [
     '@nuxt/image',
     '@nuxt/content',
+    '@nuxt/devtools',
     (_options, nuxt) => {
       nuxt.hooks.hook('vite:extendConfig',
         config => config?.plugins?.push(vuetify()));
     }],
+  devtools: {
+    // Enable devtools (default: true)
+    enabled: true
+  },
   css: ['vuetify/styles',
     '@mdi/font/css/materialdesignicons.min.css',
     'leaflet/dist/leaflet.css'],
