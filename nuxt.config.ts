@@ -60,6 +60,7 @@ export default defineNuxtConfig({
     ]
   },
   image: {
-    domains: config.imageDomains ?? ['openatlas.eu']
+    domains: config.imageDomains ?? ['openatlas.eu'],
+    inject: true
   }
 });

@@ -11,13 +11,11 @@
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "test": "concurrently -c \"auto\" --names \"RUN,TEST\" --kill-others -s first --hide \"0\" \"npm run start\" \"npm run cy:run\"",
-    "test:watch": "vitest --reporter verbose --globals --coverage",
     "lint-all": "eslint .",
     "lint-fix-all": "eslint . --fix",
     "prepare": "husky install",
     "cy:open": "cypress open",
     "cy:run": "cypress run",
-    "vitest:run": "vitest run --coverage",
     "load-content": "node deployment/loadContent.mjs",
     "build-and-test": "npm run build && npm run test",
     "static-export": "node deployment/loadContent.mjs && nuxt generate"
@@ -31,24 +29,17 @@
     "@mdi/js": "^7.0.96",
     "@nuxt/content": "^2.8.2",
     "@nuxt/devtools": "^0.8.2",
-    "@nuxt/test-utils": "^3.0.0",
     "@nuxtjs/eslint-config-typescript": "^12.0.0",
     "@vitejs/plugin-vue": "^3.2.0",
-    "@vitest/coverage-c8": "^0.25.3",
-    "@vue/test-utils": "^2.2.0",
-    "c8": "^7.12.0",
     "concurrently": "^7.6.0",
     "cypress": "^12.5.1",
     "eslint": "^8.28.0",
     "fs-extra": "^11.1.1",
     "husky": "^8.0.3",
-    "jsdom": "^20.0.1",
     "lint-staged": "^13.1.0",
-    "msw": "^0.49.1",
     "sass": "^1.60.0",
     "swagger-typescript-api": "^12.0.2",
     "vite-plugin-vuetify": "^1.0.0",
-    "vitest": "^0.25.3",
     "vue-i18n": "^9.2.2",
     "vuetify": "^3.*"
   },
@@ -56,7 +47,6 @@
     "@nuxt/image": "^1.0.0-rc.1",
     "@types/leaflet": "^1.9.0",
     "leaflet": "^1.9.2",
-    "nuxt": "^3.7.0",
-    "vue-country-flag-next": "^2.3.2"
+    "nuxt": "^3.7.0"
   }
 }
