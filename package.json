@@ -10,7 +10,7 @@
     "dev": "nuxt dev",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
-    "test": "concurrently -c \"auto\" --names \"RUN,TEST\" --kill-others -s first --hide \"0\" \"npm run start\" \"npm run cy:run\"",
+    "test": "concurrently -c \"auto\" --names \"RUN,TEST\" --kill-others -s first \"npm run start\" \"npm run cy:run\"",
     "lint-all": "eslint .",
     "lint-fix-all": "eslint . --fix",
     "prepare": "husky install",
