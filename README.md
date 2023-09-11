@@ -43,23 +43,38 @@ npm run prepare
 
 ## Content Fetching
 
-If you want to fetch the content and configuration from a Content repository, you can do so by running the `..\deployment\loadContent.mjs` script.
+If you want to fetch the content and configuration from a Content repository, you can do so by running the `..\deployment\loadContent.mjs` script. This will clone the repository and copy the content into the `content` and `public` directories, and overwrite the `discoveryConfig` with the one from the content repository.
 
-Set up the enviroment Variables `CONTENT_REPO` & `CONTENT_BRANCH`:
+You can run the script either with node or npm:
 
 ```bash
+# node
+node .\deployment\loadContent.mjs
+
+# npm
+npm run load-content
+```
+
+
+By default the content will be fetched from the `main` branch of the `acdh-oeaw/OpenAtlas-Discovery-Content-Template` repository. You can change the repository and branch by changing the repo and branch variables. Either through environment variables or directly as arguments:
+
+```bash
+# Set up the enviroment Variables `CONTENT_REPO` & `CONTENT_BRANCH`:
+
 # Windows
-$env:CONTENT_REPO='link-to-clone-your-repository'
+$env:CONTENT_REPO='owner/repositoryName'
 
 $env:CONTENT_BRANCH='main'
 ```
 
-Run the script:
+Using arguments:
 
 ```bash
-# npm
-npm run load-content
+node .\deployment\loadContent.mjs owner/repositoryName branchToUse
+
+npm run load-content owner/repositoryName branchToUse
 ```
+
 
 ## Development Server
 Start the development server on http://localhost:3000
@@ -81,7 +96,7 @@ For locally preview production build:
 npm run preview
 ```
 
-Checkout the [deployment documentation](https://v3.nuxtjs.org/docs/deployment)
+Checkout the [deployment documentation](https://nuxt.com/docs/getting-started/deployment#deployment)
 for more information.
 
 ## Testing
