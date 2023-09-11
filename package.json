@@ -1,7 +1,7 @@
 {
   "engines": {
     "node": "18.x",
-    "npm": "9.5.x"
+    "npm": "9.8.x"
   },
   "private": true,
   "scripts": {
@@ -18,7 +18,8 @@
     "cy:run": "cypress run",
     "load-content": "node deployment/loadContent.mjs",
     "build-and-test": "npm run build && npm run test",
-    "static-export": "node deployment/loadContent.mjs && nuxt generate"
+    "static-export": "node deployment/loadContent.mjs && nuxt generate",
+    "nb": "nuxt build"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx,vue}": "eslint --fix"
