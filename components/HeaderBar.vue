@@ -1,10 +1,10 @@
 <template>
   <v-app-bar flat class="px-5">
     <nuxt-link to="/">
-      <nuxt-img
+      <v-nuxt-image
         class="pt-2"
         :src="logo"
-        max-height="150px"
+        alt="header logo"
         height="60px"
       />
     </nuxt-link>

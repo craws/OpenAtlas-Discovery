@@ -15,11 +15,13 @@ const props = withDefaults(
     src: '/img/header-bg.jpg'
   });
 
-const $img = useImage();
+// Comment out usage of NuxtImage as it's currently not working with SSR.
+// const $img = useImage();
 </script>
 
 <template>
-  <v-img
+  <!-- v-img might cause issues with getting images in proper height and width, esp. in header bar therfor consider using plain htm img instead -->
+  <!-- <v-img
     :height="height"
     :lazy-src="$img(src, { height, quality: 10 })"
     :src="$img(src, { height, quality: 100 })"
@@ -32,5 +34,11 @@ const $img = useImage();
         />
       </div>
     </template>
-  </v-img>
+  </v-img> -->
+
+  <img
+    :height="height"
+    :lazy-src="src"
+    :src="src"
+  >
 </template>

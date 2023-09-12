@@ -2,7 +2,7 @@
   <v-card class="my-4 px-2">
     <div class="d-flex flex-no-wrap">
       <v-avatar v-if="picture && picture !== ''" size="150" color="primary" class="my-2" :image="picture">
-        <nuxt-img :src="picture" :alt="name + ' profile picture'" />
+        <v-nuxt-image :src="picture" :alt="name + ' profile picture'" />
       </v-avatar>
       <div class="mx-0 text-left">
         <v-card-title>
