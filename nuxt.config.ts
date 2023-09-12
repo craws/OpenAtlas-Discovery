@@ -1,4 +1,3 @@
-import vuetify from 'vite-plugin-vuetify';
 import { DiscoveryConfig } from './config/discoveryConfig';
 import discoveryConfig from './config/discoveryConfig.json';
 
@@ -25,29 +24,27 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@nuxt/content',
     '@nuxt/devtools',
-    (_options, nuxt) => {
-      nuxt.hooks.hook('vite:extendConfig',
-        config => config?.plugins?.push(vuetify()));
-    }
+    'vuetify-nuxt-module'
   ],
   devtools: {
     // Enable devtools (default: true)
     enabled: true
+  },
+  vuetify: {
+    moduleOptions: {
+      /* module specific options */
+    },
+    vuetifyOptions: {
+      /* vuetify options */
+    }
   },
   css: [
     'vuetify/styles',
     '@mdi/font/css/materialdesignicons.min.css',
     'leaflet/dist/leaflet.css'],
   build: {
-    transpile: ['vuetify']
   },
   vite: {
-    // @ts-ignore
-    // curently this will lead to a type error, but hopefully will be fixed soon #justBetaThings
-    ssr: {
-
-      noExternal: ['vuetify'] // add the vuetify vite plugin
-    },
     define: {
       'process.env.DEBUG': false
     }

@@ -1,6 +1,6 @@
 {
   "engines": {
-    "node": "18.x",
+    "node": "18.17.1",
     "npm": "9.8.x"
   },
   "private": true,
@@ -40,8 +40,7 @@
     "lint-staged": "^13.1.0",
     "sass": "^1.60.0",
     "swagger-typescript-api": "^12.0.2",
-    "vite-plugin-vuetify": "^1.0.0",
-    "vuetify": "^3.*"
+    "vuetify-nuxt-module": "^0.5.7"
   },
   "dependencies": {
     "@nuxt/image": "^1.0.0-rc.1",
