@@ -33,4 +33,18 @@ describe('Navigation', () => {
         .should('exist');
     }
   });
+
+  it('Successive Nav Clicks', () => {
+    if (discoveryConfig.APIbase === undefined) {
+      cy.task('log', 'APIbase is undefined, skipping test');
+      this.skip();
+    } else {
+      cy.get('[data-test="main-map-btn"]')
+        .should('exist')
+        .dblclick();
+
+      cy.get('[data-test="map-page-container"]')
+        .should('exist');
+    }
+  });
 });
