@@ -26,10 +26,6 @@ export default defineNuxtConfig({
     '@nuxt/devtools',
     'vuetify-nuxt-module'
   ],
-  devtools: {
-    // Enable devtools (default: true)
-    enabled: true
-  },
   vuetify: {
     moduleOptions: {
       /* module specific options */
