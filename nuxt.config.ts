@@ -23,7 +23,6 @@ export default defineNuxtConfig({
     '@nuxtjs/i18n',
     '@nuxt/image',
     '@nuxt/content',
-    '@nuxt/devtools',
     'vuetify-nuxt-module'
   ],
   vuetify: {
