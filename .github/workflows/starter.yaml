@@ -44,7 +44,6 @@ jobs:
       environment: ${{ needs.setup_workflow_env.outputs.environment }}
       registry_root: ${{ needs.setup_workflow_env.outputs.registry_root }}
       image_tagged: ${{ needs.setup_workflow_env.outputs.image_tagged }}
-      source_image: ${{ needs.setup_workflow_env.outputs.source_image }}
       default_port: ${{ needs.setup_workflow_env.outputs.default_port }}
       submodules: ${{ needs.setup_workflow_env.outputs.submodules }}
   _1-mamems:
@@ -56,7 +55,6 @@ jobs:
       environment: ${{ needs.setup_workflow_env.outputs.environment}}-mamems
       registry_root: ${{ needs.setup_workflow_env.outputs.registry_root }}
       image_tagged: ${{ needs.setup_workflow_env.outputs.image_tagged }}-mamems
-      source_image: ${{ needs.setup_workflow_env.outputs.source_image }}
       default_port: ${{ needs.setup_workflow_env.outputs.default_port }}
       submodules: ${{ needs.setup_workflow_env.outputs.submodules }}
   _1-approaching-byzantium:
@@ -68,7 +66,6 @@ jobs:
       environment: ${{ needs.setup_workflow_env.outputs.environment}}-approaching-byzantium
       registry_root: ${{ needs.setup_workflow_env.outputs.registry_root }}
       image_tagged: ${{ needs.setup_workflow_env.outputs.image_tagged }}-approaching-byzantium
-      source_image: ${{ needs.setup_workflow_env.outputs.source_image }}
       default_port: ${{ needs.setup_workflow_env.outputs.default_port }}
       submodules: ${{ needs.setup_workflow_env.outputs.submodules }}
   _2:
@@ -80,7 +77,6 @@ jobs:
       environment: ${{ needs.setup_workflow_env.outputs.environment}}
       registry_root: ${{ needs.setup_workflow_env.outputs.registry_root }}
       image_tagged: ${{ needs.setup_workflow_env.outputs.image_tagged }}
-      source_image: ${{ needs.setup_workflow_env.outputs.source_image }}
       default_port: ${{ needs.setup_workflow_env.outputs.default_port }}
       herokuish_base_image: ${{ needs.setup_workflow_env.outputs.herokuish_base_image }}
       POSTGRES_ENABLED: ${{ needs.setup_workflow_env.outputs.POSTGRES_ENABLED }}
