@@ -70,6 +70,16 @@ function handleConfig () {
       console.log('Attempting to set config from content repo');
       fs.copyFile(configSourcePath, configDestPath);
       console.log('Successfully set config from content repo!');
+      console.log('Local config content:')
+      fs.readFile(configDestPath, 'utf8', function (err, data) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log(JSON.stringify(JSON.parse(data), null, 4));
+        }
+      });
+      console.log('---');
+
     } catch (err) {
       console.error(err);
     }
