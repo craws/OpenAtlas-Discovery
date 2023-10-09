@@ -1,10 +1,12 @@
 <script setup lang="ts"></script>
 <template>
 	<v-app>
-		<v-main>
+		<v-main class="d-flex flex-column">
 			<HeaderBar />
 			<v-divider />
 			<nuxt-page />
+			<v-spacer />
+			<OADFooter />
 		</v-main>
 	</v-app>
 </template>
