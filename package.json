@@ -1,55 +1,56 @@
 {
-  "engines": {
-    "node": "18.x",
-    "npm": "9.x.x"
-  },
-  "private": true,
-  "scripts": {
-    "build": "node deployment/loadContent.mjs && nuxt build",
-    "start": "nuxt start",
-    "dev": "nuxt dev",
-    "generate": "nuxt generate",
-    "preview": "nuxt preview",
-    "test": "concurrently -c \"auto\" --names \"RUN,TEST\" --kill-others -s first \"npm run start\" \"npm run cy:run\"",
-    "lint-all": "eslint .",
-    "lint-fix-all": "eslint . --fix",
-    "prepare": "husky install",
-    "cy:open": "cypress open",
-    "cy:run": "cypress run",
-    "load-content": "node deployment/loadContent.mjs",
-    "build-and-test": "npm run build && npm run test",
-    "static-export": "node deployment/loadContent.mjs && nuxt generate",
-    "nb": "nuxt build",
+	"engines": {
+		"node": "18.x",
+		"npm": "9.x.x"
+	},
+	"private": true,
+	"scripts": {
+		"build": "node deployment/loadContent.mjs && nuxt build",
+		"start": "nuxt start",
+		"dev": "nuxt dev",
+		"generate": "nuxt generate",
+		"preview": "nuxt preview",
+		"test": "concurrently -c \"auto\" --names \"RUN,TEST\" --kill-others -s first \"npm run start\" \"npm run cy:run\"",
+		"lint-all": "eslint .",
+		"lint-fix-all": "eslint . --fix",
+		"prepare": "husky install",
+		"cy:open": "cypress open",
+		"cy:run": "cypress run",
+		"load-content": "node deployment/loadContent.mjs",
+		"build-and-test": "npm run build && npm run test",
+		"static-export": "node deployment/loadContent.mjs && nuxt generate",
+		"nb": "nuxt build",
 		"format:check": "prettier . --cache --check --ignore-path .gitignore",
 		"format:fix": "npm run format:check -- --write"
-  },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx,vue}": "eslint --fix"
-  },
-  "devDependencies": {
-    "@acdh-oeaw/prettier-config": "^1.0.1",
-    "@mdi/font": "^7.0.96",
-    "@mdi/js": "^7.0.96",
-    "@nuxt/content": "^2.8.*",
-    "@nuxtjs/eslint-config-typescript": "^12.0.0",
-    "@nuxtjs/i18n": "npm:@nuxtjs/i18n-edge@^8.0.0-rc.4-28240475.595f9ca",
-    "@vitejs/plugin-vue": "^3.2.0",
-    "concurrently": "^7.6.0",
-    "cypress": "^12.5.1",
-    "eslint": "^8.28.0",
-    "fs-extra": "^11.1.1",
-    "husky": "^8.0.3",
-    "lint-staged": "^13.1.0",
-    "prettier": "^3.0.3",
-    "sass": "^1.60.0",
-    "swagger-typescript-api": "^12.0.2",
-    "vuetify-nuxt-module": "^0.5.7"
-  },
-  "dependencies": {
-    "@nuxt/image": "^1.0.0-rc.2",
-    "@types/leaflet": "^1.9.0",
-    "leaflet": "^1.9.2",
-    "nuxt": "3.5.*"
-  },
-  "prettier": "@acdh-oeaw/prettier-config"
+	},
+	"lint-staged": {
+		"*.{js,jsx,ts,tsx,vue}": "eslint --fix"
+	},
+	"devDependencies": {
+		"@acdh-oeaw/prettier-config": "^1.0.1",
+		"@mdi/font": "^7.0.96",
+		"@mdi/js": "^7.0.96",
+		"@nuxt/content": "^2.8.*",
+		"@nuxtjs/eslint-config-typescript": "^12.0.0",
+		"@nuxtjs/i18n": "npm:@nuxtjs/i18n-edge@^8.0.0-rc.4-28240475.595f9ca",
+		"@vitejs/plugin-vue": "^3.2.0",
+		"concurrently": "^7.6.0",
+		"cypress": "^12.5.1",
+		"eslint": "^8.28.0",
+		"eslint-config-prettier": "^9.0.0",
+		"fs-extra": "^11.1.1",
+		"husky": "^8.0.3",
+		"lint-staged": "^13.1.0",
+		"prettier": "^3.0.3",
+		"sass": "^1.60.0",
+		"swagger-typescript-api": "^12.0.2",
+		"vuetify-nuxt-module": "^0.5.7"
+	},
+	"dependencies": {
+		"@nuxt/image": "^1.0.0-rc.2",
+		"@types/leaflet": "^1.9.0",
+		"leaflet": "^1.9.2",
+		"nuxt": "3.5.*"
+	},
+	"prettier": "@acdh-oeaw/prettier-config"
 }

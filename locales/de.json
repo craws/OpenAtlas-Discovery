@@ -1,96 +1,96 @@
 {
-  "locales": {
-    "de": {
-      "nativeName": "Deutsch",
-      "englishName": "German"
-    },
-    "en": {
-      "nativeName": "English",
-      "englishName": "English"
-    }
-  },
-  "global": {
-    "basics": {
-      "hello": "Hallo, {name}!",
-      "language": "Sprache",
-      "of": "von",
-      "map": "Karte",
-      "more details": "weitere Infos",
-      "search": "Suche",
-      "title": "Titel",
-      "unknown": "Unbekannt",
-      "data": "Daten",
-      "de": "deutsch",
-      "en": "englisch",
-      "loading": "Laden",
-      "license": "Lizenz",
-      "depictions": "Darstellungen",
-      "backHome": "Zurück zur Startseite",
-      "language-selection": "Sprach Auswahl"
-    },
-    "entity": {
-      "class": "Klasse",
-      "name": "Name",
-      "description": "Beschreibung",
-      "begin": "Beginn",
-      "end": "Ende",
-      "system_classes": {
-        "acquisition": "Erwerb",
-        "activity": "Aktivität",
-        "actor_appellation": "Akteursbezeichnung",
-        "administrative_unit": "administrative Einheit",
-        "appellation": "Bezeichnung",
-        "artifact": "Artefakt",
-        "bibliography": "Bibliographie",
-        "edition": "Auflage",
-        "external_reference": "externe Referenz",
-        "feature": "Merkmal",
-        "group": "Gruppe",
-        "human_remains": "menschliche Überreste",
-        "move": "Verschiebung",
-        "object_location": "Objektstandort",
-        "person": "Person",
-        "place": "Ort",
-        "referenceSystem": "Referenzsystem",
-        "source": "Quelle",
-        "stratigraphic_unit": "stratigraphische Einheit",
-        "source_translation": "Quellenübersetzung",
-        "type": "Typ"
-      },
-      "alias": "Alias",
-      "cidoc class": "Cidoc Klasse",
-      "system class": "System Klasse",
-      "type id": "Typ-ID",
-      "value type id": "Werttyp-ID",
-      "type id with subs": "Typ-ID mit Subtypen",
-      "type name": "Typname",
-      "begin from": "Beginn von",
-      "begin to": "Beginn bis",
-      "end from": "Ende von",
-      "end to": "Ende bis",
-      "realation to id": "Beziehung-ID",
-      "id": "ID"
-    }
-  },
-  "components": {
-    "entity": {
-      "prim_description_missing": "Primäre Beschreibung fehlt.",
-      "class_missing": "Klasse fehlt",
-      "details_header": "Details",
-      "detail": {
-        "more": "weitere"
-      },
-      "basics": {
-        "start": "Anfang",
-        "end": "Ende"
-      },
-      "details": {
-        "types": "Typen"
-      }
-    },
-    "when-display": {
-      "no-dates": "Keine Kalenderdaten bekannt",
-      "details_header": "Details"
-    }
-  }
+	"locales": {
+		"de": {
+			"nativeName": "Deutsch",
+			"englishName": "German"
+		},
+		"en": {
+			"nativeName": "English",
+			"englishName": "English"
+		}
+	},
+	"global": {
+		"basics": {
+			"hello": "Hallo, {name}!",
+			"language": "Sprache",
+			"of": "von",
+			"map": "Karte",
+			"more details": "weitere Infos",
+			"search": "Suche",
+			"title": "Titel",
+			"unknown": "Unbekannt",
+			"data": "Daten",
+			"de": "deutsch",
+			"en": "englisch",
+			"loading": "Laden",
+			"license": "Lizenz",
+			"depictions": "Darstellungen",
+			"backHome": "Zurück zur Startseite",
+			"language-selection": "Sprach Auswahl"
+		},
+		"entity": {
+			"class": "Klasse",
+			"name": "Name",
+			"description": "Beschreibung",
+			"begin": "Beginn",
+			"end": "Ende",
+			"system_classes": {
+				"acquisition": "Erwerb",
+				"activity": "Aktivität",
+				"actor_appellation": "Akteursbezeichnung",
+				"administrative_unit": "administrative Einheit",
+				"appellation": "Bezeichnung",
+				"artifact": "Artefakt",
+				"bibliography": "Bibliographie",
+				"edition": "Auflage",
+				"external_reference": "externe Referenz",
+				"feature": "Merkmal",
+				"group": "Gruppe",
+				"human_remains": "menschliche Überreste",
+				"move": "Verschiebung",
+				"object_location": "Objektstandort",
+				"person": "Person",
+				"place": "Ort",
+				"referenceSystem": "Referenzsystem",
+				"source": "Quelle",
+				"stratigraphic_unit": "stratigraphische Einheit",
+				"source_translation": "Quellenübersetzung",
+				"type": "Typ"
+			},
+			"alias": "Alias",
+			"cidoc class": "Cidoc Klasse",
+			"system class": "System Klasse",
+			"type id": "Typ-ID",
+			"value type id": "Werttyp-ID",
+			"type id with subs": "Typ-ID mit Subtypen",
+			"type name": "Typname",
+			"begin from": "Beginn von",
+			"begin to": "Beginn bis",
+			"end from": "Ende von",
+			"end to": "Ende bis",
+			"realation to id": "Beziehung-ID",
+			"id": "ID"
+		}
+	},
+	"components": {
+		"entity": {
+			"prim_description_missing": "Primäre Beschreibung fehlt.",
+			"class_missing": "Klasse fehlt",
+			"details_header": "Details",
+			"detail": {
+				"more": "weitere"
+			},
+			"basics": {
+				"start": "Anfang",
+				"end": "Ende"
+			},
+			"details": {
+				"types": "Typen"
+			}
+		},
+		"when-display": {
+			"no-dates": "Keine Kalenderdaten bekannt",
+			"details_header": "Details"
+		}
+	}
 }

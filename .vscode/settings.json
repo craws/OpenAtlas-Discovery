@@ -1,17 +1,12 @@
 {
-    "nuxt.isNuxtApp": false,
-    "i18n-ally.localesPaths": [
-        "locales"
-    ],
-    "i18n-ally.keystyle": "nested",
-    "prettier.requireConfig": true,
-    "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": true
-    },
-    "cSpell.words": [
-        "Cidoc",
-        "nuxt"
-    ],
+	"nuxt.isNuxtApp": false,
+	"i18n-ally.localesPaths": ["locales"],
+	"i18n-ally.keystyle": "nested",
+	"prettier.requireConfig": true,
+	"editor.codeActionsOnSave": {
+		"source.fixAll.eslint": true
+	},
+	"cSpell.words": ["Cidoc", "nuxt"],
 	"editor.defaultFormatter": "esbenp.prettier-vscode",
-	"editor.formatOnSave": true,
+	"editor.formatOnSave": true
 }
