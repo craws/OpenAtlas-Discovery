@@ -1,9 +1,8 @@
 ---
 navigation:
-  title: 'About'
+  title: "About"
 ---
 
 # About
-
 
 [Back home](/)
