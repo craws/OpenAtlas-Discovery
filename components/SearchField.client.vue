@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Query, Search } from "~~/types/query";
- 
+
 const emit = defineEmits<{
 	(e: "search", search: Query): void;
 }>();
