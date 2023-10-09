@@ -43,16 +43,12 @@ import type { LinkedPlacesModelWhen } from '~~/composables/api';
 
 const { t } = useI18n();
 
-interface displayOptions {
-}
-
 interface Props {
-  loading?: boolean,
-  title?: string,
-  descriptions?: string[],
-  systemClass?: string,
-  when?: LinkedPlacesModelWhen,
-  displayOptions?: displayOptions
+	loading?: boolean;
+	title?: string;
+	descriptions?: string[];
+	systemClass?: string;
+	when?: LinkedPlacesModelWhen;
 }
 
 const props = defineProps<Props>();
