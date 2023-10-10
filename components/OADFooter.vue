@@ -14,9 +14,9 @@ const frontenVersion = `${config.public.gitTag ?? "version"} - ${
 				</div>
 
 				<div class="text-center" style="font-size: 0.75em">
-					<b>Versions</b>
+					<b>Version</b>
 					<div>
-						<p>Frontend: {{ frontenVersion }}</p>
+						<p>{{ frontenVersion }}</p>
 					</div>
 				</div>
 
