@@ -10,7 +10,7 @@ const frontenVersion = `${config.public.gitTag ?? "version"} - ${
 		<v-footer border class="py-2">
 			<div class="w-50 mx-auto d-flex justify-center justify-space-between align-center">
 				<div>
-					<NuxtLink style="text-decoration: none; color: inherit" to="/">Home</NuxtLink>
+					<NuxtLink style="text-decoration: none; color: inherit" to="/imprint">{{ $t('global.imprint') }}</NuxtLink>
 				</div>
 
 				<div class="text-center" style="font-size: 0.75em">

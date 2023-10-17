@@ -3,7 +3,7 @@ import fs from "fs-extra";
 
 const clonedContentPath = "temp";
 
-// from env variable or argument or default value
+// from .env variable or argument or default value
 const repo =
 	process.env.CONTENT_REPO ?? process.argv[2] ?? "acdh-oeaw/OpenAtlas-Discovery-Content-Template";
 const branch = process.env.CONTENT_BRANCH ?? process.argv[3] ?? "main";
@@ -40,7 +40,7 @@ if (fs.existsSync(clonedContentPath)) {
  */
 function cloneRepo(targetpath, repo, branch, useHttp = true) {
 	// From https://cheatcode.co/tutorials/how-to-clone-and-sync-a-github-repo-via-node-js
-	// child_process.execSync(`git clone ${getBranch(branch)} https://${username}:${process.env.PERSONAL_ACCESS_TOKEN}@github.com/${username}/${repo}.git ${targetpath}`);
+	// child_process.execSync(`git clone ${getBranch(branch)} https://${username}:${process..env.PERSONAL_ACCESS_TOKEN}@github.com/${username}/${repo}.git ${targetpath}`);
 
 	if (fs.existsSync(targetpath)) {
 		fs.rmSync(clonedContentPath, { recursive: true, force: true });
