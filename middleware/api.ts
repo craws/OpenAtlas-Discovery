@@ -1,6 +1,5 @@
 export default defineNuxtRouteMiddleware(() => {
-	const { $discoveryConfig } = useNuxtApp();
-	if ($discoveryConfig.APIbase === undefined) {
+	if (useRuntimeConfig().public.APIBase === undefined) {
 		return navigateTo("/", { redirectCode: 308 });
 	}
 });

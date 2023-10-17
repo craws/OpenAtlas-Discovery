@@ -1,8 +1,6 @@
 import { execSync } from "node:child_process";
-import { DiscoveryConfig } from "./config/discoveryConfig";
-import discoveryConfig from "./config/discoveryConfig.json";
+import { discoveryConfig } from "./config/discoveryConfig";
 
-const config: DiscoveryConfig = discoveryConfig as DiscoveryConfig;
 const branchName = execSync("git rev-parse --abbrev-ref HEAD").toString().trimEnd();
 const commitHash = execSync("git rev-parse HEAD").toString().trimEnd();
 const gitTag = execSync("git describe --always --tags").toString().trimEnd();
@@ -16,7 +14,7 @@ export default defineNuxtConfig({
 		head: {
 			meta: [
 				{
-					name: config.title ?? "OpenAtlas Discovery",
+					name: discoveryConfig.title,
 				},
 			],
 		},
@@ -24,6 +22,7 @@ export default defineNuxtConfig({
 	runtimeConfig: {
 		// Keys within public, will be also exposed to the client-side
 		public: {
+			APIBase: process.env.NUXT_PUBLIC_API_BASE_URL,
 			commitHash,
 			branchName,
 			gitTag,
@@ -46,7 +45,7 @@ export default defineNuxtConfig({
 		},
 	},
 	image: {
-		domains: config.imageDomains ?? ["openatlas.eu"],
+		domains: JSON.parse(process.env.NUXT_PUBLIC_IMAGE_DOMAINS),
 		inject: true,
 	},
 });

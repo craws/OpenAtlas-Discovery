@@ -1,10 +1,10 @@
 import en from "./locales/en.json";
 import de from "./locales/de.json";
-import { DiscoveryConfig, defaultDiscoveryConfig } from "./config/discoveryConfig";
+import { discoveryConfig } from "./config/discoveryConfig";
 import configJson from "./config/discoveryConfig.json";
 
-let config: DiscoveryConfig = configJson as DiscoveryConfig;
-config = { ...defaultDiscoveryConfig, ...config };
+let config: discoveryConfig = configJson as discoveryConfig;
+config = { ...config };
 
 export default defineI18nConfig(() => {
 	return {

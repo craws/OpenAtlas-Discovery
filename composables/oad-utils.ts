@@ -1,3 +1,5 @@
+import { discoveryConfig } from '~/config/discoveryConfig';
+
 export const useSafeRead = function (obj: Object, index: string): string | undefined {
 	const indizes = index.split(/[.[\]"']/).filter((x) => x !== "");
 	return indizes.reduce((o, key) => o?.[key], obj);
@@ -10,20 +12,17 @@ export const useFormatDateTime = (date: string) => {
 export const selectedLocaleLocalStorageKey = "oad-selected-locale";
 
 export function getLogo(): string {
-	const { $discoveryConfig } = useNuxtApp();
 
-	const logo = $discoveryConfig.logo ?? "logo.svg";
+	const logo = discoveryConfig.logo ?? "logo.svg";
 	return logo;
 }
 
 export function getHeaderLogo(): string {
-	const { $discoveryConfig } = useNuxtApp();
 
-	return $discoveryConfig.headerLogo ?? $discoveryConfig.logo ?? "/header_logo.svg";
+	return discoveryConfig.headerLogo ?? discoveryConfig.logo ?? "/header_logo.svg";
 }
 
 export function getFavicon(): { rel: string; type: string; href: string; sizes: string } {
-	const { $discoveryConfig } = useNuxtApp();
 
 	const favicon = {
 		rel: "icon",
@@ -31,12 +30,12 @@ export function getFavicon(): { rel: string; type: string; href: string; sizes: 
 		href: "/favicon.svg",
 		sizes: "any",
 	};
-	const faviconExt = $discoveryConfig.favicon?.split(".").pop();
+	const faviconExt = discoveryConfig.favicon?.split(".").pop();
 
 	// Can Handle SVGs, .ico
 	if (faviconExt === "ico") {
 		favicon.type = "image/x-icon";
-		favicon.href = "/" + $discoveryConfig.favicon;
+		favicon.href = "/" + discoveryConfig.favicon;
 	}
 
 	return favicon;
