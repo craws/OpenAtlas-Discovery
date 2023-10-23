@@ -5,7 +5,7 @@
 	},
 	"private": true,
 	"scripts": {
-		"build": "node deployment/loadContent.mjs && nuxt build",
+		"build": "nuxt build",
 		"start": "nuxt start",
 		"dev": "nuxt dev",
 		"generate": "nuxt generate",
@@ -18,7 +18,7 @@
 		"cy:run": "cypress run",
 		"load-content": "node deployment/loadContent.mjs",
 		"build-and-test": "npm run build && npm run test",
-		"static-export": "node deployment/loadContent.mjs && nuxt generate",
+		"static-export": "nuxt generate",
 		"nb": "nuxt build",
 		"format:check": "prettier . --cache --check --ignore-path .gitignore",
 		"format:fix": "npm run format:check -- --write"
