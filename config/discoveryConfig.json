@@ -3,7 +3,5 @@
 		"primaryColor": "#b8cf5b",
 		"geoJson": "#d900d5"
 	},
-	"defaultLocale": "en",
-	"APIbase": "https://demo-dev.openatlas.eu",
-	"imageDomains": ["openatlas.eu"]
+	"defaultLocale": "en"
 }
