@@ -32,7 +32,7 @@ collections:
     files:
       - name: project_config
         label: Project config
-        file: project.config.json
+        file: config/discoveryConfig.json
         fields:
           - name: colors
             label: Colors
