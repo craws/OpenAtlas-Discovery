@@ -31,10 +31,23 @@ const schema = z.object({
 	 */
 	defaultFilters: z.array(z.number()).optional(), // should be required
 
-	/**
-	 * Hex color code for the primary color of the website.
-	 */
-	primaryColor: z.string().optional(),
+	colors: z.object({
+		/**
+		 * Hex color code for the primary color of the website.
+		 */
+		primaryColor: z.string().default('#b8cf5b'),
+
+		/**
+		 * Hex color for the secondary color of the website
+		 */
+		secondaryColor: z.string().optional(),
+
+		/**
+		 * Hex color of the geoJson (map color)
+		 */
+
+		geoJson: z.string().default('#d900d5'),
+	}),
 
 	/**
 	 * Logo
