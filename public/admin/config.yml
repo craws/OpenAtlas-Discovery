@@ -1,0 +1,144 @@
+load_config_file: true
+local_backend: true
+backend:
+  name: github
+  repo: acdh-oeaw/openatlas-discovery
+  branch: develop
+  base_url: https://openatlas-discovery-demo.acdh-ch-dev.oeaw.ac.at/
+  auth_endpoint: /api/oauth/authorize
+  auth_scope: repo
+  squash_merges: true
+  commit_messages:
+    create: "content(create): {{collection}} '{{slug}}'"
+    update: "content(update): {{collection}} '{{slug}}'"
+    delete: "content(delete): {{collection}} '{{slug}}'"
+    uploadMedia: "content(upload): '{{path}}'"
+    deleteMedia: "content(delete): '{{path}}'"
+# publish_mode: editorial_workflow
+media_folder: public/
+public_folder: /
+editor:
+  preview: false
+i18n:
+  structure: multiple_folders
+  locales:
+    - en
+    - de
+  default_locale: en
+collections:
+  - name: config
+    label: Config
+    # description: Config
+    files:
+      - name: project_config
+        label: Project config
+        file: project.config.json
+        fields:
+          - name: colors
+            label: Colors
+            hint: Colors
+            widget: object
+            fields:
+              - name: accent
+                label: Accent
+                hint: Accent color
+                widget: color
+                allowInput: true
+
+              - name: geojson
+                label: GeoJSON features
+                hint: GeoJSON feaures color
+                widget: color
+                allowInput: true
+
+          - name: defaultFilters
+            label: Default filters
+            label_singular: Default filter
+            hint: Default filters
+            widget: list
+            fields:
+              - name: id
+                label: ID
+                widget: number
+
+          - name: defaultLocale
+            label: Default locale
+            hint: Default locale
+            widget: select
+            options:
+              - value: en
+                label: English
+              - value: de
+                label: German
+
+          - name: logo
+            label: Logo
+            hint: Logo
+            widget: image
+
+
+  - name: metadata
+    label: Metadata
+    # description: Metadata
+    i18n: true
+    # currently file collections only support the "single_file" i18n structure,
+    # so we create a folder collection with a single entry, and disallow creating
+    # new entries.
+    folder: messages
+    format: json
+    create: false
+    delete: false
+    summary: Project metadata
+    filter:
+      field: __cms__
+      value: true
+    fields:
+      - name: __cms__
+        widget: hidden
+
+      - name: title
+        label: Title
+        i18n: true
+        hint: The title
+
+      - name: description
+        label: Description
+        i18n: true
+        hint: The description
+
+  - name: pages
+    label: Pages
+    label_singular: Page
+    # description: Pages
+    i18n: true
+    folder: content
+    create: true
+    delete: true
+    # nested:
+    #   depth: 3
+    # meta: { path: { widget: string, label: 'Path', index_file: 'index' } }
+    fields:
+      - name: title
+        label: Title
+        i18n: true
+        hint: The title
+
+      - name: navigation
+        label: Navigation
+        i18n: true
+        hint: The navigation
+        widget: object
+        fields:
+          - name: title
+            label: Title
+            i18n: true
+            hint: The navigation title
+
+      - name: body
+        label: Content
+        i18n: true
+        hint: The content
+        widget: markdown
+        modes:
+          - raw
+          - rich_text
