@@ -39,17 +39,18 @@ collections:
             hint: Colors
             widget: object
             fields:
-              - name: accent
-                label: Accent
-                hint: Accent color
+              - name: primaryColor
+                label: Primary
+                hint: Primary color
                 widget: color
                 allowInput: true
 
-              - name: geojson
-                label: GeoJSON features
-                hint: GeoJSON feaures color
+              - name: secondaryColor
+                label: Secondary
+                hint: Secondary color
                 widget: color
                 allowInput: true
+                required: false
 
           - name: defaultFilters
             label: Default filters
@@ -75,36 +76,6 @@ collections:
             label: Logo
             hint: Logo
             widget: image
-
-
-  - name: metadata
-    label: Metadata
-    # description: Metadata
-    i18n: true
-    # currently file collections only support the "single_file" i18n structure,
-    # so we create a folder collection with a single entry, and disallow creating
-    # new entries.
-    folder: messages
-    format: json
-    create: false
-    delete: false
-    summary: Project metadata
-    filter:
-      field: __cms__
-      value: true
-    fields:
-      - name: __cms__
-        widget: hidden
-
-      - name: title
-        label: Title
-        i18n: true
-        hint: The title
-
-      - name: description
-        label: Description
-        i18n: true
-        hint: The description
 
   - name: pages
     label: Pages

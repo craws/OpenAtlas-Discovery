@@ -41,12 +41,6 @@ const schema = z.object({
 		 * Hex color for the secondary color of the website
 		 */
 		secondaryColor: z.string().optional(),
-
-		/**
-		 * Hex color of the geoJson (map color)
-		 */
-
-		geoJson: z.string().default('#d900d5'),
 	}),
 
 	/**

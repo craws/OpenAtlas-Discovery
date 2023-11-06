@@ -1,7 +1,7 @@
 {
-	"colors": {
-		"primaryColor": "#b8cf5b",
-		"geoJson": "#d900d5"
-	},
-	"defaultLocale": "en"
+  "colors": {
+    "primaryColor": "#b8cf5b"
+  },
+  "defaultLocale": "en",
+  "logo": "/logo.svg"
 }
