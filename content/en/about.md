@@ -1,6 +1,7 @@
 ---
+title: About
 navigation:
-  title: "About"
+  title: About
 ---
 
 # About

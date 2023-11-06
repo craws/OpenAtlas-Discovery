@@ -1,3 +1,6 @@
+// Import discovery config
+import discoveryConfig from "../../config/discoveryConfig.json";
+
 describe("Main Page", () => {
 	beforeEach(() => {
 		cy.visit("/");
@@ -5,6 +8,11 @@ describe("Main Page", () => {
 
 	it("Has the main Elements", () => {
 		cy.get('[data-test="main-content-renderer"]').should("exist");
+
+		if (discoveryConfig.APIbase === undefined) {
+			cy.task("log", "APIbase is undefined, skipping map button & data button");
+			return;
+		}
 
 		cy.get('[data-test="main-map-btn"]').should("exist");
 

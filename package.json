@@ -5,9 +5,10 @@
 	},
 	"private": true,
 	"scripts": {
-		"build": "node deployment/loadContent.mjs && nuxt build",
+		"build": "nuxt build",
 		"start": "nuxt start",
 		"dev": "nuxt dev",
+		"dev:cms": "netlify-cms-proxy-server",
 		"generate": "nuxt generate",
 		"preview": "nuxt preview",
 		"test": "concurrently -c \"auto\" --names \"RUN,TEST\" --kill-others -s first \"npm run start\" \"npm run cy:run\"",
@@ -18,7 +19,7 @@
 		"cy:run": "cypress run",
 		"load-content": "node deployment/loadContent.mjs",
 		"build-and-test": "npm run build && npm run test",
-		"static-export": "node deployment/loadContent.mjs && nuxt generate",
+		"static-export": "nuxt generate",
 		"nb": "nuxt build",
 		"format:check": "prettier . --cache --check --ignore-path .gitignore",
 		"format:fix": "npm run format:check -- --write"
@@ -45,7 +46,8 @@
 		"sass": "^1.60.0",
 		"swagger-typescript-api": "^12.0.2",
 		"typescript": "^5.2.2",
-		"vuetify-nuxt-module": "^0.5.7"
+		"vuetify-nuxt-module": "^0.5.7",
+		"netlify-cms-proxy-server": "^1.3.24"
 	},
 	"dependencies": {
 		"@nuxt/image": "^1.0.0-rc.2",

@@ -8,31 +8,30 @@ const frontenVersion = `${config.public.gitTag ?? "version"} - ${
 <template>
 	<div>
 		<v-footer border class="py-2">
-			<div class="w-50 mx-auto d-flex justify-center justify-space-between align-center">
+			<div
+				style="font-size: 0.75em"
+				class="w-50 mx-auto d-flex justify-center justify-space-between align-center">
 				<div>
-					<NuxtLink style="text-decoration: none; color: inherit" to="/">Home</NuxtLink>
+					<NuxtLink style="text-decoration: none; color: inherit" to="/imprint">{{ $t('global.imprint') }}</NuxtLink>
 				</div>
 
-				<div class="text-center" style="font-size: 0.75em">
-					<b>Versions</b>
-					<div>
-						<p>Frontend: {{ frontenVersion }}</p>
-					</div>
+				<div class="text-center" >
+					<p><b>Version:</b> {{ frontenVersion }}</p>
 				</div>
 
-				<span class="relative" style="font-size: 0.75em">
+				<div class="relative">
 					With
-					<v-icon style="position: relative; top: -2px">mdi-heart</v-icon>
+					<v-icon size="16" style="position: relative; top: -2px">mdi-heart</v-icon>
 					from
 					<NuxtLink style="text-decoration: none; color: inherit" to="https://openatlas.eu/">
 						<v-nuxt-image
-							style="position: relative; top: 6px"
+							style="position: absolute; top: 6px"
 							src="/oad-favicon.svg"
 							alt="OpenAtlas Logo"
-							height="24px"
+							height="20px"
 						/>
 					</NuxtLink>
-				</span>
+				</div>
 			</div>
 		</v-footer>
 	</div>

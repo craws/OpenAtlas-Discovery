@@ -11,4 +11,5 @@ const { locale } = useI18n();
 
 const { data } = await useFetch(imprintServiceURL + serviceID + `/?locale=${locale.value}`);
 
+
 </script>

@@ -46,50 +46,6 @@ jobs:
       image_tagged: ${{ needs.setup_workflow_env.outputs.image_tagged }}
       default_port: ${{ needs.setup_workflow_env.outputs.default_port }}
       submodules: ${{ needs.setup_workflow_env.outputs.submodules }}
-  _1-mamems:
-    needs: [setup_workflow_env]
-    uses: acdh-oeaw/gl-autodevops-minimal-port/.github/workflows/build-herokuish-and-push-to-registry.yaml@main
-    secrets: inherit
-    # if you run this outside of acdh-oeaw yo uneed to specify every secret you want to pass by name
-    with:
-      environment: ${{ needs.setup_workflow_env.outputs.environment}}-mamems
-      registry_root: ${{ needs.setup_workflow_env.outputs.registry_root }}
-      image_tagged: ${{ needs.setup_workflow_env.outputs.image_tagged }}-mamems
-      default_port: ${{ needs.setup_workflow_env.outputs.default_port }}
-      submodules: ${{ needs.setup_workflow_env.outputs.submodules }}
-  _1-approaching-byzantium:
-    needs: [setup_workflow_env]
-    uses: acdh-oeaw/gl-autodevops-minimal-port/.github/workflows/build-herokuish-and-push-to-registry.yaml@main
-    secrets: inherit
-    # if you run this outside of acdh-oeaw yo uneed to specify every secret you want to pass by name
-    with:
-      environment: ${{ needs.setup_workflow_env.outputs.environment}}-approaching-byzantium
-      registry_root: ${{ needs.setup_workflow_env.outputs.registry_root }}
-      image_tagged: ${{ needs.setup_workflow_env.outputs.image_tagged }}-approaching-byzantium
-      default_port: ${{ needs.setup_workflow_env.outputs.default_port }}
-      submodules: ${{ needs.setup_workflow_env.outputs.submodules }}
-  _1-moving-byzantium:
-    needs: [setup_workflow_env]
-    uses: acdh-oeaw/gl-autodevops-minimal-port/.github/workflows/build-herokuish-and-push-to-registry.yaml@main
-    secrets: inherit
-    # if you run this outside of acdh-oeaw yo uneed to specify every secret you want to pass by name
-    with:
-      environment: ${{ needs.setup_workflow_env.outputs.environment}}-moving-byzantium
-      registry_root: ${{ needs.setup_workflow_env.outputs.registry_root }}
-      image_tagged: ${{ needs.setup_workflow_env.outputs.image_tagged }}-moving-byzantium
-      default_port: ${{ needs.setup_workflow_env.outputs.default_port }}
-      submodules: ${{ needs.setup_workflow_env.outputs.submodules }}
-  _1-femcarevienna:
-    needs: [setup_workflow_env]
-    uses: acdh-oeaw/gl-autodevops-minimal-port/.github/workflows/build-herokuish-and-push-to-registry.yaml@main
-    secrets: inherit
-    # if you run this outside of acdh-oeaw yo uneed to specify every secret you want to pass by name
-    with:
-      environment: ${{ needs.setup_workflow_env.outputs.environment}}-femcarevienna
-      registry_root: ${{ needs.setup_workflow_env.outputs.registry_root }}
-      image_tagged: ${{ needs.setup_workflow_env.outputs.image_tagged }}-femcarevienna
-      default_port: ${{ needs.setup_workflow_env.outputs.default_port }}
-      submodules: ${{ needs.setup_workflow_env.outputs.submodules }}
   _2:
     needs: [setup_workflow_env]
     uses: acdh-oeaw/gl-autodevops-minimal-port/.github/workflows/herokuish-tests-db-url.yaml@main
@@ -122,70 +78,6 @@ jobs:
       APP_NAME:
         ${{ needs.setup_workflow_env.outputs.APP_NAME }}-${{
         needs.setup_workflow_env.outputs.environment_short }}
-      APP_ROOT: ${{ needs.setup_workflow_env.outputs.APP_ROOT }}
-      SERVICE_ID: ${{ needs.setup_workflow_env.outputs.SERVICE_ID }}
-      PUBLIC_URL: ${{ needs.setup_workflow_env.outputs.PUBLIC_URL }}
-      POSTGRES_ENABLED: ${{ needs.setup_workflow_env.outputs.POSTGRES_ENABLED == 'true'}}
-      default_port: "${{ needs.setup_workflow_env.outputs.default_port}}"
-      submodules: ${{ needs.setup_workflow_env.outputs.submodules }}
-  _3-mamems:
-    needs: [setup_workflow_env, _1-mamems, _2]
-    uses: acdh-oeaw/gl-autodevops-minimal-port/.github/workflows/deploy.yml@main
-    secrets: inherit
-    with:
-      environment: ${{ needs.setup_workflow_env.outputs.environment}}-mamems
-      DOCKER_TAG:
-        ${{ needs.setup_workflow_env.outputs.registry_root }}${{
-        needs.setup_workflow_env.outputs.image_tagged }}-mamems
-      APP_NAME: mamems-app-${{ needs.setup_workflow_env.outputs.environment_short }}
-      APP_ROOT: ${{ needs.setup_workflow_env.outputs.APP_ROOT }}
-      SERVICE_ID: ${{ needs.setup_workflow_env.outputs.SERVICE_ID }}
-      PUBLIC_URL: ${{ needs.setup_workflow_env.outputs.PUBLIC_URL }}
-      POSTGRES_ENABLED: ${{ needs.setup_workflow_env.outputs.POSTGRES_ENABLED == 'true'}}
-      default_port: "${{ needs.setup_workflow_env.outputs.default_port}}"
-      submodules: ${{ needs.setup_workflow_env.outputs.submodules }}
-  _3-approaching-byzantium:
-    needs: [setup_workflow_env, _1-approaching-byzantium, _2]
-    uses: acdh-oeaw/gl-autodevops-minimal-port/.github/workflows/deploy.yml@main
-    secrets: inherit
-    with:
-      environment: ${{ needs.setup_workflow_env.outputs.environment}}-approaching-byzantium
-      DOCKER_TAG:
-        ${{ needs.setup_workflow_env.outputs.registry_root }}${{
-        needs.setup_workflow_env.outputs.image_tagged }}-approaching-byzantium
-      APP_NAME: approaching-byzantium-app-${{ needs.setup_workflow_env.outputs.environment_short }}
-      APP_ROOT: ${{ needs.setup_workflow_env.outputs.APP_ROOT }}
-      SERVICE_ID: ${{ needs.setup_workflow_env.outputs.SERVICE_ID }}
-      PUBLIC_URL: ${{ needs.setup_workflow_env.outputs.PUBLIC_URL }}
-      POSTGRES_ENABLED: ${{ needs.setup_workflow_env.outputs.POSTGRES_ENABLED == 'true'}}
-      default_port: "${{ needs.setup_workflow_env.outputs.default_port}}"
-      submodules: ${{ needs.setup_workflow_env.outputs.submodules }}
-  _3-moving-byzantium:
-    needs: [setup_workflow_env, _1-moving-byzantium, _2]
-    uses: acdh-oeaw/gl-autodevops-minimal-port/.github/workflows/deploy.yml@main
-    secrets: inherit
-    with:
-      environment: ${{ needs.setup_workflow_env.outputs.environment}}-moving-byzantium
-      DOCKER_TAG:
-        ${{ needs.setup_workflow_env.outputs.registry_root }}${{
-        needs.setup_workflow_env.outputs.image_tagged }}-moving-byzantium
-      APP_NAME: moving-byzantium-app-${{ needs.setup_workflow_env.outputs.environment_short }}
-      APP_ROOT: ${{ needs.setup_workflow_env.outputs.APP_ROOT }}
-      SERVICE_ID: ${{ needs.setup_workflow_env.outputs.SERVICE_ID }}
-      PUBLIC_URL: ${{ needs.setup_workflow_env.outputs.PUBLIC_URL }}
-      POSTGRES_ENABLED: ${{ needs.setup_workflow_env.outputs.POSTGRES_ENABLED == 'true'}}
-      default_port: "${{ needs.setup_workflow_env.outputs.default_port}}"
-      submodules: ${{ needs.setup_workflow_env.outputs.submodules }}
-  _3-femcarevienna:
-    needs: [setup_workflow_env, _1-femcarevienna, _2]
-    uses: acdh-oeaw/gl-autodevops-minimal-port/.github/workflows/deploy.yml@main
-    secrets: inherit
-    with:
-      environment: ${{ needs.setup_workflow_env.outputs.environment}}-femcarevienna
-      DOCKER_TAG:
-        ${{ needs.setup_workflow_env.outputs.registry_root }}${{
-        needs.setup_workflow_env.outputs.image_tagged }}-femcarevienna
-      APP_NAME: femcarevienna-app-${{ needs.setup_workflow_env.outputs.environment_short }}
       APP_ROOT: ${{ needs.setup_workflow_env.outputs.APP_ROOT }}
       SERVICE_ID: ${{ needs.setup_workflow_env.outputs.SERVICE_ID }}
       PUBLIC_URL: ${{ needs.setup_workflow_env.outputs.PUBLIC_URL }}
