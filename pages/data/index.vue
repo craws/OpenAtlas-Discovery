@@ -4,8 +4,9 @@ import { ComputedRef } from "vue";
 import headers from "~/assets/tableheaders.json";
 import classes from "~/assets/classes.json";
 import { Query } from "~~/types/query";
+import { discoveryConfig } from '~/config/discoveryConfig';
 const { t } = useI18n();
-const { $discoveryConfig, $api } = useNuxtApp();
+const { $api } = useNuxtApp();
 
 definePageMeta({
 	middleware: ["api"],
@@ -24,10 +25,10 @@ const query = computed(() => ({
 	page: options.page,
 	limit: options.itemsPerPage,
 	search: search.value,
-	type_id: $discoveryConfig.defaultFilters,
+	type_id: discoveryConfig.defaultFilters,
 }));
 
-const apiEnabled = computed(() => $discoveryConfig.APIbase !== undefined);
+const apiEnabled = computed(() => $api !== undefined);
 
 const { data, pending, refresh } = await useAsyncData(() => $api.query.getQuery(query.value));
 watch(

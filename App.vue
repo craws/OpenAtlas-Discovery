@@ -6,11 +6,11 @@
 	</div>
 </template>
 <script setup lang="ts">
-const { $discoveryConfig } = useNuxtApp();
+import { discoveryConfig } from '~/config/discoveryConfig';
 
 useHead({
 	titleTemplate: (titleChunk) => {
-		return titleChunk ? `${titleChunk} - ${$discoveryConfig.title}` : $discoveryConfig.title;
+		return titleChunk ? `${titleChunk} - ${discoveryConfig.title}` : discoveryConfig.title;
 	},
 	link: [getFavicon()],
 });

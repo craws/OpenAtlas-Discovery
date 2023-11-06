@@ -3,6 +3,7 @@ import { ParsedContent } from "@nuxt/content/dist/runtime/types";
 import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
 
+const APIBase = useRuntimeConfig().public.APIBase;
 const { smAndUp } = useDisplay();
 const t = useI18n();
 const data = reactive<{ [name: string]: ParsedContent }>({});
@@ -20,7 +21,6 @@ t.availableLocales.forEach(async (locale) => {
 	}
 });
 const logoHeight = computed(() => (smAndUp.value ? "350px" : "250px"));
-const { $discoveryConfig } = useNuxtApp();
 
 const contentToUse = computed(() => {
 	if (data[t.locale.value]) {
@@ -39,7 +39,7 @@ const contentToUse = computed(() => {
 				<ContentRendererMarkdown :value="contentToUse" class="w-50 mx-auto" />
 			</ContentRenderer>
 			<br />
-			<v-row v-if="$discoveryConfig.APIbase" justify="center">
+			<v-row v-if="APIBase" justify="center">
 				<v-col cols="auto">
 					<v-btn
 						size="large"

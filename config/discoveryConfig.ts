@@ -1,47 +1,60 @@
 /**
  * Configuration options for the Discovery website.
  */
-export interface DiscoveryConfig {
+import { z } from 'zod';
+import userConfig from './discoveryConfig.json'
+const locales = ['en', 'de'] as const;
+
+const schema = z.object({
+	/**
+	 * The title of the website.
+	 * Specifies the title that will be used for the Discovery website.
+	 * @default OpenAtlas Discovery
+	 */
+	title: z.string().default('OpenAtlas Discovery'),
+
+	/**
+	 * The description of the website.
+	 * Specifies the description that will be used for the Discovery website.
+	 */
+	description: z.string().optional(),
+
 	/**
 	 * The default locale for the website. The locales have to be provided and present to be applied.
 	 */
-	defaultLocale: string;
-
-	/**
-	 * The custom format for displaying dates and times on the Discovery website.
-	 */
-	dateTimeFormat?: string;
+	defaultLocale: z.enum(locales).default('en'),
 
 	/**
 	 * A list of filters represented as numbers.
 	 * Acts as a whitelist to allow only entities belonging to a certain type given by ID.
 	 * These filters are applied in the Overview and Search sections of the website but not in the detailed view.
 	 */
-	defaultFilters?: number[];
+	defaultFilters: z.array(z.number()).optional(), // should be required
 
-	/**
-	 * The base URL for the Discovery website's API.
-	 * If provided, it specifies the root URL that will be used for making API requests.
-	 */
-	APIbase?: string;
+	colors: z.object({
+		/**
+		 * Hex color code for the primary color of the website.
+		 */
+		primaryColor: z.string().default('#b8cf5b'),
 
-	/**
-	 * The list of allowed image domains.
-	 * Specifies the domains from which images can be optimized via nuxt-img for the Discovery website.
-	 */
-	imageDomains?: string[];
+		/**
+		 * Hex color for the secondary color of the website
+		 */
+		secondaryColor: z.string().optional(),
 
-	/**
-	 * Hex color code for the primary color of the website.
-	 */
-	primaryColor?: string;
+		/**
+		 * Hex color of the geoJson (map color)
+		 */
+
+		geoJson: z.string().default('#d900d5'),
+	}),
 
 	/**
 	 * Logo
 	 * Specifies the logo that will be used for the Discovery website.
 	 * @default logo.svg
 	 */
-	logo: string;
+	logo: z.string().default('logo.svg'),
 
 	/**
 	 * Header Logo
@@ -49,27 +62,19 @@ export interface DiscoveryConfig {
 	 * @default logo
 	 * @see logo
 	 */
-	headerLogo?: string;
-
-	// Favicon
+	headerLogo: z.string().optional(), // should be required
 
 	/**
 	 * The favicon of the website.
 	 * Specifies the favicon that will be used for the Discovery website.
 	 * @supportedTypes image/svg+xml, image/x-icon
 	 */
-	favicon?: string;
+	favicon: z.string().optional(), // should be required
+});
 
-	/**
-	 * The title of the website.
-	 * Specifies the title that will be used for the Discovery website.
-	 * @default OpenAtlas Discovery
-	 */
-	title: string;
+const result = schema.safeParse(userConfig);
+if(!result.success) {
+	console.error('invalid config!', result.error.flatten().fieldErrors);
+	throw new Error('invalid config!');
 }
-
-export const defaultDiscoveryConfig: DiscoveryConfig = {
-	defaultLocale: "en",
-	logo: "logo.svg",
-	title: "OpenAtlas Discovery",
-};
+export const discoveryConfig = result.data;
