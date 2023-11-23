@@ -71,7 +71,9 @@ export default defineNuxtConfig({
 		},
 	},
 	image: {
-		domains: JSON.parse(process.env.NUXT_PUBLIC_IMAGE_DOMAINS),
+		domains: process.env.NUXT_PUBLIC_IMAGE_DOMAINS
+			? JSON.parse(process.env.NUXT_PUBLIC_IMAGE_DOMAINS)
+			: [],
 		inject: true,
 	},
 });
