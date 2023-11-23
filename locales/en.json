@@ -60,7 +60,8 @@
 			"end to": "end to",
 			"realation to id": "realation to id",
 			"id": "id"
-		}
+		},
+		"imprint": "Imprint"
 	},
 	"components": {
 		"entity": {

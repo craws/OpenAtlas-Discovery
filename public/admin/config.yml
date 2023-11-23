@@ -1,0 +1,115 @@
+load_config_file: true
+local_backend: true
+backend:
+  name: github
+  repo: acdh-oeaw/openatlas-discovery
+  branch: develop
+  base_url: https://openatlas-discovery-demo.acdh-ch-dev.oeaw.ac.at/
+  auth_endpoint: /api/oauth/authorize
+  auth_scope: repo
+  squash_merges: true
+  commit_messages:
+    create: "content(create): {{collection}} '{{slug}}'"
+    update: "content(update): {{collection}} '{{slug}}'"
+    delete: "content(delete): {{collection}} '{{slug}}'"
+    uploadMedia: "content(upload): '{{path}}'"
+    deleteMedia: "content(delete): '{{path}}'"
+# publish_mode: editorial_workflow
+media_folder: public/
+public_folder: /
+editor:
+  preview: false
+i18n:
+  structure: multiple_folders
+  locales:
+    - en
+    - de
+  default_locale: en
+collections:
+  - name: config
+    label: Config
+    # description: Config
+    files:
+      - name: project_config
+        label: Project config
+        file: config/discoveryConfig.json
+        fields:
+          - name: colors
+            label: Colors
+            hint: Colors
+            widget: object
+            fields:
+              - name: primaryColor
+                label: Primary
+                hint: Primary color
+                widget: color
+                allowInput: true
+
+              - name: secondaryColor
+                label: Secondary
+                hint: Secondary color
+                widget: color
+                allowInput: true
+                required: false
+
+          - name: defaultFilters
+            label: Default filters
+            label_singular: Default filter
+            hint: Default filters
+            widget: list
+            fields:
+              - name: id
+                label: ID
+                widget: number
+
+          - name: defaultLocale
+            label: Default locale
+            hint: Default locale
+            widget: select
+            options:
+              - value: en
+                label: English
+              - value: de
+                label: German
+
+          - name: logo
+            label: Logo
+            hint: Logo
+            widget: image
+
+  - name: pages
+    label: Pages
+    label_singular: Page
+    # description: Pages
+    i18n: true
+    folder: content
+    create: true
+    delete: true
+    # nested:
+    #   depth: 3
+    # meta: { path: { widget: string, label: 'Path', index_file: 'index' } }
+    fields:
+      - name: title
+        label: Title
+        i18n: true
+        hint: The title
+
+      - name: navigation
+        label: Navigation
+        i18n: true
+        hint: The navigation
+        widget: object
+        fields:
+          - name: title
+            label: Title
+            i18n: true
+            hint: The navigation title
+
+      - name: body
+        label: Content
+        i18n: true
+        hint: The content
+        widget: markdown
+        modes:
+          - raw
+          - rich_text

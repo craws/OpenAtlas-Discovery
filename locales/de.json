@@ -60,7 +60,8 @@
 			"end to": "Ende bis",
 			"realation to id": "Beziehung-ID",
 			"id": "ID"
-		}
+		},
+		"imprint": "Impressum"
 	},
 	"components": {
 		"entity": {

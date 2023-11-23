@@ -3,6 +3,9 @@ import { GeoJsonObject } from "geojson";
 import { useI18n } from "vue-i18n";
 import { LinkedPlacesModelDescriptions, LinkedPlacesModelWhen } from "~~/composables/api";
 import { Format, Query, ViewClasses } from "~~/types/query";
+import { discoveryConfig } from '~/config/discoveryConfig';
+const { $api } = useNuxtApp();
+
 const { t } = useI18n();
 
 definePageMeta({
@@ -12,14 +15,12 @@ useHead({
 	title: t("global.basics.map") ?? "Map",
 });
 
-const { $discoveryConfig, $api } = useNuxtApp();
-
 const query = ref({
 	view_classes: ["actor", "event", "place", "reference", "source"] as ViewClasses,
 	limit: 0,
 	format: "geojson" as Format,
 	search: undefined as string[] | undefined,
-	type_id: $discoveryConfig.defaultFilters,
+	type_id: discoveryConfig.defaultFilters,
 });
 const { data, pending, refresh } = await useAsyncData(() => $api.query.getQuery(query.value));
 onMounted(() => {

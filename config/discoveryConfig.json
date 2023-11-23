@@ -1,5 +1,7 @@
 {
-	"defaultLocale": "en",
-	"APIbase": "https://demo-dev.openatlas.eu",
-	"imageDomains": ["openatlas.eu"]
+  "colors": {
+    "primaryColor": "#b8cf5b"
+  },
+  "defaultLocale": "en",
+  "logo": "/logo.svg"
 }

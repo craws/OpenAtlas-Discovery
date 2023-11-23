@@ -7,7 +7,7 @@
 
 		<ContentNavigationCNCustom />
 
-		<client-only v-if="$discoveryConfig.APIbase">
+		<client-only v-if="APIBase">
 			<v-tooltip content-class="text-capitalize" :text="$t('global.basics.map')" location="bottom">
 				<template #activator="{ props }">
 					<nuxt-link
@@ -43,7 +43,7 @@ const Locale = useI18n().locale;
 const localePath = useLocalePath();
 
 const logo = getHeaderLogo();
-
+const APIBase = useRuntimeConfig().public.APIBase;
 onBeforeMount(() => {
 	Locale.value = localStorage.getItem(selectedLocaleLocalStorageKey) ?? Locale.value;
 });
