@@ -37,3 +37,10 @@ const availableLocales = computed(() => {
 	return locales.value;
 });
 </script>
+
+<style>
+a {
+	text-decoration: none;
+	color: inherit;
+}
+</style>
