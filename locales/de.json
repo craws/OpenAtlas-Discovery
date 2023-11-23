@@ -1,14 +1,4 @@
 {
-	"locales": {
-		"de": {
-			"nativeName": "Deutsch",
-			"englishName": "German"
-		},
-		"en": {
-			"nativeName": "English",
-			"englishName": "English"
-		}
-	},
 	"global": {
 		"basics": {
 			"hello": "Hallo, {name}!",

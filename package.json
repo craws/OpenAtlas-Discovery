@@ -32,7 +32,7 @@
 		"@mdi/js": "^7.0.96",
 		"@nuxt/content": "^2.8.*",
 		"@nuxtjs/eslint-config-typescript": "^12.0.0",
-		"@nuxtjs/i18n": "npm:@nuxtjs/i18n-edge@^8.0.0-rc.4-28240475.595f9ca",
+		"@nuxtjs/i18n": "^8.0.0-rc.5",
 		"@vitejs/plugin-vue": "^3.2.0",
 		"concurrently": "^7.6.0",
 		"cypress": "^12.5.1",

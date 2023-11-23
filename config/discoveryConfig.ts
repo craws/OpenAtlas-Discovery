@@ -70,6 +70,6 @@ export interface DiscoveryConfig {
 
 export const defaultDiscoveryConfig: DiscoveryConfig = {
 	defaultLocale: "en",
-	logo: "logo.svg",
+	logo: "/logo.svg",
 	title: "OpenAtlas Discovery",
 };

@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { ParsedContent } from "@nuxt/content/dist/runtime/types";
-import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
+
+const localePath = useLocalePath();
 
 const { smAndUp } = useDisplay();
 const t = useI18n();
@@ -43,20 +44,20 @@ const contentToUse = computed(() => {
 				<v-col cols="auto">
 					<v-btn
 						size="large"
-						to="/map"
 						min-width="150px"
 						color="primary"
 						width="100px"
 						prepend-icon="mdi-map-marker"
 						data-test="main-map-btn"
 					>
-						{{ $t("global.basics.map") }}
+						<NuxtLink :to="localePath('/map')">
+							{{ $t("global.basics.map") }}
+						</NuxtLink>
 					</v-btn>
 				</v-col>
 				<v-col cols="auto">
 					<v-btn
 						size="large"
-						to="/data"
 						min-width="150px"
 						variant="outlined"
 						color="primary"
@@ -64,7 +65,9 @@ const contentToUse = computed(() => {
 						prepend-icon="mdi-database"
 						data-test="main-data-btn"
 					>
-						{{ $t("global.basics.data") }}
+						<NuxtLink :to="localePath('/data')">
+							{{ $t("global.basics.data") }}
+						</NuxtLink>
 					</v-btn>
 				</v-col>
 			</v-row>
