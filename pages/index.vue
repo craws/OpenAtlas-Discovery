@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { ParsedContent } from "@nuxt/content/dist/runtime/types";
-import { useI18n } from "vue-i18n";
 import { useDisplay } from "vuetify";
+
+const localePath = useLocalePath();
 
 const APIBase = useRuntimeConfig().public.APIBase;
 const { smAndUp } = useDisplay();
@@ -43,7 +44,7 @@ const contentToUse = computed(() => {
 				<v-col cols="auto">
 					<v-btn
 						size="large"
-						to="/map"
+						:to="localePath('/map')"
 						min-width="150px"
 						color="primary"
 						width="100px"
@@ -56,7 +57,7 @@ const contentToUse = computed(() => {
 				<v-col cols="auto">
 					<v-btn
 						size="large"
-						to="/data"
+						:to="localePath('/data')"
 						min-width="150px"
 						variant="outlined"
 						color="primary"

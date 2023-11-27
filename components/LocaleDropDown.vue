@@ -16,34 +16,36 @@
 					{{ $t("global.basics.language") }}
 				</p>
 			</v-list-subheader>
+			<v-list-item v-for="l in availableLocales" :key="l.code">
+				<!--
+				`@nuxtjs/i18n` does not update the locale cookie on route change, so we need to
+				call `setLocale` explicitly.
+
+				@see https://i18n.nuxtjs.org/guide/lang-switcher
+			 	-->
+				<NuxtLink :to="switchLocalePath(l.code)" @click.prevent.stop="setLocale(locale.code)">
+					{{ l.nativeName }}
+				</NuxtLink>
+			</v-list-item>
 			<!--
         To make sure there is a correct name for each locale, the locale
         must have a list of locales with their corresponding natvieNames.
        -->
-			<v-list-item
-				v-for="locale in $i18n.availableLocales"
-				:key="locale"
-				@click="setLanguage(locale)"
-			>
-				<v-list-item-title
-					:data-test="'locale-selector-' + locale"
-					class="text-body-2 text-capitalize px-2"
-				>
-					<b v-if="locale === Locale">
-						{{ $t("locales." + locale + ".nativeName") }}
-					</b>
-					{{ locale !== Locale ? $t("locales." + locale + ".nativeName") : "" }}
-				</v-list-item-title>
-			</v-list-item>
 		</v-list>
 	</v-menu>
 </template>
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
-const Locale = useI18n().locale;
+const { locale, locales, setLocale } = useI18n();
+const switchLocalePath = useSwitchLocalePath();
 
-function setLanguage(locale: string) {
-	Locale.value = locale;
-	window.localStorage.setItem(selectedLocaleLocalStorageKey, locale);
-}
+const availableLocales = computed(() => {
+	return locales.value;
+});
 </script>
+
+<style scoped>
+a {
+	text-decoration: none;
+}
+</style>

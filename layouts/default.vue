@@ -1,4 +1,6 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import "../styles/global.css";
+</script>
 <template>
 	<v-app>
 		<v-main class="d-flex flex-column">

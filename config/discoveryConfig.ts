@@ -1,9 +1,9 @@
 /**
  * Configuration options for the Discovery website.
  */
-import { z } from 'zod';
-import userConfig from './discoveryConfig.json'
-const locales = ['en', 'de'] as const;
+import { z } from "zod";
+import userConfig from "./discoveryConfig.json";
+const locales = ["en", "de"] as const;
 
 const schema = z.object({
 	/**
@@ -11,7 +11,7 @@ const schema = z.object({
 	 * Specifies the title that will be used for the Discovery website.
 	 * @default OpenAtlas Discovery
 	 */
-	title: z.string().default('OpenAtlas Discovery'),
+	title: z.string().default("OpenAtlas Discovery"),
 
 	/**
 	 * The description of the website.
@@ -22,7 +22,7 @@ const schema = z.object({
 	/**
 	 * The default locale for the website. The locales have to be provided and present to be applied.
 	 */
-	defaultLocale: z.enum(locales).default('en'),
+	defaultLocale: z.enum(locales).default("en"),
 
 	/**
 	 * A list of filters represented as numbers.
@@ -35,7 +35,7 @@ const schema = z.object({
 		/**
 		 * Hex color code for the primary color of the website.
 		 */
-		primaryColor: z.string().default('#b8cf5b'),
+		primaryColor: z.string().default("#b8cf5b"),
 
 		/**
 		 * Hex color for the secondary color of the website
@@ -48,7 +48,7 @@ const schema = z.object({
 	 * Specifies the logo that will be used for the Discovery website.
 	 * @default logo.svg
 	 */
-	logo: z.string().default('logo.svg'),
+	logo: z.string().default("logo.svg"),
 
 	/**
 	 * Header Logo
@@ -67,8 +67,9 @@ const schema = z.object({
 });
 
 const result = schema.safeParse(userConfig);
-if(!result.success) {
-	console.error('invalid config!', result.error.flatten().fieldErrors);
-	throw new Error('invalid config!');
+if (!result.success) {
+	console.error("invalid config!", result.error.flatten().fieldErrors);
+	throw new Error("invalid config!");
 }
+
 export const discoveryConfig = result.data;
