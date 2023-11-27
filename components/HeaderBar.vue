@@ -15,6 +15,7 @@
 						class="text-body-1 nav-item h-100 d-flex align-center justify-center px-2 text-grey"
 						:to="localePath('/map')"
 					>
+						<span class="d-sr-only">{{ $t("global.basics.map") }}</span>
 						<v-icon>mdi-map-marker</v-icon>
 					</nuxt-link>
 				</template>
@@ -26,6 +27,7 @@
 						class="text-body-1 nav-item h-100 d-flex align-center justify-center px-2 text-grey"
 						:to="localePath('/data')"
 					>
+						<span class="d-sr-only">{{ $t("global.basics.data") }}</span>
 						<v-icon>mdi-database</v-icon>
 					</nuxt-link>
 				</template>

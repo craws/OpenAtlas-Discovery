@@ -17,6 +17,12 @@
 				</p>
 			</v-list-subheader>
 			<v-list-item v-for="l in availableLocales" :key="l.code">
+				<!--
+				`@nuxtjs/i18n` does not update the locale cookie on route change, so we need to
+				call `setLocale` explicitly.
+
+				@see https://i18n.nuxtjs.org/guide/lang-switcher
+			 	-->
 				<NuxtLink :to="switchLocalePath(l.code)" @click.prevent.stop="setLocale(locale.code)">
 					{{ l.nativeName }}
 				</NuxtLink>
@@ -38,9 +44,8 @@ const availableLocales = computed(() => {
 });
 </script>
 
-<style>
+<style scoped>
 a {
 	text-decoration: none;
-	color: inherit;
 }
 </style>

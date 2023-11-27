@@ -44,20 +44,20 @@ const contentToUse = computed(() => {
 				<v-col cols="auto">
 					<v-btn
 						size="large"
+						:to="localePath('/map')"
 						min-width="150px"
 						color="primary"
 						width="100px"
 						prepend-icon="mdi-map-marker"
 						data-test="main-map-btn"
 					>
-						<NuxtLink :to="localePath('/map')">
-							{{ $t("global.basics.map") }}
-						</NuxtLink>
+						{{ $t("global.basics.map") }}
 					</v-btn>
 				</v-col>
 				<v-col cols="auto">
 					<v-btn
 						size="large"
+						:to="localePath('/data')"
 						min-width="150px"
 						variant="outlined"
 						color="primary"
@@ -65,9 +65,7 @@ const contentToUse = computed(() => {
 						prepend-icon="mdi-database"
 						data-test="main-data-btn"
 					>
-						<NuxtLink :to="localePath('/data')">
-							{{ $t("global.basics.data") }}
-						</NuxtLink>
+						{{ $t("global.basics.data") }}
 					</v-btn>
 				</v-col>
 			</v-row>
