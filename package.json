@@ -4,6 +4,7 @@
 		"npm": "9.x.x"
 	},
 	"private": true,
+	"type": "module",
 	"scripts": {
 		"build": "nuxt build",
 		"start": "nuxt start",
@@ -50,8 +51,8 @@
 		"vuetify-nuxt-module": "^0.5.7"
 	},
 	"dependencies": {
-		"@stefanprobst/netlify-cms-oauth-client": "^0.2.0",
 		"@nuxt/image": "^1.0.0-rc.2",
+		"@stefanprobst/netlify-cms-oauth-client": "^0.2.0",
 		"@types/leaflet": "^1.9.0",
 		"leaflet": "^1.9.2",
 		"nuxt": "3.5.*",
