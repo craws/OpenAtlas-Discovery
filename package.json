@@ -8,7 +8,7 @@
 		"build": "nuxt build",
 		"start": "nuxt start",
 		"dev": "nuxt dev",
-		"dev:cms": "netlify-cms-proxy-server",
+		"dev:cms": "decap-server",
 		"generate": "nuxt generate",
 		"preview": "nuxt preview",
 		"test": "concurrently -c \"auto\" --names \"RUN,TEST\" --kill-others -s first \"npm run start\" \"npm run cy:run\"",
@@ -37,6 +37,7 @@
 		"@vitejs/plugin-vue": "^3.2.0",
 		"concurrently": "^7.6.0",
 		"cypress": "^12.5.1",
+		"decap-server": "^3.0.1",
 		"eslint": "^8.28.0",
 		"eslint-config-prettier": "^9.0.0",
 		"fs-extra": "^11.1.1",
@@ -46,10 +47,10 @@
 		"sass": "^1.60.0",
 		"swagger-typescript-api": "^12.0.2",
 		"typescript": "^5.2.2",
-		"vuetify-nuxt-module": "^0.5.7",
-		"netlify-cms-proxy-server": "^1.3.24"
+		"vuetify-nuxt-module": "^0.5.7"
 	},
 	"dependencies": {
+		"@stefanprobst/netlify-cms-oauth-client": "^0.2.0",
 		"@nuxt/image": "^1.0.0-rc.2",
 		"@types/leaflet": "^1.9.0",
 		"leaflet": "^1.9.2",

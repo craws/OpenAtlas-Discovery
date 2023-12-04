@@ -1,4 +1,4 @@
-import { discoveryConfig } from '~/config/discoveryConfig';
+import { discoveryConfig } from "~/config/discoveryConfig";
 
 export const useSafeRead = function (obj: Object, index: string): string | undefined {
 	const indizes = index.split(/[.[\]"']/).filter((x) => x !== "");
@@ -12,18 +12,15 @@ export const useFormatDateTime = (date: string) => {
 export const selectedLocaleLocalStorageKey = "oad-selected-locale";
 
 export function getLogo(): string {
-
 	const logo = discoveryConfig.logo ?? "logo.svg";
 	return logo;
 }
 
 export function getHeaderLogo(): string {
-
 	return discoveryConfig.headerLogo ?? discoveryConfig.logo ?? "/header_logo.svg";
 }
 
 export function getFavicon(): { rel: string; type: string; href: string; sizes: string } {
-
 	const favicon = {
 		rel: "icon",
 		type: "image/svg+xml",
