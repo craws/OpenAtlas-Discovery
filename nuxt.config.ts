@@ -5,7 +5,7 @@ const commitHash = execSync("git rev-parse HEAD").toString().trimEnd();
 const gitTag = execSync("git describe --always --tags").toString().trimEnd();
 
 console.log("NUXT-config: ");
-console.log(process.env.NUXT_PUBLIC_API_BASE_URL);
+console.log(process.env);
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
 	typescript: {
