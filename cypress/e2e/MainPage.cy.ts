@@ -1,5 +1,4 @@
 // Import discovery config
-import discoveryConfig from "../../config/discoveryConfig.json";
 
 describe("Main Page", () => {
 	beforeEach(() => {
@@ -7,10 +6,12 @@ describe("Main Page", () => {
 	});
 
 	it("Has the main Elements", () => {
+		const apiBase = Cypress.env("api_url");
 		cy.get('[data-test="main-content-renderer"]').should("exist");
 
-		if (discoveryConfig.APIbase === undefined) {
+		if (apiBase === undefined) {
 			cy.task("log", "APIbase is undefined, skipping map button & data button");
+			cy.task("log", apiBase);
 			return;
 		}
 
