@@ -4,8 +4,6 @@ const branchName = execSync("git rev-parse --abbrev-ref HEAD").toString().trimEn
 const commitHash = execSync("git rev-parse HEAD").toString().trimEnd();
 const gitTag = execSync("git describe --always --tags").toString().trimEnd();
 
-console.log("NUXT-config: ");
-console.log(process.env);
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
 	typescript: {

@@ -23,7 +23,11 @@
 
 				@see https://i18n.nuxtjs.org/guide/lang-switcher
 			 	-->
-				<NuxtLink :to="switchLocalePath(l.code)" @click.prevent.stop="setLocale(locale.code)">
+				<NuxtLink
+					:data-test="`locale-selector-${l.code}`"
+					:to="switchLocalePath(l.code)"
+					@click.prevent.stop="setLocale(locale.code)"
+				>
 					{{ l.nativeName }}
 				</NuxtLink>
 			</v-list-item>
