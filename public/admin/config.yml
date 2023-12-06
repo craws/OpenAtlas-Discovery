@@ -1,5 +1,6 @@
 load_config_file: true
 local_backend: true
+logo_url: /OpenAtlasDiscovery_logo.png
 backend:
   name: github
   repo: acdh-oeaw/openatlas-discovery
