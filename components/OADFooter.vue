@@ -9,7 +9,7 @@ const frontenVersion = `${config.public.gitTag ?? "version"} - ${
 
 <template>
 	<div>
-		<v-footer border class="py-2">
+		<VFooter border class="py-2">
 			<div
 				style="font-size: 0.75em"
 				class="w-50 mx-auto d-flex justify-center justify-space-between align-center"
@@ -29,10 +29,10 @@ const frontenVersion = `${config.public.gitTag ?? "version"} - ${
 
 				<div class="relative">
 					With
-					<v-icon size="16" style="position: relative; top: -2px">mdi-heart</v-icon>
+					<VIcon size="16" style="position: relative; top: -2px">mdi-heart</VIcon>
 					from
 					<NuxtLink style="text-decoration: none; color: inherit" to="https://openatlas.eu/">
-						<v-nuxt-image
+						<VNuxtImage
 							style="position: absolute; top: 6px"
 							src="/oad-favicon.svg"
 							alt="OpenAtlas Logo"
@@ -41,6 +41,6 @@ const frontenVersion = `${config.public.gitTag ?? "version"} - ${
 					</NuxtLink>
 				</div>
 			</div>
-		</v-footer>
+		</VFooter>
 	</div>
 </template>

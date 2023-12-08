@@ -21,7 +21,7 @@ describe("Main Page", () => {
 	});
 
 	it("Has the Locale Selection with all Available Locales", () => {
-		const locales: string[] = ["en", "de"];
+		const locales: Array<string> = ["en", "de"];
 
 		cy.wait(2000); // Initial load time needed. Unsure why, potentially to load vuetify components.
 

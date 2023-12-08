@@ -1,5 +1,7 @@
 import { execSync } from "node:child_process";
+
 import discoveryConfig from "./config/discoveryConfig.json";
+
 const branchName = execSync("git rev-parse --abbrev-ref HEAD").toString().trimEnd();
 const commitHash = execSync("git rev-parse HEAD").toString().trimEnd();
 const gitTag = execSync("git describe --always --tags").toString().trimEnd();

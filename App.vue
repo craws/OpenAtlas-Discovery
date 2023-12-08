@@ -1,10 +1,3 @@
-<template>
-	<div>
-		<NuxtLayout>
-			<NuxtPage />
-		</NuxtLayout>
-	</div>
-</template>
 <script setup lang="ts">
 import { discoveryConfig } from "~/config/discoveryConfig";
 
@@ -15,3 +8,11 @@ useHead({
 	link: [getFavicon()],
 });
 </script>
+
+<template>
+	<div>
+		<NuxtLayout>
+			<NuxtPage />
+		</NuxtLayout>
+	</div>
+</template>

@@ -1,23 +1,8 @@
-<template>
-	<v-row v-if="start || end">
-		<v-col>
-			<p>{{ $t("components.entity.basics.start") }}: {{ start }}</p>
-		</v-col>
-		<v-spacer />
-		<v-col>
-			<p>{{ $t("components.entity.basics.end") }}: {{ end }}</p>
-		</v-col>
-		<v-spacer />
-		<v-spacer />
-	</v-row>
-	<div v-else-if="props.displayOptions?.time?.showUnknownIfMissing">
-		<p>{{ $t("components.when-display.no-dates") }}</p>
-	</div>
-</template>
 <script lang="ts" setup>
-import { DateTimeFormatOptions } from "@intlify/core-base";
+import type { DateTimeFormatOptions } from "@intlify/core-base";
 import { useI18n } from "vue-i18n";
-import type { LinkedPlacesModelWhenStart, LinkedPlacesModelWhen } from "~~/composables/api";
+
+import type { LinkedPlacesModelWhen,LinkedPlacesModelWhenStart } from "~~/composables/api";
 
 const { t } = useI18n();
 
@@ -41,8 +26,8 @@ const start = computed(() => {
 	if (!props.when?.timespans) {
 		return undefined;
 	}
-	const timespan = props.when?.timespans[0];
-	if (!timespan || !timespan.start) {
+	const timespan = props.when.timespans[0];
+	if (!timespan.start) {
 		return t("global.basics.unknown");
 	}
 	const { earliest, latest } = getEarliestAndLatestDateFromTimeDetail(timespan.start);
@@ -53,8 +38,8 @@ const end = computed(() => {
 	if (!props.when?.timespans) {
 		return undefined;
 	}
-	const timespan = props?.when?.timespans[0];
-	if (!timespan || !timespan.end) {
+	const timespan = props.when.timespans[0];
+	if (!timespan.end) {
 		return t("global.basics.unknown");
 	}
 
@@ -98,6 +83,23 @@ function convertStringToDate(dateStr?: string): Date | null {
 	const date = dateStr.split("T")[0].split("-");
 	const time = dateStr.split("T")[1].split(":");
 
-	return new Date(+date[0], +date[1], +date[2], +time[0], +time[1], +time[2]);
+	return new Date(Number(date[0]), Number(date[1]), Number(date[2]), Number(time[0]), Number(time[1]), Number(time[2]));
 }
 </script>
+
+<template>
+	<VRow v-if="start || end">
+		<VCol>
+			<p>{{ $t("components.entity.basics.start") }}: {{ start }}</p>
+		</VCol>
+		<VSpacer />
+		<VCol>
+			<p>{{ $t("components.entity.basics.end") }}: {{ end }}</p>
+		</VCol>
+		<VSpacer />
+		<VSpacer />
+	</VRow>
+	<div v-else-if="props.displayOptions?.time?.showUnknownIfMissing">
+		<p>{{ $t("components.when-display.no-dates") }}</p>
+	</div>
+</template>

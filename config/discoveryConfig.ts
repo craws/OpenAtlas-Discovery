@@ -2,7 +2,9 @@
  * Configuration options for the Discovery website.
  */
 import { z } from "zod";
+
 import userConfig from "./discoveryConfig.json";
+
 const locales = ["en", "de"] as const;
 
 const schema = z.object({

@@ -1,44 +1,29 @@
-<template>
-	<div class="mx-0 pt-4 mb-1">
-		<h3 class="pl-4">
-			{{ $t("components.entity.details_header") }}
-		</h3>
-		<div class="details py-2 px-4">
-			<EntityDetailCard
-				v-for="detail in detailsLists"
-				:key="detail.title"
-				:title="detail.title"
-				:details="detail.detailItems"
-				class="mb-3"
-			/>
-		</div>
-	</div>
-</template>
 <script setup lang="ts">
 import { useDisplay } from "vuetify";
-import { LinkedPlacesModelRelations, LinkedPlacesModelTypes } from "~~/composables/api";
-import { DetailItem, relationGroup } from "~~/types/entityDetailTypes";
+
+import type { LinkedPlacesModelRelations, LinkedPlacesModelTypes } from "~~/composables/api";
+import type { DetailItem, relationGroup } from "~~/types/entityDetailTypes";
 
 interface DetailList {
 	title: string;
-	detailItems: DetailItem[];
+	detailItems: Array<DetailItem>;
 }
 
 const props = defineProps<{
-	relations?: relationGroup[];
-	types?: LinkedPlacesModelTypes[];
+	relations?: Array<relationGroup>;
+	types?: Array<LinkedPlacesModelTypes>;
 }>();
 
 const detailsLists = computed(() => {
-	const detailLists: DetailList[] = [];
+	const detailLists: Array<DetailList> = [];
 
 	if (props.types) {
-		const detailItems: DetailItem[] = [];
+		const detailItems: Array<DetailItem> = [];
 		props.types.forEach((type) => {
 			detailItems.push({
 				id:
 					type.identifier?.substring(
-						type.identifier?.lastIndexOf("/") + 1,
+						type.identifier.lastIndexOf("/") + 1,
 						type.identifier.length,
 					) ?? "id",
 				label: type.label ?? "label",
@@ -68,7 +53,7 @@ const detailsLists = computed(() => {
 	return detailLists;
 });
 
-function GetItemsFromRelation(relations: LinkedPlacesModelRelations[]): DetailItem[] {
+function GetItemsFromRelation(relations: Array<LinkedPlacesModelRelations>): Array<DetailItem> {
 	return relations.map((relation) => {
 		return {
 			id: relation.relationTo?.split("/").at(-1) ?? "id",
@@ -92,6 +77,23 @@ const columnCount = computed(() => {
 	return 3;
 });
 </script>
+
+<template>
+	<div class="mx-0 pt-4 mb-1">
+		<h3 class="pl-4">
+			{{ $t("components.entity.details_header") }}
+		</h3>
+		<div class="details py-2 px-4">
+			<EntityDetailCard
+				v-for="detail in detailsLists"
+				:key="detail.title"
+				:title="detail.title"
+				:details="detail.detailItems"
+				class="mb-3"
+			/>
+		</div>
+	</div>
+</template>
 
 <style scoped>
 .details {

@@ -1,14 +1,14 @@
 <script setup lang="ts">
 interface Header {
 	text: string;
-	align?: "left" | "center" | "right";
+	align?: "center" | "left" | "right";
 	sortable?: boolean;
 	value: string;
 }
 interface Props {
-	headers: Header[];
-	items: Object[];
-	loading?: Boolean;
+	headers: Array<Header>;
+	items: Array<Object>;
+	loading?: boolean;
 	height?: string;
 	options: {
 		page: number;
@@ -21,11 +21,12 @@ withDefaults(defineProps<Props>(), {
 	height: () => "100%",
 });
 </script>
+
 <template>
 	<!-- eslint-disable vue/no-mutating-props -->
 	<div>
-		<v-progress-linear :active="loading" indeterminate />
-		<v-table :height="`calc( ${height} - 84px)`" fixed-header>
+		<VProgressLinear :active="loading" indeterminate />
+		<VTable :height="`calc( ${height} - 84px)`" fixed-header>
 			<thead>
 				<tr>
 					<th
@@ -51,8 +52,8 @@ withDefaults(defineProps<Props>(), {
 					</td>
 				</tr>
 			</tbody>
-		</v-table>
-		<v-divider />
+		</VTable>
+		<VDivider />
 		<div class="d-flex align-center justify-end">
 			<div class="text-caption">
 				{{ options.itemsPerPage * options.page - options.itemsPerPage + 1 }}-{{
@@ -61,26 +62,26 @@ withDefaults(defineProps<Props>(), {
 				{{ $t("global.basics.of") }} {{ options.itemsLength }}
 			</div>
 			<div>
-				<v-btn
+				<VBtn
 					:disabled="options.page === 1"
 					size="small"
 					variant="plain"
 					icon
 					@click="options.page--"
 				>
-					<v-icon>mdi-chevron-left</v-icon>
-				</v-btn>
+					<VIcon>mdi-chevron-left</VIcon>
+				</VBtn>
 			</div>
 			<div>
-				<v-btn
+				<VBtn
 					:disabled="options.itemsLength <= options.page * options.itemsPerPage"
 					size="small"
 					variant="plain"
 					icon
 					@click="options.page++"
 				>
-					<v-icon>mdi-chevron-right</v-icon>
-				</v-btn>
+					<VIcon>mdi-chevron-right</VIcon>
+				</VBtn>
 			</div>
 		</div>
 	</div>

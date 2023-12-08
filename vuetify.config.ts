@@ -1,5 +1,6 @@
+import type { ThemeDefinition } from "vuetify";
 import { defineVuetifyConfiguration } from "vuetify-nuxt-module/custom-configuration";
-import { ThemeDefinition } from "vuetify";
+
 import discoveryConfig from "./config/discoveryConfig.json";
 
 const lightTheme: ThemeDefinition = {

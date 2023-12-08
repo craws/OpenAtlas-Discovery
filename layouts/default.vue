@@ -1,16 +1,17 @@
 <script setup lang="ts">
 import "../styles/global.css";
 </script>
+
 <template>
-	<v-app>
-		<v-main class="d-flex flex-column">
+	<VApp>
+		<VMain class="d-flex flex-column">
 			<HeaderBar />
-			<v-divider />
-			<nuxt-page />
-			<v-spacer />
+			<VDivider />
+			<NuxtPage />
+			<VSpacer />
 			<OADFooter />
-		</v-main>
-	</v-app>
+		</VMain>
+	</VApp>
 </template>
 
 <style>

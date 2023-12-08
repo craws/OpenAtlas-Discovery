@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ParsedContent } from "@nuxt/content/dist/runtime/types";
+import type { ParsedContent } from "@nuxt/content/dist/runtime/types";
 import { useDisplay } from "vuetify";
 
 const localePath = useLocalePath();
@@ -7,7 +7,7 @@ const localePath = useLocalePath();
 const APIBase = useRuntimeConfig().public.APIBase;
 const { smAndUp } = useDisplay();
 const t = useI18n();
-const data = reactive<{ [name: string]: ParsedContent }>({});
+const data = reactive<Record<string, ParsedContent>>({});
 t.availableLocales.forEach(async (locale) => {
 	let content = null;
 	try {
@@ -33,16 +33,17 @@ const contentToUse = computed(() => {
 	return null;
 });
 </script>
+
 <template>
-	<v-sheet class="landing-page d-flex justify-center pt-5">
-		<v-container class="text-center" data-test="main-content-renderer">
+	<VSheet class="landing-page d-flex justify-center pt-5">
+		<VContainer class="text-center" data-test="main-content-renderer">
 			<ContentRenderer v-if="contentToUse">
 				<ContentRendererMarkdown :value="contentToUse" class="w-50 mx-auto" />
 			</ContentRenderer>
 			<br />
-			<v-row v-if="APIBase" justify="center">
-				<v-col cols="auto">
-					<v-btn
+			<VRow v-if="APIBase" justify="center">
+				<VCol cols="auto">
+					<VBtn
 						size="large"
 						:to="localePath('/map')"
 						min-width="150px"
@@ -52,10 +53,10 @@ const contentToUse = computed(() => {
 						data-test="main-map-btn"
 					>
 						{{ $t("global.basics.map") }}
-					</v-btn>
-				</v-col>
-				<v-col cols="auto">
-					<v-btn
+					</VBtn>
+				</VCol>
+				<VCol cols="auto">
+					<VBtn
 						size="large"
 						:to="localePath('/data')"
 						min-width="150px"
@@ -66,11 +67,11 @@ const contentToUse = computed(() => {
 						data-test="main-data-btn"
 					>
 						{{ $t("global.basics.data") }}
-					</v-btn>
-				</v-col>
-			</v-row>
-		</v-container>
-	</v-sheet>
+					</VBtn>
+				</VCol>
+			</VRow>
+		</VContainer>
+	</VSheet>
 </template>
 
 <style scoped>

@@ -1,9 +1,10 @@
-import { Component } from "nuxt/dist/app/compat/capi";
-import { LinkedPlacesModelRelations } from "~~/composables/api";
+import type { Component } from "nuxt/dist/app/compat/capi";
+
+import type { LinkedPlacesModelRelations } from "~~/composables/api";
 
 export interface relationGroup {
 	relationType: string;
-	relations: LinkedPlacesModelRelations[];
+	relations: Array<LinkedPlacesModelRelations>;
 }
 
 export interface DetailItem {
@@ -14,6 +15,6 @@ export interface DetailItem {
 
 export interface DetailTab {
 	title: string;
-	component: string | Component;
+	component: Component | string;
 	props: any;
 }

@@ -1,30 +1,19 @@
-<template>
-	<v-tabs v-if="tabs.length > 1" v-model="activeTab" align-tabs="center">
-		<v-tab v-for="(tab, index) in tabs" :key="index" :value="index">
-			{{ $t(tab.title) }}
-		</v-tab>
-	</v-tabs>
-	<v-window v-model="activeTab">
-		<v-window-item v-for="(tab, index) in tabs" :key="index" :value="index">
-			<component :is="tab.component" v-bind="tab.props" class="mx-auto my-6" />
-		</v-window-item>
-	</v-window>
-</template>
 <script setup lang="ts">
-import { EntityImageContainerProps } from "./ImageContainer.vue";
-import { EntityMapContainerProps } from "./MapContainer.vue";
-import {
+import type {
 	GeometryCollection,
 	LineString,
 	LinkedPlacesDepiction,
 	Point,
 	Polygon,
 } from "~~/composables/api";
-import { DetailTab } from "~~/types/entityDetailTypes";
+import type { DetailTab } from "~~/types/entityDetailTypes";
+
+import type { EntityImageContainerProps } from "./ImageContainer.vue";
+import type { EntityMapContainerProps } from "./MapContainer.vue";
 
 const props = defineProps<{
-	depictions?: LinkedPlacesDepiction[];
-	geometry?: Polygon | Point | LineString | GeometryCollection;
+	depictions?: Array<LinkedPlacesDepiction>;
+	geometry?: GeometryCollection | LineString | Point | Polygon;
 }>();
 
 const activeTab = ref(0);
@@ -62,7 +51,7 @@ const mapTab = computed((): DetailTab | undefined => {
 });
 
 const tabs = computed(() => {
-	const activeTabs: DetailTab[] = [];
+	const activeTabs: Array<DetailTab> = [];
 	if (depictionTab.value) {
 		activeTabs.push(depictionTab.value);
 	}
@@ -72,3 +61,16 @@ const tabs = computed(() => {
 	return activeTabs;
 });
 </script>
+
+<template>
+	<VTabs v-if="tabs.length > 1" v-model="activeTab" align-tabs="center">
+		<VTab v-for="(tab, index) in tabs" :key="index" :value="index">
+			{{ $t(tab.title) }}
+		</VTab>
+	</VTabs>
+	<VWindow v-model="activeTab">
+		<VWindowItem v-for="(tab, index) in tabs" :key="index" :value="index">
+			<component :is="tab.component" v-bind="tab.props" class="mx-auto my-6" />
+		</VWindowItem>
+	</VWindow>
+</template>

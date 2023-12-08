@@ -1,10 +1,12 @@
 <script setup lang="ts">
+import type { ComputedRef } from "vue";
 import { useI18n } from "vue-i18n";
-import { ComputedRef } from "vue";
-import headers from "~/assets/tableheaders.json";
+
 import classes from "~/assets/classes.json";
-import { Query } from "~~/types/query";
+import headers from "~/assets/tableheaders.json";
 import { discoveryConfig } from "~/config/discoveryConfig";
+import type { Query } from "~~/types/query";
+
 const { t } = useI18n();
 const { $api } = useNuxtApp();
 
@@ -16,10 +18,10 @@ useHead({
 });
 
 const itemsLength: ComputedRef<number | undefined> = computed(
-	() => data?.value?.pagination?.entities,
+	() => data.value?.pagination?.entities,
 );
 const options = reactive({ page: 1, itemsPerPage: 20, itemsLength });
-const search = ref<string[] | undefined>([]);
+const search = ref<Array<string> | undefined>([]);
 const query = computed(() => ({
 	view_classes: ["actor", "event", "place", "reference", "source"],
 	page: options.page,
@@ -49,9 +51,9 @@ function updateQuery(newQuery: Query) {
 
 <template>
 	<ClientOnly>
-		<v-container data-test="data-page-container">
-			<search-field :loading="pending" @search="updateQuery" />
-			<data-table
+		<VContainer data-test="data-page-container">
+			<SearchField :loading="pending" @search="updateQuery" />
+			<DataTable
 				class="mt-10"
 				height="calc(100vh - 150px)"
 				density="compact"
@@ -60,21 +62,21 @@ function updateQuery(newQuery: Query) {
 				:options="options"
 			>
 				<template #features[0].systemClass="{ value }">
-					<v-tooltip
+					<VTooltip
 						content-class="text-capitalize"
 						:text="$t(`global.entity.system_classes.${value}`)"
 					>
 						<template #activator="{ props }">
-							<v-icon v-bind="props">
+							<VIcon v-bind="props">
 								{{ classes.find((x) => x.systemClass === value)?.icon }}
-							</v-icon>
+							</VIcon>
 						</template>
-					</v-tooltip>
+					</VTooltip>
 				</template>
 				<template #features[0].properties.title="{ item, value }">
-					<nuxt-link :to="`/entity/${item.features[0]['@id'].split('/').at(-1)}`">
+					<NuxtLink :to="`/entity/${item.features[0]['@id'].split('/').at(-1)}`">
 						{{ value }}
-					</nuxt-link>
+					</NuxtLink>
 				</template>
 				<template #features[0].when.timespans[0].start.earliest="{ value }">
 					{{ useFormatDateTime(value) }}
@@ -82,7 +84,7 @@ function updateQuery(newQuery: Query) {
 				<template #features[0].when.timespans[0].end.earliest="{ value }">
 					{{ useFormatDateTime(value) }}
 				</template>
-			</data-table>
-		</v-container>
+			</DataTable>
+		</VContainer>
 	</ClientOnly>
 </template>

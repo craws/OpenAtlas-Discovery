@@ -1,13 +1,7 @@
-<template>
-	<template v-if="navigation !== null">
-		<template v-for="el of navigation" :key="el._id">
-			<ContentNavigationCNElement :nav-item="el" />
-		</template>
-	</template>
-</template>
 <script setup lang="ts">
-import { QueryBuilderParams } from "@nuxt/content/dist/runtime/types";
+import type { QueryBuilderParams } from "@nuxt/content/dist/runtime/types";
 import { useI18n } from "vue-i18n";
+
 const Locale = useI18n().locale;
 
 const updateNaviagation = ref(false);
@@ -35,7 +29,7 @@ const { data: fetchedNavigation } = await useAsyncData(
 );
 
 onBeforeMount(() => {
-	if (!fetchedNavigation.value || !fetchedNavigation.value?.[0]?._path.includes(Locale.value)) {
+	if (!fetchedNavigation.value || !fetchedNavigation.value[0]?._path.includes(Locale.value)) {
 		updateNaviagation.value = true;
 	}
 });
@@ -44,3 +38,11 @@ const navigation = computed(() => {
 	return fetchedNavigation.value?.[0]?.children ?? null;
 });
 </script>
+
+<template>
+	<template v-if="navigation !== null">
+		<template v-for="el of navigation" :key="el._id">
+			<ContentNavigationCNElement :nav-item="el" />
+		</template>
+	</template>
+</template>

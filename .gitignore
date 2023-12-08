@@ -11,6 +11,10 @@ dist
 releases
 temp
 
+# caches
+.eslintignore
+*.tsbuildinfo
+
 # IDE / Editor
 .idea/
 

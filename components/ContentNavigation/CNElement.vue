@@ -1,25 +1,6 @@
-<template>
-	<template v-if="isDirectory">
-		<v-btn variant="plain" :ripple="false">
-			{{ navItem.title }}
-			<v-menu activator="parent">
-				<v-list>
-					<v-list-item v-for="(item, index) in navItem.children" :key="index" :value="index">
-						<ContentNavigationCNElement :nav-item="item" />
-					</v-list-item>
-				</v-list>
-			</v-menu>
-		</v-btn>
-	</template>
-	<template v-else>
-		<v-btn variant="plain" :ripple="false" :to="navItem._path">
-			{{ navItem.title || navItem.navTitle }}
-		</v-btn>
-	</template>
-</template>
 <script setup lang="ts">
+import type { NavItem } from "@nuxt/content/dist/runtime/types";
 import { defineProps } from "vue";
-import { NavItem } from "@nuxt/content/dist/runtime/types";
 
 // Add a prop that takes a NavigationItem
 
@@ -35,3 +16,23 @@ const navItem = computed(() => {
 	return props.navItem;
 });
 </script>
+
+<template>
+	<template v-if="isDirectory">
+		<VBtn variant="plain" :ripple="false">
+			{{ navItem.title }}
+			<VMenu activator="parent">
+				<VList>
+					<VListItem v-for="(item, index) in navItem.children" :key="index" :value="index">
+						<ContentNavigationCNElement :nav-item="item" />
+					</VListItem>
+				</VList>
+			</VMenu>
+		</VBtn>
+	</template>
+	<template v-else>
+		<VBtn variant="plain" :ripple="false" :to="navItem._path">
+			{{ navItem.title || navItem.navTitle }}
+		</VBtn>
+	</template>
+</template>

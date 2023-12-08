@@ -1,22 +1,33 @@
+<script setup lang="ts">
+import { useI18n } from "vue-i18n";
+
+const { locale, locales, setLocale } = useI18n();
+const switchLocalePath = useSwitchLocalePath();
+
+const availableLocales = computed(() => {
+	return locales.value;
+});
+</script>
+
 <template>
-	<v-btn
+	<VBtn
 		id="locale-selector-button-activator"
 		data-test="header-locale-menu"
 		role="button"
 		class="h-100 d-flex align-center justify-center px-2 text-grey"
 	>
-		<v-icon>mdi-translate</v-icon>
-		<v-icon size="small">mdi-chevron-down</v-icon>
+		<VIcon>mdi-translate</VIcon>
+		<VIcon size="small">mdi-chevron-down</VIcon>
 		<span class="d-sr-only">{{ $t("global.basics.language-selection") }}</span>
-	</v-btn>
-	<v-menu activator="#locale-selector-button-activator">
-		<v-list data-test="locale-selector-list">
-			<v-list-subheader>
+	</VBtn>
+	<VMenu activator="#locale-selector-button-activator">
+		<VList data-test="locale-selector-list">
+			<VListSubheader>
 				<p class="text-caption px-2">
 					{{ $t("global.basics.language") }}
 				</p>
-			</v-list-subheader>
-			<v-list-item v-for="l in availableLocales" :key="l.code">
+			</VListSubheader>
+			<VListItem v-for="l in availableLocales" :key="l.code">
 				<!--
 				`@nuxtjs/i18n` does not update the locale cookie on route change, so we need to
 				call `setLocale` explicitly.
@@ -30,23 +41,14 @@
 				>
 					{{ l.nativeName }}
 				</NuxtLink>
-			</v-list-item>
+			</VListItem>
 			<!--
         To make sure there is a correct name for each locale, the locale
         must have a list of locales with their corresponding natvieNames.
        -->
-		</v-list>
-	</v-menu>
+		</VList>
+	</VMenu>
 </template>
-<script setup lang="ts">
-import { useI18n } from "vue-i18n";
-const { locale, locales, setLocale } = useI18n();
-const switchLocalePath = useSwitchLocalePath();
-
-const availableLocales = computed(() => {
-	return locales.value;
-});
-</script>
 
 <style scoped>
 a {

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Query, Search } from "~~/types/query";
+import type { Query, Search } from "~~/types/query";
 
 const emit = defineEmits<{
 	(e: "search", search: Query): void;
@@ -10,7 +10,7 @@ interface FilterOperator {
 	title: string;
 }
 
-const filterOperators: FilterOperator[] = [
+const filterOperators: Array<FilterOperator> = [
 	{ value: "entityName", title: "name" },
 	{ value: "entityDescription", title: "description" },
 	{ value: "entityAliases", title: "alias" },
@@ -30,7 +30,7 @@ const filterOperators: FilterOperator[] = [
 const filterOperator = ref<FilterOperator>({ value: "entityName", title: "name" });
 const props = withDefaults(
 	defineProps<{
-		loading?: Boolean;
+		loading?: boolean;
 	}>(),
 	{
 		loading: () => false,
@@ -53,11 +53,12 @@ function handleSearch() {
 	emit("search", query);
 }
 </script>
+
 <template>
 	<div class="">
-		<v-row no-gutters class="search">
-			<v-col cols="4">
-				<v-select
+		<VRow no-gutters class="search">
+			<VCol cols="4">
+				<VSelect
 					v-model="filterOperator"
 					hide-details
 					class="search-select"
@@ -70,17 +71,17 @@ function handleSearch() {
 					}"
 				>
 					<template #item="{ item }">
-						<v-list-item @click="filterOperator = item">
+						<VListItem @click="filterOperator = item">
 							<span class="text-capitalize">{{ $t(`global.entity.${item.title}`) }}</span>
-						</v-list-item>
+						</VListItem>
 					</template>
 					<template #selection="{ item }">
 						<span class="text-capitalize">{{ $t(`global.entity.${item.title}`) }}</span>
 					</template>
-				</v-select>
-			</v-col>
-			<v-col cols="">
-				<v-text-field
+				</VSelect>
+			</VCol>
+			<VCol cols="">
+				<VTextField
 					id="search-field"
 					v-model="search"
 					hide-details
@@ -92,9 +93,9 @@ function handleSearch() {
 					@change="handleSearch"
 					@click:clear="handleSearch"
 				/>
-			</v-col>
-			<v-progress-linear :active="props.loading" class="search-progress" indeterminate />
-		</v-row>
+			</VCol>
+			<VProgressLinear :active="props.loading" class="search-progress" indeterminate />
+		</VRow>
 	</div>
 </template>
 

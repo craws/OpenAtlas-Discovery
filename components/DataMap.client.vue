@@ -1,28 +1,28 @@
 <script setup lang="ts">
-import { Feature, GeoJsonObject, Geometry } from "geojson";
+import type { Feature, GeoJsonObject, Geometry } from "geojson";
 import * as L from "leaflet";
 
 const emit = defineEmits<{ (e: "itemClicked", event: L.LeafletMouseEvent): void }>();
 
 const mapContainer = ref();
 let map: L.Map;
-let geoJsonLayer: L.GeoJSON<any>;
+let geoJsonLayer: L.GeoJSON;
 onMounted(() => initMap());
 
 const props = defineProps<{
-	items: GeoJsonObject | GeoJsonObject[];
+	items: Array<GeoJsonObject> | GeoJsonObject;
 	zoomLevel?: number;
 }>();
 
 watch(
 	() => props.items,
-	() => placeGeoJson(props.items),
+	() => { placeGeoJson(props.items); },
 	{ immediate: true },
 );
 
 watch(
 	() => props.zoomLevel,
-	() => adaptZoom(),
+	() => { adaptZoom(); },
 );
 
 async function initMap() {
@@ -40,7 +40,7 @@ async function initMap() {
 	scrollToCenter();
 }
 
-function placeGeoJson(items: GeoJsonObject | GeoJsonObject[]) {
+function placeGeoJson(items: Array<GeoJsonObject> | GeoJsonObject) {
 	if (!map) {
 		return;
 	}
@@ -94,6 +94,7 @@ function handleClick(e: L.LeafletMouseEvent) {
 	emit("itemClicked", e);
 }
 </script>
+
 <template>
 	<div id="mapid" ref="mapContainer" />
 </template>
