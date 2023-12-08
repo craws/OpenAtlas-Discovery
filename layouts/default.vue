@@ -16,17 +16,17 @@ import "../styles/global.css";
 
 <style>
 .nav-item {
+	min-width: 50px;
 	text-decoration: none;
 	transition: all 200ms ease-in-out;
-	min-width: 50px;
 }
 
 .nav-item:hover {
-	background-color: rgba(0, 0, 0, 0.05);
+	background-color: rgb(0 0 0 / 5%);
 }
 
 .language-menu .v-overlay__content {
-	border-top-right-radius: 0 !important;
 	border-top-left-radius: 0 !important;
+	border-top-right-radius: 0 !important;
 }
 </style>

@@ -114,6 +114,6 @@ onMounted(async () => {
 
 <style scoped>
 .primary-background-light {
-	background-color: rgba(var(--v-theme-primary-lighten-1), 0.2);
+	background-color: rgb(var(--v-theme-primary-lighten-1) 0.2);
 }
 </style>

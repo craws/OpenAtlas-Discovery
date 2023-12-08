@@ -126,14 +126,14 @@ function updateQuery(newQuery: Query) {
 
 <style scoped>
 .popup {
-	transition: all 100ms ease-in-out;
-	right: 20px;
 	top: 100px;
+	right: 20px;
 	z-index: 500;
+	transition: all 100ms ease-in-out;
 }
 
 .popup.move {
-	translate: 500px 0px;
+	translate: 500px 0;
 }
 
 .scroll {
@@ -142,18 +142,18 @@ function updateQuery(newQuery: Query) {
 
 .search {
 	position: absolute;
+	top: 20px;
+	right: 0;
+	left: 0;
 	z-index: 500;
 	width: 60%;
-	left: 0;
-	right: 0;
 	margin: auto;
-	top: 20px;
 }
 
 .close-btn {
 	position: relative;
-	right: -88%;
 	top: 1%;
+	right: -88%;
 	z-index: 5;
 }
 </style>

@@ -86,8 +86,9 @@ const showExpandable = computed(() => {
 
 <style scoped>
 .closed-divider {
-	transform: translate(0px, 30px);
+	transform: translate(0, 30px);
 }
+
 .detail-title::first-letter {
 	text-transform: capitalize;
 }

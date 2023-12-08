@@ -115,7 +115,8 @@
 						"v-bind"
 					]
 				}
-			]
+			],
+			"selector-class-pattern": null
 		}
 	}
 }

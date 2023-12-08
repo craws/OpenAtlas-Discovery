@@ -42,7 +42,7 @@ const systemClassName = computed(() => {
 					<VAvatar
 						color="primary"
 						size="56"
-						style="position: absolute; z-index: -1; scale: 5; left: 40px; top: 40px; opacity: 0.2"
+						style="position: absolute; top: 40px; left: 40px; z-index: -1; opacity: 20%; scale: 5"
 					>
 						<VIcon>{{ classIcon }}</VIcon>
 					</VAvatar>

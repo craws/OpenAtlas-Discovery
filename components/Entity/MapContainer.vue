@@ -13,7 +13,7 @@ const props = defineProps<EntityMapContainerProps>();
 </script>
 
 <template>
-	<VCard style="min-width: 400px; min-height: 400px; max-width: 1000px; max-height: 750">
+	<VCard style="min-width: 400px; max-width: 1000px; min-height: 400px; max-height: 750">
 		<DataMap
 			:items="props.geoData as GeoJsonObject"
 			:style="{
