@@ -1,23 +1,37 @@
-node_modules
-coverage
-*.log*
-.nuxt
-.nitro
-.cache
-.output
-.env
-dist
+# dependencies
+node_modules/
+.pnpm-store/
 
-releases
-temp
+# logs
+*.log
+
+# non-public environment variables
+.env.local
+.env.*.local
 
 # caches
-.eslintignore
+.eslintcache
+.stylelintcache
 *.tsbuildinfo
 
-# IDE / Editor
+# vercel
+.vercel
+
+# misc
+.DS_Store
 .idea/
 
-# Cypress
-cypress/videos/
-cypress/screenshots/
+# nuxt.js
+dist
+.nuxt/
+.nitro/
+.output/
+
+# playwright
+/test-results/
+/playwright-report/
+/playwright/.cache/
+
+# cypress
+/cypress/videos/
+/cypress/screenshots/
