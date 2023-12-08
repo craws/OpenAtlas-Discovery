@@ -2,7 +2,7 @@
 import type { DateTimeFormatOptions } from "@intlify/core-base";
 import { useI18n } from "vue-i18n";
 
-import type { LinkedPlacesModelWhen,LinkedPlacesModelWhenStart } from "~~/composables/api";
+import type { LinkedPlacesModelWhen, LinkedPlacesModelWhenStart } from "~~/composables/api";
 
 const { t } = useI18n();
 
@@ -83,7 +83,14 @@ function convertStringToDate(dateStr?: string): Date | null {
 	const date = dateStr.split("T")[0].split("-");
 	const time = dateStr.split("T")[1].split(":");
 
-	return new Date(Number(date[0]), Number(date[1]), Number(date[2]), Number(time[0]), Number(time[1]), Number(time[2]));
+	return new Date(
+		Number(date[0]),
+		Number(date[1]),
+		Number(date[2]),
+		Number(time[0]),
+		Number(time[1]),
+		Number(time[2]),
+	);
 }
 </script>
 

@@ -16,13 +16,17 @@ const props = defineProps<{
 
 watch(
 	() => props.items,
-	() => { placeGeoJson(props.items); },
+	() => {
+		placeGeoJson(props.items);
+	},
 	{ immediate: true },
 );
 
 watch(
 	() => props.zoomLevel,
-	() => { adaptZoom(); },
+	() => {
+		adaptZoom();
+	},
 );
 
 async function initMap() {

@@ -15,7 +15,7 @@ const frontenVersion = `${config.public.gitTag ?? "version"} - ${
 				class="w-50 mx-auto d-flex justify-center justify-space-between align-center"
 			>
 				<div>
-					<NuxtLink style=" color: inherit;text-decoration: none" :to="localePath('/imprint')">
+					<NuxtLink style="color: inherit; text-decoration: none" :to="localePath('/imprint')">
 						{{ $t("global.imprint") }}
 					</NuxtLink>
 				</div>
@@ -31,7 +31,7 @@ const frontenVersion = `${config.public.gitTag ?? "version"} - ${
 					With
 					<VIcon size="16" style="position: relative; top: -2px">mdi-heart</VIcon>
 					from
-					<NuxtLink style=" color: inherit;text-decoration: none" to="https://openatlas.eu/">
+					<NuxtLink style="color: inherit; text-decoration: none" to="https://openatlas.eu/">
 						<VNuxtImage
 							style="position: absolute; top: 6px"
 							src="/oad-favicon.svg"

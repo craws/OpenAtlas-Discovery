@@ -1,6 +1,25 @@
-export type ViewClasses = Array<"actor" | "all" | "artifact" | "event" | "file" | "place" | "reference_system" | "reference" | "source_translation" | "source" | "type">;
+export type ViewClasses = Array<
+	| "actor"
+	| "all"
+	| "artifact"
+	| "event"
+	| "file"
+	| "place"
+	| "reference_system"
+	| "reference"
+	| "source_translation"
+	| "source"
+	| "type"
+>;
 export type Format =
-	"geojson-v2" | "geojson" | "lp" | "n3" | "nt" | "pretty-xml" | "turtle" | "xml";
+	| "geojson-v2"
+	| "geojson"
+	| "lp"
+	| "n3"
+	| "nt"
+	| "pretty-xml"
+	| "turtle"
+	| "xml";
 export interface Filter {
 	operator: "equal";
 	values: Array<number> | Array<string>;
