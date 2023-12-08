@@ -5,7 +5,8 @@ export const useSafeRead = function (obj: Object, index: string): string | undef
 	return indizes.reduce((o, key) => o[key], obj);
 };
 
-export const useFormatDateTime = (date: string) => {
+export const useFormatDateTime = (date: string | undefined) => {
+	if (date == null) return null;
 	return date.split("T")[0];
 };
 

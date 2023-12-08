@@ -97,6 +97,6 @@ const columnCount = computed(() => {
 
 <style scoped>
 .details {
-	column-count: v-bind(columncount);
+	column-count: v-bind(columnCount);
 }
 </style>

@@ -83,6 +83,6 @@ const contentToUse = computed(() => {
 .landing-page :deep(img) {
 	object-fit: contain;
 	width: 80%;
-	max-height: v-bind(logoheight);
+	max-height: v-bind(logoHeight);
 }
 </style>
