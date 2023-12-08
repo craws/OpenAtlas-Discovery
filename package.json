@@ -51,11 +51,11 @@
 		"dotenv": "^16.3.1",
 		"eslint": "^8.55.0",
 		"husky": "^8.0.3",
-		"lint-staged": "^13.1.0",
-		"prettier": "^3.0.3",
+		"lint-staged": "^15.2.0",
+		"prettier": "^3.1.0",
 		"sass": "^1.60.0",
 		"swagger-typescript-api": "^12.0.2",
-		"typescript": "^5.2.2"
+		"typescript": "^5.3.3"
 	},
 	"eslintConfig": {
 		"extends": [
@@ -74,7 +74,11 @@
 		}
 	},
 	"lint-staged": {
-		"*.{js,jsx,ts,tsx,vue}": "eslint --cache --fix"
+		"*.@(js|ts|vue)": [
+			"eslint --cache --fix",
+			"prettier --cache --write"
+		],
+		"*.!(js|ts|vue)": "prettier --cache --ignore-unknown --write"
 	},
 	"prettier": "@acdh-oeaw/prettier-config"
 }
