@@ -16,8 +16,6 @@
 		"generate": "nuxt generate",
 		"preview": "nuxt preview",
 		"test": "concurrently -c \"auto\" --names \"RUN,TEST\" --kill-others -s first \"npm run start\" \"npm run cy:run\"",
-		"lint-all": "eslint .",
-		"lint-fix-all": "eslint . --fix",
 		"prepare": "husky install",
 		"cy:open": "cypress open",
 		"cy:run": "cypress run",
@@ -25,40 +23,58 @@
 		"static-export": "nuxt generate",
 		"nb": "nuxt build",
 		"format:check": "prettier . --cache --check --ignore-path ./.gitignore",
-		"format:fix": "npm run format:check -- --write"
+		"format:fix": "npm run format:check -- --write",
+		"lint:check": "eslint . --cache --ignore-path ./.gitignore",
+		"lint:fix": "npm run lint:check -- --fix"
 	},
-	"lint-staged": {
-		"*.{js,jsx,ts,tsx,vue}": "eslint --fix"
-	},
-	"devDependencies": {
-		"@acdh-oeaw/prettier-config": "^1.0.1",
+	"dependencies": {
 		"@mdi/font": "^7.0.96",
 		"@mdi/js": "^7.0.96",
 		"@nuxt/content": "^2.8.*",
-		"@nuxtjs/eslint-config-typescript": "^12.0.0",
+		"@nuxt/image": "^1.0.0-rc.2",
 		"@nuxtjs/i18n": "^8.0.0-rc.5",
-		"@vitejs/plugin-vue": "^3.2.0",
+		"@stefanprobst/netlify-cms-oauth-client": "^0.2.0",
+		"leaflet": "^1.9.2",
+		"nuxt": "3.5.*",
+		"vuetify-nuxt-module": "^0.5.7",
+		"zod": "^3.22.4"
+	},
+	"devDependencies": {
+		"@acdh-oeaw/eslint-config": "^1.0.5",
+		"@acdh-oeaw/eslint-config-nuxt": "^1.0.11",
+		"@acdh-oeaw/eslint-config-vue": "^1.0.10",
+		"@acdh-oeaw/prettier-config": "^1.0.1",
+		"@types/leaflet": "^1.9.0",
 		"concurrently": "^7.6.0",
 		"cypress": "^12.5.1",
 		"decap-server": "^3.0.1",
-		"eslint": "^8.28.0",
-		"eslint-config-prettier": "^9.0.0",
+		"dotenv": "^16.3.1",
+		"eslint": "^8.55.0",
 		"husky": "^8.0.3",
 		"lint-staged": "^13.1.0",
 		"prettier": "^3.0.3",
 		"sass": "^1.60.0",
 		"swagger-typescript-api": "^12.0.2",
-		"typescript": "^5.2.2",
-		"vuetify-nuxt-module": "^0.5.7"
+		"typescript": "^5.2.2"
 	},
-	"dependencies": {
-		"@nuxt/image": "^1.0.0-rc.2",
-		"@stefanprobst/netlify-cms-oauth-client": "^0.2.0",
-		"@types/leaflet": "^1.9.0",
-		"dotenv": "^16.3.1",
-		"leaflet": "^1.9.2",
-		"nuxt": "3.5.*",
-		"zod": "^3.22.4"
+	"eslintConfig": {
+		"extends": [
+			"@acdh-oeaw/eslint-config",
+			"@acdh-oeaw/eslint-config/strict",
+			"@acdh-oeaw/eslint-config-vue",
+			"@acdh-oeaw/eslint-config-nuxt"
+		],
+		"rules": {
+			"vue/valid-v-slot": [
+				"error",
+				{
+					"allowModifiers": true
+				}
+			]
+		}
+	},
+	"lint-staged": {
+		"*.{js,jsx,ts,tsx,vue}": "eslint --cache --fix"
 	},
 	"prettier": "@acdh-oeaw/prettier-config"
 }
