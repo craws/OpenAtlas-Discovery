@@ -16,7 +16,7 @@
 		"generate": "nuxt generate",
 		"preview": "nuxt preview",
 		"test": "concurrently -c \"auto\" --names \"RUN,TEST\" --kill-others -s first \"npm run start\" \"npm run cy:run\"",
-		"prepare": "husky install",
+		"prepare": "is-ci || simple-git-hooks",
 		"cy:open": "cypress open",
 		"cy:run": "cypress run",
 		"build-and-test": "npm run build && npm run test",
@@ -50,10 +50,11 @@
 		"decap-server": "^3.0.1",
 		"dotenv": "^16.3.1",
 		"eslint": "^8.55.0",
-		"husky": "^8.0.3",
+		"is-ci": "^3.0.1",
 		"lint-staged": "^15.2.0",
 		"prettier": "^3.1.0",
 		"sass": "^1.60.0",
+		"simple-git-hooks": "^2.9.0",
 		"swagger-typescript-api": "^12.0.2",
 		"typescript": "^5.3.3"
 	},
@@ -80,5 +81,8 @@
 		],
 		"*.!(js|ts|vue)": "prettier --cache --ignore-unknown --write"
 	},
-	"prettier": "@acdh-oeaw/prettier-config"
+	"prettier": "@acdh-oeaw/prettier-config",
+	"simple-git-hooks": {
+		"pre-commit": "npx lint-staged"
+	}
 }
