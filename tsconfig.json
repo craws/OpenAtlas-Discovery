@@ -1,9 +1,10 @@
 {
-	// https://v3.nuxtjs.org/concepts/typescript
-	"extends": "./.nuxt/tsconfig.json",
+	"$schema": "https://json.schemastore.org/tsconfig",
+	"extends": ["./.nuxt/tsconfig.json", "@acdh-oeaw/tsconfig"],
 	"compilerOptions": {
-		"module": "esnext",
-		"moduleResolution": "bundler",
-		"strict": true
+		/**
+		 * @see https://github.com/microsoft/TypeScript/issues/54057
+		 */
+		"incremental": false
 	}
 }
