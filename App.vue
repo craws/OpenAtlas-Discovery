@@ -6,7 +6,7 @@
 	</div>
 </template>
 <script setup lang="ts">
-import { discoveryConfig } from '~/config/discoveryConfig';
+import { discoveryConfig } from "~/config/discoveryConfig";
 
 useHead({
 	titleTemplate: (titleChunk) => {

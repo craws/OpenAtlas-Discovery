@@ -25,7 +25,7 @@
 		"build-and-test": "npm run build && npm run test",
 		"static-export": "nuxt generate",
 		"nb": "nuxt build",
-		"format:check": "prettier . --cache --check --ignore-path .gitignore",
+		"format:check": "prettier . --cache --check --ignore-path ./.gitignore",
 		"format:fix": "npm run format:check -- --write"
 	},
 	"lint-staged": {

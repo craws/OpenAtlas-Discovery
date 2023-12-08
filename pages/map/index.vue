@@ -3,7 +3,7 @@ import { GeoJsonObject } from "geojson";
 import { useI18n } from "vue-i18n";
 import { LinkedPlacesModelDescriptions, LinkedPlacesModelWhen } from "~~/composables/api";
 import { Format, Query, ViewClasses } from "~~/types/query";
-import { discoveryConfig } from '~/config/discoveryConfig';
+import { discoveryConfig } from "~/config/discoveryConfig";
 const { $api } = useNuxtApp();
 
 const { t } = useI18n();

@@ -4,7 +4,7 @@ import { ComputedRef } from "vue";
 import headers from "~/assets/tableheaders.json";
 import classes from "~/assets/classes.json";
 import { Query } from "~~/types/query";
-import { discoveryConfig } from '~/config/discoveryConfig';
+import { discoveryConfig } from "~/config/discoveryConfig";
 const { t } = useI18n();
 const { $api } = useNuxtApp();
 

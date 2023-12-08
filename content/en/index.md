@@ -3,6 +3,7 @@ title: Home
 navigation:
   title: OpenAtlas Disovery
 ---
+
 ![logo](/logo.svg)
 
 # OpenAtlas Discovery

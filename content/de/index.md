@@ -3,6 +3,7 @@ title: Home
 navigation:
   title: OpenAtlas Discovery
 ---
+
 ![logo](/OpenAtlasDiscovery_logo.jpg)
 
 # OpenAtlas Discovery
