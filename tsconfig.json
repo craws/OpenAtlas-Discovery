@@ -1,7 +1,31 @@
 {
 	"$schema": "https://json.schemastore.org/tsconfig",
-	"extends": ["./.nuxt/tsconfig.json", "@acdh-oeaw/tsconfig"],
+	/**
+	 * `ts-node` (used by `cypress`) cannot parse `extends` array.
+	 *
+	 * @see https://github.com/TypeStrong/ts-node/issues/2000
+	 */
+	"extends": "./.nuxt/tsconfig.json",
+	// "extends": ["./.nuxt/tsconfig.json", "@acdh-oeaw/tsconfig"],
 	"compilerOptions": {
+		"allowJs": true,
+		"checkJs": true,
+		"esModuleInterop": true,
+		"exactOptionalPropertyTypes": false,
+		"jsx": "preserve",
+		"lib": ["dom", "dom.iterable", "es2021"],
+		"module": "esnext",
+		"moduleResolution": "bundler",
+		"noEmit": true,
+		"noFallthroughCasesInSwitch": true,
+		"noImplicitReturns": true,
+		"noPropertyAccessFromIndexSignature": false,
+		"noUncheckedIndexedAccess": true,
+		"resolveJsonModule": true,
+		"skipLibCheck": true,
+		"strict": true,
+		"target": "es2021",
+		"verbatimModuleSyntax": true,
 		/**
 		 * @see https://github.com/microsoft/TypeScript/issues/54057
 		 */

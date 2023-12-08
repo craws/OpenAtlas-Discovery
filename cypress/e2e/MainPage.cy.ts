@@ -1,4 +1,4 @@
-// Import discovery config
+const apiBase = Cypress.env("api_url");
 
 describe("Main Page", () => {
 	beforeEach(() => {
@@ -6,7 +6,6 @@ describe("Main Page", () => {
 	});
 
 	it("Has the main Elements", () => {
-		const apiBase = Cypress.env("api_url");
 		cy.get('[data-test="main-content-renderer"]').should("exist");
 
 		if (apiBase === undefined) {

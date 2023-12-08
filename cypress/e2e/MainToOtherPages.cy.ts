@@ -1,5 +1,4 @@
-// Import discovery config
-import discoveryConfig from "../../config/discoveryConfig.json";
+const apiBase = Cypress.env("api_url");
 
 describe("Navigation", () => {
 	beforeEach(() => {
@@ -7,7 +6,7 @@ describe("Navigation", () => {
 	});
 
 	it("Main to Map", () => {
-		if (discoveryConfig.APIbase === undefined) {
+		if (apiBase === undefined) {
 			cy.task("log", "APIbase is undefined, skipping test");
 			return;
 		}
@@ -18,7 +17,7 @@ describe("Navigation", () => {
 	});
 
 	it("Main to Data", () => {
-		if (discoveryConfig.APIbase === undefined) {
+		if (apiBase === undefined) {
 			cy.task("log", "APIbase is undefined, skipping test");
 			return;
 		}
@@ -29,7 +28,7 @@ describe("Navigation", () => {
 	});
 
 	it("Successive Nav Clicks", () => {
-		if (discoveryConfig.APIbase === undefined) {
+		if (apiBase === undefined) {
 			cy.task("log", "APIbase is undefined, skipping test");
 			return;
 		}
