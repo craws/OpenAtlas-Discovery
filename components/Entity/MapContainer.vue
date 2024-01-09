@@ -9,6 +9,7 @@ export interface EntityMapContainerProps {
 	bounds?: SizeBounds;
 }
 
+const localePath = useLocalePath();
 const props = defineProps<EntityMapContainerProps>();
 </script>
 
@@ -25,7 +26,7 @@ const props = defineProps<EntityMapContainerProps>();
 		/>
 		<VCardActions justify="center">
 			<VSpacer />
-			<VBtn to="/map" prepend-icon="mdi-map-marker">
+			<VBtn :to="localePath('/map')" prepend-icon="mdi-map-marker">
 				{{ $t("global.basics.map") }}
 			</VBtn>
 			<VSpacer />

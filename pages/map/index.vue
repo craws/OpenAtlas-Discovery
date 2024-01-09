@@ -8,6 +8,7 @@ import type { Format, Query, ViewClasses } from "~~/types/query";
 
 const { $api } = useNuxtApp();
 
+const localePath = useLocalePath();
 const { t } = useI18n();
 
 definePageMeta({
@@ -109,7 +110,7 @@ function updateQuery(newQuery: Query) {
 					style="max-height: 400px"
 				/>
 				<VCardActions>
-					<VBtn :to="`/entity/${featureContent.id}`" variant="text">
+					<VBtn :to="localePath(`/entity/${featureContent.id}`)" variant="text">
 						{{ $t("global.basics.more details") }}
 					</VBtn>
 				</VCardActions>

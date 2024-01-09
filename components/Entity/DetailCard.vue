@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import type { DetailItem } from "~~/types/entityDetailTypes";
 
+const localePath = useLocalePath();
+
 const props = defineProps({
 	title: {
 		type: String,
@@ -37,7 +39,7 @@ const showExpandable = computed(() => {
 						<VDivider v-if="index > 0" />
 						<p>
 							<b v-if="item?.subheader">{{ item?.subheader }}:</b>
-							<NuxtLink :to="`/entity/${item?.id}`">{{ item.label }}</NuxtLink>
+							<NuxtLink :to="localePath(`/entity/${item?.id}`)">{{ item.label }}</NuxtLink>
 						</p>
 					</span>
 				</template>
@@ -54,7 +56,7 @@ const showExpandable = computed(() => {
 								<VDivider />
 								<p>
 									<b v-if="item?.subheader">{{ item?.subheader }}:</b>
-									<NuxtLink :to="`/entity/${item?.id}`">
+									<NuxtLink :to="localePath(`/entity/${item?.id}`)">
 										{{ item.label }}
 									</NuxtLink>
 								</p>

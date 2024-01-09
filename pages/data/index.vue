@@ -9,6 +9,7 @@ import type { Query } from "~~/types/query";
 
 const { t } = useI18n();
 const { $api } = useNuxtApp();
+const localePath = useLocalePath();
 
 definePageMeta({
 	middleware: ["api"],
@@ -74,7 +75,7 @@ function updateQuery(newQuery: Query) {
 					</VTooltip>
 				</template>
 				<template #features[0].properties.title="{ item, value }">
-					<NuxtLink :to="`/entity/${item.features[0]['@id'].split('/').at(-1)}`">
+					<NuxtLink :to="localePath(`/entity/${item.features[0]['@id'].split('/').at(-1)}`)">
 						{{ value }}
 					</NuxtLink>
 				</template>
