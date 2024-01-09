@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { discoveryConfig } from '~/config/discoveryConfig';
+
 const localePath = useLocalePath();
 const config = useRuntimeConfig();
 
@@ -14,7 +16,7 @@ const frontenVersion = `${config.public.gitTag ?? "version"} - ${
 				style="font-size: 0.75em"
 				class="w-50 mx-auto d-flex justify-center justify-space-between align-center"
 			>
-				<div>
+				<div v-if="discoveryConfig.acdhImprint">
 					<NuxtLink style="color: inherit; text-decoration: none" :to="localePath('/imprint')">
 						{{ $t("global.imprint") }}
 					</NuxtLink>

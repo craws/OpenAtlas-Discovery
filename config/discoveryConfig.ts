@@ -66,6 +66,8 @@ const schema = z.object({
 	 * @supportedTypes image/svg+xml, image/x-icon
 	 */
 	favicon: z.string().optional(), // should be required
+
+	acdhImprint: z.boolean().default(false),
 });
 
 const result = schema.safeParse(userConfig);

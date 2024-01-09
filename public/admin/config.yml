@@ -78,6 +78,12 @@ collections:
             hint: Logo
             widget: image
 
+          - name: acdhImprint
+            label: Imprint-Service of the Austrian Academy of Sciences
+            hint: Imprint-Service
+            widget: boolean
+            default: false
+
   - name: pages
     label: Pages
     label_singular: Page

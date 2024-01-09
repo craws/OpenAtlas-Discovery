@@ -1,7 +1,8 @@
 {
-	"colors": {
-		"primaryColor": "#b8cf5b"
-	},
-	"defaultLocale": "en",
-	"logo": "/logo.svg"
+  "colors": {
+    "primaryColor": "#b8cf5b"
+  },
+  "defaultLocale": "en",
+  "logo": "/logo.svg",
+  "acdhImprint": true
 }
