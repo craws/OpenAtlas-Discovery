@@ -5,9 +5,5 @@
   "defaultLocale": "de",
   "logo": "/logo.svg",
   "acdhImprint": true,
-  "defaultFilters": [
-    {
-      "id": 25
-    }
-  ]
+  "defaultFilters": []
 }
