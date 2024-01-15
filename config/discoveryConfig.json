@@ -2,7 +2,12 @@
   "colors": {
     "primaryColor": "#6b5bcf"
   },
-  "defaultLocale": "en",
+  "defaultLocale": "de",
   "logo": "/logo.svg",
-  "acdhImprint": true
+  "acdhImprint": true,
+  "defaultFilters": [
+    {
+      "id": 25
+    }
+  ]
 }
