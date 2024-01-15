@@ -1,6 +1,6 @@
 ---
-title: Unser tolles Team (Titel)
+title: Team
 navigation:
-  title: Das ist das tolle Team (navigation)
+  title: Team
 ---
 Nichts für jetzt einmal

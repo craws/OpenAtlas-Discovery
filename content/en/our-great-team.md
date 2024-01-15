@@ -1,7 +1,7 @@
 ---
-title: Our great team
+title: Team
 navigation:
-  title: This is our wonderful team
+  title: Team
 ---
 We are *very* young, **motivated** and beautiful people. You can see us [here.](https://openatlas.eu/team)
 
