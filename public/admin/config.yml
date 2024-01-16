@@ -46,23 +46,6 @@ collections:
                 widget: color
                 allowInput: true
 
-              - name: secondaryColor
-                label: Secondary
-                hint: Secondary color
-                widget: color
-                allowInput: true
-                required: false
-
-          - name: defaultFilters
-            label: Default filters
-            label_singular: Default filter
-            hint: Default filters
-            widget: list
-            fields:
-              - name: id
-                label: ID
-                widget: number
-
           - name: defaultLocale
             label: Default locale
             hint: Default locale
@@ -97,14 +80,14 @@ collections:
     # meta: { path: { widget: string, label: 'Path', index_file: 'index' } }
     fields:
       - name: title
-        label: Title
+        label: Page Name
         i18n: true
-        hint: The title
+        hint: The name of the page (shown in the URL)
 
       - name: navigation
-        label: Navigation
+        label: Navigation title
         i18n: true
-        hint: The navigation
+        hint: The navigation title
         widget: object
         fields:
           - name: title
