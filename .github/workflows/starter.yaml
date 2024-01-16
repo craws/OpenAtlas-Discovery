@@ -1,27 +1,36 @@
-name: workflows starter
+name: build and deploy
+
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
+
 on:
-  push: {}
-  workflow_dispatch: {}
+  push:
+    branches:
+      - main
+      - develop
+  pull_request:
+    branches:
+      - main
+      - develop
+  workflow_dispatch:
+
 jobs:
   setup_workflow_env:
     runs-on: ubuntu-latest
     outputs:
       environment: ${{ steps.get_environment_from_git_ref.outputs.environment }}
       environment_short: ${{ steps.get_environment_from_git_ref.outputs.environment_short }}
-      image_tagged: openatlas-discovery
+      image_name: openatlas-discovery
       registry_root: ghcr.io/acdh-oeaw/openatlas-discovery/
-      default_port: "5000"
-      submodules: "true"
+      default_port: "3000"
+      fetch-depth: 10
+      submodules: "false"
       herokuish_base_image: ghcr.io/acdh-oeaw/herokuish-for-cypress/main:latest-22
       APP_NAME: openatlas-discovery
-      # This together with the branch name is also used as the namespace to deploy to
       APP_ROOT: "/"
-      # SERVICE_ID: "99999" # Better use GtiHub environment variables for this
-      # PUBLIC_URL: "https://some-stuff.acdh-ch-dev.oeaw.ac.at" # Better use GitHub environment variables for this
-      # POSTGRES_ENABLED: "false" # needs to be set to true to enable a postgres db installed next to the deployed app
+      # SERVICE_ID: "99999"
+      # PUBLIC_URL: "https://some-stuff.acdh-ch-dev.oeaw.ac.at"
     # You should not need to have to change anything below this line
     #-----------------------------------------------------------------------------------------------------
     steps:
@@ -36,34 +45,56 @@ jobs:
           else
             echo "environment=review/${{ github.ref_name }}"
             echo "environment=review/${{ github.ref_name }}" >> $GITHUB_OUTPUT
-            echo "environment_short=$(echo -n ${{ github.ref_name }} | sed s/feature_// | tr '_' '-' | tr '[:upper:]' '[:lower:]' )" >> $GITHUB_OUTPUT
+            echo "environment_short=$(echo -n ${{ github.ref_name }} | sed 's/\(feat\|feature\|fix\)\{0,1\}[_/]//' | tr '_' '-' | tr '[:upper:]' '[:lower:]' | cut -c -63 )" >> $GITHUB_OUTPUT
           fi
-  _1:
+  generate_workflow_vars:
     needs: [setup_workflow_env]
-    uses: acdh-oeaw/gl-autodevops-minimal-port/.github/workflows/build-herokuish-and-push-to-registry.yaml@main
+    environment:
+      name: ${{ needs.setup_workflow_env.outputs.environment }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate PUBLIC_URL if not set
+        id: generate_public_url
+        run: |
+          kube_ingress_base_domain="${{ vars.KUBE_INGRESS_BASE_DOMAIN }}"
+          public_url="${{ needs.setup_workflow_env.outputs.PUBLIC_URL || vars.PUBLIC_URL }}"
+          if [ "${public_url}x" == 'x' ]
+          then public_url=https://${{ needs.setup_workflow_env.outputs.environment_short }}.${kube_ingress_base_domain}
+          fi
+          echo "public_url=$public_url" >> $GITHUB_OUTPUT
+    outputs:
+      PUBLIC_URL: ${{ steps.generate_public_url.outputs.public_url }}
+  _1:
+    needs: [setup_workflow_env, generate_workflow_vars]
+    uses: acdh-oeaw/gl-autodevops-minimal-port/.github/workflows/build-cnb-and-push-to-registry.yaml@main
     secrets: inherit
     # if you run this outside of of an org that provides KUBE_CONFIG etc as a secret, you need to specify every secret you want to pass by name
     with:
       environment: ${{ needs.setup_workflow_env.outputs.environment }}
       registry_root: ${{ needs.setup_workflow_env.outputs.registry_root }}
-      image_tagged: ${{ needs.setup_workflow_env.outputs.image_tagged }}
+      image_name: ${{ needs.setup_workflow_env.outputs.image_name }}
+      source_image: ${{ needs.setup_workflow_env.outputs.source_image }}
       default_port: ${{ needs.setup_workflow_env.outputs.default_port }}
+      PUBLIC_URL: ${{ needs.generate_workflow_vars.outputs.PUBLIC_URL }}
+      fetch-depth: ${{ fromJson(needs.setup_workflow_env.outputs.fetch-depth) }}
       submodules: ${{ needs.setup_workflow_env.outputs.submodules }}
   _2:
-    needs: [setup_workflow_env]
+    needs: [setup_workflow_env, generate_workflow_vars]
     uses: acdh-oeaw/gl-autodevops-minimal-port/.github/workflows/herokuish-tests-db-url.yaml@main
     secrets: inherit
     # if you run this outside of acdh-oeaw yo uneed to specify every secret you want to pass by name
     with:
       environment: ${{ needs.setup_workflow_env.outputs.environment}}
       registry_root: ${{ needs.setup_workflow_env.outputs.registry_root }}
-      image_tagged: ${{ needs.setup_workflow_env.outputs.image_tagged }}
+      image_name: ${{ needs.setup_workflow_env.outputs.image_name }}
       default_port: ${{ needs.setup_workflow_env.outputs.default_port }}
+      fetch-depth: ${{ fromJson(needs.setup_workflow_env.outputs.fetch-depth) }}
       herokuish_base_image: ${{ needs.setup_workflow_env.outputs.herokuish_base_image }}
       POSTGRES_ENABLED: ${{ needs.setup_workflow_env.outputs.POSTGRES_ENABLED }}
+      PUBLIC_URL: ${{ needs.generate_workflow_vars.outputs.PUBLIC_URL }}
       submodules: ${{ needs.setup_workflow_env.outputs.submodules }}
   _3:
-    needs: [setup_workflow_env, _1, _2]
+    needs: [setup_workflow_env, generate_workflow_vars, _1, _2]
     uses: acdh-oeaw/gl-autodevops-minimal-port/.github/workflows/deploy.yml@main
     secrets: inherit
     # if you run this outside of acdh-oeaw yo uneed to specify every secret you want to pass by name
@@ -75,15 +106,16 @@ jobs:
     #      K8S_SECRET_A_VAR_NAME: ${{  }}
     with:
       environment: ${{ needs.setup_workflow_env.outputs.environment}}
+      fetch-depth: ${{ fromJson(needs.setup_workflow_env.outputs.fetch-depth) }}
       DOCKER_TAG:
         ${{ needs.setup_workflow_env.outputs.registry_root }}${{
-        needs.setup_workflow_env.outputs.image_tagged }}
+        needs.setup_workflow_env.outputs.image_name }}
       APP_NAME:
         ${{ needs.setup_workflow_env.outputs.APP_NAME }}-${{
         needs.setup_workflow_env.outputs.environment_short }}
       APP_ROOT: ${{ needs.setup_workflow_env.outputs.APP_ROOT }}
       SERVICE_ID: ${{ needs.setup_workflow_env.outputs.SERVICE_ID }}
-      PUBLIC_URL: ${{ needs.setup_workflow_env.outputs.PUBLIC_URL }}
+      PUBLIC_URL: ${{ needs.generate_workflow_vars.outputs.PUBLIC_URL }}
       POSTGRES_ENABLED: ${{ needs.setup_workflow_env.outputs.POSTGRES_ENABLED == 'true'}}
       default_port: "${{ needs.setup_workflow_env.outputs.default_port}}"
       submodules: ${{ needs.setup_workflow_env.outputs.submodules }}
