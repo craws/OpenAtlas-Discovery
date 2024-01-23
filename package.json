@@ -26,7 +26,7 @@
     "prepare": "run-s setup",
     "setup": "is-ci || simple-git-hooks",
     "start": "nuxt start --dotenv .env.local",
-    "test": "run-p --race start cy:run",
+    "test": "playwright test",
     "types:check": "nuxt typecheck"
   },
   "dependencies": {
