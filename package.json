@@ -1,119 +1,122 @@
 {
-  "name": "@acdh-oeaw/openatlas-discovery",
-  "private": true,
-  "license": "MIT",
-  "type": "module",
-  "engines": {
-    "node": "20.x",
-    "npm": "10.x"
-  },
-  "packageManager": "npm@10.2.3",
-  "scripts": {
-    "build": "nuxt build --dotenv .env.local",
-    "build-and-test": "run-s build test",
-    "dev": "nuxt dev --dotenv .env.local",
-    "dev:cms": "decap-server",
-    "format:check": "prettier . --cache --check --ignore-path ./.gitignore",
-    "format:fix": "npm run format:check -- --write",
-    "generate": "npm run build -- --prerender",
-    "lint:check": "run-p --continue-on-error \"lint:*:check\"",
-    "lint:fix": "run-p --continue-on-error \"lint:*:fix\"",
-    "lint:code:check": "eslint . --cache --ext .js,.ts,.vue --ignore-path ./.gitignore",
-    "lint:code:fix": "npm run lint:code:check -- --fix",
-    "lint:styles:check": "stylelint \"./**/*.@(css|vue)\" --cache --ignore-path ./.gitignore",
-    "lint:styles:fix": "npm run lint:styles:check -- --fix",
-    "postinstall": "nuxt prepare",
-    "prepare": "run-s setup",
-    "setup": "is-ci || simple-git-hooks",
-    "start": "nuxt start --dotenv .env.local",
-    "test": "playwright test",
-    "types:check": "nuxt typecheck"
-  },
-  "dependencies": {
-    "@acdh-oeaw/lib": "^0.1.6",
-    "@mdi/font": "^7.3.67",
-    "@nuxt/content": "2.8.2",
-    "@nuxt/image": "^1.1.0",
-    "@nuxtjs/i18n": "^8.0.0-rc.8",
-    "@stefanprobst/netlify-cms-oauth-client": "^0.2.0",
-    "leaflet": "^1.9.4",
-    "nuxt": "3.5.3",
-    "vuetify-nuxt-module": "0.5.12",
-    "zod": "^3.22.4"
-  },
-  "devDependencies": {
-    "@acdh-oeaw/eslint-config": "^1.0.5",
-    "@acdh-oeaw/eslint-config-nuxt": "^1.0.11",
-    "@acdh-oeaw/eslint-config-vue": "^1.0.10",
-    "@acdh-oeaw/prettier-config": "^1.0.1",
-    "@acdh-oeaw/stylelint-config": "^1.0.7",
-    "@acdh-oeaw/tsconfig": "^1.0.1",
-    "@playwright/test": "^1.41.1",
-    "@types/geojson": "^7946.0.13",
-    "@types/leaflet": "^1.9.8",
-    "@types/node": "^20.10.4",
-    "decap-server": "^3.0.1",
-    "dotenv": "^16.3.1",
-    "eslint": "^8.55.0",
-    "is-ci": "^3.0.1",
-    "lint-staged": "^15.2.0",
-    "npm-run-all2": "^6.1.1",
-    "prettier": "^3.1.0",
-    "sass": "^1.60.0",
-    "simple-git-hooks": "^2.9.0",
-    "stylelint": "^15.11.0",
-    "typescript": "^5.3.3",
-    "vue-tsc": "^1.8.25"
-  },
-  "eslintConfig": {
-    "extends": [
-      "@acdh-oeaw/eslint-config",
-      "@acdh-oeaw/eslint-config/strict",
-      "@acdh-oeaw/eslint-config-vue",
-      "@acdh-oeaw/eslint-config-nuxt"
-    ],
-    "rules": {
-      "vue/valid-v-slot": [
-        "error",
-        {
-          "allowModifiers": true
-        }
-      ]
-    }
-  },
-  "lint-staged": {
-    "*.@(vue)": [
-      "eslint --cache --fix",
-      "stylelint --cache --fix",
-      "prettier --cache --write"
-    ],
-    "*.@(js|ts)": [
-      "eslint --cache --fix",
-      "prettier --cache --write"
-    ],
-    "*.@(css)": [
-      "stylelint --cache --fix",
-      "prettier --cache --write"
-    ],
-    "*.!(css|js|ts|vue)": "prettier --cache --ignore-unknown --write"
-  },
-  "prettier": "@acdh-oeaw/prettier-config",
-  "simple-git-hooks": {
-    "pre-commit": "npx lint-staged"
-  },
-  "stylelint": {
-    "extends": "@acdh-oeaw/stylelint-config",
-    "rules": {
-      "function-no-unknown": [
-        true,
-        {
-          "ignoreFunctions": [
-            "theme",
-            "v-bind"
-          ]
-        }
-      ],
-      "selector-class-pattern": null
-    }
-  }
+	"name": "@acdh-oeaw/openatlas-discovery",
+	"private": true,
+	"license": "MIT",
+	"type": "module",
+	"engines": {
+		"node": "20.x",
+		"npm": "10.x"
+	},
+	"packageManager": "npm@10.2.3",
+	"scripts": {
+		"build": "nuxt build --dotenv .env.local",
+		"build-and-test": "run-s build test",
+		"dev": "nuxt dev --dotenv .env.local",
+		"dev:cms": "decap-server",
+		"format:check": "prettier . --cache --check --ignore-path ./.gitignore",
+		"format:fix": "npm run format:check -- --write",
+		"generate": "npm run build -- --prerender",
+		"lint:check": "run-p --continue-on-error \"lint:*:check\"",
+		"lint:fix": "run-p --continue-on-error \"lint:*:fix\"",
+		"lint:code:check": "eslint . --cache --ext .js,.ts,.vue --ignore-path ./.gitignore",
+		"lint:code:fix": "npm run lint:code:check -- --fix",
+		"lint:styles:check": "stylelint \"./**/*.@(css|vue)\" --cache --ignore-path ./.gitignore",
+		"lint:styles:fix": "npm run lint:styles:check -- --fix",
+		"postinstall": "nuxt prepare",
+		"prepare": "run-s setup",
+		"setup": "is-ci || simple-git-hooks",
+		"start": "nuxt start --dotenv .env.local",
+		"test:install_browsers": "playwright install",
+		"test:e2e": "playwright test",
+		"test": "run test:install_browsers && run test:e2e",
+		"types:check": "nuxt typecheck"
+	},
+	"dependencies": {
+		"@acdh-oeaw/lib": "^0.1.6",
+		"@mdi/font": "^7.3.67",
+		"@nuxt/content": "2.8.2",
+		"@nuxt/image": "^1.1.0",
+		"@nuxtjs/i18n": "^8.0.0-rc.8",
+		"@stefanprobst/netlify-cms-oauth-client": "^0.2.0",
+		"leaflet": "^1.9.4",
+		"nuxt": "3.5.3",
+		"vuetify-nuxt-module": "0.5.12",
+		"zod": "^3.22.4"
+	},
+	"devDependencies": {
+		"@acdh-oeaw/eslint-config": "^1.0.5",
+		"@acdh-oeaw/eslint-config-nuxt": "^1.0.11",
+		"@acdh-oeaw/eslint-config-vue": "^1.0.10",
+		"@acdh-oeaw/prettier-config": "^1.0.1",
+		"@acdh-oeaw/stylelint-config": "^1.0.7",
+		"@acdh-oeaw/tsconfig": "^1.0.1",
+		"@playwright/test": "^1.41.1",
+		"@types/geojson": "^7946.0.13",
+		"@types/leaflet": "^1.9.8",
+		"@types/node": "^20.10.4",
+		"decap-server": "^3.0.1",
+		"dotenv": "^16.3.1",
+		"dotenv-expand": "^10.0.0",
+		"eslint": "^8.55.0",
+		"is-ci": "^3.0.1",
+		"lint-staged": "^15.2.0",
+		"npm-run-all2": "^6.1.1",
+		"prettier": "^3.1.0",
+		"sass": "^1.60.0",
+		"simple-git-hooks": "^2.9.0",
+		"stylelint": "^15.11.0",
+		"typescript": "^5.3.3",
+		"vue-tsc": "^1.8.25"
+	},
+	"eslintConfig": {
+		"extends": [
+			"@acdh-oeaw/eslint-config",
+			"@acdh-oeaw/eslint-config/strict",
+			"@acdh-oeaw/eslint-config-vue",
+			"@acdh-oeaw/eslint-config-nuxt"
+		],
+		"rules": {
+			"vue/valid-v-slot": [
+				"error",
+				{
+					"allowModifiers": true
+				}
+			]
+		}
+	},
+	"lint-staged": {
+		"*.@(vue)": [
+			"eslint --cache --fix",
+			"stylelint --cache --fix",
+			"prettier --cache --write"
+		],
+		"*.@(js|ts)": [
+			"eslint --cache --fix",
+			"prettier --cache --write"
+		],
+		"*.@(css)": [
+			"stylelint --cache --fix",
+			"prettier --cache --write"
+		],
+		"*.!(css|js|ts|vue)": "prettier --cache --ignore-unknown --write"
+	},
+	"prettier": "@acdh-oeaw/prettier-config",
+	"simple-git-hooks": {
+		"pre-commit": "npx lint-staged"
+	},
+	"stylelint": {
+		"extends": "@acdh-oeaw/stylelint-config",
+		"rules": {
+			"function-no-unknown": [
+				true,
+				{
+					"ignoreFunctions": [
+						"theme",
+						"v-bind"
+					]
+				}
+			],
+			"selector-class-pattern": null
+		}
+	}
 }
