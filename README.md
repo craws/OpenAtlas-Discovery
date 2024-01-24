@@ -92,6 +92,15 @@ Start the development server on http://localhost:3000
 npm run dev
 ```
 
+Mock the CMS OAuth locally by running the following command:
+
+```bash
+npm run dev:cms
+```
+
+Further, at the moment the enviroment variables under '# CMS' are required to be set. Though you can
+use dummy values and don't have to use real ones.
+
 ## Production
 
 To build the application for production run:
