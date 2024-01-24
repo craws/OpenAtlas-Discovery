@@ -39,7 +39,6 @@
 		"@nuxtjs/i18n": "^8.0.0-rc.8",
 		"@stefanprobst/netlify-cms-oauth-client": "^0.2.0",
 		"leaflet": "^1.9.4",
-		"nuxt": "3.5.3",
 		"vuetify-nuxt-module": "0.5.12",
 		"zod": "^3.22.4"
 	},
@@ -60,6 +59,8 @@
 		"is-ci": "^3.0.1",
 		"lint-staged": "^15.2.0",
 		"npm-run-all2": "^6.1.1",
+		"nuxi": "^3.10.0",
+		"nuxt": "^3.9.3",
 		"prettier": "^3.1.0",
 		"sass": "^1.60.0",
 		"simple-git-hooks": "^2.9.0",
