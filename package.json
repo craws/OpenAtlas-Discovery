@@ -26,7 +26,7 @@
 		"prepare": "run-s setup",
 		"setup": "is-ci || simple-git-hooks",
 		"start": "nuxt start --dotenv .env.local",
-		"test:install-browsers": "playwright install",
+		"test:install_browsers": "playwright install",
 		"test:e2e": "playwright test",
 		"test": "run-s test:install_browsers test:e2e",
 		"types:check": "nuxt typecheck"
