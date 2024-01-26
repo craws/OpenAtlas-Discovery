@@ -2,23 +2,50 @@ import { expect, test } from "@playwright/test";
 
 import { locales } from "@/config/i18n.config";
 
-test("has main elements", async ({ page }) => {
-	await page.goto("/");
-	await expect(page.locator('[data-test="main-content-renderer"]')).toBeVisible();
-	if (process.env.NUXT_PUBLIC_API_BASE_URL === undefined) {
-		console.log("APIBase is undefined!");
-		return;
-	}
-	await expect(page.locator('[data-test="main-map-btn"]')).toBeVisible();
-	await expect(page.locator('[data-test="main-data-btn"]')).toBeVisible();
+test.describe("locale is de", () => {
+	test.skip(!locales.includes("de"));
+
+	const path = "./de";
+	test.describe("APIBase is defined", () => {
+		test.skip(process.env.NUXT_PUBLIC_API_BASE_URL === undefined);
+
+		test("has main elements", async ({ page }) => {
+			await page.goto(path);
+			await expect(page.locator("#content-renderer-container")).toBeVisible();
+			await expect(page.getByRole("button", { name: "Karte" })).toBeVisible();
+			await expect(page.getByRole("button", { name: "Daten" })).toBeVisible();
+		});
+	});
+
+	test.describe("has locale selector", () => {
+		test.skip(locales.length === 1);
+		test("has locale selector", async ({ page }) => {
+			await page.goto(path);
+			await expect(page.getByRole("button", { name: "Sprach Auswahl" })).toBeVisible();
+		});
+	});
 });
 
-test("has locale selector", async ({ page }) => {
-	await page.goto("/");
-	if (locales.length > 1) {
-		await expect(page.locator('[data-test="header-locale-menu"]')).toBeVisible();
-		return;
-	}
-	console.log("only one language detected, no locale selector");
-	expect(await page.locator('[data-test="header-locale-menu"]').count()).toEqual(0);
+test.describe("locale is en", () => {
+	test.skip(!locales.includes("en"));
+	const path = "./en";
+
+	test.describe("APIBase is defined", () => {
+		test.skip(process.env.NUXT_PUBLIC_API_BASE_URL === undefined);
+
+		test("has main elements", async ({ page }) => {
+			await page.goto(path);
+			await expect(page.locator("#content-renderer-container")).toBeVisible();
+			await expect(page.getByRole("button", { name: "map" })).toBeVisible();
+			await expect(page.getByRole("button", { name: "data" })).toBeVisible();
+		});
+	});
+
+	test.describe("has locale selector", () => {
+		test.skip(locales.length === 1);
+		test("has locale selector", async ({ page }) => {
+			await page.goto(path);
+			await expect(page.getByRole("button", { name: "Locale Selection" })).toBeVisible();
+		});
+	});
 });

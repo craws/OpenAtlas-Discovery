@@ -36,7 +36,7 @@ const contentToUse = computed(() => {
 
 <template>
 	<VSheet class="landing-page d-flex justify-center pt-5">
-		<VContainer class="text-center" data-test="main-content-renderer">
+		<VContainer id="content-renderer-container" class="text-center">
 			<ContentRenderer v-if="contentToUse">
 				<ContentRendererMarkdown :value="contentToUse" class="w-50 mx-auto" />
 			</ContentRenderer>
@@ -45,12 +45,12 @@ const contentToUse = computed(() => {
 				<VCol cols="auto">
 					<VBtn
 						size="large"
+						role="button"
 						:to="localePath('/map')"
 						min-width="150px"
 						color="primary"
 						width="100px"
 						prepend-icon="mdi-map-marker"
-						data-test="main-map-btn"
 					>
 						{{ $t("global.basics.map") }}
 					</VBtn>
@@ -58,13 +58,13 @@ const contentToUse = computed(() => {
 				<VCol cols="auto">
 					<VBtn
 						size="large"
+						role="button"
 						:to="localePath('/data')"
 						min-width="150px"
 						variant="outlined"
 						color="primary"
 						width="100px"
 						prepend-icon="mdi-database"
-						data-test="main-data-btn"
 					>
 						{{ $t("global.basics.data") }}
 					</VBtn>

@@ -12,7 +12,6 @@ const availableLocales = computed(() => {
 <template>
 	<VBtn
 		id="locale-selector-button-activator"
-		data-test="header-locale-menu"
 		role="button"
 		class="h-100 d-flex align-center justify-center px-2 text-grey"
 	>
@@ -21,7 +20,7 @@ const availableLocales = computed(() => {
 		<span class="d-sr-only">{{ $t("global.basics.language-selection") }}</span>
 	</VBtn>
 	<VMenu activator="#locale-selector-button-activator">
-		<VList data-test="locale-selector-list">
+		<VList>
 			<VListSubheader>
 				<p class="text-caption px-2">
 					{{ $t("global.basics.language") }}
@@ -35,7 +34,6 @@ const availableLocales = computed(() => {
 				@see https://i18n.nuxtjs.org/guide/lang-switcher
 			 	-->
 				<NuxtLink
-					:data-test="`locale-selector-${l.code}`"
 					:to="switchLocalePath(l.code)"
 					@click.prevent.stop="setLocale(locale.code)"
 				>
