@@ -1,8 +1,7 @@
 <script lang="ts" setup>
 import type { DateTimeFormatOptions } from "@intlify/core-base";
-import { useI18n } from "vue-i18n";
 
-import type { LinkedPlacesModelWhen, LinkedPlacesModelWhenStart } from "~~/composables/api";
+import type { LinkedPlacesModelWhen, LinkedPlacesModelWhenStart } from "@/composables/api";
 
 const { t } = useI18n();
 
@@ -97,16 +96,16 @@ function convertStringToDate(dateStr?: string): Date | null {
 <template>
 	<VRow v-if="start || end">
 		<VCol>
-			<p>{{ $t("components.entity.basics.start") }}: {{ start }}</p>
+			<p>{{ t("components.entity.basics.start") }}: {{ start }}</p>
 		</VCol>
 		<VSpacer />
 		<VCol>
-			<p>{{ $t("components.entity.basics.end") }}: {{ end }}</p>
+			<p>{{ t("components.entity.basics.end") }}: {{ end }}</p>
 		</VCol>
 		<VSpacer />
 		<VSpacer />
 	</VRow>
 	<div v-else-if="props.displayOptions?.time?.showUnknownIfMissing">
-		<p>{{ $t("components.when-display.no-dates") }}</p>
+		<p>{{ t("components.when-display.no-dates") }}</p>
 	</div>
 </template>

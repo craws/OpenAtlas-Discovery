@@ -1,15 +1,14 @@
 <script setup lang="ts">
 import type { ComputedRef } from "vue";
-import { useI18n } from "vue-i18n";
 
-import classes from "~/assets/classes.json";
-import headers from "~/assets/tableheaders.json";
-import { discoveryConfig } from "~/config/discoveryConfig";
-import type { Query } from "~~/types/query";
+import classes from "@/assets/classes.json";
+import headers from "@/assets/tableheaders.json";
+import { discoveryConfig } from "@/config/discoveryConfig";
+import type { Query } from "@/types/query";
 
 const { t } = useI18n();
-const { $api } = useNuxtApp();
 const localePath = useLocalePath();
+const client = useApiClient();
 
 definePageMeta({
 	middleware: ["api"],
@@ -31,18 +30,11 @@ const query = computed(() => ({
 	type_id: discoveryConfig.defaultFilters,
 }));
 
-const apiEnabled = computed(() => $api !== undefined);
-
-const { data, pending, refresh } = await useAsyncData(() => $api.query.getQuery(query.value));
+const { data, pending, refresh } = await useAsyncData(() => client.query.getQuery(query.value));
 watch(
 	() => options.page,
 	() => refresh(),
 );
-onMounted(() => {
-	if (!apiEnabled) {
-		refresh();
-	}
-});
 
 function updateQuery(newQuery: Query) {
 	search.value = newQuery.search?.map((x) => JSON.stringify(x));
@@ -65,7 +57,7 @@ function updateQuery(newQuery: Query) {
 				<template #features[0].systemClass="{ value }">
 					<VTooltip
 						content-class="text-capitalize"
-						:text="$t(`global.entity.system_classes.${value}`)"
+						:text="t(`global.entity.system_classes.${value}`)"
 					>
 						<template #activator="{ props }">
 							<VIcon v-bind="props">

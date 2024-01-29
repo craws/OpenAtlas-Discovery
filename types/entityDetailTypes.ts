@@ -1,6 +1,6 @@
 import type { Component } from "nuxt/dist/app/compat/capi";
 
-import type { LinkedPlacesModelRelations } from "~~/composables/api";
+import type { LinkedPlacesModelRelations } from "@/composables/api";
 
 export interface relationGroup {
 	relationType: string;

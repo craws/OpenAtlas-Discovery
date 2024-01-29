@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { DetailItem } from "~~/types/entityDetailTypes";
+import type { DetailItem } from "@/types/entityDetailTypes";
 
 const localePath = useLocalePath();
 

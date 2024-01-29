@@ -10,6 +10,15 @@ const gitTag = execSync("git describe --always --tags").toString().trimEnd();
 export default defineNuxtConfig({
 	typescript: {
 		shim: false,
+		strict: true,
+		// https://github.com/nuxt/nuxt/issues/14816#issuecomment-1484918081
+		tsConfig: {
+			compilerOptions: {
+				paths: {
+					"@/*": ["./*"],
+				},
+			},
+		},
 	},
 	app: {
 		head: {

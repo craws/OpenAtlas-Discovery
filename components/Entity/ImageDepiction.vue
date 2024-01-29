@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { LinkedPlacesDepiction } from "~~/composables/api";
+import type { LinkedPlacesDepiction } from "@/composables/api";
 
 export interface DepictionProps {
 	depiction: LinkedPlacesDepiction;

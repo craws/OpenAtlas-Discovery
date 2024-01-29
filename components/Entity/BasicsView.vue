@@ -1,7 +1,6 @@
 <script lang="ts" setup>
-import { useI18n } from "vue-i18n";
 
-import type { LinkedPlacesModelWhen } from "~~/composables/api";
+import type { LinkedPlacesModelWhen } from "@/composables/api";
 
 import classes from "../../assets/classes.json";
 
@@ -48,7 +47,7 @@ const systemClassName = computed(() => {
 					</VAvatar>
 					<div>
 						<h1 class="text-h4 text-md-h3">
-							{{ title || $t("global.basics.title") }}
+							{{ title || t("global.basics.title") }}
 						</h1>
 						<p class="text-overline">
 							{{ systemClassName }}

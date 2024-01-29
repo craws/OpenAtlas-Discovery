@@ -1,15 +1,13 @@
 <script setup lang="ts">
 import type { GeoJsonObject } from "geojson";
-import { useI18n } from "vue-i18n";
 
-import { discoveryConfig } from "~/config/discoveryConfig";
-import type { LinkedPlacesModelDescriptions, LinkedPlacesModelWhen } from "~~/composables/api";
-import type { Format, Query, ViewClasses } from "~~/types/query";
-
-const { $api } = useNuxtApp();
+import { discoveryConfig } from "@/config/discoveryConfig";
+import type { LinkedPlacesModelDescriptions, LinkedPlacesModelWhen } from "@/composables/api";
+import type { Format, Query, ViewClasses } from "@/types/query";
 
 const localePath = useLocalePath();
 const { t } = useI18n();
+const client = useApiClient();
 
 definePageMeta({
 	middleware: ["api"],
@@ -25,7 +23,7 @@ const query = ref({
 	search: undefined as Array<string> | undefined,
 	type_id: discoveryConfig.defaultFilters,
 });
-const { data, pending, refresh } = await useAsyncData(() => $api.query.getQuery(query.value));
+const { data, pending, refresh } = await useAsyncData(() => client.query.getQuery(query.value));
 onMounted(() => {
 	refresh();
 });
@@ -111,7 +109,7 @@ function updateQuery(newQuery: Query) {
 				/>
 				<VCardActions>
 					<VBtn :to="localePath(`/entity/${featureContent.id}`)" variant="text">
-						{{ $t("global.basics.more details") }}
+						{{ t("global.basics.more details") }}
 					</VBtn>
 				</VCardActions>
 			</VCard>

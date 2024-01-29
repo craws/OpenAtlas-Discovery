@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { useI18n } from "vue-i18n";
 
-const { locale, locales, setLocale } = useI18n();
+const { locale, locales, setLocale, t } = useI18n();
 const switchLocalePath = useSwitchLocalePath();
 
 const availableLocales = computed(() => {
@@ -16,13 +15,13 @@ const availableLocales = computed(() => {
 	>
 		<VIcon>mdi-translate</VIcon>
 		<VIcon size="small">mdi-chevron-down</VIcon>
-		<span class="d-sr-only">{{ $t("global.basics.language-selection") }}</span>
+		<span class="d-sr-only">{{ t("global.basics.language-selection") }}</span>
 	</VBtn>
 	<VMenu activator="#locale-selector-button-activator">
 		<VList>
 			<VListSubheader>
 				<p class="text-caption px-2">
-					{{ $t("global.basics.language") }}
+					{{ t("global.basics.language") }}
 				</p>
 			</VListSubheader>
 			<VListItem v-for="l in availableLocales" :key="l.code">

@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { useDisplay } from "vuetify";
 
-import type { LinkedPlacesModelRelations, LinkedPlacesModelTypes } from "~~/composables/api";
-import type { DetailItem, relationGroup } from "~~/types/entityDetailTypes";
+import type { LinkedPlacesModelRelations, LinkedPlacesModelTypes } from "@/composables/api";
+import type { DetailItem, relationGroup } from "@/types/entityDetailTypes";
 
 interface DetailList {
 	title: string;
