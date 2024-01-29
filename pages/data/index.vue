@@ -8,8 +8,8 @@ import { discoveryConfig } from "@/config/discoveryConfig";
 import type { Query } from "@/types/query";
 
 const { t } = useI18n();
-const { $api } = useNuxtApp();
 const localePath = useLocalePath();
+const client = useApiClient();
 
 definePageMeta({
 	middleware: ["api"],
@@ -31,18 +31,11 @@ const query = computed(() => ({
 	type_id: discoveryConfig.defaultFilters,
 }));
 
-const apiEnabled = computed(() => $api !== undefined);
-
-const { data, pending, refresh } = await useAsyncData(() => $api.query.getQuery(query.value));
+const { data, pending, refresh } = await useAsyncData(() => client.query.getQuery(query.value));
 watch(
 	() => options.page,
 	() => refresh(),
 );
-onMounted(() => {
-	if (!apiEnabled) {
-		refresh();
-	}
-});
 
 function updateQuery(newQuery: Query) {
 	search.value = newQuery.search?.map((x) => JSON.stringify(x));
