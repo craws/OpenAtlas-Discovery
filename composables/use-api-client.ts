@@ -9,5 +9,6 @@ export function useApiClient() {
 	if (!client) {
 		client = new Api({ baseUrl });
 	}
+
 	return client;
 }
