@@ -51,7 +51,7 @@ const contentToUse = computed(() => {
 						width="100px"
 						prepend-icon="mdi-map-marker"
 					>
-						{{ $t("global.basics.map") }}
+						{{ t("global.basics.map") }}
 					</VBtn>
 				</VCol>
 				<VCol cols="auto">
@@ -64,7 +64,7 @@ const contentToUse = computed(() => {
 						width="100px"
 						prepend-icon="mdi-database"
 					>
-						{{ $t("global.basics.data") }}
+						{{ t("global.basics.data") }}
 					</VBtn>
 				</VCol>
 			</VRow>

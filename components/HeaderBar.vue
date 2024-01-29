@@ -1,14 +1,9 @@
 <script setup lang="ts">
-import { useI18n } from "vue-i18n";
 
-const Locale = useI18n().locale;
 const localePath = useLocalePath();
 
 const logo = getHeaderLogo();
 const APIBase = useRuntimeConfig().public.APIBase;
-onBeforeMount(() => {
-	Locale.value = localStorage.getItem(selectedLocaleLocalStorageKey) ?? Locale.value;
-});
 </script>
 
 <template>

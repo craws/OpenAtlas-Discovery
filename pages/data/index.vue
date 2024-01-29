@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { ComputedRef } from "vue";
-import { useI18n } from "vue-i18n";
 
 import classes from "@/assets/classes.json";
 import headers from "@/assets/tableheaders.json";
@@ -58,7 +57,7 @@ function updateQuery(newQuery: Query) {
 				<template #features[0].systemClass="{ value }">
 					<VTooltip
 						content-class="text-capitalize"
-						:text="$t(`global.entity.system_classes.${value}`)"
+						:text="t(`global.entity.system_classes.${value}`)"
 					>
 						<template #activator="{ props }">
 							<VIcon v-bind="props">

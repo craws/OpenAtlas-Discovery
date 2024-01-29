@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { QueryBuilderParams } from "@nuxt/content/dist/runtime/types";
-import { useI18n } from "vue-i18n";
 
 const Locale = useI18n().locale;
 

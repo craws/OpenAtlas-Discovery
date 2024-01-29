@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { GeoJsonObject } from "geojson";
-import { useI18n } from "vue-i18n";
 
 import { discoveryConfig } from "@/config/discoveryConfig";
 import type { LinkedPlacesModelDescriptions, LinkedPlacesModelWhen } from "@/composables/api";
@@ -110,7 +109,7 @@ function updateQuery(newQuery: Query) {
 				/>
 				<VCardActions>
 					<VBtn :to="localePath(`/entity/${featureContent.id}`)" variant="text">
-						{{ $t("global.basics.more details") }}
+						{{ t("global.basics.more details") }}
 					</VBtn>
 				</VCardActions>
 			</VCard>
