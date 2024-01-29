@@ -1,6 +1,6 @@
 <script lang="ts" setup>
-import type { LinkedPlacesDepiction } from "~~/composables/api";
-import type { SizeBounds } from "~~/types/layouts";
+import type { LinkedPlacesDepiction } from "@/composables/api";
+import type { SizeBounds } from "@/types/layouts";
 
 export interface EntityImageContainerProps {
 	depictions: Array<LinkedPlacesDepiction>;

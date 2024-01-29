@@ -5,8 +5,8 @@ import type {
 	LinkedPlacesDepiction,
 	Point,
 	Polygon,
-} from "~~/composables/api";
-import type { DetailTab } from "~~/types/entityDetailTypes";
+} from "@/composables/api";
+import type { DetailTab } from "@/types/entityDetailTypes";
 
 import type { EntityImageContainerProps } from "./ImageContainer.vue";
 import type { EntityMapContainerProps } from "./MapContainer.vue";

@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import type { GeoJsonObject } from "geojson";
 
-import type { GeometryCollection, LineString, Point, Polygon } from "~~/composables/api";
-import type { SizeBounds } from "~~/types/layouts";
+import type { GeometryCollection, LineString, Point, Polygon } from "@/composables/api";
+import type { SizeBounds } from "@/types/layouts";
 
 export interface EntityMapContainerProps {
 	geoData: GeometryCollection | LineString | Point | Polygon;

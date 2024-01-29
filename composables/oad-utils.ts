@@ -1,4 +1,4 @@
-import { discoveryConfig } from "~/config/discoveryConfig";
+import { discoveryConfig } from "@/config/discoveryConfig";
 
 export const useSafeRead = function (obj: Object, index: string): string | undefined {
 	const indizes = index.split(/[.[\]"']/).filter((x) => x !== "");

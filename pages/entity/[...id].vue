@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
 
-import type { relationGroup } from "~~/types/entityDetailTypes";
+import type { relationGroup } from "@/types/entityDetailTypes";
 
-const { $api } = useNuxtApp();
 const route = useRoute();
 const { t } = useI18n();
 

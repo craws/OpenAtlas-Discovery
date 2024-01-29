@@ -7,6 +7,8 @@ import type { LinkedPlacesModelDescriptions, LinkedPlacesModelWhen } from "~~/co
 import type { Format, Query, ViewClasses } from "~~/types/query";
 
 const { $api } = useNuxtApp();
+import type { LinkedPlacesModelDescriptions, LinkedPlacesModelWhen } from "@/composables/api";
+import type { Format, Query, ViewClasses } from "@/types/query";
 
 const localePath = useLocalePath();
 const { t } = useI18n();

@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { useI18n } from "vue-i18n";
 
-import type { LinkedPlacesModelWhen } from "~~/composables/api";
+import type { LinkedPlacesModelWhen } from "@/composables/api";
 
 import classes from "../../assets/classes.json";
 

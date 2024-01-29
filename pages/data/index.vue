@@ -2,10 +2,10 @@
 import type { ComputedRef } from "vue";
 import { useI18n } from "vue-i18n";
 
-import classes from "~/assets/classes.json";
-import headers from "~/assets/tableheaders.json";
-import { discoveryConfig } from "~/config/discoveryConfig";
-import type { Query } from "~~/types/query";
+import classes from "@/assets/classes.json";
+import headers from "@/assets/tableheaders.json";
+import { discoveryConfig } from "@/config/discoveryConfig";
+import type { Query } from "@/types/query";
 
 const { t } = useI18n();
 const { $api } = useNuxtApp();
