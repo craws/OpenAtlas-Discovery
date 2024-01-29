@@ -15,7 +15,7 @@ dependencies:
     specifier: 2.8.2
     version: 2.8.2(rollup@4.9.6)(vue@3.4.15)
   '@nuxt/image':
-    specifier: ^1.1.0
+    specifier: ^1.3.0
     version: 1.3.0(rollup@4.9.6)
   '@nuxtjs/i18n':
     specifier: ^8.0.0-rc.8
