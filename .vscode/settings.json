@@ -4,7 +4,7 @@
 	"i18n-ally.keystyle": "nested",
 	"prettier.requireConfig": true,
 	"editor.codeActionsOnSave": {
-		"source.fixAll.eslint": true
+		"source.fixAll.eslint": "explicit"
 	},
 	"cSpell.words": ["Cidoc", "nuxt"],
 	"editor.defaultFormatter": "esbenp.prettier-vscode",

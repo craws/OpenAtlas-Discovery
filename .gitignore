@@ -32,7 +32,3 @@ dist
 /test-results/
 /playwright-report/
 /playwright/.cache/
-
-# cypress
-/cypress/videos/
-/cypress/screenshots/

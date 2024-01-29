@@ -50,9 +50,9 @@ function updateQuery(newQuery: Query) {
 }
 </script>
 
-<template>
+<template id="data-table">
 	<ClientOnly>
-		<VContainer data-test="data-page-container">
+		<VContainer id="data-table-container">
 			<SearchField :loading="pending" @search="updateQuery" />
 			<DataTable
 				class="mt-10"

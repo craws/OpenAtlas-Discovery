@@ -92,6 +92,15 @@ Start the development server on http://localhost:3000
 npm run dev
 ```
 
+Mock the CMS OAuth locally by running the following command:
+
+```bash
+npm run dev:cms
+```
+
+Further, at the moment the enviroment variables under '# CMS' are required to be set. Though you can
+use dummy values and don't have to use real ones.
+
 ## Production
 
 To build the application for production run:
@@ -125,14 +134,8 @@ To test the frontend we use Cypress to run E2E tests.
    2. Run all the specs directly with `npm run cy:run`. This will run through all the tests and
       output the results in the console. If you run `npm run cy:run-record` cypress will also record
       videos of the tests and save them under `cypress/videos`.
-
-### Developing with and for Cypress
-
-- To enable tests to run properly even when changing component we should use selectors that are
-  prone to stay the same. Therefore we should follow the
-  [Best Practice](https://docs.cypress.io/guides/references/best-practices#Selecting-Elements) and
-  add a `data-test` attribute to elements we intend to test.
-
+### Developing with and for Playwright
+TO-DO
 # Licensing
 
 All code unless otherwise noted is licensed under the terms of the MIT License (MIT). Please refer

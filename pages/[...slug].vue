@@ -4,7 +4,7 @@ const localePath = useLocalePath();
 
 <template>
 	<VSheet height="calc(100vh - 65px)" class="d-flex justify-center pt-5">
-		<VContainer class="text-center" data-test="main-content-renderer">
+		<VContainer class="text-center">
 			<ContentDoc>
 				<template #not-found>
 					<h1>Document not found</h1>
