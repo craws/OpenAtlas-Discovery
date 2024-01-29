@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useI18n } from "vue-i18n";
+import { client } from '@/utils/api-client'
 
 import type { relationGroup } from "@/types/entityDetailTypes";
 
@@ -9,7 +10,7 @@ const { t } = useI18n();
 const entityID = Number(route.params.id);
 const wasMounted = ref(false);
 
-const { data, pending, refresh } = await useAsyncData(() => $api.entity.getEntity(entityID));
+const { data, pending, refresh } = await useAsyncData(() => client.entity.getEntity(entityID));
 
 // Entity Variables
 
