@@ -83,7 +83,7 @@ function updateQuery(newQuery: Query) {
 </script>
 
 <template>
-	<div data-test="map-page-container">
+	<div>
 		<div style="position: relative; overflow: hidden">
 			<SearchField class="search" :loading="pending" @search="updateQuery" />
 			<VCard
