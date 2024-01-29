@@ -5,9 +5,9 @@
 	"type": "module",
 	"engines": {
 		"node": "20.x",
-		"npm": "10.x"
+		"pnpm": "8.x"
 	},
-	"packageManager": "npm@10.2.3",
+	"packageManager": "pnpm@8.15.0",
 	"scripts": {
 		"build": "nuxt build --dotenv .env.local",
 		"build-and-test": "run-s build test",
