@@ -45,7 +45,6 @@ const contentToUse = computed(() => {
 				<VCol cols="auto">
 					<VBtn
 						size="large"
-						role="button"
 						:to="localePath('/map')"
 						min-width="150px"
 						color="primary"
@@ -58,7 +57,6 @@ const contentToUse = computed(() => {
 				<VCol cols="auto">
 					<VBtn
 						size="large"
-						role="button"
 						:to="localePath('/data')"
 						min-width="150px"
 						variant="outlined"

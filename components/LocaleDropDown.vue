@@ -12,7 +12,6 @@ const availableLocales = computed(() => {
 <template>
 	<VBtn
 		id="locale-selector-button-activator"
-		role="button"
 		class="h-100 d-flex align-center justify-center px-2 text-grey"
 	>
 		<VIcon>mdi-translate</VIcon>

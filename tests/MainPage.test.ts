@@ -12,8 +12,8 @@ test.describe("locale is de", () => {
 		test("has main elements", async ({ page }) => {
 			await page.goto(path);
 			await expect(page.locator("#content-renderer-container")).toBeVisible();
-			await expect(page.getByRole("button", { name: "Karte" })).toBeVisible();
-			await expect(page.getByRole("button", { name: "Daten" })).toBeVisible();
+			await expect(page.locator('#content-renderer-container').getByRole('link', { name: 'Karte' })).toBeVisible();
+			await expect(page.locator('#content-renderer-container').getByRole('link', { name: 'Daten' })).toBeVisible();
 		});
 	});
 
@@ -36,8 +36,8 @@ test.describe("locale is en", () => {
 		test("has main elements", async ({ page }) => {
 			await page.goto(path);
 			await expect(page.locator("#content-renderer-container")).toBeVisible();
-			await expect(page.getByRole("button", { name: "map" })).toBeVisible();
-			await expect(page.getByRole("button", { name: "data" })).toBeVisible();
+			await expect(page.locator('#content-renderer-container').getByRole('link', { name: 'map' })).toBeVisible();
+			await expect(page.locator('#content-renderer-container').getByRole('link', { name: 'data' })).toBeVisible();
 		});
 	});
 

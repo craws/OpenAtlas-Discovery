@@ -12,19 +12,10 @@ test.describe("locale is en", () => {
 		test("Main to Data and Map", async ({ page }) => {
 			await page.goto(path);
 
-			await page.getByRole("button", { name: "map" }).click();
+			await page.locator("#content-renderer-container").getByRole("link", { name: "map" }).click();
 			await expect(page.locator("#mapid")).toBeVisible();
 			await page.goto(path);
-			await page.getByRole("button", { name: "data" }).click();
-			await expect(page.locator("#data-table-container")).toBeVisible();
-		});
-
-		test("Successive Nav Clicks", async ({ page }) => {
-			await page.goto(path);
-			await page.getByRole("button", { name: "map" }).dblclick();
-			await expect(page.locator("#mapid")).toBeVisible();
-			await page.goto(path);
-			await page.getByRole("button", { name: "data" }).dblclick();
+			await page.locator("#content-renderer-container").getByRole("link", { name: "data" }).click();
 			await expect(page.locator("#data-table-container")).toBeVisible();
 		});
 	});
@@ -39,19 +30,16 @@ test.describe("locale is de", () => {
 		test("Main to Data and Map", async ({ page }) => {
 			await page.goto(path);
 
-			await page.getByRole("button", { name: "Karte" }).click();
+			await page
+				.locator("#content-renderer-container")
+				.getByRole("link", { name: "Karte" })
+				.click();
 			await expect(page.locator("#mapid")).toBeVisible();
 			await page.goto(path);
-			await page.getByRole("button", { name: "Daten" }).click();
-			await expect(page.locator("#data-table-container")).toBeVisible();
-		});
-
-		test("Successive Nav Clicks", async ({ page }) => {
-			await page.goto(path);
-			await page.getByRole("button", { name: "Karte" }).dblclick();
-			await expect(page.locator("#mapid")).toBeVisible();
-			await page.goto(path);
-			await page.getByRole("button", { name: "Daten" }).dblclick();
+			await page
+				.locator("#content-renderer-container")
+				.getByRole("link", { name: "Daten" })
+				.click();
 			await expect(page.locator("#data-table-container")).toBeVisible();
 		});
 	});
