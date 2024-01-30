@@ -7,15 +7,14 @@
 		"node": "20.x",
 		"pnpm": "8.x"
 	},
-	"packageManager": "pnpm@8.15.0",
+	"packageManager": "pnpm@8.15.1",
 	"scripts": {
-		"build": "nuxt build --dotenv .env.local",
-		"build-and-test": "run-s build test",
-		"dev": "nuxt dev --dotenv .env.local",
+		"analyze": "nuxt analyze",
+		"build": "nuxt build --dotenv ./.env.local",
+		"dev": "nuxt dev --dotenv ./.env.local",
 		"dev:cms": "decap-server",
-		"format:check": "prettier . --cache --check --ignore-path ./.gitignore",
+		"format:check": "prettier . \"!./content/**\" --cache --check --ignore-path ./.gitignore",
 		"format:fix": "pnpm run format:check --write",
-		"generate": "pnpm run build --prerender",
 		"lint:check": "run-p --continue-on-error \"lint:*:check\"",
 		"lint:fix": "run-p --continue-on-error \"lint:*:fix\"",
 		"lint:code:check": "eslint . --cache --ext .js,.ts,.vue --ignore-path ./.gitignore",
@@ -23,52 +22,71 @@
 		"lint:styles:check": "stylelint \"./**/*.@(css|vue)\" --cache --ignore-path ./.gitignore",
 		"lint:styles:fix": "pnpm run lint:styles:check --fix",
 		"postinstall": "nuxt prepare",
+		"preinstall": "npx only-allow pnpm",
 		"prepare": "run-s setup",
 		"setup": "is-ci || simple-git-hooks",
-		"start": "nuxt start --dotenv .env.local",
-		"test:install_browsers": "playwright install",
+		"start": "nuxt preview --dotenv ./.env.local",
+		"test": "run-s test:install-browsers test:e2e",
 		"test:e2e": "playwright test",
-		"test": "run-s test:install_browsers test:e2e",
-		"types:check": "nuxt typecheck"
+		"test:e2e:codegen": "playwright codegen",
+		"test:e2e:ui": "playwright test --ui",
+		"test:install-browsers": "playwright install",
+		"types:check": "nuxt typecheck",
+		"validate": "run-p format:check lint:check types:check test test:e2e"
 	},
 	"dependencies": {
-		"@acdh-oeaw/lib": "^0.1.6",
-		"@mdi/font": "^7.3.67",
+		"@acdh-oeaw/lib": "^0.1.7",
+		"@mdi/font": "^7.4.47",
 		"@nuxt/content": "^2.11.0",
 		"@nuxt/image": "^1.3.0",
 		"@nuxtjs/i18n": "^8.0.0",
-		"@stefanprobst/netlify-cms-oauth-client": "^0.2.0",
+		"@stefanprobst/netlify-cms-oauth-client": "^0.4.0",
 		"ci-info": "^4.0.0",
 		"is-ci": "^3.0.1",
 		"leaflet": "^1.9.4",
 		"npm-run-all2": "^6.1.1",
 		"nuxt": "^3.9.3",
 		"simple-git-hooks": "^2.9.0",
-		"vuetify-nuxt-module": "0.5.12",
+		"vue": "^3.4.15",
+		"vue-router": "^4.2.5",
+		"vuetify-nuxt-module": "0.10.3",
 		"zod": "^3.22.4"
 	},
 	"devDependencies": {
 		"@acdh-oeaw/eslint-config": "^1.0.5",
 		"@acdh-oeaw/eslint-config-nuxt": "^1.0.11",
 		"@acdh-oeaw/eslint-config-vue": "^1.0.10",
-		"@acdh-oeaw/prettier-config": "^1.0.1",
-		"@acdh-oeaw/stylelint-config": "^1.0.7",
-		"@acdh-oeaw/tsconfig": "^1.0.1",
+		"@acdh-oeaw/prettier-config": "^2.0.0",
+		"@acdh-oeaw/stylelint-config": "^2.0.1",
+		"@acdh-oeaw/tsconfig": "^1.0.2",
 		"@playwright/test": "^1.41.1",
 		"@types/geojson": "^7946.0.13",
 		"@types/leaflet": "^1.9.8",
-		"@types/node": "^20.10.4",
+		"@types/node": "^20.11.10",
 		"decap-server": "^3.0.1",
-		"dotenv": "^16.3.1",
+		"dotenv": "^16.4.1",
+		"dotenv-cli": "^7.3.0",
 		"dotenv-expand": "^10.0.0",
-		"eslint": "^8.55.0",
+		"eslint": "^8.56.0",
 		"lint-staged": "^15.2.0",
 		"nuxi": "^3.10.0",
-		"prettier": "^3.1.0",
-		"sass": "^1.60.0",
-		"stylelint": "^15.11.0",
+		"prettier": "^3.2.4",
+		"sass": "^1.70.0",
+		"stylelint": "^16.2.0",
 		"typescript": "^5.3.3",
-		"vue-tsc": "^1.8.25"
+		"vue-tsc": "^1.8.27"
+	},
+	"browserslist": {
+		"development": [
+			"last 1 chrome version",
+			"last 1 firefox version",
+			"last 1 safari version"
+		],
+		"production": [
+			">=0.75%",
+			"not dead",
+			"not op_mini all"
+		]
 	},
 	"eslintConfig": {
 		"extends": [
@@ -100,7 +118,7 @@
 			"stylelint --cache --fix",
 			"prettier --cache --write"
 		],
-		"*.!(css|js|ts|vue)": "prettier --cache --ignore-unknown --write"
+		"*.!(css|js|ts|vue),!./content/**": "prettier --cache --ignore-unknown --write"
 	},
 	"prettier": "@acdh-oeaw/prettier-config",
 	"simple-git-hooks": {

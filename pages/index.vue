@@ -6,9 +6,9 @@ const localePath = useLocalePath();
 
 const APIBase = useRuntimeConfig().public.APIBase;
 const { smAndUp } = useDisplay();
-const t = useI18n();
+const { t, availableLocales, locale, fallbackLocale } = useI18n();
 const data = reactive<Record<string, ParsedContent>>({});
-t.availableLocales.forEach(async (locale) => {
+availableLocales.forEach(async (locale) => {
 	let content = null;
 	try {
 		content = await queryContent(`/${locale}`).findOne();
@@ -24,11 +24,11 @@ t.availableLocales.forEach(async (locale) => {
 const logoHeight = computed(() => (smAndUp.value ? "350px" : "250px"));
 
 const contentToUse = computed(() => {
-	if (data[t.locale.value]) {
-		return data[t.locale.value];
+	if (data[locale.value]) {
+		return data[locale.value];
 	}
-	if (typeof t.fallbackLocale.value === "string" && data[t.fallbackLocale.value]) {
-		return data[t.fallbackLocale.value];
+	if (typeof fallbackLocale.value === "string" && data[fallbackLocale.value]) {
+		return data[fallbackLocale.value];
 	}
 	return null;
 });
