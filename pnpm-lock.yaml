@@ -23,6 +23,9 @@ dependencies:
   '@stefanprobst/netlify-cms-oauth-client':
     specifier: ^0.2.0
     version: 0.2.0
+  ci-info:
+    specifier: ^4.0.0
+    version: 4.0.0
   is-ci:
     specifier: ^3.0.1
     version: 3.0.1
