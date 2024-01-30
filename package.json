@@ -14,14 +14,14 @@
 		"dev": "nuxt dev --dotenv .env.local",
 		"dev:cms": "decap-server",
 		"format:check": "prettier . --cache --check --ignore-path ./.gitignore",
-		"format:fix": "npm run format:check -- --write",
-		"generate": "npm run build -- --prerender",
+		"format:fix": "pnpm run format:check --write",
+		"generate": "pnpm run build --prerender",
 		"lint:check": "run-p --continue-on-error \"lint:*:check\"",
 		"lint:fix": "run-p --continue-on-error \"lint:*:fix\"",
 		"lint:code:check": "eslint . --cache --ext .js,.ts,.vue --ignore-path ./.gitignore",
-		"lint:code:fix": "npm run lint:code:check -- --fix",
+		"lint:code:fix": "pnpm run lint:code:check --fix",
 		"lint:styles:check": "stylelint \"./**/*.@(css|vue)\" --cache --ignore-path ./.gitignore",
-		"lint:styles:fix": "npm run lint:styles:check -- --fix",
+		"lint:styles:fix": "pnpm run lint:styles:check --fix",
 		"postinstall": "nuxt prepare",
 		"prepare": "run-s setup",
 		"setup": "is-ci || simple-git-hooks",
@@ -103,7 +103,7 @@
 	},
 	"prettier": "@acdh-oeaw/prettier-config",
 	"simple-git-hooks": {
-		"pre-commit": "npx lint-staged"
+		"pre-commit": "pnpm exec lint-staged"
 	},
 	"stylelint": {
 		"extends": "@acdh-oeaw/stylelint-config",
