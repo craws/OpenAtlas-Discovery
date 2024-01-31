@@ -1,0 +1,133 @@
+{
+	"AppFooter": {
+		"links": {
+			"imprint": "Imprint"
+		},
+		"navigation-secondary": "Secondary",
+		"with-love": "With {0} from {1}"
+	},
+	"AppHeader": {
+		"links": {
+			"home": "Home",
+			"data": "Data",
+			"map": "Map"
+		},
+		"navigation-main": "Main",
+		"navigation-menu": "Navigation menu"
+	},
+	"ColorSchemeSwitcher": {
+		"change-color-scheme": "Change color scheme",
+		"color-schemes": {
+			"dark": "Dark",
+			"light": "Light",
+			"system": "System"
+		}
+	},
+	"ContentPage": {
+		"error": {
+			"not-found": "Document not found",
+			"unknown": "Failed to display document"
+		},
+		"meta": {
+			"title": "Content"
+		}
+	},
+	"DataPage": {
+		"meta": {
+			"title": "Data"
+		},
+		"nothing-found": "Nothing found",
+		"search": "Search",
+		"title": "Data",
+		"work-in-progress": "The database is currently work in progress."
+	},
+	"DefaultLayout": {
+		"skip-to-main-content": "Skip to main content"
+	},
+	"EntityPage": {
+		"meta": {
+			"title": "Entity"
+		}
+	},
+	"ErrorBoundary": {
+		"error": "Error"
+	},
+	"ErrorPage": {
+		"meta": {
+			"title": "Error"
+		},
+		"title": "Something went wrong!",
+		"try-again": "Try again"
+	},
+	"ImprintPage": {
+		"error": {
+			"not-found": "Imprint not found",
+			"unknown": "Internal Error"
+		},
+		"meta": {
+			"title": "Imprint"
+		},
+		"title": "Imprint"
+	},
+	"IndexPage": {
+		"error": {
+			"not-found": "Page not found",
+			"unknown": "Internal Error"
+		},
+		"meta": {
+			"title": "Home"
+		}
+	},
+	"LocaleSwitcher": {
+		"current-locale": "Current language: {locale}",
+		"switch-locale": "Switch to {locale}"
+	},
+	"MapPage": {
+		"meta": {
+			"title": "Map"
+		},
+		"title": "Map",
+		"work-in-progress": "The database is currently work in progress."
+	},
+	"NotFoundPage": {
+		"meta": {
+			"title": "Page not found"
+		},
+		"title": "Page not found"
+	},
+	"SearchForm": {
+		"filter": "Filter",
+		"filters": {
+			"beginFrom": "Begin from",
+			"beginTo": "Begin to",
+			"endFrom": "End from",
+			"endTo": "End to",
+			"entityAliases": "Alias",
+			"entityCidocClass": "CIDOC class",
+			"entityDescription": "Description",
+			"entityID": "ID",
+			"entityName": "Name",
+			"entitySystemClass": "System class",
+			"relationToID": "Relation to ID",
+			"typeID": "Type ID",
+			"typeIDWithSubs": "Type ID with subs",
+			"typeName": "Type name",
+			"valueTypeID": "Value type ID"
+		},
+		"search": "Search",
+		"select-filter": "Select filter"
+	},
+	"SearchResultsTable": {
+		"header": {
+			"class": "Class",
+			"name": "Name",
+			"description": "Description",
+			"begin": "Begin",
+			"end": "End"
+		},
+		"search-results": "Search results"
+	},
+	"Toast": {
+		"error": "Error"
+	}
+}

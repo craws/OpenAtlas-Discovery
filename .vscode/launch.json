@@ -1,0 +1,25 @@
+{
+	"configurations": [
+		{
+			"cwd": "${workspaceFolder}",
+			"name": "App: Web (server-side)",
+			"request": "launch",
+			"runtimeArgs": ["run", "dev"],
+			"runtimeExecutable": "pnpm",
+			"skipFiles": ["<node_internals>/**"],
+			"type": "node"
+		},
+		{
+			"name": "App: Web (client-side)",
+			"type": "chrome",
+			"request": "launch",
+			"url": "http://localhost:3000"
+		}
+	],
+	"compounds": [
+		{
+			"name": "App: Web",
+			"configurations": ["App: Web (server-side)", "App: Web (client-side)"]
+		}
+	]
+}

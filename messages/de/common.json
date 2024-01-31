@@ -1,0 +1,133 @@
+{
+	"AppFooter": {
+		"links": {
+			"imprint": "Impressum"
+		},
+		"navigation-secondary": "Sekundärnavigation",
+		"with-love": "Mit {0} von {1}"
+	},
+	"AppHeader": {
+		"links": {
+			"home": "Startseite",
+			"data": "Daten",
+			"map": "Karte"
+		},
+		"navigation-main": "Hauptnavigation",
+		"navigation-menu": "Navigationsmenü"
+	},
+	"ColorSchemeSwitcher": {
+		"change-color-scheme": "Farbschema ändern",
+		"color-schemes": {
+			"dark": "Dunkel",
+			"light": "Hell",
+			"system": "System"
+		}
+	},
+	"ContentPage": {
+		"error": {
+			"not-found": "Dokument nicht gefunden",
+			"unknown": "Dokument kann nicht angezeigt werden"
+		},
+		"meta": {
+			"title": "Inhalt"
+		}
+	},
+	"DataPage": {
+		"meta": {
+			"title": "Daten"
+		},
+		"nothing-found": "Nichts gefunden",
+		"search": "Suche",
+		"title": "Daten",
+		"work-in-progress": "Die Datenbank ist derzeit im Aufbau."
+	},
+	"DefaultLayout": {
+		"skip-to-main-content": "Zum Hauptinhalt springen"
+	},
+	"EntityPage": {
+		"meta": {
+			"title": "Entität"
+		}
+	},
+	"ErrorBoundary": {
+		"error": "Fehler"
+	},
+	"ErrorPage": {
+		"meta": {
+			"title": "Fehler"
+		},
+		"title": "Etwas ist schief gelaufen!",
+		"try-again": "Erneut versuchen"
+	},
+	"ImprintPage": {
+		"error": {
+			"not-found": "Impressum nicht gefunden",
+			"unknown": "Interner Fehler"
+		},
+		"meta": {
+			"title": "Impressum"
+		},
+		"title": "Impressum"
+	},
+	"IndexPage": {
+		"error": {
+			"not-found": "Seite nicht gefunden",
+			"unknown": "Interner Fehler"
+		},
+		"meta": {
+			"title": "Startseite"
+		}
+	},
+	"LocaleSwitcher": {
+		"current-locale": "Aktuelle Sprache: {locale}",
+		"switch-locale": "Zu {locale} wechseln"
+	},
+	"MapPage": {
+		"meta": {
+			"title": "Karte"
+		},
+		"title": "Karte",
+		"work-in-progress": "Die Datenbank ist derzeit im Aufbau."
+	},
+	"NotFoundPage": {
+		"meta": {
+			"title": "Seite nicht gefunden"
+		},
+		"title": "Seite nicht gefunden"
+	},
+	"SearchForm": {
+		"filter": "Filter",
+		"filters": {
+			"beginFrom": "Beginn von",
+			"beginTo": "Beginn bis",
+			"endFrom": "Ende von",
+			"endTo": "Ende bis",
+			"entityAliases": "Alias",
+			"entityCidocClass": "CIDOC Klasse",
+			"entityDescription": "Beschreibung",
+			"entityID": "ID",
+			"entityName": "Name",
+			"entitySystemClass": "System Klasse",
+			"relationToID": "Beziehung-ID",
+			"typeID": "Typ-ID",
+			"typeIDWithSubs": "Typ-ID mit Subtypen",
+			"typeName": "Typname",
+			"valueTypeID": "Werttyp-ID"
+		},
+		"search": "Suche",
+		"select-filter": "Filter auswählen"
+	},
+	"SearchResultsTable": {
+		"header": {
+			"class": "Klasse",
+			"name": "Name",
+			"description": "Beschreibung",
+			"begin": "Anfang",
+			"end": "Ende"
+		},
+		"search-results": "Suchergebnisse"
+	},
+	"Toast": {
+		"error": "Fehler"
+	}
+}

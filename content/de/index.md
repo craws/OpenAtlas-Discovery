@@ -1,14 +1,18 @@
 ---
-title: Home
-navigation:
-  title: OpenAtlas Discovery
+title: OpenAtlas Discovery
+navigation: false
+image:
+  light: /assets/images/hero-light.svg
+  dark: /assets/images/hero-dark.svg
+links:
+  - label: Daten anzeigen
+    href: /data
+  - label: Karte anzeigen
+    href: /map
 ---
 
-![logo](/OpenAtlasDiscovery_logo.jpg)
+Das ist ein Prototyp für [OpenAtlas](https://openatlas.eu) Projekte. Demo Daten freundlicherweise
+zur Verfügung gestellt von: _The Ethnonym of the Vlachs in the Written Sources and the Toponymy in
+the Historical Region of Macedonia_ (11th-16th Cent.).
 
-# OpenAtlas Discovery
-
-Das ist ein Prototyp für [OpenAtlas](https://openatlas.eu/){:target="\_blank"} Projekte. Demo Daten
-freundlicherweise zur Verfügung gestellt von: _The Ethnonym of the Vlachs in the Written Sources and
-the Toponymy in the Historical Region of Macedonia_ (11th-16th Cent.)
-[Weitere Informationen](http://dpp.oeaw.ac.at/index.php?seite=CaseStudies&submenu=skopje){:target="\_blank"},
+[Weitere Informationen](http://dpp.oeaw.ac.at/index.php?seite=CaseStudies&submenu=skopje)

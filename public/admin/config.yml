@@ -1,11 +1,12 @@
+site_url: https://openatlas-discovery-new.vercel.app
+logo_url: /icon.svg
 load_config_file: true
 local_backend: true
-logo_url: /OpenAtlasDiscovery_logo.png
 backend:
   name: github
-  repo: acdh-oeaw/openatlas-discovery
-  branch: develop
-  base_url: https://openatlas-discovery-demo.acdh-ch-dev.oeaw.ac.at/
+  repo: stefanprobst/openatlas-discovery-new
+  branch: main
+  base_url: https://openatlas-discovery-new.vercel.app
   auth_endpoint: /api/oauth/authorize
   auth_scope: repo
   squash_merges: true
@@ -16,8 +17,8 @@ backend:
     uploadMedia: "content(upload): '{{path}}'"
     deleteMedia: "content(delete): '{{path}}'"
 # publish_mode: editorial_workflow
-media_folder: public/
-public_folder: /
+media_folder: public/assets/images
+public_folder: /assets/images
 editor:
   preview: false
 i18n:
@@ -33,18 +34,34 @@ collections:
     files:
       - name: project_config
         label: Project config
-        file: config/discoveryConfig.json
+        file: project.config.json
         fields:
           - name: colors
             label: Colors
             hint: Colors
             widget: object
             fields:
-              - name: primaryColor
-                label: Primary
-                hint: Primary color
+              - name: accent
+                label: Accent
+                hint: Accent color
                 widget: color
                 allowInput: true
+
+              - name: geojson
+                label: GeoJSON features
+                hint: GeoJSON feaures color
+                widget: color
+                allowInput: true
+
+          - name: defaultFilters
+            label: Default filters
+            label_singular: Default filter
+            hint: Default filters
+            widget: list
+            fields:
+              - name: id
+                label: ID
+                widget: number
 
           - name: defaultLocale
             label: Default locale
@@ -56,16 +73,86 @@ collections:
               - value: de
                 label: German
 
-          - name: logo
-            label: Logo
-            hint: Logo
-            widget: image
+          - name: logos
+            label: Logos
+            hint: Logos
+            widget: object
+            fields:
+              - name: light
+                label: Logo (light mode)
+                hint: Logo in light mode
+                widget: image
 
-          - name: acdhImprint
-            label: Imprint-Service of the Austrian Academy of Sciences
-            hint: Imprint-Service
-            widget: boolean
-            default: false
+              - name: dark
+                label: Logo (dark mode)
+                hint: Logo in dark mode
+                widget: image
+
+              - name: withTextLight
+                label: Logo with text (light mode)
+                hint: Logo with text in light mode
+                widget: image
+
+              - name: withTextDark
+                label: Logo with text (dark mode)
+                hint: Logo with text in dark mode
+                widget: image
+
+          - name: imprint
+            label: Imprint
+            hint: Imprint page
+            widget: select
+            options:
+              - name: none
+                label: No imprint
+              - name: custom
+                label: Use custom imprint page
+              - name: acdh-ch
+                label: Use ACDH-CH imprint
+
+          - name: twitter
+            label: Twitter
+            required: false
+
+  - name: metadata
+    label: Metadata
+    # description: Metadata
+    i18n: true
+    # currently file collections only support the "single_file" i18n structure,
+    # so we create a folder collection with a single entry, and disallow creating
+    # new entries.
+    folder: messages
+    format: json
+    create: false
+    delete: false
+    summary: Project metadata
+    filter:
+      field: __cms__
+      value: true
+    fields:
+      - name: __cms__
+        widget: hidden
+
+      - name: Metadata
+        label: Metadata
+        i18n: true
+        hint: Metadata
+        widget: object
+        fields:
+          - name: name
+            label: Title
+            i18n: true
+            hint: The website title
+
+          - name: shortName
+            label: Title
+            i18n: true
+            hint: The website short title
+
+          - name: description
+            label: Description
+            i18n: true
+            hint: The website description
 
   - name: pages
     label: Pages
@@ -80,20 +167,56 @@ collections:
     # meta: { path: { widget: string, label: 'Path', index_file: 'index' } }
     fields:
       - name: title
-        label: Page Name
+        label: Title
         i18n: true
-        hint: The name of the page (shown in the URL)
+        hint: The title
 
       - name: navigation
-        label: Navigation title
+        label: Navigation
         i18n: true
-        hint: The navigation title
+        hint: The navigation
         widget: object
         fields:
           - name: title
             label: Title
             i18n: true
             hint: The navigation title
+
+      - name: image
+        label: Hero image
+        i18n: true
+        hint: Hero image
+        widget: object
+        required: false
+        fields:
+          - name: light
+            label: Hero image (light mode)
+            i18n: true
+            hint: Hero image (light mode)
+            widget: image
+
+          - name: dark
+            label: Hero image (dark mode)
+            i18n: true
+            hint: Hero image (dark mode)
+            widget: image
+
+      - name: links
+        label: Links
+        i18n: true
+        hint: Call to action links
+        widget: list
+        required: false
+        fields:
+          - name: label
+            label: label
+            i18n: true
+            hint: The link label
+
+          - name: href
+            label: URL
+            i18n: duplicate
+            hint: The pathname, e.g. "/about"
 
       - name: body
         label: Content
@@ -102,4 +225,4 @@ collections:
         widget: markdown
         modes:
           - raw
-          - rich_text
+          # - rich_text

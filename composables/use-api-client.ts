@@ -1,14 +1,11 @@
-import { Api } from "@/composables/api";
+import createApiClient from "@stefanprobst/openapi-client";
 
-let client: Api<unknown> | null = null;
+import type { paths } from "@/lib/api-client/api";
 
 export function useApiClient() {
 	const env = useRuntimeConfig();
-	const baseUrl = env.public.APIBase;
-
-	if (!client) {
-		client = new Api({ baseUrl });
-	}
+	const baseUrl = env.public.NUXT_PUBLIC_API_BASE_URL;
+	const client = createApiClient<paths>({ baseUrl });
 
 	return client;
 }

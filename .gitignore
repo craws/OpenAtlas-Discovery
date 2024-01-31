@@ -8,7 +8,6 @@ node_modules/
 # non-public environment variables
 .env.local
 .env.*.local
-.env
 
 # caches
 .eslintcache
@@ -29,6 +28,10 @@ dist
 .output/
 
 # playwright
-/test-results/
-/playwright-report/
+/blob-report/
 /playwright/.cache/
+/playwright-report/
+/test-results/
+
+# generated api-client
+/lib/api-client/api.ts

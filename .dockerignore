@@ -1,0 +1,65 @@
+## .gitignore ##
+
+# dependencies
+node_modules/
+.pnpm-store/
+
+# logs
+*.log
+
+# non-public environment variables
+.env.local
+.env.*.local
+
+# caches
+.eslintcache
+.stylelintcache
+*.tsbuildinfo
+
+# vercel
+.vercel
+
+# misc
+.DS_Store
+.idea/
+
+# nuxt.js
+dist
+.nuxt/
+.nitro/
+.output/
+
+# playwright
+/blob-report/
+/playwright/.cache/
+/playwright-report/
+/test-results/
+
+# generated api-client
+/lib/api-client/api.ts
+
+
+## .dockerignore ##
+
+# git
+.git/
+.gitattributes
+.gitignore
+
+# github
+.github/
+
+# vscode settings
+.vscode/
+
+# environment variables
+.env
+.env.*
+
+# tests
+playwright.config.ts
+/e2e/
+/test/
+
+# misc
+.editorconfig
