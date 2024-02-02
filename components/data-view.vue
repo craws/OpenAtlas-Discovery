@@ -44,7 +44,7 @@ function onUpdatePage(page: number) {
 	setSearchFilters({ ...searchFilters.value, page });
 }
 
-const { data, isPending, isPlaceholderData } = useGetSearchResults(
+const { data, error, isPending, isPlaceholderData, suspense } = useGetSearchResults(
 	computed(() => {
 		const { search, category, ...params } = searchFilters.value;
 

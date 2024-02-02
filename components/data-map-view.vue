@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import type { FeatureCollection } from "geojson";
+import type { MapGeoJSONFeature } from "maplibre-gl";
 import { z } from "zod";
 
 import type { SearchFormData } from "@/components/search-form.vue";
-import type { Entity } from "@/composables/use-create-entity";
+import type { EntityFeature } from "@/composables/use-create-entity";
 import { categories } from "@/composables/use-get-search-results";
 import { project } from "@/config/project.config";
 
@@ -29,7 +29,7 @@ function onChangeSearchFilters(values: SearchFormData) {
 	setSearchFilters(values);
 }
 
-const { data, isPending, isPlaceholderData } = useGetSearchResults(
+const { data, error, isPending, isPlaceholderData, suspense } = useGetSearchResults(
 	computed(() => {
 		const { search, category, ...params } = searchFilters.value;
 
@@ -50,21 +50,15 @@ const isLoading = computed(() => {
 	return isPending.value || isPlaceholderData.value;
 });
 
-const geojson = computed(() => {
-	const features =
+const entities = computed(() => {
+	return (
 		data.value?.results.flatMap((result) => {
 			return result.features;
-		}) ?? [];
-
-	const collection: FeatureCollection = {
-		type: "FeatureCollection",
-		features,
-	};
-
-	return collection;
+		}) ?? []
+	);
 });
 
-function onLayerClick(_features: Array<Entity>) {
+function onLayerClick(_features: Array<MapGeoJSONFeature & Pick<EntityFeature, "properties">>) {
 	// TODO:
 }
 </script>
@@ -83,7 +77,7 @@ function onLayerClick(_features: Array<Entity>) {
 		>
 			<GeoMap
 				v-if="height && width"
-				:geojson="geojson"
+				:entities="entities"
 				:height="height"
 				:width="width"
 				@layer-click="onLayerClick"

@@ -3,7 +3,6 @@ import { createUrl } from "@acdh-oeaw/lib";
 import type { LinkedPlace, LinkedPlaceFeature } from "@/types/api";
 
 export interface EntityFeature extends LinkedPlaceFeature {
-	geometry: LinkedPlaceFeature["geometry"];
 	properties: LinkedPlaceFeature["properties"] & { _id: string };
 }
 

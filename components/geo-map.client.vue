@@ -3,28 +3,31 @@ import "maplibre-gl/dist/maplibre-gl.css";
 
 import { assert } from "@acdh-oeaw/lib";
 import * as turf from "@turf/turf";
-import type { FeatureCollection } from "geojson";
 import {
 	FullscreenControl,
 	type GeoJSONSource,
 	Map as GeoMap,
+	type MapGeoJSONFeature,
 	NavigationControl,
 	ScaleControl,
 } from "maplibre-gl";
 
 import { type GeoMapContext, geoMapContextKey } from "@/components/geo-map.context";
-import type { Entity } from "@/composables/use-create-entity";
+import type { EntityFeature } from "@/composables/use-create-entity";
 import { initialViewState } from "@/config/geo-map.config";
 import { project } from "@/config/project.config";
 
 const props = defineProps<{
-	geojson: FeatureCollection;
+	entities: Array<EntityFeature>;
 	height: number;
 	width: number;
 }>();
 
 const emit = defineEmits<{
-	(event: "layer-click", features: Array<Entity>): void;
+	(
+		event: "layer-click",
+		features: Array<MapGeoJSONFeature & Pick<EntityFeature, "properties">>,
+	): void;
 }>();
 
 const env = useRuntimeConfig();
@@ -48,6 +51,10 @@ const context: GeoMapContext = {
 
 onMounted(create);
 onScopeDispose(dispose);
+
+function createFeatureCollection(features: Array<EntityFeature>) {
+	return { type: "FeatureCollection" as const, features };
+}
 
 async function create() {
 	await nextTick();
@@ -88,7 +95,7 @@ function init() {
 	//
 
 	const sourceId = "data";
-	map.addSource(sourceId, { type: "geojson", data: { type: "FeatureCollection", features: [] } });
+	map.addSource(sourceId, { type: "geojson", data: createFeatureCollection([]) });
 
 	//
 
@@ -119,11 +126,17 @@ function init() {
 	//
 
 	map.on("click", "points", (event) => {
-		emit("layer-click", event.features as unknown as Array<Entity>);
+		emit(
+			"layer-click",
+			(event.features ?? []) as Array<MapGeoJSONFeature & Pick<EntityFeature, "properties">>,
+		);
 	});
 
 	map.on("click", "polygon", (event) => {
-		emit("layer-click", event.features as unknown as Array<Entity>);
+		emit(
+			"layer-click",
+			(event.features ?? []) as Array<MapGeoJSONFeature & Pick<EntityFeature, "properties">>,
+		);
 	});
 
 	//
@@ -148,6 +161,17 @@ function init() {
 
 	//
 
+	map.on("sourcedata", () => {
+		const geojson = createFeatureCollection(props.entities);
+
+		if (geojson.features.length > 0) {
+			const bounds = turf.bbox(geojson);
+			map.fitBounds(bounds, { padding: 20 });
+		}
+	});
+
+	//
+
 	update();
 }
 
@@ -156,7 +180,7 @@ function dispose() {
 }
 
 watch(() => {
-	return props.geojson;
+	return props.entities;
 }, update);
 
 function update() {
@@ -165,12 +189,7 @@ function update() {
 
 	const sourceId = "data";
 	const source = map.getSource(sourceId) as GeoJSONSource | undefined;
-	source?.setData(props.geojson);
-
-	if (props.geojson.features.length > 0) {
-		const bounds = turf.bbox(props.geojson);
-		map.fitBounds(bounds, { padding: 20 });
-	}
+	source?.setData(createFeatureCollection(props.entities));
 }
 
 defineExpose(context);

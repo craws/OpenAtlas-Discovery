@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import type { FeatureCollection } from "geojson";
 import { z } from "zod";
 
 // defineRouteRules({
@@ -38,15 +37,8 @@ const entity = computed(() => {
 	return data.value?.features[0];
 });
 
-const geojson = computed(() => {
-	const features = data.value?.features ?? [];
-
-	const collection: FeatureCollection = {
-		type: "FeatureCollection",
-		features,
-	};
-
-	return collection;
+const entities = computed(() => {
+	return data.value?.features ?? [];
 });
 
 useHead({
@@ -72,7 +64,7 @@ useHead({
 		<VisualisationContainer v-slot="{ height, width }">
 			<GeoMap
 				v-if="entity != null && height && width"
-				:geojson="geojson"
+				:entities="entities"
 				:height="height"
 				:width="width"
 			/>
