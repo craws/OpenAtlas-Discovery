@@ -39,6 +39,6 @@ onServerPrefetch(async () => {
 
 <template>
 	<!-- eslint-disable vue/no-v-html -->
-	<div v-if="imprint" class="prose dark:prose-invert max-w-3xl" v-html="imprint" />
+	<div v-if="imprint" class="prose max-w-3xl dark:prose-invert" v-html="imprint" />
 	<!-- eslint-enable vue/no-v-html -->
 </template>

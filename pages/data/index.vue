@@ -9,7 +9,7 @@ const env = useRuntimeConfig();
 </script>
 
 <template>
-	<MainContent class="grid container grid-rows-[auto_1fr] py-8">
+	<MainContent class="container grid grid-rows-[auto_1fr] py-8">
 		<div>
 			<PageTitle class="sr-only">{{ t("DataPage.title") }}</PageTitle>
 		</div>

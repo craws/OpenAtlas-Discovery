@@ -44,7 +44,7 @@ const sheetVariants = variants({
 <template>
 	<DialogPortal>
 		<DialogOverlay
-			class="data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 fixed inset-0 z-50 bg-background/80 backdrop-blur-sm"
+			class="fixed inset-0 z-50 bg-background/80 backdrop-blur-sm data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0"
 		/>
 		<DialogContent
 			:class="cn(sheetVariants({ side: props.side }), props.class)"

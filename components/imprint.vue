@@ -35,7 +35,7 @@ onServerPrefetch(async () => {
 <template>
 	<ContentRenderer
 		v-if="content != null"
-		class="prose dark:prose-invert max-w-3xl"
+		class="prose max-w-3xl dark:prose-invert"
 		:value="content"
 	/>
 </template>
