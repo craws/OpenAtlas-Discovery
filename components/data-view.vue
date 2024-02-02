@@ -64,7 +64,7 @@ const isLoading = computed(() => {
 	return isPending.value || isPlaceholderData.value;
 });
 
-const results = computed(() => {
+const entities = computed(() => {
 	return (
 		data.value?.results.flatMap((result) => {
 			return result.features;
@@ -74,7 +74,7 @@ const results = computed(() => {
 </script>
 
 <template>
-	<div class="grid relative grid-rows-[auto_1fr] gap-4">
+	<div class="relative grid grid-rows-[auto_1fr] gap-4">
 		<SearchForm
 			:filter="searchFilters.category"
 			:search="searchFilters.search"
@@ -82,11 +82,11 @@ const results = computed(() => {
 		/>
 
 		<div
-			class="grid relative isolate size-full overflow-y-auto"
+			class="relative isolate grid size-full overflow-y-auto"
 			:class="{ 'opacity-50 grayscale': isLoading }"
 		>
 			<div v-if="useGetSearchResults.length > 0" class="grid gap-8">
-				<SearchResultsTable :results="results" />
+				<SearchResultsTable :entities="entities" />
 
 				<Pagination
 					v-if="data?.pagination != null"

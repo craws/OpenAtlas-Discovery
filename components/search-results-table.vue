@@ -1,16 +1,12 @@
 <script lang="ts" setup>
-import { createUrl } from "@acdh-oeaw/lib";
+import type { EntityFeature } from "@/composables/use-create-entity";
 
-import type { LinkedPlaceFeature } from "@/types/api";
+const props = defineProps<{
+	entities: Array<EntityFeature>;
+}>();
 
 const t = useTranslations();
 const { d } = useI18n();
-
-const props = defineProps<{
-	results: Array<LinkedPlaceFeature>;
-}>();
-
-const getEntityId = useGetEntityId();
 </script>
 
 <template>
@@ -35,38 +31,38 @@ const getEntityId = useGetEntityId();
 				</TableHead>
 			</TableRow>
 		</TableHeader>
-		<!-- FIXME: are features de-duplicated? -->
-		<!-- FIXME: why pick descriptions[0], and timespans[0] -->
 		<TableBody>
-			<TableRow v-for="result of props.results" :key="result['@id']">
+			<TableRow v-for="entity of props.entities" :key="entity.properties._id">
 				<TableCell class="font-medium">
-					<Component :is="getEntityIcon(result.systemClass)" class="size-4 shrink-0" />
-					<span class="sr-only">{{ result.systemClass }}</span>
+					<Component :is="getEntityIcon(entity.systemClass)" class="size-4 shrink-0" />
+					<span class="sr-only">{{ entity.systemClass }}</span>
 				</TableCell>
 				<TableCell>
 					<NavLink
 						class="underline decoration-dotted transition hover:no-underline focus-visible:no-underline"
-						:href="{ path: `/entities/${encodeURIComponent(getEntityId(result['@id']))}` }"
+						:href="{ path: `/entities/${encodeURIComponent(entity.properties._id)}` }"
 					>
-						{{ result.properties.title }}
+						{{ entity.properties.title }}
 					</NavLink>
 				</TableCell>
 				<TableCell>
-					{{ result.descriptions[0]?.value }}
+					<template v-for="(description, index) of entity.descriptions" :key="index">
+						<span v-if="description.value != null">{{ description.value }}</span>
+					</template>
 				</TableCell>
 				<TableCell class="text-right">
-					{{
-						result.when?.timespans?.[0]?.start?.earliest != null
-							? d(result.when?.timespans[0].start.earliest)
-							: null
-					}}
+					<template v-for="(timespan, index) of entity.when?.timespans" :key="index">
+						<span v-if="timespan.start?.earliest != null">
+							{{ d(timespan.start.earliest) }}
+						</span>
+					</template>
 				</TableCell>
 				<TableCell class="text-right">
-					{{
-						result.when?.timespans?.[0]?.end?.earliest != null
-							? d(result.when?.timespans[0].end.earliest)
-							: null
-					}}
+					<template v-for="(timespan, index) of entity.when?.timespans" :key="index">
+						<span v-if="timespan.end?.earliest != null">
+							{{ d(timespan.end.earliest) }}
+						</span>
+					</template>
 				</TableCell>
 			</TableRow>
 		</TableBody>

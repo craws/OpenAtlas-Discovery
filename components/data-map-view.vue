@@ -3,6 +3,7 @@ import type { FeatureCollection } from "geojson";
 import { z } from "zod";
 
 import type { SearchFormData } from "@/components/search-form.vue";
+import type { Entity } from "@/composables/use-create-entity";
 import { categories } from "@/composables/use-get-search-results";
 import { project } from "@/config/project.config";
 
@@ -57,12 +58,15 @@ const geojson = computed(() => {
 
 	const collection: FeatureCollection = {
 		type: "FeatureCollection",
-		// @ts-expect-error FIXME: Incorrect type in openapi document.
 		features,
 	};
 
 	return collection;
 });
+
+function onLayerClick(_features: Array<Entity>) {
+	// TODO:
+}
 </script>
 
 <template>
@@ -77,7 +81,13 @@ const geojson = computed(() => {
 			v-slot="{ height, width }"
 			:class="{ 'opacity-50 grayscale': isLoading }"
 		>
-			<GeoMap v-if="height && width" :geojson="geojson" :height="height" :width="width" />
+			<GeoMap
+				v-if="height && width"
+				:geojson="geojson"
+				:height="height"
+				:width="width"
+				@layer-click="onLayerClick"
+			/>
 
 			<Centered v-if="isLoading">
 				<LoadingIndicator size="lg" />

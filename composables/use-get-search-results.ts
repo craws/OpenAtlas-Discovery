@@ -1,6 +1,7 @@
-import { useQuery } from "@tanstack/vue-query";
+import { useQuery, useQueryClient } from "@tanstack/vue-query";
 import { z } from "zod";
 
+import { type Entity, useCreateEntity } from "@/composables/use-create-entity";
 import type { components, operations } from "@/lib/api-client/api";
 import type { LinkedPlace } from "@/types/api";
 
@@ -96,15 +97,17 @@ export interface GetSearchResultsResponse {
 
 export function useGetSearchResults(params: MaybeRef<GetSearchResultsParams>) {
 	const api = useApiClient();
+	const creatEntity = useCreateEntity();
+	const queryClient = useQueryClient();
 
 	return useQuery({
 		queryKey: ["search-results", params] as const,
-		queryFn({ queryKey: [, params], signal }) {
+		async queryFn({ queryKey: [, params], signal }) {
 			const search = params.search?.map((value) => {
 				return JSON.stringify(value);
 			});
 
-			return api.GET("/query/", {
+			const response = (await api.GET("/query/", {
 				params: {
 					query: {
 						...params,
@@ -113,7 +116,21 @@ export function useGetSearchResults(params: MaybeRef<GetSearchResultsParams>) {
 					},
 				},
 				signal,
-			}) as Promise<GetSearchResultsResponse>;
+			})) as GetSearchResultsResponse;
+
+			const results: Array<Entity> = [];
+
+			response.results.forEach((result) => {
+				const entity = creatEntity(result);
+				results.push(entity);
+
+				entity.features.forEach((feature) => {
+					const params = { entityId: feature.properties._id };
+					queryClient.setQueryData(["entity", params], entity);
+				});
+			});
+
+			return { ...response, results };
 		},
 	});
 }

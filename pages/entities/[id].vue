@@ -29,14 +29,13 @@ const { data, error, isPending, isPlaceholderData, suspense } = useGetEntity(
 		return { entityId: id.value };
 	}),
 );
-// TODO: error, loading states
 
 const isLoading = computed(() => {
 	return isPending.value || isPlaceholderData.value;
 });
 
 const entity = computed(() => {
-	return data.value?.features[0] ?? null;
+	return data.value?.features[0];
 });
 
 const geojson = computed(() => {
@@ -44,7 +43,6 @@ const geojson = computed(() => {
 
 	const collection: FeatureCollection = {
 		type: "FeatureCollection",
-		// @ts-expect-error
 		features,
 	};
 
@@ -59,20 +57,25 @@ useHead({
 });
 </script>
 
-<!-- TODO: loading indicator -->
+<!-- TODO: loading indicator, error state -->
 <template>
-	<MainContent class="container py-8 relative grid grid-rows-[auto_1fr] gap-4">
+	<MainContent class="container relative grid grid-rows-[auto_1fr] gap-4 py-8">
 		<div v-if="entity != null">
 			<PageTitle>{{ entity.properties.title }}</PageTitle>
 
 			<!-- TODO: <dl> -->
 			<div>{{ entity.types }}</div>
-			<div>{{ entity.when }}</div>
-			<div v-for="description of entity.descriptions">{{ description.value }}</div>
+			<div>{{ entity.when?.timespans }}</div>
+			<div>{{ entity.descriptions }}</div>
 		</div>
 
 		<VisualisationContainer v-slot="{ height, width }">
-			<GeoMap v-if="height && width" :geojson="geojson" :height="height" :width="width" />
+			<GeoMap
+				v-if="entity != null && height && width"
+				:geojson="geojson"
+				:height="height"
+				:width="width"
+			/>
 		</VisualisationContainer>
 
 		<div>

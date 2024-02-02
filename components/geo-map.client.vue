@@ -1,20 +1,21 @@
 <script lang="ts" setup>
 import "maplibre-gl/dist/maplibre-gl.css";
 
-import { initialViewState } from "@/config/geo-map.config";
+import { assert } from "@acdh-oeaw/lib";
+import * as turf from "@turf/turf";
+import type { FeatureCollection } from "geojson";
 import {
+	FullscreenControl,
+	type GeoJSONSource,
 	Map as GeoMap,
 	NavigationControl,
 	ScaleControl,
-	FullscreenControl,
-	type GeoJSONSource,
-	Popup,
 } from "maplibre-gl";
-import { assert } from "@acdh-oeaw/lib";
-import type { FeatureCollection, Point, Polygon } from "geojson";
-import type { LinkedPlace, LinkedPlaceFeature } from "@/types/api";
+
+import { type GeoMapContext, geoMapContextKey } from "@/components/geo-map.context";
+import type { Entity } from "@/composables/use-create-entity";
+import { initialViewState } from "@/config/geo-map.config";
 import { project } from "@/config/project.config";
-import { geoMapContextKey } from "@/components/geo-map.context";
 
 const props = defineProps<{
 	geojson: FeatureCollection;
@@ -22,11 +23,12 @@ const props = defineProps<{
 	width: number;
 }>();
 
-const emit = defineEmits();
+const emit = defineEmits<{
+	(event: "layer-click", features: Array<Entity>): void;
+}>();
 
 const env = useRuntimeConfig();
 const theme = useColorMode();
-const getEntityId = useGetEntityId();
 
 const colors = {
 	default: project.colors.geojson,
@@ -39,10 +41,6 @@ const mapStyle = computed(() => {
 });
 
 const elementRef = ref<HTMLElement | null>(null);
-
-interface GeoMapContext {
-	map: GeoMap | null;
-}
 
 const context: GeoMapContext = {
 	map: null,
@@ -121,46 +119,11 @@ function init() {
 	//
 
 	map.on("click", "points", (event) => {
-		console.log(event.features);
-		const features = event.features as unknown as Array<LinkedPlaceFeature>; // FIXME:
-		const feature = features[0]!;
-
-		const geometry = feature.geometry as Point;
-		const coordinates = geometry.coordinates.slice() as [number, number];
-
-		const content = features
-			.map((feature) => {
-				return `<div>${feature.properties.title}</div>`;
-			})
-			.join("\n");
-
-		while (Math.abs(event.lngLat.lng - coordinates[0]) > 180) {
-			coordinates[0] += event.lngLat.lng > coordinates[0] ? 360 : -360;
-		}
-
-		const popup = new Popup({ closeButton: false, maxWidth: "320px" });
-		popup.setLngLat(coordinates).setHTML(content).addTo(map);
+		emit("layer-click", event.features as unknown as Array<Entity>);
 	});
 
 	map.on("click", "polygon", (event) => {
-		const features = event.features as unknown as Array<LinkedPlaceFeature>;
-		const feature = features[0]!;
-
-		const geometry = feature.geometry as Polygon;
-		const coordinates = geometry.coordinates.slice();
-
-		const content = features
-			.map((feature) => {
-				return `<div>${feature.properties.title}</div>`;
-			})
-			.join("\n");
-
-		while (Math.abs(event.lngLat.lng - coordinates[0]) > 180) {
-			coordinates[0] += event.lngLat.lng > coordinates[0] ? 360 : -360;
-		}
-
-		const popup = new Popup({ closeButton: false, maxWidth: "320px" });
-		popup.setLngLat(coordinates).setHTML(content).addTo(map);
+		emit("layer-click", event.features as unknown as Array<Entity>);
 	});
 
 	//
@@ -192,7 +155,9 @@ function dispose() {
 	context.map?.remove();
 }
 
-watch(() => props.geojson, update);
+watch(() => {
+	return props.geojson;
+}, update);
 
 function update() {
 	assert(context.map != null);
@@ -200,27 +165,20 @@ function update() {
 
 	const sourceId = "data";
 	const source = map.getSource(sourceId) as GeoJSONSource | undefined;
-	// TODO: ensure every feature has an id, because not the whole feature object is serialised in the popup event callback
-	source?.setData({
-		type: "FeatureCollection",
-		features: props.geojson.features.map((feature) => {
-			return {
-				type: "Feature",
-				geometry: feature.geometry,
-				properties: {
-					id: getEntityId(feature["@id"]),
-					title: feature.properties.title,
-				},
-			};
-		}),
-	});
+	source?.setData(props.geojson);
+
+	if (props.geojson.features.length > 0) {
+		const bounds = turf.bbox(props.geojson);
+		map.fitBounds(bounds, { padding: 20 });
+	}
 }
 
+defineExpose(context);
 provide(geoMapContextKey, context);
 </script>
 
 <template>
-	<div class="grid size-full relative text-black">
+	<div class="relative grid size-full text-black">
 		<div ref="elementRef" data-geo-map="true" />
 		<slot />
 	</div>
