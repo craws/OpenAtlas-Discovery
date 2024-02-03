@@ -55,7 +55,10 @@ useHead({
 const tabs = computed(() => {
 	const tabs = [];
 	if (entity.value?.geometry != null) {
-		tabs.push({ id: "geo-map", label: t("EntityPage.map") });
+		tabs.push({
+			id: "geo-map",
+			label: t("EntityPage.map"),
+		});
 	}
 	if (entity.value?.depictions != null) {
 		tabs.push({
@@ -91,41 +94,10 @@ const relationsByType = computed(() => {
 						{{ tab.label }}
 					</TabsTrigger>
 				</TabsList>
+				<!-- TODO: keep map alive -->
 				<TabsContent v-for="tab of tabs" :key="tab.id" :value="tab.id">
-					<template v-if="tab.id === 'geo-map'">
-						<Card class="h-96 overflow-hidden">
-							<VisualisationContainer v-slot="{ height, width }">
-								<GeoMap
-									v-if="height && width"
-									:entities="entities"
-									:height="height"
-									:width="width"
-								/>
-							</VisualisationContainer>
-						</Card>
-					</template>
-					<template v-else-if="tab.id === 'images'">
-						<Carousel class="mx-14">
-							<CarouselPrevious />
-							<CarouselContent>
-								<CarouselItem
-									v-for="(image, index) of entity?.depictions"
-									:key="index"
-									class="h-full"
-								>
-									<Card class="pb-3">
-										<figure class="grid h-96 grid-rows-[1fr_auto] gap-y-1.5 overflow-hidden">
-											<div class="relative">
-												<img alt="" class="absolute size-full object-contain" :src="image" />
-											</div>
-											<figcaption class="justify-self-center">{{ image }}</figcaption>
-										</figure>
-									</Card>
-								</CarouselItem>
-							</CarouselContent>
-							<CarouselNext />
-						</Carousel>
-					</template>
+					<EntityGeoMap v-if="tab.id === 'geo-map'" :entities="entities" />
+					<EntityImages v-else-if="tab.id === 'images'" :images="entity.depictions" />
 				</TabsContent>
 			</Tabs>
 
@@ -133,7 +105,7 @@ const relationsByType = computed(() => {
 		</template>
 
 		<template v-else-if="isLoading">
-			<Centered>
+			<Centered class="opacity-50">
 				<LoadingIndicator />
 			</Centered>
 		</template>
