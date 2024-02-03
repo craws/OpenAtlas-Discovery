@@ -132,7 +132,7 @@ function init() {
 		);
 	});
 
-	map.on("click", "polygon", (event) => {
+	map.on("click", "polygons", (event) => {
 		emit(
 			"layer-click",
 			(event.features ?? []) as Array<MapGeoJSONFeature & Pick<EntityFeature, "properties">>,
@@ -161,17 +161,6 @@ function init() {
 
 	//
 
-	map.on("sourcedata", () => {
-		const geojson = createFeatureCollection(props.entities);
-
-		if (geojson.features.length > 0) {
-			const bounds = turf.bbox(geojson);
-			map.fitBounds(bounds, { padding: 20 });
-		}
-	});
-
-	//
-
 	update();
 }
 
@@ -189,7 +178,13 @@ function update() {
 
 	const sourceId = "data";
 	const source = map.getSource(sourceId) as GeoJSONSource | undefined;
-	source?.setData(createFeatureCollection(props.entities));
+	const geojson = createFeatureCollection(props.entities);
+	source?.setData(geojson);
+
+	if (geojson.features.length > 0) {
+		const bounds = turf.bbox(geojson);
+		map.fitBounds(bounds, { padding: 20 });
+	}
 }
 
 defineExpose(context);

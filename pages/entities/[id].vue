@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { groupByToMap } from "@acdh-oeaw/lib";
 import { z } from "zod";
 
 // defineRouteRules({
@@ -47,6 +48,26 @@ useHead({
 	}),
 	// TODO: description, other metadata
 });
+
+const tabs = computed(() => {
+	const tabs = [];
+	if (entity.value?.geometry != null) {
+		tabs.push({ id: "geo-map", label: t("EntityPage.map") });
+	}
+	if (entity.value?.depictions != null) {
+		tabs.push({
+			id: "images",
+			label: t("EntityPage.images", { count: entity.value.depictions.length }),
+		});
+	}
+	return tabs;
+});
+
+const relationsByType = computed(() => {
+	return groupByToMap(entity.value?.relations ?? [], (relation) => {
+		return relation.relationType;
+	});
+});
 </script>
 
 <!-- TODO: loading indicator, error state -->
@@ -61,20 +82,45 @@ useHead({
 			<div>{{ entity.descriptions }}</div>
 		</div>
 
-		<VisualisationContainer v-slot="{ height, width }">
-			<GeoMap
-				v-if="entity != null && height && width"
-				:entities="entities"
-				:height="height"
-				:width="width"
-			/>
-		</VisualisationContainer>
+		<Tabs v-if="tabs.length > 0" :default-value="tabs[0]?.id">
+			<TabsList>
+				<TabsTrigger v-for="tab of tabs" :key="tab.id" :value="tab.id">
+					{{ tab.label }}
+				</TabsTrigger>
+			</TabsList>
+			<TabsContent v-for="tab of tabs" :key="tab.id" :value="tab.id">
+				<template v-if="tab.id === 'geo-map'">
+					<Card class="h-96 overflow-hidden">
+						<VisualisationContainer v-slot="{ height, width }">
+							<GeoMap v-if="height && width" :entities="entities" :height="height" :width="width" />
+						</VisualisationContainer>
+					</Card>
+				</template>
+				<template v-else-if="tab.id === 'images'">
+					<Carousel class="mx-14">
+						<CarouselPrevious />
+						<CarouselContent>
+							<CarouselItem
+								v-for="(image, index) of entity?.depictions"
+								:key="index"
+								class="h-full"
+							>
+								<Card class="pb-3">
+									<figure class="grid h-96 grid-rows-[1fr_auto] gap-y-1.5 overflow-hidden">
+										<div class="relative">
+											<img alt="" class="absolute size-full object-contain" :src="image" />
+										</div>
+										<figcaption class="justify-self-center">{{ image }}</figcaption>
+									</figure>
+								</Card>
+							</CarouselItem>
+						</CarouselContent>
+						<CarouselNext />
+					</Carousel>
+				</template>
+			</TabsContent>
+		</Tabs>
 
-		<div>
-			<dl>
-				<dt></dt>
-				<dd></dd>
-			</dl>
-		</div>
+		<pre>{{ relationsByType }}</pre>
 	</MainContent>
 </template>

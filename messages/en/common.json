@@ -47,7 +47,9 @@
 	"EntityPage": {
 		"meta": {
 			"title": "Entity"
-		}
+		},
+		"images": "Images ({count})",
+		"map": "Map"
 	},
 	"ErrorBoundary": {
 		"error": "Error"

@@ -52,6 +52,7 @@ const { d } = useI18n();
 				</TableCell>
 				<TableCell class="text-right">
 					<template v-for="(timespan, index) of entity.when?.timespans" :key="index">
+						<!-- FIXME: why earliest -->
 						<span v-if="timespan.start?.earliest != null">
 							{{ d(timespan.start.earliest) }}
 						</span>
@@ -59,6 +60,7 @@ const { d } = useI18n();
 				</TableCell>
 				<TableCell class="text-right">
 					<template v-for="(timespan, index) of entity.when?.timespans" :key="index">
+						<!-- FIXME: why earliest -->
 						<span v-if="timespan.end?.earliest != null">
 							{{ d(timespan.end.earliest) }}
 						</span>

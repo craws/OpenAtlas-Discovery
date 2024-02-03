@@ -47,7 +47,9 @@
 	"EntityPage": {
 		"meta": {
 			"title": "Entität"
-		}
+		},
+		"images": "Bilder ({count})",
+		"map": "Karte"
 	},
 	"ErrorBoundary": {
 		"error": "Fehler"
