@@ -7,6 +7,9 @@ defineRouteRules({
 
 definePageMeta({
 	title: "ImprintPage.meta.title",
+	validate() {
+		return project.imprint !== "none";
+	},
 });
 
 const t = useTranslations();
