@@ -45,7 +45,8 @@ onServerPrefetch(async () => {
 
 <template>
 	<MainContent class="container py-8">
-		<div class="grid content-start gap-8">
+		<div class=" flex h-full flex-col items-center gap-8">
+			<div class="basis-1/12"></div>
 			<div v-if="content != null">
 				<h1 class="sr-only">{{ content.title }}</h1>
 				<NuxtImg
