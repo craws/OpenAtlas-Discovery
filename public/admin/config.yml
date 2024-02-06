@@ -226,3 +226,33 @@ collections:
         modes:
           - raw
           # - rich_text
+
+  - name: team
+    label: Team
+    label_singular: Team member
+    # description: Team
+    i18n: true
+    folder: data/team
+    create: true
+    delete: true
+    fields:
+      - name: firstname
+        label: First name
+        i18n: duplicate
+        required: false
+      - name: lastname
+        label: Last name
+        i18n: duplicate
+      - name: title
+        label: Title
+        i18n: duplicate
+        required: false
+      - name: image
+        label: Image
+        i18n: duplicate
+        widget: image
+        required: false
+      - name: body
+        label: Short biography
+        i18n: true
+        widget: markdown
