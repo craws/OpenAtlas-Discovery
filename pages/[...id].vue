@@ -10,10 +10,6 @@ defineRouteRules({
 
 definePageMeta({
 	title: "ContentPage.meta.title",
-	validate(route) {
-		// FIXME: check actual content pages
-		return true;
-	},
 });
 
 const locale = useLocale();

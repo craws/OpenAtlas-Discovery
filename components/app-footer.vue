@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { isNonEmptyString } from "@acdh-oeaw/lib";
 import { HeartIcon } from "lucide-vue-next";
 
 import type { NavLinkProps } from "@/components/nav-link.vue";
@@ -44,8 +45,13 @@ const links = computed(() => {
 				</ul>
 			</nav>
 
-			<div class="sm:justify-self-end">
-				Version: {{ env.public.NUXT_PUBLIC_GIT_TAG }} - {{ env.public.NUXT_PUBLIC_GIT_BRANCH_NAME }}
+			<div class="sm:justify-self-end sm:text-right">
+				Version:
+				{{
+					[env.public.NUXT_PUBLIC_GIT_TAG, env.public.NUXT_PUBLIC_GIT_BRANCH_NAME]
+						.filter(isNonEmptyString)
+						.join(" - ")
+				}}
 			</div>
 		</div>
 	</footer>

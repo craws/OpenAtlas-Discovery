@@ -103,11 +103,11 @@ collections:
             hint: Imprint page
             widget: select
             options:
-              - name: none
+              - value: none
                 label: No imprint
-              - name: custom
+              - value: custom
                 label: Use custom imprint page
-              - name: acdh-ch
+              - value: acdh-ch
                 label: Use ACDH-CH imprint
 
           - name: twitter
@@ -145,7 +145,7 @@ collections:
             hint: The website title
 
           - name: shortName
-            label: Title
+            label: Short title
             i18n: true
             hint: The website short title
 
@@ -153,6 +153,7 @@ collections:
             label: Description
             i18n: true
             hint: The website description
+            widget: text
 
   - name: pages
     label: Pages
@@ -233,14 +234,18 @@ collections:
     # description: Team
     i18n: true
     folder: data/team
+    identifier_field: lastName
+    format: yml
     create: true
     delete: true
+    slug: "{{lastName}}-{{firstName}}"
+	  summary: "{{firstName}} {{lastName}}"
     fields:
-      - name: firstname
+      - name: firstName
         label: First name
         i18n: duplicate
         required: false
-      - name: lastname
+      - name: lastName
         label: Last name
         i18n: duplicate
       - name: title
@@ -252,7 +257,6 @@ collections:
         i18n: duplicate
         widget: image
         required: false
-      - name: body
+      - name: description
         label: Short biography
         i18n: true
-        widget: markdown

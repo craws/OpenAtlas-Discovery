@@ -1,4 +1,4 @@
-export function createDateSpan(date: { earliest?: string; latest?: string }) {
+export function createDateSpan(date: { earliest?: string | null; latest?: string | null }) {
 	const { d } = useI18n();
 
 	const segments: Array<string> = [];

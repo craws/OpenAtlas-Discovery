@@ -57,12 +57,12 @@ const links = computed(() => {
 
 <template>
 	<header class="border-b">
-		<div class="container flex items-center gap-4 py-4 lg:py-6">
+		<div class="container flex items-center gap-4 py-4">
 			<NavLink class="flex shrink-0" :href="links.home.href">
 				<span class="sr-only">{{ links.home.label }}</span>
 				<NuxtImg
 					alt=""
-					class="block size-12 object-contain lg:size-16 dark:hidden"
+					class="block size-10 object-contain lg:size-12 dark:hidden"
 					height="64"
 					width="64"
 					preload
@@ -70,7 +70,7 @@ const links = computed(() => {
 				/>
 				<NuxtImg
 					alt=""
-					class="hidden size-12 object-contain lg:size-16 dark:block"
+					class="hidden size-10 object-contain lg:size-12 dark:block"
 					height="64"
 					width="64"
 					preload
