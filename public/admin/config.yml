@@ -252,7 +252,6 @@ collections:
         i18n: duplicate
         widget: image
         required: false
-      - name: body
+      - name: description
         label: Short biography
         i18n: true
-        widget: markdown

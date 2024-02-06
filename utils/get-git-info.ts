@@ -19,7 +19,7 @@ export function getGitInfo() {
 		return {
 			branchName: "development",
 			commitHash: "",
-			tag: "",
+			tag: "v0.0.0",
 		};
 	}
 }
