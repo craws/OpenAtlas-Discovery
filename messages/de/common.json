@@ -48,6 +48,9 @@
 	"DefaultLayout": {
 		"skip-to-main-content": "Zum Hauptinhalt springen"
 	},
+	"EntityDescriptionsDisplay": {
+		"no-descriptions": "Keine Beschreibungen verfügbar."
+	},
 	"EntityPage": {
 		"images": "Bilder ({count})",
 		"map": "Karte",

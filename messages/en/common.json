@@ -48,6 +48,9 @@
 	"DefaultLayout": {
 		"skip-to-main-content": "Skip to main content"
 	},
+	"EntityDescriptionsDisplay": {
+		"no-descriptions": "No descriptions available."
+	},
 	"EntityPage": {
 		"images": "Images ({count})",
 		"map": "Map",
@@ -137,8 +140,8 @@
 		"acquisition": "Acquisition",
 		"activity": "Activity",
 		"actor_appellation": "Actor Appellation",
-		"appellation": "Appellation",
 		"administrative_unit": "Place",
+		"appellation": "Appellation",
 		"artifact": "Man-Made Object",
 		"bibliography": "Document",
 		"edition": "Document",
@@ -154,8 +157,8 @@
 		"place": "Physical Thing",
 		"referenceSystem": "Authority Document",
 		"source": "Linguistic Object",
-		"stratigraphic_unit": "Physical Thing",
 		"source_translation": "Linguistic Object",
+		"stratigraphic_unit": "Physical Thing",
 		"type": "Type"
 	},
 	"Toast": {
