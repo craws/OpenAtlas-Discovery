@@ -1,14 +1,12 @@
-import { execSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
 
 import { defaultLocale, localesMap } from "./config/i18n.config";
+import { getGitInfo } from "./utils/get-git-info";
 
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 const baseUrl = process.env.NUXT_PUBLIC_APP_BASE_URL!;
 
-const branchName = execSync("git rev-parse --abbrev-ref HEAD").toString().trimEnd();
-const commitHash = execSync("git rev-parse HEAD").toString().trimEnd();
-const tag = execSync("git describe --always --tags").toString().trimEnd();
+const { branchName, commitHash, tag } = getGitInfo();
 
 export default defineNuxtConfig({
 	alias: {
