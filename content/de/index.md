@@ -12,7 +12,5 @@ links:
 ---
 
 Das ist ein Prototyp für [OpenAtlas](https://openatlas.eu) Projekte. Demo Daten freundlicherweise
-zur Verfügung gestellt von: _The Ethnonym of the Vlachs in the Written Sources and the Toponymy in
-the Historical Region of Macedonia_ (11th-16th Cent.).
-
-[Weitere Informationen](http://dpp.oeaw.ac.at/index.php?seite=CaseStudies&submenu=skopje)
+zur Verfügung gestellt von: [_The Ethnonym of the Vlachs in the Written Sources and the Toponymy in
+the Historical Region of Macedonia_ (11th-16th Cent.)](http://dpp.oeaw.ac.at/index.php?seite=CaseStudies&submenu=skopje)
