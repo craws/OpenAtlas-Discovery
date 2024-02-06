@@ -79,13 +79,19 @@ const relationsByType = computed(() => {
 <template>
 	<MainContent class="container relative grid grid-rows-[auto_1fr] gap-4 py-8">
 		<template v-if="entity != null">
-			<div class="flex flex-col gap-4">
-				<SystemClassDisplay :system-class="entity.systemClass" />
-				<PageTitle>{{ entity.properties.title }}</PageTitle>
+			<Card>
+				<CardHeader>
+					<SystemClassDisplay :system-class="entity.systemClass" />
+					<PageTitle>{{ entity.properties.title }}</PageTitle>
+				</CardHeader>
+				<CardContent>
+					<div class="flex flex-col gap-4">
+						<TimespansDisplay class="max-w-96" :timespans="entity.when?.timespans" />
+						<EntityDescriptionsDisplay :descriptions="entity?.descriptions ?? []" />
+					</div>
+				</CardContent>
+			</Card>
 
-				<TimespansDisplay :timespans="entity.when?.timespans" />
-				<EntityDescriptionsDisplay :descriptions="entity?.descriptions ?? []" />
-			</div>
 
 			<Tabs v-if="tabs.length > 0" :default-value="tabs[0]?.id">
 				<TabsList>
