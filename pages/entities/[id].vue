@@ -84,7 +84,7 @@ const relationsByType = computed(() => {
 				<PageTitle>{{ entity.properties.title }}</PageTitle>
 
 				<TimespansDisplay :timespans="entity.when?.timespans" />
-				<div>{{ entity.descriptions }}</div>
+				<EntityDescriptionsDisplay :descriptions="entity?.descriptions ?? []" />
 			</div>
 
 			<Tabs v-if="tabs.length > 0" :default-value="tabs[0]?.id">
