@@ -80,7 +80,7 @@ function onLayerClick(features: Array<MapGeoJSONFeature & Pick<EntityFeature, "p
 		}
 	});
 
-	const point = turf.center(createFeatureCollection(entities))
+	const point = turf.center(createFeatureCollection(entities));
 	const coordinates = point.geometry.coordinates;
 
 	popover.value = { coordinates, entities };
@@ -117,11 +117,22 @@ function createDateSpan(date: { earliest?: string; latest?: string }) {
 				:width="width"
 				@layer-click="onLayerClick"
 			>
-				<GeoMapPopup v-if="popover != null" :coordinates="popover.coordinates" @close="popover = null">
-					<article v-for="entity of popover.entities">
-						<strong class="text-semibold">{{ entity.properties.title }}</strong>
-						<NavLink class="underline" :href="{ path: `/entities/${entity.properties._id}` }">
-							{{ t('DataMapView.go-to-details-page') }}
+				<GeoMapPopup
+					v-if="popover != null"
+					:coordinates="popover.coordinates"
+					@close="popover = null"
+				>
+					<article
+						v-for="entity of popover.entities"
+						:key="entity.properties._id"
+						class="grid gap-0.5 font-body text-xs"
+					>
+						<strong class="block font-medium">{{ entity.properties.title }}</strong>
+						<NavLink
+							class="underline hover:no-underline"
+							:href="{ path: `/entities/${entity.properties._id}` }"
+						>
+							{{ t("DataMapView.go-to-details-page") }}
 						</NavLink>
 					</article>
 				</GeoMapPopup>

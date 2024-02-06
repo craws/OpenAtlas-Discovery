@@ -3,43 +3,50 @@ import { assert } from "@acdh-oeaw/lib";
 import { Popup } from "maplibre-gl";
 
 const props = defineProps<{
-	coordinates: [number, number]
+	coordinates: [number, number];
 }>();
 
 const emit = defineEmits<{
-	(event: 'close'): void
-}>()
+	(event: "close"): void;
+}>();
 
 const { map } = useGeoMap();
 
 const elementRef = ref<HTMLElement | null>(null);
 
 interface Context {
-	popup: Popup | null
+	popup: Popup | null;
 }
 
 const context: Context = {
-	popup: null
+	popup: null,
 };
 
 onMounted(async () => {
-	await nextTick()
+	await nextTick();
 	assert(elementRef.value != null);
 	assert(map != null);
 
-	const popup = new Popup({ closeButton: false })
+	const popup = new Popup({ closeButton: false, maxWidth: "256px" })
 		.setLngLat(props.coordinates)
 		.setDOMContent(elementRef.value)
 		.addTo(map);
 
-	popup.once("close", () => emit("close"))
+	popup.once("close", () => {
+		emit("close");
+	});
 
 	context.popup = popup;
 });
 
-watch(() => props.coordinates, (coordinates) => {
-	context.popup?.setLngLat(coordinates)
-})
+watch(
+	() => {
+		return props.coordinates;
+	},
+	(coordinates) => {
+		context.popup?.setLngLat(coordinates);
+	},
+);
 
 onScopeDispose(() => {
 	context.popup?.remove();
