@@ -58,6 +58,15 @@ dependencies:
   cva:
     specifier: ^1.0.0-beta.1
     version: 1.0.0-beta.1(typescript@5.3.3)
+  dotenv:
+    specifier: ^16.4.1
+    version: 16.4.1
+  dotenv-cli:
+    specifier: ^7.3.0
+    version: 7.3.0
+  dotenv-expand:
+    specifier: ^10.0.0
+    version: 10.0.0
   embla-carousel:
     specifier: ^8.0.0-rc22
     version: 8.0.0-rc22
@@ -159,15 +168,6 @@ devDependencies:
   decap-server:
     specifier: ^3.0.2
     version: 3.0.2
-  dotenv:
-    specifier: ^16.4.1
-    version: 16.4.1
-  dotenv-cli:
-    specifier: ^7.3.0
-    version: 7.3.0
-  dotenv-expand:
-    specifier: ^10.0.0
-    version: 10.0.0
   eslint:
     specifier: ^8.56.0
     version: 8.56.0
@@ -5475,12 +5475,12 @@ packages:
       dotenv: 16.4.1
       dotenv-expand: 10.0.0
       minimist: 1.2.8
-    dev: true
+    dev: false
 
   /dotenv-expand@10.0.0:
     resolution: {integrity: sha512-GopVGCpVS1UKH75VKHGuQFqS1Gusej0z4FyQkPdwjil2gNIv+LNsqBlboOzpJFZKVT95GkCyWJbBSdFEFUWI2A==}
     engines: {node: '>=12'}
-    dev: true
+    dev: false
 
   /dotenv@10.0.0:
     resolution: {integrity: sha512-rlBi9d8jpv9Sf1klPjNfFAuWDjKLwTIJJ/VxtoTwIR6hnZxcEOQCZg2oIL3MWBYw5GpUDKOEnND7LXTbIpQ03Q==}
@@ -7975,6 +7975,7 @@ packages:
 
   /minimist@1.2.8:
     resolution: {integrity: sha512-2yyAR8qBkN3YuheJanUpWC5U3bb5osDywNB8RzDVlDwDHbocAJveqqj1u8+SVD7jkWT4yvsHCpWqqWqAxb0zCA==}
+    dev: false
 
   /minipass-collect@2.0.1:
     resolution: {integrity: sha512-D7V8PO9oaz7PWGLbCACuI1qEOsq7UKfLotx/C0Aet43fCUB/wfQ7DYeq2oR/svFJGYDHPr38SHATeaj/ZoKHKw==}
