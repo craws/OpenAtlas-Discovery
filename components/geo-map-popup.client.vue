@@ -27,7 +27,7 @@ onMounted(async () => {
 	assert(elementRef.value != null);
 	assert(map != null);
 
-	const popup = new Popup({ closeButton: false, maxWidth: "256px" })
+	const popup = new Popup({ closeButton: false, maxWidth: "272px" })
 		.setLngLat(props.coordinates)
 		.setDOMContent(elementRef.value)
 		.addTo(map);
@@ -54,7 +54,7 @@ onScopeDispose(() => {
 </script>
 
 <template>
-	<div ref="elementRef" class="grid gap-4" data-geo-map-popup="true">
+	<div ref="elementRef" class="grid gap-3" data-geo-map-popup="true">
 		<slot />
 	</div>
 </template>

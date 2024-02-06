@@ -33,7 +33,8 @@
 		}
 	},
 	"DataMapView": {
-		"go-to-details-page": "Zur Detailseite"
+		"end-date": "End-Datum",
+		"start-date": "Start-Datum"
 	},
 	"DataPage": {
 		"meta": {

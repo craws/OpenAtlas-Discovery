@@ -12,7 +12,6 @@ import { project } from "@/config/project.config";
 const router = useRouter();
 const route = useRoute();
 const t = useTranslations();
-const { d } = useI18n();
 
 const searchFiltersSchema = z.object({
 	category: z.enum(categories).catch("entityName"),
@@ -85,17 +84,6 @@ function onLayerClick(features: Array<MapGeoJSONFeature & Pick<EntityFeature, "p
 
 	popover.value = { coordinates, entities };
 }
-
-function createDateSpan(date: { earliest?: string; latest?: string }) {
-	const segments: Array<string> = [];
-	if (date.earliest != null) {
-		segments.push(d(date.earliest));
-	}
-	if (date.latest != null) {
-		segments.push(d(date.latest));
-	}
-	return segments.join(" - ");
-}
 </script>
 
 <template>
@@ -125,15 +113,36 @@ function createDateSpan(date: { earliest?: string; latest?: string }) {
 					<article
 						v-for="entity of popover.entities"
 						:key="entity.properties._id"
-						class="grid gap-0.5 font-body text-xs"
+						class="grid gap-1 font-body text-xs"
 					>
-						<strong class="block font-medium">{{ entity.properties.title }}</strong>
-						<NavLink
-							class="underline hover:no-underline"
-							:href="{ path: `/entities/${entity.properties._id}` }"
+						<strong class="font-medium">
+							<NavLink
+								class="flex items-center gap-1 underline decoration-dotted hover:no-underline"
+								:href="{ path: `/entities/${entity.properties._id}` }"
+							>
+								<Component :is="getEntityIcon(entity.systemClass)" class="size-3.5 shrink-0" />
+								{{ entity.properties.title }}
+							</NavLink>
+						</strong>
+						<dl
+							v-if="entity.when?.timespans != null && entity.when.timespans.length > 0"
+							class="grid gap-1 text-2xs text-neutral-600"
 						>
-							{{ t("DataMapView.go-to-details-page") }}
-						</NavLink>
+							<template v-for="(timespan, index) of entity.when.timespans" :key="index">
+								<template v-if="timespan.start?.earliest != null || timespan.start?.latest != null">
+									<div class="grid gap-0.5">
+										<dt class="font-medium uppercase">{{ t("DataMapView.start-date") }}</dt>
+										<dd>{{ createDateSpan(timespan.start) }}</dd>
+									</div>
+								</template>
+								<template v-if="timespan.end?.earliest != null || timespan.end?.latest != null">
+									<div class="grid gap-0.5">
+										<dt class="font-medium uppercase">{{ t("DataMapView.end-date") }}</dt>
+										<dd>{{ createDateSpan(timespan.end) }}</dd>
+									</div>
+								</template>
+							</template>
+						</dl>
 					</article>
 				</GeoMapPopup>
 			</GeoMap>
