@@ -14,7 +14,7 @@ const {
 } = useQuery({
 	queryKey: ["imprint", locale] as const,
 	queryFn({ queryKey: [, locale] }) {
-		return queryContent<ContentPage>("/imprint").locale(locale).findOne();
+		return queryContent<ContentPage>("pages", locale, "imprint").findOne();
 	},
 });
 useErrorMessage(error, {

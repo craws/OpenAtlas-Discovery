@@ -20,10 +20,17 @@ const defaultLinks = computed(() => {
 const { data: navigation, suspense } = useQuery({
 	queryKey: ["content-navigation", locale] as const,
 	queryFn({ queryKey: [, locale] }) {
+		const prefix = ["pages", locale] as const;
 		return fetchContentNavigation(
-			queryContent<ContentPage>("/")
-				.locale(locale)
-				.where({ $not: { _path: { $in: ["/", "/imprint"] } } }),
+			queryContent<ContentPage>(...prefix).where({
+				$not: {
+					_path: {
+						$in: ["/", "/imprint"].map((pathname) => {
+							return "/" + prefix.join("/") + pathname;
+						}),
+					},
+				},
+			}),
 		);
 	},
 });
@@ -38,11 +45,14 @@ onServerPrefetch(async () => {
 });
 
 const contentLinks = computed(() => {
-	if (navigation.value == null) return {};
+	const pages = navigation.value?.at(0)?.children?.at(0)?.children;
+	if (pages == null) return {};
+
+	const prefix = ["", "pages", locale.value].join("/");
 
 	return Object.fromEntries(
-		navigation.value.map((link) => {
-			return [link._path, { href: { path: link._path }, label: link.title }];
+		pages.map((link) => {
+			return [link._path, { href: { path: link._path.slice(prefix.length) }, label: link.title }];
 		}),
 	) satisfies Record<string, { href: NavLinkProps["href"]; label: string }>;
 });

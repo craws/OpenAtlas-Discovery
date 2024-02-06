@@ -22,10 +22,7 @@ const {
 } = useQuery({
 	queryKey: ["content", locale, "index"] as const,
 	queryFn({ queryKey: [, locale] }) {
-		return queryContent<ContentPage>("/")
-			.where({ _path: { $eq: "/" } })
-			.locale(locale)
-			.findOne();
+		return queryContent<ContentPage>("pages", locale).findOne();
 	},
 });
 useErrorMessage(error, {

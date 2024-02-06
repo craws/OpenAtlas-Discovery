@@ -160,7 +160,7 @@ collections:
     label_singular: Page
     # description: Pages
     i18n: true
-    folder: content
+    folder: content/pages
     create: true
     delete: true
     # nested:
@@ -233,9 +233,8 @@ collections:
     label_singular: Team member
     # description: Team
     i18n: true
-    folder: data/team
+    folder: content/team
     identifier_field: lastName
-    format: yml
     create: true
     delete: true
     slug: "{{lastName}}-{{firstName}}"
@@ -257,6 +256,7 @@ collections:
         i18n: duplicate
         widget: image
         required: false
-      - name: description
+      - name: body
         label: Short biography
         i18n: true
+        widget: markdown
