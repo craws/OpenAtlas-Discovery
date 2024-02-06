@@ -84,7 +84,7 @@ const relationsByType = computed(() => {
 
 				<!-- TODO: <dl> -->
 				<div>{{ entity.types }}</div>
-				<div>{{ entity.when?.timespans }}</div>
+				<TimespansDisplay :timespans="entity.when?.timespans" />
 				<div>{{ entity.descriptions }}</div>
 			</div>
 

@@ -8,8 +8,8 @@
 	},
 	"AppHeader": {
 		"links": {
-			"home": "Startseite",
 			"data": "Daten",
+			"home": "Startseite",
 			"map": "Karte"
 		},
 		"navigation-main": "Hauptnavigation",
@@ -49,11 +49,11 @@
 		"skip-to-main-content": "Zum Hauptinhalt springen"
 	},
 	"EntityPage": {
+		"images": "Bilder ({count})",
+		"map": "Karte",
 		"meta": {
 			"title": "Entität"
-		},
-		"images": "Bilder ({count})",
-		"map": "Karte"
+		}
 	},
 	"ErrorBoundary": {
 		"error": "Fehler"
@@ -125,15 +125,20 @@
 	},
 	"SearchResultsTable": {
 		"header": {
-			"class": "Klasse",
-			"name": "Name",
-			"description": "Beschreibung",
 			"begin": "Anfang",
-			"end": "Ende"
+			"class": "Klasse",
+			"description": "Beschreibung",
+			"end": "Ende",
+			"name": "Name"
 		},
 		"search-results": "Suchergebnisse"
 	},
 	"Toast": {
 		"error": "Fehler"
+	},
+	"when-display": {
+		"end": "Ende",
+		"no-dates": "Keine Kalenderdaten bekannt",
+		"start": "Start"
 	}
 }
