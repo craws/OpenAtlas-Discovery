@@ -7,6 +7,6 @@
 		 *
 		 * @see https://github.com/microsoft/TypeScript/issues/54057
 		 */
-		"incremental": false,
-	},
+		"incremental": false
+	}
 }

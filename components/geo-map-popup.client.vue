@@ -32,7 +32,7 @@ onMounted(async () => {
 		.setDOMContent(elementRef.value)
 		.addTo(map);
 
-	popup.once("close", () => {
+	void popup.once("close", () => {
 		emit("close");
 	});
 
