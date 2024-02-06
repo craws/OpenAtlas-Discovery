@@ -133,6 +133,31 @@
 		},
 		"search-results": "Search results"
 	},
+	"SystemClassNames": {
+		"acquisition": "Acquisition",
+		"activity": "Activity",
+		"actor_appellation": "Actor Appellation",
+		"appellation": "Appellation",
+		"administrative_unit": "Place",
+		"artifact": "Man-Made Object",
+		"bibliography": "Document",
+		"edition": "Document",
+		"external_reference": "Document",
+		"feature": "Physical Thing",
+		"file": "Document",
+		"find": "Man-Made Object",
+		"group": "Group",
+		"human_remains": "Biological Object",
+		"move": "Move",
+		"object_location": "Place",
+		"person": "Person",
+		"place": "Physical Thing",
+		"referenceSystem": "Authority Document",
+		"source": "Linguistic Object",
+		"stratigraphic_unit": "Physical Thing",
+		"source_translation": "Linguistic Object",
+		"type": "Type"
+	},
 	"Toast": {
 		"error": "Error"
 	},

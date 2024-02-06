@@ -79,11 +79,10 @@ const relationsByType = computed(() => {
 <template>
 	<MainContent class="container relative grid grid-rows-[auto_1fr] gap-4 py-8">
 		<template v-if="entity != null">
-			<div>
+			<div class="flex flex-col gap-4">
+				<SystemClassDisplay :system-class="entity.systemClass" />
 				<PageTitle>{{ entity.properties.title }}</PageTitle>
 
-				<!-- TODO: <dl> -->
-				<div>{{ entity.types }}</div>
 				<TimespansDisplay :timespans="entity.when?.timespans" />
 				<div>{{ entity.descriptions }}</div>
 			</div>

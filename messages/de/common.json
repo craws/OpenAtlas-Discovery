@@ -133,6 +133,31 @@
 		},
 		"search-results": "Suchergebnisse"
 	},
+	"SystemClassNames": {
+		"acquisition": "Erwerb",
+		"activity": "Aktivität",
+		"actor_appellation": "Akteurenbezeichnung",
+		"administrative_unit": "Ort",
+		"appellation": "Bezeichnung",
+		"artifact": "Künstliches Objekt",
+		"bibliography": "Dokument",
+		"edition": "Dokument",
+		"external_reference": "Dokument",
+		"feature": "Physische Sache",
+		"file": "Dokument",
+		"find": "Künstliches Objekt",
+		"group": "Gruppe",
+		"human_remains": "Biologisches Objekt",
+		"move": "Bewegung",
+		"object_location": "Ort",
+		"person": "Person",
+		"place": "Physische Sache",
+		"referenceSystem": "Autoritätsdokument",
+		"source": "Linguistisches Objekt",
+		"source_translation": "Linguistisches Objekt",
+		"stratigraphic_unit": "Physische Sache",
+		"type": "Typ"
+	},
 	"Toast": {
 		"error": "Fehler"
 	},
