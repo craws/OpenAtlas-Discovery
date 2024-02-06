@@ -105,7 +105,7 @@ const relationsByType = computed(() => {
 		</template>
 
 		<template v-else-if="isLoading">
-			<Centered class="opacity-50">
+			<Centered class="opacity-50 mix-blend-difference">
 				<LoadingIndicator />
 			</Centered>
 		</template>
