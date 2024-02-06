@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { keyByToMap } from "@acdh-oeaw/lib";
+import * as turf from "@turf/turf";
 import type { MapGeoJSONFeature } from "maplibre-gl";
 import { z } from "zod";
 
@@ -9,6 +11,8 @@ import { project } from "@/config/project.config";
 
 const router = useRouter();
 const route = useRoute();
+const t = useTranslations();
+const { d } = useI18n();
 
 const searchFiltersSchema = z.object({
 	category: z.enum(categories).catch("entityName"),
@@ -58,8 +62,39 @@ const entities = computed(() => {
 	);
 });
 
-function onLayerClick(_features: Array<MapGeoJSONFeature & Pick<EntityFeature, "properties">>) {
-	// TODO:
+const entitiesById = computed(() => {
+	return keyByToMap(entities.value, (entity) => {
+		return entity.properties._id;
+	});
+});
+
+const popover = ref<{ coordinates: [number, number]; entities: Array<EntityFeature> } | null>(null);
+
+function onLayerClick(features: Array<MapGeoJSONFeature & Pick<EntityFeature, "properties">>) {
+	const entities: Array<EntityFeature> = [];
+
+	features.forEach((feature) => {
+		const entity = entitiesById.value.get(feature.properties._id);
+		if (entity != null) {
+			entities.push(entity);
+		}
+	});
+
+	const point = turf.center(createFeatureCollection(entities))
+	const coordinates = point.geometry.coordinates;
+
+	popover.value = { coordinates, entities };
+}
+
+function createDateSpan(date: { earliest?: string; latest?: string }) {
+	const segments: Array<string> = [];
+	if (date.earliest != null) {
+		segments.push(d(date.earliest));
+	}
+	if (date.latest != null) {
+		segments.push(d(date.latest));
+	}
+	return segments.join(" - ");
 }
 </script>
 
@@ -81,9 +116,18 @@ function onLayerClick(_features: Array<MapGeoJSONFeature & Pick<EntityFeature, "
 				:height="height"
 				:width="width"
 				@layer-click="onLayerClick"
-			/>
+			>
+				<GeoMapPopup v-if="popover != null" :coordinates="popover.coordinates" @close="popover = null">
+					<article v-for="entity of popover.entities">
+						<strong class="text-semibold">{{ entity.properties.title }}</strong>
+						<NavLink class="underline" :href="{ path: `/entities/${entity.properties._id}` }">
+							{{ t('DataMapView.go-to-details-page') }}
+						</NavLink>
+					</article>
+				</GeoMapPopup>
+			</GeoMap>
 
-			<Centered v-if="isLoading">
+			<Centered v-if="isLoading" class="mix-blend-difference">
 				<LoadingIndicator size="lg" />
 			</Centered>
 		</VisualisationContainer>

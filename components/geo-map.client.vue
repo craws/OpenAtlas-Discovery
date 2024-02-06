@@ -52,10 +52,6 @@ const context: GeoMapContext = {
 onMounted(create);
 onScopeDispose(dispose);
 
-function createFeatureCollection(features: Array<EntityFeature>) {
-	return { type: "FeatureCollection" as const, features };
-}
-
 async function create() {
 	await nextTick();
 	assert(elementRef.value != null);

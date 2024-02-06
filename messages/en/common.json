@@ -32,6 +32,9 @@
 			"title": "Content"
 		}
 	},
+	"DataMapView": {
+		"go-to-details-page": "Go to details page"
+	},
 	"DataPage": {
 		"meta": {
 			"title": "Data"
