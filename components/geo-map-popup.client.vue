@@ -54,7 +54,7 @@ onScopeDispose(() => {
 </script>
 
 <template>
-	<div ref="elementRef" class="grid gap-3" data-geo-map-popup="true">
+	<div ref="elementRef" class="grid max-h-80 gap-3 overflow-y-auto" data-geo-map-popup="true">
 		<slot />
 	</div>
 </template>
