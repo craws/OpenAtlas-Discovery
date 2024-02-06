@@ -59,20 +59,26 @@ dependencies:
     specifier: ^1.0.0-beta.1
     version: 1.0.0-beta.1(typescript@5.3.3)
   embla-carousel:
-    specifier: 8.0.0-rc22
+    specifier: ^8.0.0-rc22
     version: 8.0.0-rc22
   embla-carousel-vue:
-    specifier: 8.0.0-rc22
+    specifier: ^8.0.0-rc22
     version: 8.0.0-rc22(vue@3.4.15)
   fast-glob:
     specifier: ^3.3.2
     version: 3.3.2
+  is-ci:
+    specifier: ^3.0.1
+    version: 3.0.1
   lucide-vue-next:
     specifier: ^0.321.0
     version: 0.321.0(vue@3.4.15)
   maplibre-gl:
     specifier: ^3.6.2
     version: 3.6.2
+  npm-run-all2:
+    specifier: ^6.1.2
+    version: 6.1.2
   nuxt:
     specifier: ^3.10.1
     version: 3.10.1(@types/node@20.11.16)(eslint@8.56.0)(rollup@4.9.6)(stylelint@16.2.1)(typescript@5.3.3)(vite@5.0.12)(vue-tsc@1.8.27)
@@ -168,15 +174,9 @@ devDependencies:
   eslint-plugin-tailwindcss:
     specifier: ^3.14.1
     version: 3.14.1(tailwindcss@3.4.1)
-  is-ci:
-    specifier: ^3.0.1
-    version: 3.0.1
   lint-staged:
     specifier: ^15.2.1
     version: 15.2.2
-  npm-run-all2:
-    specifier: ^6.1.2
-    version: 6.1.2
   postcss:
     specifier: ^8.4.33
     version: 8.4.34
@@ -4836,7 +4836,7 @@ packages:
   /ci-info@3.9.0:
     resolution: {integrity: sha512-NIxF55hv4nSqQswkAeiOi1r83xy8JldOFDTWiug55KBu9Jnblncd2U6ViHmYgHf01TPZS77NJBhBMKdWj9HQMQ==}
     engines: {node: '>=8'}
-    dev: true
+    dev: false
 
   /ci-info@4.0.0:
     resolution: {integrity: sha512-TdHqgGf9odd8SXNuxtUBVx8Nv+qZOejE6qyqiy5NtbYYQOeFa6zmHkxlPzmaLxWWHsU6nJmB7AETdVPi+2NBUg==}
@@ -6886,7 +6886,7 @@ packages:
     hasBin: true
     dependencies:
       ci-info: 3.9.0
-    dev: true
+    dev: false
 
   /is-core-module@2.13.1:
     resolution: {integrity: sha512-hHrIjvZsftOsvKSn2TRYl63zvxsgE0K+0mYMoH6gD4omR5IWB2KynivBQczo3+wF1cCkjzvptnI9Q0sPU66ilw==}
@@ -7644,7 +7644,7 @@ packages:
   /memorystream@0.3.1:
     resolution: {integrity: sha512-S3UwM3yj5mtUSEfP41UZmt/0SCoVYUcU1rkXv+BQ5Ig8ndL4sPoJNBUJERafdPb5jjHJGuMgytgKvKIf58XNBw==}
     engines: {node: '>= 0.10.0'}
-    dev: true
+    dev: false
 
   /meow@13.1.0:
     resolution: {integrity: sha512-o5R/R3Tzxq0PJ3v3qcQJtSvSE9nKOLSAaDuuoMzDVuGTwHdccMWcYomh9Xolng2tjT6O/Y83d+0coVGof6tqmA==}
@@ -8364,7 +8364,7 @@ packages:
       pidtree: 0.6.0
       read-package-json-fast: 3.0.2
       shell-quote: 1.8.1
-    dev: true
+    dev: false
 
   /npm-run-path@4.0.1:
     resolution: {integrity: sha512-S48WzZW777zhNIrn7gxOlISNAqi9ZC/uQFnRdbeIHhZhCA6UqpkOT8T1G7BvfdgP4Er8gF4sUbaS0i7QvIfCWw==}
@@ -8820,7 +8820,6 @@ packages:
     resolution: {integrity: sha512-eG2dWTVw5bzqGRztnHExczNxt5VGsE6OwTeCG3fdUf9KBsZzO3R5OIIIzWR+iZA0NtZ+RDVdaoE2dK1cn6jH4g==}
     engines: {node: '>=0.10'}
     hasBin: true
-    dev: true
 
   /pify@2.3.0:
     resolution: {integrity: sha512-udgsAY+fTnvv7kI7aaxbqwWNb0AHiB0qBO89PZKPkoTmGOgdbrHDKD+0B2X4uTfJ/FT1R09r9gTsjUjNJotuog==}
