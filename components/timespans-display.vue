@@ -34,21 +34,23 @@ const timespans = computed(() => {
 </script>
 
 <template>
-	<template v-if="timespans && timespans.length > 0">
-		<template v-for="(timespan, index) in timespans" :key="index">
-			<div class="flex justify-between" >
-				<div>
-					<p>{{ t("when-display.start") }}: {{ timespan?.start }}</p>
+	<div>
+		<template v-if="timespans && timespans.length > 0">
+			<template v-for="(timespan, index) in timespans" :key="index">
+				<div class="flex justify-between" >
+					<div>
+						<p>{{ t("when-display.start") }}: {{ timespan?.start }}</p>
+					</div>
+					<div>
+						<p>{{ t("when-display.end") }}: {{ timespan?.end }}</p>
+					</div>
 				</div>
-				<div>
-					<p>{{ t("when-display.end") }}: {{ timespan?.end }}</p>
-				</div>
+			</template>
+		</template>
+		<template v-else>
+			<div>
+				{{ t('when-display.no-dates') }}
 			</div>
 		</template>
-	</template>
-	<template v-else>
-		<div>
-			{{ t('when-display.no-dates') }}
-		</div>
-	</template>
+	</div>
 </template>
