@@ -2,11 +2,28 @@
 
 OpenAtlas Discovery is a presentation website for [OpenAtlas](https://openatlas.eu) projects.
 
-A demo website is deplyed at <https://frontend-demo-dev.openatlas.eu/>.
+A demo website is deplyed at <https://openatlas-discovery-demo.acdh-ch-dev.oeaw.ac.at>.
 
 ## Content management (CMS)
 
-TODO:
+The website comes with a content management system, which is deployed at `/admin` and commits all
+content chanes to the website repository on GitHub. All content is stored in plain text (markdown or
+json), and can also be edited directly with your favourite text editor.
+
+- "Config" collection: Main configuration file for the website. Allows setting default locale, brand
+  colors, logos. Saves to [`project.config.json`](project.config.json).
+- "Metadata" collection: Project metadata which needs translation in all suppoted languages. Saves
+  to [`messages/:locale/project.json`](messages/en/project.json).
+- "Pages" collection: Custom content pages. Saves to [`content/pages/*.md`](content/pages).
+- "Team" collection: Team members. Saves to [`content/team/*.md`](content/team).
+
+When developing locally, you can run a development CMS server with:
+
+```bash
+pnpm run dev:cms
+```
+
+This server will _not_ commit content changes to GitHub, but write to the local filesystem instead.
 
 ## Development
 
@@ -41,6 +58,8 @@ Environment variables:
   analytics, set the base URL and property id (optional).
 - `NUXT_PUBLIC_BOTS`: Set this to "enabled" to allow web crawlers like the Google bot to index this
   website.
+
+- `NUXT_PUBLIC_REDMINE_ID`: Needed when using the ACDH-CH imprint service for the imprint page.
 
 ### Install dependencies
 

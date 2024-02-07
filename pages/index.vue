@@ -22,10 +22,7 @@ const {
 } = useQuery({
 	queryKey: ["content", locale, "index"] as const,
 	queryFn({ queryKey: [, locale] }) {
-		return queryContent<ContentPage>("/")
-			.where({ _path: { $eq: "/" } })
-			.locale(locale)
-			.findOne();
+		return queryContent<ContentPage>("pages", locale).findOne();
 	},
 });
 useErrorMessage(error, {
@@ -45,7 +42,7 @@ onServerPrefetch(async () => {
 
 <template>
 	<MainContent class="container py-8">
-		<div class=" flex h-full flex-col items-center gap-8">
+		<div class="flex h-full flex-col items-center gap-8">
 			<div class="basis-1/12"></div>
 			<div v-if="content != null">
 				<h1 class="sr-only">{{ content.title }}</h1>

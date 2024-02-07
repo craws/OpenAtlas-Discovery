@@ -14,7 +14,7 @@ const {
 } = useQuery({
 	queryKey: ["imprint", locale] as const,
 	queryFn({ queryKey: [, locale] }) {
-		return queryContent<ContentPage>("/imprint").locale(locale).findOne();
+		return queryContent<ContentPage>("pages", locale, "imprint").findOne();
 	},
 });
 useErrorMessage(error, {
@@ -33,9 +33,5 @@ onServerPrefetch(async () => {
 </script>
 
 <template>
-	<ContentRenderer
-		v-if="content != null"
-		class="prose max-w-3xl dark:prose-invert"
-		:value="content"
-	/>
+	<ContentRenderer v-if="content != null" class="prose dark:prose-invert" :value="content" />
 </template>

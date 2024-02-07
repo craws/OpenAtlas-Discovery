@@ -92,7 +92,6 @@ const relationsByType = computed(() => {
 				</CardContent>
 			</Card>
 
-
 			<Tabs v-if="tabs.length > 0" :default-value="tabs[0]?.id">
 				<TabsList>
 					<TabsTrigger v-for="tab of tabs" :key="tab.id" :value="tab.id">
@@ -110,7 +109,7 @@ const relationsByType = computed(() => {
 		</template>
 
 		<template v-else-if="isLoading">
-			<Centered class="opacity-50 mix-blend-difference">
+			<Centered class="pointer-events-none opacity-50">
 				<LoadingIndicator />
 			</Centered>
 		</template>

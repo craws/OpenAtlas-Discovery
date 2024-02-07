@@ -1,19 +1,21 @@
 <script lang="ts" setup>
-import type { LinkedPlaceFeature } from '@/types/api';
+import type { LinkedPlaceFeature } from "@/types/api";
 
 interface DateSpan {
 	comments?: string | null;
 	earliest?: string | null;
 	latest?: string | null;
-};
+}
 
 const t = useTranslations();
 
 const props = defineProps<{
-	timespans: NonNullable<LinkedPlaceFeature['when']>['timespans'];
+	timespans: NonNullable<LinkedPlaceFeature["when"]>["timespans"];
 }>();
 
-function timespanToDateSpans(timespan?: { start?: DateSpan, end?: DateSpan } | null): { start: string | null, end: string | null } | null {
+function timespanToDateSpans(
+	timespan?: { start?: DateSpan; end?: DateSpan } | null,
+): { start: string | null; end: string | null } | null {
 	if (!timespan) return null;
 	const start = timespan.start ? createDateSpan(timespan.start) : null;
 	const end = timespan.end ? createDateSpan(timespan.end) : null;
@@ -28,16 +30,17 @@ function timespanToDateSpans(timespan?: { start?: DateSpan, end?: DateSpan } | n
 
 const timespans = computed(() => {
 	if (!props.timespans) return null;
-	return props.timespans.map(timespanToDateSpans).filter((timespan) => { return timespan !== null });
+	return props.timespans.map(timespanToDateSpans).filter((timespan) => {
+		return timespan !== null;
+	});
 });
-
 </script>
 
 <template>
 	<div>
 		<template v-if="timespans && timespans.length > 0">
 			<template v-for="(timespan, index) in timespans" :key="index">
-				<div class="flex justify-between" >
+				<div class="flex justify-between">
 					<div>
 						<p>{{ t("when-display.start") }}: {{ timespan?.start }}</p>
 					</div>
@@ -49,7 +52,7 @@ const timespans = computed(() => {
 		</template>
 		<template v-else>
 			<div>
-				{{ t('when-display.no-dates') }}
+				{{ t("when-display.no-dates") }}
 			</div>
 		</template>
 	</div>

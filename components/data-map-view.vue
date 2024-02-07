@@ -96,6 +96,7 @@ function onLayerClick(features: Array<MapGeoJSONFeature & Pick<EntityFeature, "p
 
 		<VisualisationContainer
 			v-slot="{ height, width }"
+			class="border"
 			:class="{ 'opacity-50 grayscale': isLoading }"
 		>
 			<GeoMap
@@ -126,7 +127,7 @@ function onLayerClick(features: Array<MapGeoJSONFeature & Pick<EntityFeature, "p
 						</strong>
 						<dl
 							v-if="entity.when?.timespans != null && entity.when.timespans.length > 0"
-							class="grid gap-1 pl-[18px] text-2xs text-neutral-600"
+							class="grid grid-cols-[auto_auto] justify-start gap-x-6 gap-y-1 pl-[18px] text-2xs text-neutral-600"
 						>
 							<template v-for="(timespan, index) of entity.when.timespans" :key="index">
 								<template v-if="timespan.start?.earliest != null || timespan.start?.latest != null">
@@ -147,8 +148,8 @@ function onLayerClick(features: Array<MapGeoJSONFeature & Pick<EntityFeature, "p
 				</GeoMapPopup>
 			</GeoMap>
 
-			<Centered v-if="isLoading" class="mix-blend-difference">
-				<LoadingIndicator size="lg" />
+			<Centered v-if="isLoading" class="pointer-events-none">
+				<LoadingIndicator class="text-[#0a0a0a]" size="lg" />
 			</Centered>
 		</VisualisationContainer>
 	</div>

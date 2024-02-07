@@ -1,8 +1,8 @@
 {
-  "__cms__": true,
-  "Metadata": {
-    "name": "OpenAtlas Discovery",
-    "shortName": "OpenAtlas Discovery",
-    "description": "OpenAtlas ist eine Open-Source-Datenbanksoftware, die speziell für die Erfassung, Bearbeitung und Verwaltung von Forschungsdaten aus verschiedenen Bereichen der Geisteswissenschaften entwickelt wurde."
-  }
+	"__cms__": true,
+	"Metadata": {
+		"name": "OpenAtlas Discovery",
+		"shortName": "OpenAtlas Discovery",
+		"description": "OpenAtlas ist eine Open-Source-Datenbanksoftware, die speziell für die Erfassung, Bearbeitung und Verwaltung von Forschungsdaten aus verschiedenen Bereichen der Geisteswissenschaften entwickelt wurde."
+	}
 }

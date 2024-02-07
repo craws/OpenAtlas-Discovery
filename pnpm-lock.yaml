@@ -20,8 +20,8 @@ dependencies:
     specifier: ^5.0.16
     version: 5.0.16
   '@nuxt/content':
-    specifier: ^2.11.0
-    version: 2.11.0(nuxt@3.10.1)(rollup@4.9.6)(vue@3.4.15)
+    specifier: ^2.12.0
+    version: 2.12.0(nuxt@3.10.1)(rollup@4.9.6)(vue@3.4.15)
   '@nuxt/image':
     specifier: ^1.3.0
     version: 1.3.0(rollup@4.9.6)
@@ -29,8 +29,8 @@ dependencies:
     specifier: ^3.3.2
     version: 3.3.2(rollup@4.9.6)
   '@nuxtjs/i18n':
-    specifier: ^8.0.1
-    version: 8.0.1(rollup@4.9.6)(vue@3.4.15)
+    specifier: ^8.0.2
+    version: 8.0.2(rollup@4.9.6)(vue@3.4.15)
   '@stefanprobst/netlify-cms-oauth-client':
     specifier: ^0.4.0
     version: 0.4.0
@@ -83,11 +83,11 @@ dependencies:
     specifier: ^3.0.1
     version: 3.0.1
   lucide-vue-next:
-    specifier: ^0.321.0
-    version: 0.321.0(vue@3.4.15)
+    specifier: ^0.323.0
+    version: 0.323.0(vue@3.4.15)
   maplibre-gl:
-    specifier: ^3.6.2
-    version: 3.6.2
+    specifier: ^4.0.0
+    version: 4.0.0
   npm-run-all2:
     specifier: ^6.1.2
     version: 6.1.2
@@ -101,8 +101,8 @@ dependencies:
     specifier: ^9.0.0
     version: 9.0.0
   radix-vue:
-    specifier: ^1.3.2
-    version: 1.4.1(vue@3.4.15)
+    specifier: ^1.4.2
+    version: 1.4.2(vue@3.4.15)
   tailwind-merge:
     specifier: ^2.2.1
     version: 2.2.1
@@ -175,16 +175,16 @@ devDependencies:
     specifier: ^8.56.0
     version: 8.56.0
   eslint-plugin-tailwindcss:
-    specifier: ^3.14.1
-    version: 3.14.1(tailwindcss@3.4.1)
+    specifier: ^3.14.2
+    version: 3.14.2(tailwindcss@3.4.1)
   lint-staged:
-    specifier: ^15.2.1
+    specifier: ^15.2.2
     version: 15.2.2
   postcss:
-    specifier: ^8.4.33
+    specifier: ^8.4.34
     version: 8.4.34
   prettier:
-    specifier: ^3.2.4
+    specifier: ^3.2.5
     version: 3.2.5
   schema-dts:
     specifier: ^1.1.2
@@ -1572,13 +1572,13 @@ packages:
     engines: {node: '>=6.0.0'}
     dev: false
 
-  /@maplibre/maplibre-gl-style-spec@19.3.3:
-    resolution: {integrity: sha512-cOZZOVhDSulgK0meTsTkmNXb1ahVvmTmWmfx9gRBwc6hq98wS9JP35ESIoNq3xqEan+UN+gn8187Z6E4NKhLsw==}
+  /@maplibre/maplibre-gl-style-spec@20.1.1:
+    resolution: {integrity: sha512-z85ARNPCBI2Cs5cPOS3DSbraTN+ue8zrcYVoSWBuNrD/mA+2SKAJ+hIzI22uN7gac6jBMnCdpPKRxS/V0KSZVQ==}
     hasBin: true
     dependencies:
       '@mapbox/jsonlint-lines-primitives': 2.0.2
       '@mapbox/unitbezier': 0.0.1
-      json-stringify-pretty-compact: 3.0.0
+      json-stringify-pretty-compact: 4.0.0
       minimist: 1.2.8
       rw: 1.3.3
       sort-object: 3.0.3
@@ -1708,11 +1708,11 @@ packages:
       - bluebird
       - supports-color
 
-  /@nuxt/content@2.11.0(nuxt@3.10.1)(rollup@4.9.6)(vue@3.4.15):
-    resolution: {integrity: sha512-bHk4Vs+9k94z9WDdQcjTKWeXEkHiRsatTPx/914okegKaWz3yntt3x6NUPv6Ch3zI5JJZvepqbVPoWxuySFmmQ==}
+  /@nuxt/content@2.12.0(nuxt@3.10.1)(rollup@4.9.6)(vue@3.4.15):
+    resolution: {integrity: sha512-XQkbkJzFRWKdX4aoVDprqLphbQGDsRX35ZRgHe4i7Phe3F1z2EzXVhZ9WXBTmpXau3MkLlmsQ+NzcRns1kOOvQ==}
     dependencies:
       '@nuxt/kit': 3.10.1(rollup@4.9.6)
-      '@nuxtjs/mdc': 0.3.2(rollup@4.9.6)
+      '@nuxtjs/mdc': 0.5.0(rollup@4.9.6)
       '@vueuse/core': 10.7.2(vue@3.4.15)
       '@vueuse/head': 2.0.0(vue@3.4.15)
       '@vueuse/nuxt': 10.7.2(nuxt@3.10.1)(rollup@4.9.6)(vue@3.4.15)
@@ -1731,7 +1731,7 @@ packages:
       ohash: 1.1.3
       pathe: 1.1.2
       scule: 1.2.0
-      shikiji: 0.9.19
+      shiki: 1.0.0
       slugify: 1.6.6
       socket.io-client: 4.7.4
       ufo: 1.3.2
@@ -2020,8 +2020,8 @@ packages:
       - supports-color
     dev: false
 
-  /@nuxtjs/i18n@8.0.1(rollup@4.9.6)(vue@3.4.15):
-    resolution: {integrity: sha512-h1IBAY/sdGYHEud/HrL28tx632wteggQ1hFWO+XBj/5xBAVfgSYjcaB3bWtB6KNXYktojWOifW0QIis5lfx7UQ==}
+  /@nuxtjs/i18n@8.0.2(rollup@4.9.6)(vue@3.4.15):
+    resolution: {integrity: sha512-cIZc6PvSjSJ15FTol6XT8AV9jwF8OKu5pmPje/wsQeG41phQAqEGcLwv+3hrhZgBZhQ3k9w/asWl/uTWGqTgFw==}
     engines: {node: ^14.16.0 || >=16.11.0}
     dependencies:
       '@intlify/h3': 0.5.0
@@ -2053,14 +2053,16 @@ packages:
       - vue-i18n-bridge
     dev: false
 
-  /@nuxtjs/mdc@0.3.2(rollup@4.9.6):
-    resolution: {integrity: sha512-iSepiwfNCh5dgO3ETqSdBHWdendRuRIZ7OsgIpEQXX2J9ubHK5XvRsK3DSUOqZZ8PHbRZ3eSr/9ZF9+IeZ0GFw==}
+  /@nuxtjs/mdc@0.5.0(rollup@4.9.6):
+    resolution: {integrity: sha512-480Ajc7o/YAl9b21btd0oRtVe/UjUWmVSEWauS+H+izwEGdGvJTVfZRdaiAXcXKl+UmUTpf+POel027sE9HAZQ==}
     dependencies:
       '@nuxt/kit': 3.10.1(rollup@4.9.6)
+      '@shikijs/transformers': 1.0.0
       '@types/hast': 3.0.4
       '@types/mdast': 4.0.3
       '@vue/compiler-core': 3.4.15
       consola: 3.2.3
+      debug: 4.3.4
       defu: 6.1.4
       destr: 2.0.2
       detab: 3.0.2
@@ -2069,6 +2071,8 @@ packages:
       mdast-util-to-hast: 13.1.0
       micromark-util-sanitize-uri: 2.0.0
       ohash: 1.1.3
+      parse5: 7.1.2
+      pathe: 1.1.2
       property-information: 6.4.1
       rehype-external-links: 3.0.0
       rehype-raw: 7.0.0
@@ -2081,8 +2085,7 @@ packages:
       remark-parse: 11.0.0
       remark-rehype: 11.1.0
       scule: 1.2.0
-      shikiji: 0.9.19
-      shikiji-transformers: 0.9.19
+      shiki: 1.0.0
       ufo: 1.3.2
       unified: 11.0.4
       unist-builder: 4.0.0
@@ -2500,6 +2503,16 @@ packages:
     os: [win32]
     requiresBuild: true
     optional: true
+
+  /@shikijs/core@1.0.0:
+    resolution: {integrity: sha512-UMKGMZ+8b88N0/n6DWwWth1PHsOaxjW+R2u+hzSiargZWTv+l3s1l8dhuIxUSsEUPlBDKLs2CSMiFZeviKQM1w==}
+    dev: false
+
+  /@shikijs/transformers@1.0.0:
+    resolution: {integrity: sha512-US0Sc0OdH7eGL64BtfvX3XezPfqhqF5mPyBFLlbZqSpFt2/emnv9GveAWzELGsIuvXoJ6N1RjeAdmQx5Xni6BQ==}
+    dependencies:
+      shiki: 1.0.0
+    dev: false
 
   /@sigstore/bundle@2.1.1:
     resolution: {integrity: sha512-v3/iS+1nufZdKQ5iAlQKcCsoh0jffQyABvYIxKsZQFWc4ubuGjwZklFHpDgV6O6T7vvV78SW5NHI91HFKEcxKg==}
@@ -3701,6 +3714,12 @@ packages:
 
   /@types/estree@1.0.5:
     resolution: {integrity: sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==}
+
+  /@types/geojson-vt@3.2.5:
+    resolution: {integrity: sha512-qDO7wqtprzlpe8FfQ//ClPV9xiuoh2nkIgiouIptON9w5jvD/fA4szvP9GBlDVdJ5dldAl0kX/sy3URbWwLx0g==}
+    dependencies:
+      '@types/geojson': 7946.0.14
+    dev: false
 
   /@types/geojson@7946.0.14:
     resolution: {integrity: sha512-WCfD5Ht3ZesJUsONdhvm84dmzWOiOzOAqOncN0++w0lBw1o8OuDNJF2McvvCef/yBqb/HYRahp1BYtODFQ8bRg==}
@@ -5815,8 +5834,8 @@ packages:
       eslint: 8.56.0
     dev: true
 
-  /eslint-plugin-tailwindcss@3.14.1(tailwindcss@3.4.1):
-    resolution: {integrity: sha512-orNkVzJ1fdCkj5d8AHE3tAbixNpMJRoKoHPnxZbZ6iBHTsNvOEmeBz62C3THPhFnXCXaD55SRbNjqGzMEXRoZA==}
+  /eslint-plugin-tailwindcss@3.14.2(tailwindcss@3.4.1):
+    resolution: {integrity: sha512-fNzdf4poZP2yQC0xC2prQxMuArMSb5mnellLQvwb9HC3NcLzxs+0IVKWIg1BqUqyui0c+bbjMmhWcKUWK67SLQ==}
     engines: {node: '>=12.13.0'}
     peerDependencies:
       tailwindcss: ^3.4.0
@@ -7127,8 +7146,8 @@ packages:
   /json-stable-stringify-without-jsonify@1.0.1:
     resolution: {integrity: sha512-Bdboy+l7tA3OGW6FjyFHWkP5LuByj1Tk33Ljyq0axyzdk9//JSi2u3fP1QSmd1KNwq6VOKYGlAu87CisVir6Pw==}
 
-  /json-stringify-pretty-compact@3.0.0:
-    resolution: {integrity: sha512-Rc2suX5meI0S3bfdZuA7JMFBGkJ875ApfVyq2WHELjBiiG22My/l7/8zPpH/CfFVQHuVLd8NLR0nv6vi0BYYKA==}
+  /json-stringify-pretty-compact@4.0.0:
+    resolution: {integrity: sha512-3CNZ2DnrpByG9Nqj6Xo8vqbjT4F6N+tb4Gb28ESAZjYZ5yqvmc56J+/kuIwkaAMOyblTQhUW7PxMkUb8Q36N3Q==}
     dev: false
 
   /json5@2.2.3:
@@ -7398,8 +7417,8 @@ packages:
     dependencies:
       yallist: 4.0.0
 
-  /lucide-vue-next@0.321.0(vue@3.4.15):
-    resolution: {integrity: sha512-r4IXuXuFneX2tAJF9TxXY/X5J0zIblI/pBPMR5vcAtDFVAKwWHoGSvCMk3dkH2dmD/uUZfNZiLI5fa07g4pbMA==}
+  /lucide-vue-next@0.323.0(vue@3.4.15):
+    resolution: {integrity: sha512-Hf++C/pHAZ7RUOw0J7ZBrxHr9KWlwecwK72HxvOgD9uYsqLCbPNSOaaol1ypMCpnTXIvjUIK7t/NVcd2J1u/wA==}
     peerDependencies:
       vue: '>=3.0.1'
     dependencies:
@@ -7449,8 +7468,8 @@ packages:
     transitivePeerDependencies:
       - supports-color
 
-  /maplibre-gl@3.6.2:
-    resolution: {integrity: sha512-krg2KFIdOpLPngONDhP6ixCoWl5kbdMINP0moMSJFVX7wX1Clm2M9hlNKXS8vBGlVWwR5R3ZfI6IPrYz7c+aCQ==}
+  /maplibre-gl@4.0.0:
+    resolution: {integrity: sha512-bzVQ2pdOWITwbE+JHKSiAB/viVBBx4Aa1puydc1xizOWGbvRHD9pXpy3dsaW2ZlbmZKbv9r9sHpcvM9fTLGsKA==}
     engines: {node: '>=16.14.0', npm: '>=8.1.0'}
     dependencies:
       '@mapbox/geojson-rewind': 0.5.2
@@ -7460,8 +7479,9 @@ packages:
       '@mapbox/unitbezier': 0.0.1
       '@mapbox/vector-tile': 1.3.1
       '@mapbox/whoots-js': 3.1.0
-      '@maplibre/maplibre-gl-style-spec': 19.3.3
+      '@maplibre/maplibre-gl-style-spec': 20.1.1
       '@types/geojson': 7946.0.14
+      '@types/geojson-vt': 3.2.5
       '@types/mapbox__point-geometry': 0.1.4
       '@types/mapbox__vector-tile': 1.3.4
       '@types/pbf': 3.0.5
@@ -9378,8 +9398,8 @@ packages:
     resolution: {integrity: sha512-RKJ22hX8mHe3Y6wH/N3wCM6BWtjaxIyyUIkpHOvfFnxdI4yD4tBXEBKSbriGujF6jnSVkJrffuo6vxACiSSxIw==}
     dev: false
 
-  /radix-vue@1.4.1(vue@3.4.15):
-    resolution: {integrity: sha512-eJsyIHDZPfIdH0iqrfTODuklPqDXfO0iNDNI1isOYIr+ejmeCjP6Yw1LA7LtDryPnjsSkqj0t04DF7eBn2wtMQ==}
+  /radix-vue@1.4.2(vue@3.4.15):
+    resolution: {integrity: sha512-3eENiigXlRBduAXoFjanDmuD/p1M+KU0C2SZWyRD9Mpey8RQSZ593AshroUV4cho8UL4h398RYA6ouMWAvU4Jg==}
     dependencies:
       '@floating-ui/dom': 1.6.1
       '@floating-ui/vue': 1.0.6(vue@3.4.15)
@@ -9927,20 +9947,10 @@ packages:
   /shell-quote@1.8.1:
     resolution: {integrity: sha512-6j1W9l1iAs/4xYBI1SYOVZyFcCis9b4KCLQ8fgAGG07QvzaRLVVRQvAy85yNmmZSjYjg4MWh4gNvlPujU/5LpA==}
 
-  /shikiji-core@0.9.19:
-    resolution: {integrity: sha512-AFJu/vcNT21t0e6YrfadZ+9q86gvPum6iywRyt1OtIPjPFe25RQnYJyxHQPMLKCCWA992TPxmEmbNcOZCAJclw==}
-    dev: false
-
-  /shikiji-transformers@0.9.19:
-    resolution: {integrity: sha512-lGLI7Z8frQrIBbhZ74/eiJtxMoCQRbpaHEB+gcfvdIy+ZFaAtXncJGnc52932/UET+Y4GyKtwwC/vjWUCp+c/Q==}
+  /shiki@1.0.0:
+    resolution: {integrity: sha512-rOUGJa3yFGgOrEoiELYxraoBbag3ZWf9bpodlr05Wjm85Scx8OIX+otdSefq9Pk7L47TKEzGodSQb4L38jka6A==}
     dependencies:
-      shikiji: 0.9.19
-    dev: false
-
-  /shikiji@0.9.19:
-    resolution: {integrity: sha512-Kw2NHWktdcdypCj1GkKpXH4o6Vxz8B8TykPlPuLHOGSV8VkhoCLcFOH4k19K4LXAQYRQmxg+0X/eM+m2sLhAkg==}
-    dependencies:
-      shikiji-core: 0.9.19
+      '@shikijs/core': 1.0.0
     dev: false
 
   /side-channel@1.0.4:
