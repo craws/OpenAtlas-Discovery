@@ -1,8 +1,8 @@
 {
-  "__cms__": true,
-  "Metadata": {
-    "name": "OpenAtlas Discovery",
-    "shortName": "OpenAtlas Discovery",
-    "description": "OpenAtlas is an open source database software developed especially to acquire, edit and manage research data from various fields of humanities."
-  }
+	"__cms__": true,
+	"Metadata": {
+		"name": "OpenAtlas Discovery",
+		"shortName": "OpenAtlas Discovery",
+		"description": "OpenAtlas is an open source database software developed especially to acquire, edit and manage research data from various fields of humanities."
+	}
 }

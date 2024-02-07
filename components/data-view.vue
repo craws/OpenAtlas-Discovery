@@ -127,7 +127,7 @@ const entities = computed(() => {
 				<Centered>{{ t("DataView.nothing-found") }}</Centered>
 			</div>
 
-			<Centered v-if="isLoading" class="mix-blend-difference">
+			<Centered v-if="isLoading" class="pointer-events-none">
 				<LoadingIndicator size="lg" />
 			</Centered>
 		</div>

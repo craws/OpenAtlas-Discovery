@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-
 const t = useTranslations();
 
 const props = defineProps<{
@@ -7,14 +6,18 @@ const props = defineProps<{
 }>();
 
 const filteredDescriptions = computed(() => {
-	return props.descriptions.filter((description: { value?: string }) => { return description.value });
+	return props.descriptions.filter((description: { value?: string }) => {
+		return description.value;
+	});
 });
-
 </script>
 
 <template>
 	<template v-if="filteredDescriptions.length > 0">
-		<div v-for="(description, index) in filteredDescriptions" :key="description.value ?? 'descr' + index">
+		<div
+			v-for="(description, index) in filteredDescriptions"
+			:key="description.value ?? 'descr' + index"
+		>
 			<template v-if="description.value">
 				<VDivider v-if="index > 0" />
 				<p class="text-md">

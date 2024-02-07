@@ -238,7 +238,7 @@ collections:
     create: true
     delete: true
     slug: "{{lastName}}-{{firstName}}"
-	  summary: "{{firstName}} {{lastName}}"
+    summary: "{{firstName}} {{lastName}}"
     fields:
       - name: firstName
         label: First name

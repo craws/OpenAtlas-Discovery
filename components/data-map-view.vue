@@ -96,6 +96,7 @@ function onLayerClick(features: Array<MapGeoJSONFeature & Pick<EntityFeature, "p
 
 		<VisualisationContainer
 			v-slot="{ height, width }"
+			class="border"
 			:class="{ 'opacity-50 grayscale': isLoading }"
 		>
 			<GeoMap
@@ -147,8 +148,8 @@ function onLayerClick(features: Array<MapGeoJSONFeature & Pick<EntityFeature, "p
 				</GeoMapPopup>
 			</GeoMap>
 
-			<Centered v-if="isLoading" class="mix-blend-difference">
-				<LoadingIndicator size="lg" />
+			<Centered v-if="isLoading" class="pointer-events-none">
+				<LoadingIndicator class="text-[#0a0a0a]" size="lg" />
 			</Centered>
 		</VisualisationContainer>
 	</div>

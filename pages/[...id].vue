@@ -49,15 +49,11 @@ useContentHead(content);
 </script>
 
 <template>
-	<MainContent class="container py-8">
+	<MainContent class="container max-w-3xl py-8">
 		<div>
 			<PageTitle>{{ content?.title }}</PageTitle>
 		</div>
 
-		<ContentRenderer
-			v-if="content != null"
-			class="prose max-w-3xl dark:prose-invert"
-			:value="content"
-		/>
+		<ContentRenderer v-if="content != null" class="prose dark:prose-invert" :value="content" />
 	</MainContent>
 </template>

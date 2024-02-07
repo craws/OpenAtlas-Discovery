@@ -20,7 +20,7 @@ if (project.imprint === "none") {
 </script>
 
 <template>
-	<MainContent class="container py-8">
+	<MainContent class="container max-w-3xl py-8">
 		<div>
 			<PageTitle>{{ t("ImprintPage.title") }}</PageTitle>
 		</div>
