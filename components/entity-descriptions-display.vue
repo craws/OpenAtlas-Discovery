@@ -1,29 +1,28 @@
 <script lang="ts" setup>
-const t = useTranslations();
+import { isNonEmptyString } from "@acdh-oeaw/lib";
 
 const props = defineProps<{
 	descriptions: Array<{ value?: string }>;
 }>();
 
-const filteredDescriptions = computed(() => {
-	return props.descriptions.filter((description: { value?: string }) => {
-		return description.value;
+const t = useTranslations();
+
+const descriptions = computed(() => {
+	const descriptions: Array<string> = [];
+	props.descriptions.forEach((description) => {
+		if (isNonEmptyString(description.value)) {
+			descriptions.push(description.value);
+		}
 	});
+	return descriptions;
 });
 </script>
 
 <template>
-	<template v-if="filteredDescriptions.length > 0">
-		<div
-			v-for="(description, index) in filteredDescriptions"
-			:key="description.value ?? 'descr' + index"
-		>
-			<template v-if="description.value">
-				<div v-if="index > 0" role="separator">
-				<p class="text-md">
-					{{ description.value }}
-				</p>
-			</template>
+	<template v-if="descriptions.length > 0">
+		<div v-for="(description, index) in descriptions" :key="index">
+			<div v-if="index > 0" class="h-px w-full bg-border" role="separator" />
+			<p class="text-md">{{ description }}</p>
 		</div>
 	</template>
 	<template v-else>
