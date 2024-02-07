@@ -16,7 +16,7 @@ const filteredDescriptions = computed(() => {
 	<template v-if="filteredDescriptions.length > 0">
 		<div v-for="(description, index) in filteredDescriptions" :key="description.value ?? 'descr' + index">
 			<template v-if="description.value">
-				<VDivider v-if="index > 0" />
+				<div v-if="index > 0" role="separator">
 				<p class="text-md">
 					{{ description.value }}
 				</p>
