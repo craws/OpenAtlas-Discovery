@@ -22,8 +22,9 @@ export default defineNuxtPlugin((nuxt) => {
 	const queryClient = new QueryClient({
 		defaultOptions: {
 			queries: {
+				gcTime: 1000 * 60 * 15,
 				placeholderData: keepPreviousData,
-				staleTime: 1000 * 60 * 15,
+				staleTime: 1000 * 60 * 30,
 			},
 		},
 		queryCache: new QueryCache({
