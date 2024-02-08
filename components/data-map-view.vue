@@ -8,6 +8,7 @@ import type { SearchFormData } from "@/components/search-form.vue";
 import type { EntityFeature } from "@/composables/use-create-entity";
 import { categories } from "@/composables/use-get-search-results";
 import { project } from "@/config/project.config";
+import type { GeoJsonFeature } from "@/utils/create-geojson-feature";
 
 const router = useRouter();
 const route = useRoute();
@@ -67,9 +68,19 @@ const entitiesById = computed(() => {
 	});
 });
 
+/**
+ * Reduce size of geojson payload, which has an impact on performance,
+ * because `maplibre-gl` will serialize geojson features when sending them to the webworker.
+ */
+const features = computed(() => {
+	return entities.value.map((entity) => {
+		return createGeoJsonFeature(entity);
+	});
+});
+
 const popover = ref<{ coordinates: [number, number]; entities: Array<EntityFeature> } | null>(null);
 
-function onLayerClick(features: Array<MapGeoJSONFeature & Pick<EntityFeature, "properties">>) {
+function onLayerClick(features: Array<MapGeoJSONFeature & Pick<GeoJsonFeature, "properties">>) {
 	const entities: Array<EntityFeature> = [];
 
 	features.forEach((feature) => {
@@ -101,7 +112,7 @@ function onLayerClick(features: Array<MapGeoJSONFeature & Pick<EntityFeature, "p
 		>
 			<GeoMap
 				v-if="height && width"
-				:entities="entities"
+				:features="features"
 				:height="height"
 				:width="width"
 				@layer-click="onLayerClick"

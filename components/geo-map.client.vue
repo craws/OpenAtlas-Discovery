@@ -13,12 +13,12 @@ import {
 } from "maplibre-gl";
 
 import { type GeoMapContext, geoMapContextKey } from "@/components/geo-map.context";
-import type { EntityFeature } from "@/composables/use-create-entity";
 import { initialViewState } from "@/config/geo-map.config";
 import { project } from "@/config/project.config";
+import type { GeoJsonFeature } from "@/utils/create-geojson-feature";
 
 const props = defineProps<{
-	entities: Array<EntityFeature>;
+	features: Array<GeoJsonFeature>;
 	height: number;
 	width: number;
 }>();
@@ -26,7 +26,7 @@ const props = defineProps<{
 const emit = defineEmits<{
 	(
 		event: "layer-click",
-		features: Array<MapGeoJSONFeature & Pick<EntityFeature, "properties">>,
+		features: Array<MapGeoJSONFeature & Pick<GeoJsonFeature, "properties">>,
 	): void;
 }>();
 
@@ -124,14 +124,14 @@ function init() {
 	map.on("click", "points", (event) => {
 		emit(
 			"layer-click",
-			(event.features ?? []) as Array<MapGeoJSONFeature & Pick<EntityFeature, "properties">>,
+			(event.features ?? []) as Array<MapGeoJSONFeature & Pick<GeoJsonFeature, "properties">>,
 		);
 	});
 
 	map.on("click", "polygons", (event) => {
 		emit(
 			"layer-click",
-			(event.features ?? []) as Array<MapGeoJSONFeature & Pick<EntityFeature, "properties">>,
+			(event.features ?? []) as Array<MapGeoJSONFeature & Pick<GeoJsonFeature, "properties">>,
 		);
 	});
 
@@ -165,7 +165,7 @@ function dispose() {
 }
 
 watch(() => {
-	return props.entities;
+	return props.features;
 }, update);
 
 function update() {
@@ -174,7 +174,7 @@ function update() {
 
 	const sourceId = "data";
 	const source = map.getSource(sourceId) as GeoJSONSource | undefined;
-	const geojson = createFeatureCollection(props.entities);
+	const geojson = createFeatureCollection(props.features);
 	source?.setData(geojson);
 
 	if (geojson.features.length > 0) {

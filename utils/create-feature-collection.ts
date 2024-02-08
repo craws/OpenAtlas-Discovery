@@ -1,5 +1,5 @@
-import type { EntityFeature } from "@/composables/use-create-entity";
+import type { Feature } from "geojson";
 
-export function createFeatureCollection(features: Array<EntityFeature>) {
+export function createFeatureCollection<T extends Feature>(features: Array<T>) {
 	return { type: "FeatureCollection" as const, features };
 }
