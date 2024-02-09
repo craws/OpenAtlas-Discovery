@@ -9,11 +9,13 @@ const t = useTranslations();
 
 const descriptions = computed(() => {
 	const descriptions: Array<string> = [];
+
 	props.descriptions.forEach((description) => {
 		if (isNonEmptyString(description.value)) {
 			descriptions.push(description.value);
 		}
 	});
+
 	return descriptions;
 });
 </script>

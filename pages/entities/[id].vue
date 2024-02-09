@@ -81,13 +81,13 @@ const relationsByType = computed(() => {
 		<template v-if="entity != null">
 			<Card>
 				<CardHeader>
-					<SystemClassDisplay :system-class="entity.systemClass" />
+					<EntitySystemClass :system-class="entity.systemClass" />
 					<PageTitle>{{ entity.properties.title }}</PageTitle>
 				</CardHeader>
 				<CardContent>
 					<div class="flex flex-col gap-4">
-						<TimespansDisplay class="max-w-96" :timespans="entity.when?.timespans" />
-						<EntityDescriptionsDisplay :descriptions="entity?.descriptions ?? []" />
+						<EntityTimespans class="max-w-96" :timespans="entity.when?.timespans" />
+						<EntityDescriptions :descriptions="entity?.descriptions ?? []" />
 					</div>
 				</CardContent>
 			</Card>

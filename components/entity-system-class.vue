@@ -1,9 +1,9 @@
 <script setup lang="ts">
-const t = useTranslations();
-
 defineProps<{
 	systemClass: string;
 }>();
+
+const t = useTranslations();
 </script>
 
 <template>
