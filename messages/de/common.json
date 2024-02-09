@@ -139,34 +139,40 @@
 	"SystemClassNames": {
 		"acquisition": "Erwerb",
 		"activity": "Aktivität",
-		"actor_appellation": "Akteurenbezeichnung",
-		"administrative_unit": "Ort",
+		"actor_function": "Akteursfunktion",
+		"actor_relation": "Akteursbeziehung",
+		"administrative_unit": "Verwaltungseinheit",
 		"appellation": "Bezeichnung",
-		"artifact": "Künstliches Objekt",
-		"bibliography": "Dokument",
-		"edition": "Dokument",
-		"external_reference": "Dokument",
-		"feature": "Physische Sache",
-		"file": "Dokument",
-		"find": "Künstliches Objekt",
+		"artifact": "Artefakt",
+		"bibliography": "Bibliographie",
+		"creation": "Kreation",
+		"edition": "Edition",
+		"event": "Ereignis",
+		"external_reference": "Externe Referenz",
+		"feature": "Feature",
+		"file": "Datei",
 		"group": "Gruppe",
-		"human_remains": "Biologisches Objekt",
-		"move": "Bewegung",
-		"object_location": "Ort",
+		"human_remains": "Menschliche Überreste",
+		"involvement": "Beteiligung",
+		"modification": "Modifikation",
+		"move": "Move",
+		"object_location": "Objektstandort",
 		"person": "Person",
-		"place": "Physische Sache",
-		"referenceSystem": "Autoritätsdokument",
-		"source": "Linguistisches Objekt",
-		"source_translation": "Linguistisches Objekt",
-		"stratigraphic_unit": "Physische Sache",
-		"type": "Typ"
+		"place": "Ort",
+		"production": "Produktion",
+		"reference_system": "Referenzsystem",
+		"source": "Quelle",
+		"source_translation": "Quellenübersetzung",
+		"stratigraphic_unit": "Stratigraphische Einheit",
+		"type": "Typ",
+		"type_tools": "Typ-Werkzeuge"
+	},
+	"TimespansDisplay": {
+		"end": "Ende",
+		"no-dates": "Keine Kalenderdaten bekannt",
+		"start": "Beginn"
 	},
 	"Toast": {
 		"error": "Fehler"
-	},
-	"when-display": {
-		"end": "Ende",
-		"no-dates": "Keine Kalenderdaten bekannt",
-		"start": "Start"
 	}
 }

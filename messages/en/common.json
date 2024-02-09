@@ -139,34 +139,40 @@
 	"SystemClassNames": {
 		"acquisition": "Acquisition",
 		"activity": "Activity",
-		"actor_appellation": "Actor Appellation",
-		"administrative_unit": "Place",
+		"actor_function": "Actor function",
+		"actor_relation": "Actor relation",
+		"administrative_unit": "Administrative unit",
 		"appellation": "Appellation",
-		"artifact": "Man-Made Object",
-		"bibliography": "Document",
-		"edition": "Document",
-		"external_reference": "Document",
-		"feature": "Physical Thing",
-		"file": "Document",
-		"find": "Man-Made Object",
+		"artifact": "Artifact",
+		"bibliography": "Bibliography",
+		"creation": "Creation",
+		"edition": "Edition",
+		"event": "Event",
+		"external_reference": "External reference",
+		"feature": "Feature",
+		"file": "File",
 		"group": "Group",
-		"human_remains": "Biological Object",
+		"human_remains": "Human remains",
+		"involvement": "Involvement",
+		"modification": "Modification",
 		"move": "Move",
-		"object_location": "Place",
+		"object_location": "Object location",
 		"person": "Person",
-		"place": "Physical Thing",
-		"referenceSystem": "Authority Document",
-		"source": "Linguistic Object",
-		"source_translation": "Linguistic Object",
-		"stratigraphic_unit": "Physical Thing",
-		"type": "Type"
+		"place": "Place",
+		"production": "Production",
+		"reference_system": "Reference system",
+		"source": "Source",
+		"source_translation": "Source translation",
+		"stratigraphic_unit": "Stratigraphic unit",
+		"type": "Type",
+		"type_tools": "Type tools"
+	},
+	"TimespansDisplay": {
+		"end": "End",
+		"no-dates": "No known calendar dates",
+		"start": "Start"
 	},
 	"Toast": {
 		"error": "Error"
-	},
-	"when-display": {
-		"end": "End",
-		"no-dates": "No known Calendar Dates",
-		"start": "Start"
 	}
 }
