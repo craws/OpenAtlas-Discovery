@@ -2,7 +2,7 @@
 import { noop } from "@acdh-oeaw/lib";
 import { useQuery } from "@tanstack/vue-query";
 
-import type { ContentPage } from "@/types/content";
+import type { SystemPage } from "@/types/content";
 
 defineRouteRules({
 	prerender: true,
@@ -22,7 +22,7 @@ const {
 } = useQuery({
 	queryKey: ["content", locale, "index"] as const,
 	queryFn({ queryKey: [, locale] }) {
-		return queryContent<ContentPage>("system-pages", locale).findOne();
+		return queryContent<SystemPage>("system-pages", locale).findOne();
 	},
 });
 useErrorMessage(error, {
@@ -42,9 +42,8 @@ onServerPrefetch(async () => {
 
 <template>
 	<MainContent class="container py-8">
-		<div class="flex h-full flex-col items-center gap-8">
-			<div class="basis-1/12"></div>
-			<div v-if="content != null">
+		<div v-if="content != null" class="grid place-items-center gap-8 py-8 sm:py-16">
+			<div>
 				<h1 class="sr-only">{{ content.title }}</h1>
 				<NuxtImg
 					v-if="content.image?.light != null"
@@ -63,18 +62,26 @@ onServerPrefetch(async () => {
 			</div>
 
 			<ContentRenderer
-				v-if="content != null"
+				v-if="content.leadIn != null"
 				class="prose prose-lg max-w-3xl text-balance text-center dark:prose-invert"
-				:value="content"
+				:value="content.leadIn"
 			/>
 
 			<div class="flex items-center gap-6">
-				<Button v-for="(link, key) of content?.links" :key="key" as-child variant="default">
+				<Button v-for="(link, key) of content.links" :key="key" as-child variant="default">
 					<NavLink :href="link.href">
 						{{ link.label }}
 					</NavLink>
 				</Button>
 			</div>
+		</div>
+
+		<div>
+			<ContentRenderer
+				v-if="content != null && content.body.children.length > 0"
+				class="prose mx-auto w-full max-w-3xl dark:prose-invert"
+				:value="content"
+			/>
 		</div>
 	</MainContent>
 </template>

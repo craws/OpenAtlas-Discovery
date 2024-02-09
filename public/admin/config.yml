@@ -201,6 +201,15 @@ collections:
             # hint: Hero image (dark mode)
             widget: image
 
+      - name: leadIn
+        label: Hero lead-in
+        i18n: true
+        # hint: Hero lead-in
+        widget: markdown
+        modes:
+          # - raw
+          - rich_text
+
       - name: links
         label: Links
         i18n: true
