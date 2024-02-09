@@ -22,7 +22,7 @@ const {
 } = useQuery({
 	queryKey: ["content", locale, "index"] as const,
 	queryFn({ queryKey: [, locale] }) {
-		return queryContent<ContentPage>("pages", locale).findOne();
+		return queryContent<ContentPage>("system-pages", locale).findOne();
 	},
 });
 useErrorMessage(error, {
@@ -64,7 +64,7 @@ onServerPrefetch(async () => {
 
 			<ContentRenderer
 				v-if="content != null"
-				class="prose max-w-3xl dark:prose-invert"
+				class="prose prose-lg max-w-3xl text-balance text-center dark:prose-invert"
 				:value="content"
 			/>
 
