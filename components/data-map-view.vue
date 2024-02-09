@@ -95,6 +95,14 @@ function onLayerClick(features: Array<MapGeoJSONFeature & Pick<GeoJsonFeature, "
 
 	popover.value = { coordinates, entities };
 }
+
+watch(data, () => {
+	/**
+	 * Close popover when search results change, to avoid displaying popup for features which are
+	 * no longer in the search results set.
+	 */
+	popover.value = null;
+});
 </script>
 
 <template>
