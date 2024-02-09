@@ -85,8 +85,8 @@ const relationsByType = computed(() => {
 					<PageTitle>{{ entity.properties.title }}</PageTitle>
 				</CardHeader>
 				<CardContent>
-					<div class="flex flex-col gap-4">
-						<EntityTimespans class="max-w-96" :timespans="entity.when?.timespans" />
+					<div class="grid gap-4">
+						<EntityTimespans :timespans="entity.when?.timespans" />
 						<EntityDescriptions :descriptions="entity?.descriptions ?? []" />
 					</div>
 				</CardContent>

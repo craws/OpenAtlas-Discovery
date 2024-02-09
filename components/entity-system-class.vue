@@ -7,7 +7,7 @@ const t = useTranslations();
 </script>
 
 <template>
-	<div>
+	<div class="flex items-center gap-1">
 		<Component :is="getEntityIcon(systemClass)" class="inline size-4" />
 		{{ t(`SystemClassNames.${systemClass}`) ?? "System Class" }}
 	</div>
