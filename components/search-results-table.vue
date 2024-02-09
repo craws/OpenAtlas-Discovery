@@ -34,8 +34,17 @@ const { d } = useI18n();
 		<TableBody>
 			<TableRow v-for="entity of props.entities" :key="entity.properties._id">
 				<TableCell class="font-medium">
-					<Component :is="getEntityIcon(entity.systemClass)" class="size-4 shrink-0" />
-					<span class="sr-only">{{ entity.systemClass }}</span>
+					<TooltipProvider>
+						<Tooltip>
+							<TooltipTrigger class="cursor-default">
+								<Component :is="getEntityIcon(entity.systemClass)" class="size-4 shrink-0" />
+							</TooltipTrigger>
+							<TooltipContent>
+								{{ t(`SystemClassNames.${entity.systemClass}`) }}
+							</TooltipContent>
+						</Tooltip>
+					</TooltipProvider>
+					<span class="sr-only">{{ t(`SystemClassNames.${entity.systemClass}`) }}</span>
 				</TableCell>
 				<TableCell>
 					<NavLink
