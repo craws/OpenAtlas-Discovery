@@ -33,7 +33,7 @@ type SearchFilters = z.infer<typeof searchFiltersSchema>;
 
 function setSearchFilters(query: Partial<SearchFilters>) {
 	void router.push({ query });
-	window.scrollTo(0, 0);
+	document.body.scrollTo(0, 0);
 }
 
 function onChangeSearchFilters(values: SearchFormData) {

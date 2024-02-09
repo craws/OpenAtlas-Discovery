@@ -27,6 +27,7 @@
 		"prepare": "run-s setup generate:api-client",
 		"setup": "is-ci || simple-git-hooks",
 		"start": "nuxt preview --dotenv ./.env.local",
+		"sync": "nuxt prepare",
 		"test": "exit 0",
 		"test:e2e": "playwright test",
 		"test:e2e:codegen": "playwright codegen",
