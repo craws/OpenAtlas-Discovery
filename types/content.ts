@@ -22,3 +22,10 @@ export interface SystemPage extends MarkdownParsedContent {
 		href: string;
 	}>;
 }
+
+export interface TeamMember extends MarkdownParsedContent {
+	firstName?: string;
+	lastName: string;
+	academicTitle?: string;
+	image?: string;
+}

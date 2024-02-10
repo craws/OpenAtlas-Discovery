@@ -9,7 +9,7 @@ defineRouteRules({
 });
 
 definePageMeta({
-	title: "IndexPage.meta.title",
+	title: "TeamPage.meta.title",
 });
 
 const locale = useLocale();
@@ -20,14 +20,14 @@ const {
 	error,
 	suspense,
 } = useQuery({
-	queryKey: ["system-pages", locale, "index"] as const,
+	queryKey: ["system-pages", locale, "team"] as const,
 	queryFn({ queryKey: [, locale] }) {
-		return queryContent<SystemPage>("system-pages", locale).findOne();
+		return queryContent<SystemPage>("system-pages", locale, "team").findOne();
 	},
 });
 useErrorMessage(error, {
-	notFound: t("IndexPage.error.not-found"),
-	unknown: t("IndexPage.error.unknown"),
+	notFound: t("TeamPage.error.not-found"),
+	unknown: t("TeamPage.error.unknown"),
 });
 onServerPrefetch(async () => {
 	/**
@@ -91,9 +91,14 @@ onServerPrefetch(async () => {
 		<div>
 			<ContentRenderer
 				v-if="content != null && content.body.children.length > 0"
-				class="prose mx-auto w-full max-w-3xl dark:prose-invert"
+				class="prose mx-auto w-full max-w-3xl px-8 dark:prose-invert"
 				:value="content"
 			/>
 		</div>
+
+		<section class="mx-auto w-full max-w-3xl p-8">
+			<h2 class="sr-only">{{ t("TeamPage.team-members") }}</h2>
+			<TeamMembersList />
+		</section>
 	</MainContent>
 </template>

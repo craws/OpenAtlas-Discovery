@@ -3,7 +3,6 @@ title: Über das Projekt
 navigation:
   title: Über das Projekt
 ---
-
 Elit anim cillum labore tempor Lorem irure voluptate qui nisi. Nostrud ut incididunt sint laborum ad
 est enim do qui. Occaecat labore ea adipisicing est esse enim amet irure non. Non ex et magna elit
 consequat cupidatat. Officia velit aute voluptate velit minim ullamco. Enim laboris irure sunt

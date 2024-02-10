@@ -25,7 +25,7 @@ const {
 	error,
 	suspense,
 } = useQuery({
-	queryKey: ["content", locale, ...id.value] as const,
+	queryKey: ["pages", locale, ...id.value] as const,
 	queryFn({ queryKey: [, locale, ...id] }) {
 		return queryContent<ContentPage>("pages", locale, ...id).findOne();
 	},

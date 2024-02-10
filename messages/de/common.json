@@ -10,7 +10,8 @@
 		"links": {
 			"data": "Daten",
 			"home": "Startseite",
-			"map": "Karte"
+			"map": "Karte",
+			"team": "Team"
 		},
 		"navigation-main": "Hauptnavigation",
 		"navigation-menu": "Navigationsmenü"
@@ -166,6 +167,16 @@
 		"stratigraphic_unit": "Stratigraphische Einheit",
 		"type": "Typ",
 		"type_tools": "Typ-Werkzeuge"
+	},
+	"TeamPage": {
+		"error": {
+			"not-found": "Seite nicht gefunden",
+			"unknown": "Interner Fehler"
+		},
+		"meta": {
+			"title": "Team"
+		},
+		"team-members": "Teammitglieder"
 	},
 	"TimespansDisplay": {
 		"end": "Ende",
