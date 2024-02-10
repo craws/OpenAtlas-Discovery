@@ -81,14 +81,16 @@ const features = computed(() => {
 const popover = ref<{ coordinates: [number, number]; entities: Array<EntityFeature> } | null>(null);
 
 function onLayerClick(features: Array<MapGeoJSONFeature & Pick<GeoJsonFeature, "properties">>) {
-	const entities: Array<EntityFeature> = [];
+	const entitiesMap = new Map<string, EntityFeature>();
 
 	features.forEach((feature) => {
 		const entity = entitiesById.value.get(feature.properties._id);
 		if (entity != null) {
-			entities.push(entity);
+			entitiesMap.set(feature.properties._id, entity);
 		}
 	});
+
+	const entities = Array.from(entitiesMap.values());
 
 	const point = turf.center(createFeatureCollection(entities));
 	const coordinates = point.geometry.coordinates;
