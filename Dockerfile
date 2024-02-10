@@ -14,6 +14,7 @@ WORKDIR /app
 USER node
 
 COPY --chown=node:node .npmrc package.json pnpm-lock.yaml ./
+COPY ./patches ./patches
 RUN sed -i "s/use-node-version/# use-node-version/" .npmrc
 
 RUN pnpm fetch
