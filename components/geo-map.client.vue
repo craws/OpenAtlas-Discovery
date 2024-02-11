@@ -59,6 +59,8 @@ async function create() {
 	const map = new GeoMap({
 		center: [initialViewState.longitude, initialViewState.latitude],
 		container: elementRef.value,
+		maxZoom: 16,
+		minZoom: 1,
 		pitch: initialViewState.pitch,
 		style: mapStyle.value,
 		zoom: initialViewState.zoom,
