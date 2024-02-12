@@ -54,7 +54,7 @@ const { data, error, isPending, isPlaceholderData, suspense } = useGetSearchResu
 				search.length > 0
 					? [{ [category]: [{ operator: "like", values: [search], logicalOperator: "and" }] }]
 					: [],
-			type_id: project.defaultFilters,
+			type_id: [],
 			view_classes: ["actor", "event", "place", "reference", "source"],
 		};
 	}),

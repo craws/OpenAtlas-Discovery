@@ -3,7 +3,6 @@
 		"accent": "#b8cf5b",
 		"geojson": "#69c0ef"
 	},
-	"defaultFilters": [],
 	"defaultLocale": "en",
 	"logos": {
 		"light": "/assets/images/logo.svg",

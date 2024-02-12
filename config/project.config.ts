@@ -25,7 +25,6 @@ const schema = z.object({
 				accentContrast: luminance > 0.5 ? "hsl(0deg 0% 0%)" : "hsl(0deg 0% 100%)",
 			};
 		}),
-	defaultFilters: z.array(z.number()),
 	defaultLocale: z.enum(["de", "en"]),
 	logos: z.object({
 		light: z.string(),
