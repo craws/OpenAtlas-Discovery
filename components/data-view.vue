@@ -12,7 +12,6 @@ import {
 	PaginationNext,
 } from "@/components/ui/pagination";
 import { categories } from "@/composables/use-get-search-results";
-import { project } from "@/config/project.config";
 
 const router = useRouter();
 const route = useRoute();

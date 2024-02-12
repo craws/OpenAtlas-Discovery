@@ -131,6 +131,7 @@
 		"header": {
 			"begin": "Anfang",
 			"class": "Klasse",
+			"dates": "Datum",
 			"description": "Beschreibung",
 			"end": "Ende",
 			"name": "Name"
