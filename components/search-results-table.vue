@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import NavLink from "@/components/nav-link.vue";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import type { EntityFeature } from "@/composables/use-create-entity";
 
@@ -66,7 +67,18 @@ const cols = [
 	columnHelper.accessor(
 		'properties.title',
 		{
-			header: t("SearchResultsTable.header.name")
+			header: t("SearchResultsTable.header.name"),
+			cell: info => {
+				const title = info.getValue()
+
+				return h(NavLink,
+					{
+						class: "underline decoration-dotted transition hover:no-underline focus-visible:no-underline",
+						href: { path: `/entities/${encodeURIComponent(info.row.original.properties._id)}` }
+					},
+					title
+				)
+			}
 		}
 	),
 	columnHelper.accessor(
@@ -132,19 +144,6 @@ const table = useVueTable({
 				</TableRow>
 			</template>
 			<!-- <TableRow v-for="entity of props.entities" :key="entity.properties._id">
-				<TableCell class="font-medium">
-					<TooltipProvider>
-						<Tooltip>
-							<TooltipTrigger class="cursor-default">
-								<Component :is="getEntityIcon(entity.systemClass)" class="size-4 shrink-0" />
-							</TooltipTrigger>
-							<TooltipContent>
-								{{ t(`SystemClassNames.${entity.systemClass}`) }}
-							</TooltipContent>
-						</Tooltip>
-					</TooltipProvider>
-					<span class="sr-only">{{ t(`SystemClassNames.${entity.systemClass}`) }}</span>
-				</TableCell>
 				<TableCell>
 					<NavLink
 						class="underline decoration-dotted transition hover:no-underline focus-visible:no-underline"
