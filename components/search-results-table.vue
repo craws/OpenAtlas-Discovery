@@ -88,7 +88,15 @@ const cols = [
 			cell: info => {
 				const descriptions = info.getValue()
 				if (!descriptions || !Array.isArray(descriptions)) return ''
-				return descriptions[0]?.value;
+
+				return descriptions
+					.filter(desc => desc.value)
+					.map((description, index) => {
+						if (description.value != null) {
+							return h('span', { key: index }, description.value)
+						}
+						return
+					});
 			}
 		}
 	),
@@ -143,37 +151,6 @@ const table = useVueTable({
 						</TableCell>
 				</TableRow>
 			</template>
-			<!-- <TableRow v-for="entity of props.entities" :key="entity.properties._id">
-				<TableCell>
-					<NavLink
-						class="underline decoration-dotted transition hover:no-underline focus-visible:no-underline"
-						:href="{ path: `/entities/${encodeURIComponent(entity.properties._id)}` }"
-					>
-						{{ entity.properties.title }}
-					</NavLink>
-				</TableCell>
-				<TableCell>
-					<template v-for="(description, index) of entity.descriptions" :key="index">
-						<span v-if="description.value != null">{{ description.value }}</span>
-					</template>
-				</TableCell>
-				<TableCell class="text-right">
-					<template v-for="(timespan, index) of entity.when?.timespans" :key="index"> -->
-						<!-- FIXME: why earliest -->
-						<!-- <span v-if="timespan.start?.earliest != null">
-							{{ d(timespan.start.earliest) }}
-						</span>
-					</template>
-				</TableCell>
-				<TableCell class="text-right">
-					<template v-for="(timespan, index) of entity.when?.timespans" :key="index"> -->
-						<!-- FIXME: why earliest -->
-						<!-- <span v-if="timespan.end?.earliest != null">
-							{{ d(timespan.end.earliest) }}
-						</span>
-					</template>
-				</TableCell>
-			 </TableRow> -->
 		</TableBody>
 	</Table>
 </template>
