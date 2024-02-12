@@ -43,18 +43,23 @@ const cols = [
 			cell: info => {
 				const icon = getEntityIcon(info.getValue())
 
-				const elements = [h('span', { class: icon ? 'sr-only' : '' }, info.getValue())];
-
-				if (icon) elements.push(h(icon, { class: "size-4 shrink-0" }))
-
 				const tooltipWrapper = h(TooltipProvider, {}, [
 					h(Tooltip, {}, [
-						h(TooltipTrigger, { class: "cursor-default" }, elements),
-						h(TooltipContent, {}, t(`SystemClassNames.${info.getValue()}`))
+						h(TooltipTrigger,
+							{ class: "cursor-default" },
+							icon ? h(icon, { class: "size-4 shrink-0" }) : h('span', {}, info.getValue())),
+						h(TooltipContent,
+							{},
+							t(`SystemClassNames.${info.getValue()}`))
 					])
 				])
 
-				return tooltipWrapper;
+				const root = h('span', {}, [
+					tooltipWrapper,
+					h('span', { class: "sr-only" }, t(`SystemClassNames.${info.getValue()}`))
+				])
+
+				return root;
 			}
 		}
 	),
