@@ -54,13 +54,13 @@ test.describe("i18n", () => {
 		await page.goto("/de/imprint");
 		await expect(page).toHaveURL("/de/imprint");
 		await expect(page.getByRole("heading", { name: "Impressum" })).toBeVisible();
-		await expect(page).toHaveTitle("Impressum | ACDH-CH App");
+		await expect(page).toHaveTitle("Impressum | OpenAtlas Discovery");
 
 		await page.getByRole("link", { name: "Zu Englisch wechseln" }).click();
 
 		await expect(page).toHaveURL("/en/imprint");
 		await expect(page.getByRole("heading", { name: "Imprint" })).toBeVisible();
-		await expect(page).toHaveTitle("Imprint | ACDH-CH App");
+		await expect(page).toHaveTitle("Imprint | OpenAtlas Discovery");
 	});
 
 	test("sets `lang` attribute on `html` element", async ({ page }) => {
@@ -89,9 +89,15 @@ test.describe("i18n", () => {
 
 				// TODO: use toMatchSnapshot
 				expect(links).toEqual([
-					`<link id="i18n-alt-de" rel="alternate" href="${createAbsoluteUrl(`/de${pathname}`)}" hreflang="de">`,
-					`<link id="i18n-alt-en" rel="alternate" href="${createAbsoluteUrl(`/en${pathname}`)}" hreflang="en">`,
-					`<link id="i18n-xd" rel="alternate" href="${createAbsoluteUrl(`/en${pathname}`)}" hreflang="x-default">`,
+					`<link id="i18n-alt-de" rel="alternate" href="${createAbsoluteUrl(
+						`/de${pathname}`,
+					)}" hreflang="de">`,
+					`<link id="i18n-alt-en" rel="alternate" href="${createAbsoluteUrl(
+						`/en${pathname}`,
+					)}" hreflang="en">`,
+					`<link id="i18n-xd" rel="alternate" href="${createAbsoluteUrl(
+						`/en${pathname}`,
+					)}" hreflang="x-default">`,
 				]);
 			}
 		}

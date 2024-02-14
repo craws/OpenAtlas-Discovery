@@ -9,7 +9,7 @@ test.describe("imprint page", () => {
 			await imprintPage.goto();
 
 			await expect(imprintPage.page).toHaveTitle(
-				[t("ImprintPage.meta.title"), t("DefaultLayout.meta.title")].join(" | "),
+				[t("ImprintPage.meta.title"), t("Metadata.name")].join(" | "),
 			);
 		}
 	});

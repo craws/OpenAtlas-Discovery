@@ -72,6 +72,8 @@
 		"tsx": "^4.7.1",
 		"vee-validate": "^4.12.5",
 		"vue": "^3.4.19",
+		"vue-i18n": "^9.9.1",
+		"vue-i18n-routing": "^1.2.0",
 		"vue-router": "^4.2.5",
 		"vue-sonner": "^1.0.3",
 		"zod": "^3.22.4"
