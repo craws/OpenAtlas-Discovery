@@ -97,11 +97,12 @@ export interface GetSearchResultsResponse {
 
 export function useGetSearchResults(params: MaybeRef<GetSearchResultsParams>) {
 	const api = useApiClient();
-	const creatEntity = useCreateEntity();
+	const createEntity = useCreateEntity();
 
 	return useQuery({
 		queryKey: ["search-results", params] as const,
-		async queryFn({ queryKey: [, params], signal }) {
+		async queryFn({ queryKey, signal }) {
+			const [, params] = queryKey;
 			const search = params.search?.map((value) => {
 				return JSON.stringify(value);
 			});
@@ -120,7 +121,7 @@ export function useGetSearchResults(params: MaybeRef<GetSearchResultsParams>) {
 			const results: Array<Entity> = [];
 
 			response.results.forEach((result) => {
-				const entity = creatEntity(result);
+				const entity = createEntity(result);
 				results.push(entity);
 			});
 
