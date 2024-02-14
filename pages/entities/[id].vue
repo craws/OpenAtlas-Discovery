@@ -1,6 +1,8 @@
 <script lang="ts" setup>
-import { groupByToMap } from "@acdh-oeaw/lib";
+import { groupByToMap, keyByToMap } from "@acdh-oeaw/lib";
 import { z } from "zod";
+
+import { useIdPrefix } from "@/composables/use-id-prefix";
 
 // defineRouteRules({
 // 	prerender: true,
@@ -21,6 +23,7 @@ definePageMeta({
 
 const locale = useLocale();
 const t = useTranslations();
+const prefix = useIdPrefix();
 
 const route = useRoute();
 const id = computed(() => {
@@ -71,7 +74,15 @@ const tabs = computed(() => {
 
 const relationsByType = computed(() => {
 	return groupByToMap(entity.value?.relations ?? [], (relation) => {
-		return relation.relationType;
+		// FIXME: This used to use `relationType` (without the prefix)
+		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+		return relation.relationSystemClass!;
+	});
+});
+
+const typesById = computed(() => {
+	return keyByToMap(entity.value?.types ?? [], (type) => {
+		return type.identifier;
 	});
 });
 </script>
@@ -105,7 +116,35 @@ const relationsByType = computed(() => {
 				</TabsContent>
 			</Tabs>
 
-			<pre>{{ relationsByType }}</pre>
+			<Card>
+				<CardHeader>
+					<CardTitle>{{ t("EntityPage.details") }}</CardTitle>
+				</CardHeader>
+				<CardContent>
+					<dl class="grid gap-x-8 gap-y-4 sm:grid-cols-[auto_auto] sm:justify-start">
+						<div v-for="[relationType, relations] of relationsByType" :key="relationType">
+							<dt class="text-xs font-medium uppercase tracking-wider text-muted-foreground">
+								{{ t(`SystemClassNames.${relationType}`) }}
+							</dt>
+							<dd>
+								<ul role="list">
+									<li v-for="(relation, index) of relations" :key="index">
+										<NavLink
+											class="underline decoration-dotted hover:no-underline"
+											:href="{ path: `/entities/${relation.relationTo?.slice(prefix.length)}` }"
+										>
+											{{ relation.label }}
+										</NavLink>
+										<span v-if="relation.relationSystemClass === 'type'">
+											({{ typesById.get(relation.relationTo)?.hierarchy }})
+										</span>
+									</li>
+								</ul>
+							</dd>
+						</div>
+					</dl>
+				</CardContent>
+			</Card>
 		</template>
 
 		<template v-else-if="isLoading">
