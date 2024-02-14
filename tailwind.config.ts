@@ -151,8 +151,8 @@ const oadPlugin = createPlugin(
 			 * Added in default layout instead.
 			 */
 			// ":root": {
-			// 	"--popover": project.colors.brand,
-			// 	"--popover-foreground": project.colors.brandContrast,
+			// 	"--brand": project.colors.brand,
+			// 	"--brand-foreground": project.colors.brandContrast,
 			// },
 		});
 	},

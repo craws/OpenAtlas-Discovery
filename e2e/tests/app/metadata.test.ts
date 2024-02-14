@@ -46,10 +46,10 @@ test.describe("sets page metadata", () => {
 		await expect(twCard).toHaveAttribute("content", "summary_large_image");
 
 		const twCreator = page.locator('meta[name="twitter:creator"]');
-		await expect(twCreator).toHaveAttribute("content", "@acdh_oeaw");
+		await expect(twCreator).toHaveAttribute("content", "@openatlas_eu");
 
 		const twSite = page.locator('meta[name="twitter:site"]');
-		await expect(twSite).toHaveAttribute("content", "@acdh_oeaw");
+		await expect(twSite).toHaveAttribute("content", "@openatlas_eu");
 
 		// const googleSiteVerification = page.locator('meta[name="google-site-verification"]');
 		// await expect(googleSiteVerification).toHaveAttribute("content", "");
