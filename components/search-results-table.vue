@@ -1,24 +1,16 @@
 <script lang="ts" setup>
+import {
+	createColumnHelper,
+	FlexRender,
+	getCoreRowModel,
+	getSortedRowModel,
+	type SortingState,
+	useVueTable
+} from '@tanstack/vue-table'
+
 import NavLink from "@/components/nav-link.vue";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import type { EntityFeature } from "@/composables/use-create-entity";
-
-import type {
-	ColumnDef,
-	ColumnFiltersState,
-	SortingState,
-	VisibilityState,
-} from '@tanstack/vue-table'
-import {
-	FlexRender,
-	createColumnHelper,
-	getCoreRowModel,
-	getFilteredRowModel,
-	getPaginationRowModel,
-	getSortedRowModel,
-
-	useVueTable,
-} from '@tanstack/vue-table'
 
 const props = defineProps<{
 	entities: Array<EntityFeature>;
@@ -69,8 +61,7 @@ const cols = [
 		{
 			header: t("SearchResultsTable.header.name"),
 			cell: info => {
-				const title = info.getValue()
-
+				const title = info.getValue();
 				return h(NavLink,
 					{
 						class: "underline decoration-dotted transition hover:no-underline focus-visible:no-underline",
@@ -87,10 +78,10 @@ const cols = [
 			header: t("SearchResultsTable.header.description"),
 			cell: info => {
 				const descriptions = info.getValue()
-				if (!descriptions || !Array.isArray(descriptions)) return ''
+				if (!Array.isArray(descriptions)) return ''
 
 				return descriptions
-					.filter(desc => desc.value)
+					.filter(desc => { return desc.value })
 					.map((description, index) => {
 						if (description.value != null) {
 							return h('span', { key: index }, description.value)
@@ -105,17 +96,17 @@ const cols = [
 			header: t("SearchResultsTable.header.dates"),
 			columns: [
 				columnHelper.accessor(
-					row => `${row.when?.timespans?.[0]?.start?.earliest}`,
+					row => {   return `${row.when?.timespans?.[0]?.start?.earliest } ` },
 					{
 						header: t("SearchResultsTable.header.begin"),
-						cell: info => getCellForTime(info)
+						cell: info => {   return getCellForTime(info ) }
 					}
 				),
 				columnHelper.accessor(
-					row => `${row.when?.timespans?.[0]?.end?.earliest}`,
+					row => {   return `${row.when?.timespans?.[0]?.end?.earliest } ` },
 					{
 						header: t("SearchResultsTable.header.end"),
-						cell: info => getCellForTime(info)
+						cell: info => {   return getCellForTime(info ) }
 					}
 				)
 			]
