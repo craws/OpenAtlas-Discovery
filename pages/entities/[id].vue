@@ -135,7 +135,12 @@ const typesById = computed(() => {
 										>
 											{{ relation.label }}
 										</NavLink>
-										<span v-if="relation.relationSystemClass === 'type'">
+										<span
+											v-if="
+												relation.relationSystemClass === 'type' &&
+												typesById.has(relation.relationTo)
+											"
+										>
 											({{ typesById.get(relation.relationTo)?.hierarchy }})
 										</span>
 									</li>

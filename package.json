@@ -64,7 +64,7 @@
 		"lucide-vue-next": "^0.330.0",
 		"maplibre-gl": "^4.0.0",
 		"npm-run-all2": "^6.1.2",
-		"nuxt": "^3.10.1",
+		"nuxt": "^3.10.2",
 		"openapi-typescript": "^7.0.0-next.7",
 		"pino-http": "^9.0.0",
 		"radix-vue": "^1.4.3",
