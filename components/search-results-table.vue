@@ -1,5 +1,7 @@
 <script lang="ts" setup>
 import {
+	type Column,
+	type ColumnSort,
 	createColumnHelper,
 	FlexRender,
 	getCoreRowModel,
@@ -7,13 +9,32 @@ import {
 	type SortingState,
 	useVueTable
 } from '@tanstack/vue-table'
+import { ArrowUpDown } from 'lucide-vue-next';
 
 import NavLink from "@/components/nav-link.vue";
+import { Button } from '@/components/ui/button';
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import type { EntityFeature } from "@/composables/use-create-entity";
+import { isColumn } from '@/composables/use-get-search-results';
+
+const emit = defineEmits({
+	"update:sorting"(sorting: SortingState) {
+		if (!sorting.length) return false;
+		const containsInvalidColumn = sorting.some((sort: ColumnSort) => { // Returns true if any column is invalid
+			if (!isColumn(sort.id)) return true;
+			return false;
+		});
+
+		if (containsInvalidColumn) return false;
+
+		return true;
+
+	}
+})
 
 const props = defineProps<{
 	entities: Array<EntityFeature>;
+	sorting: SortingState;
 }>();
 
 const t = useTranslations();
@@ -21,18 +42,31 @@ const { d } = useI18n();
 
 const columnHelper = createColumnHelper<EntityFeature>();
 
-function getCellForTime(info?: any): string {
-	const date = info.getValue();
+function dateCellToDateString(info?: any): string {
+	const date: string | null | undefined = info.getValue();
 
-	if (!date || date === 'null') return ''
+	if (!date || date.includes('null')) return ''
+
 	return d(date)
+}
+
+function sortableHeader(column: Column<EntityFeature, string>, title: string) {
+	return h(Button, {
+		variant: 'ghost',
+		onClick: () => {
+			const currentSorting = column.getIsSorted();
+
+			emit("update:sorting", [{ id: column.id, desc: currentSorting === 'asc' ? true : false }])
+		},
+	}, () => { return [title, h(ArrowUpDown, { class: 'size-4' })] })
 }
 
 const cols = [
 	columnHelper.accessor(
 		'systemClass',
 		{
-			header: t("SearchResultsTable.header.class"), // This will be where I have to put the sorting
+			id: 'system_class', // Use columns fore back-end sorting
+			header: ({ column }) => { return sortableHeader(column, t("SearchResultsTable.header.class")) },
 			cell: info => {
 				const icon = getEntityIcon(info.getValue())
 
@@ -59,7 +93,8 @@ const cols = [
 	columnHelper.accessor(
 		'properties.title',
 		{
-			header: t("SearchResultsTable.header.name"),
+			id: 'name',
+			header: ({ column }) => { return sortableHeader(column, t("SearchResultsTable.header.name")) },
 			cell: info => {
 				const title = info.getValue();
 				return h(NavLink,
@@ -91,25 +126,20 @@ const cols = [
 			}
 		}
 	),
-	columnHelper.group(
+	columnHelper.accessor(
+		row => { return `${row.when?.timespans?.[0]?.start?.earliest} ` },
 		{
-			header: t("SearchResultsTable.header.dates"),
-			columns: [
-				columnHelper.accessor(
-					row => {   return `${row.when?.timespans?.[0]?.start?.earliest } ` },
-					{
-						header: t("SearchResultsTable.header.begin"),
-						cell: info => {   return getCellForTime(info ) }
-					}
-				),
-				columnHelper.accessor(
-					row => {   return `${row.when?.timespans?.[0]?.end?.earliest } ` },
-					{
-						header: t("SearchResultsTable.header.end"),
-						cell: info => {   return getCellForTime(info ) }
-					}
-				)
-			]
+			id: 'begin_from',
+			header: ({ column }) => { return sortableHeader(column, t("SearchResultsTable.header.begin")) },
+			cell: (info) => { return dateCellToDateString(info) }
+		}
+	),
+	columnHelper.accessor(
+		row => { return `${row.when?.timespans?.[0]?.end?.earliest} ` },
+		{
+			id: 'end_from',
+			header: ({ column }) => { return sortableHeader(column, t("SearchResultsTable.header.end")) },
+			cell: (info) => { return dateCellToDateString(info) }
 		}
 	)
 ]
@@ -118,6 +148,10 @@ const table = useVueTable({
 	get data() { return props.entities },
 	get columns() { return cols },
 	getCoreRowModel: getCoreRowModel(),
+	getSortedRowModel: getSortedRowModel(),
+	state: {
+		get sorting() { return props.sorting },
+	}
 })
 
 
@@ -135,8 +169,10 @@ const table = useVueTable({
 		</TableHeader>
 		<TableBody>
 			<template v-if="table.getRowModel().rows?.length">
-				<TableRow v-for="row in table.getRowModel().rows" :key="row.id"
-						:data-state="row.getIsSelected() ? 'selected' : undefined">
+				<TableRow
+					v-for="row in table.getRowModel().rows"
+					:key="row.id"
+					:data-state="row.getIsSelected() ? 'selected' : undefined">
 						<TableCell v-for="cell in row.getVisibleCells()" :key="cell.id">
 								<FlexRender :render="cell.column.columnDef.cell" :props="cell.getContext()" />
 						</TableCell>

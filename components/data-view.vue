@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import type { SortingState } from "@tanstack/vue-table";
 import { z } from "zod";
 
 import type { SearchFormData } from "@/components/search-form.vue";
@@ -11,7 +12,7 @@ import {
 	PaginationListItem,
 	PaginationNext,
 } from "@/components/ui/pagination";
-import { categories } from "@/composables/use-get-search-results";
+import { categories, columns, isColumn } from "@/composables/use-get-search-results";
 
 const router = useRouter();
 const route = useRoute();
@@ -20,12 +21,20 @@ const t = useTranslations();
 const searchFiltersSchema = z.object({
 	category: z.enum(categories).catch("entityName"),
 	search: z.string().catch(""),
+	column: z.enum(columns).catch("name"),
+	sort: z.enum(["asc", "desc"]).catch("asc"),
 	page: z.coerce.number().int().positive().catch(1),
 	limit: z.coerce.number().int().positive().max(100).catch(20),
 });
 
 const searchFilters = computed(() => {
 	return searchFiltersSchema.parse(route.query);
+});
+
+const sortingState = computed(() => {
+	return [
+		{ id: searchFilters.value.column, desc: searchFilters.value.sort === "desc" },
+	] as SortingState;
 });
 
 type SearchFilters = z.infer<typeof searchFiltersSchema>;
@@ -41,6 +50,18 @@ function onChangeSearchFilters(values: SearchFormData) {
 
 function onUpdatePage(page: number) {
 	setSearchFilters({ ...searchFilters.value, page });
+}
+
+function onUpdateSorting(sorting: SortingState) {
+	let column = searchFilters.value.column;
+	if (isColumn(sorting[0]?.id)) column = sorting[0].id;
+
+	setSearchFilters({
+		...searchFilters.value,
+		column,
+		sort: sorting[0]?.desc ? "desc" : "asc",
+	});
+
 }
 
 const { data, error, isPending, isPlaceholderData, suspense } = useGetSearchResults(
@@ -85,7 +106,10 @@ const entities = computed(() => {
 			:class="{ 'opacity-50 grayscale': isLoading }"
 		>
 			<div v-if="useGetSearchResults.length > 0" class="grid gap-8">
-				<SearchResultsTable :entities="entities" />
+				<SearchResultsTable
+					:entities="entities"
+					:sorting="sortingState"
+					@update:sorting="onUpdateSorting" />
 
 				<Pagination
 					v-if="data?.pagination != null"
