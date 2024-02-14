@@ -11,11 +11,12 @@ export type GetEntityResponse = LinkedPlace;
 
 export function useGetEntity(params: MaybeRef<GetEntityParams>) {
 	const api = useApiClient();
-	const createtEntity = useCreateEntity();
+	const createEntity = useCreateEntity();
 
 	return useQuery({
 		queryKey: ["entity", params] as const,
-		async queryFn({ queryKey: [, params], signal }) {
+		async queryFn({ queryKey, signal }) {
+			const [, params] = queryKey;
 			const response = (await api.GET("/entity/{entityId}", {
 				params: {
 					path: {
@@ -25,7 +26,7 @@ export function useGetEntity(params: MaybeRef<GetEntityParams>) {
 				signal,
 			})) as GetEntityResponse;
 
-			const entity = createtEntity(response);
+			const entity = createEntity(response);
 
 			return entity;
 		},
