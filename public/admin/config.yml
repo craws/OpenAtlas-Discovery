@@ -41,9 +41,9 @@ collections:
             # hint: Colors
             widget: object
             fields:
-              - name: accent
-                label: Accent
-                # hint: Accent color
+              - name: brand
+                label: Brand
+                # hint: Brand color
                 widget: color
                 allowInput: true
 

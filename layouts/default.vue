@@ -21,7 +21,8 @@ useHead({
 		lang: computed(() => {
 			return locale.value;
 		}),
-		style: `--color-accent: ${project.colors.accent}; --color-accent-contrast: ${project.colors.accentContrast};`,
+		// TODO: move to tailwind config
+		style: `--color-brand: ${project.colors.brand}; --color-brand-foreground: ${project.colors.brandContrast};`,
 	},
 	titleTemplate: computed(() => {
 		return ["%s", t("Metadata.name")].join(" | ");

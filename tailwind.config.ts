@@ -2,6 +2,8 @@ import { createPreset as createDesignTokenPreset } from "@acdh-oeaw/tailwindcss-
 import type { Config } from "tailwindcss";
 import createPlugin from "tailwindcss/plugin";
 
+// import { project } from "./config/project.config";
+
 const shadcnPlugin = createPlugin(
 	({ addBase }) => {
 		addBase({
@@ -141,6 +143,33 @@ const shadcnPlugin = createPlugin(
 	},
 );
 
+const oadPlugin = createPlugin(
+	({ addBase }) => {
+		addBase({
+			/**
+			 * Currently does not work because esm support in postcss needed for `colorjs.io/fn`.
+			 * Added in default layout instead.
+			 */
+			// ":root": {
+			// 	"--popover": project.colors.brand,
+			// 	"--popover-foreground": project.colors.brandContrast,
+			// },
+		});
+	},
+	{
+		theme: {
+			extend: {
+				colors: {
+					brand: {
+						DEFAULT: "var(--brand)",
+						foreground: "var(--brand-foreground)",
+					},
+				},
+			},
+		},
+	},
+);
+
 const designTokensPreset = createDesignTokenPreset();
 
 const config: Config = {
@@ -152,15 +181,8 @@ const config: Config = {
 		"./layouts/**/*.@(css|ts|vue)",
 		"./pages/**/*.@(css|ts|vue)",
 	],
-	darkMode: ["selector", '[data-ui-color-scheme="dark"]'],
-	plugins: [shadcnPlugin],
+	plugins: [shadcnPlugin, oadPlugin],
 	presets: [designTokensPreset],
-	theme: {
-		fontFamily: {
-			body: ["var(--font-body, ui-sans-serif)", "system-ui", "sans-serif"],
-			heading: ["var(--font-heading, var(--font-body, ui-sans-serif))", "system-ui", "sans-serif"],
-		},
-	},
 };
 
 export default config;
