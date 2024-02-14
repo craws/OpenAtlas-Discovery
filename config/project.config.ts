@@ -11,18 +11,18 @@ ColorSpace.register(OKLCH);
 const schema = z.object({
 	colors: z
 		.object({
-			accent: z.string(),
+			brand: z.string(),
 			geojson: z.string(),
 		})
 		.transform((values) => {
-			const color = parse(values.accent);
+			const color = parse(values.brand);
 			const luminance = getLuminance(convert(color, OKLCH));
 			const [h, s, l] = convert(color, HSL).coords;
 
 			return {
 				...values,
-				accent: `hsl(${h}deg ${s}% ${l}%)`,
-				accentContrast: luminance > 0.5 ? "hsl(0deg 0% 0%)" : "hsl(0deg 0% 100%)",
+				brand: `hsl(${h}deg ${s}% ${l}%)`,
+				brandContrast: luminance > 0.5 ? "hsl(0deg 0% 0%)" : "hsl(0deg 0% 100%)",
 			};
 		}),
 	defaultLocale: z.enum(["de", "en"]),

@@ -54,6 +54,8 @@ useContentHead(content);
 			<PageTitle>{{ content?.title }}</PageTitle>
 		</div>
 
-		<ContentRenderer v-if="content != null" class="prose dark:prose-invert" :value="content" />
+		<ContentRenderer v-if="content != null" class="prose" :value="content">
+			<template #empty></template>
+		</ContentRenderer>
 	</MainContent>
 </template>

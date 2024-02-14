@@ -68,9 +68,11 @@ onServerPrefetch(async () => {
 
 				<ContentRenderer
 					v-if="content.leadIn != null"
-					class="prose prose-lg max-w-3xl text-balance text-center dark:prose-invert"
+					class="prose prose-lg max-w-3xl text-balance text-center"
 					:value="content.leadIn"
-				/>
+				>
+					<template #empty></template>
+				</ContentRenderer>
 
 				<div class="flex items-center gap-6">
 					<Button v-for="(link, key) of content.links" :key="key" as-child variant="default">
@@ -91,9 +93,11 @@ onServerPrefetch(async () => {
 		<div>
 			<ContentRenderer
 				v-if="content != null && content.body.children.length > 0"
-				class="prose mx-auto w-full max-w-3xl px-8 dark:prose-invert"
+				class="prose mx-auto w-full max-w-3xl px-8"
 				:value="content"
-			/>
+			>
+				<template #empty></template>
+			</ContentRenderer>
 		</div>
 
 		<section class="mx-auto w-full max-w-3xl p-8">
