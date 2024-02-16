@@ -10,7 +10,7 @@ export interface Entity extends LinkedPlace {
 }
 
 export function useCreateEntity() {
-	const prefix = useIdPrefix();
+	const { getUnprefixedId } = useIdPrefix();
 
 	return function createtEntity(lp: LinkedPlace): Entity {
 		/**
@@ -19,7 +19,7 @@ export function useCreateEntity() {
 		 * uniquely identify each entity, and to create links to entity details pages.
 		 */
 		lp.features.forEach((feature) => {
-			const id = feature["@id"].slice(prefix.length);
+			const id = getUnprefixedId(feature["@id"]);
 			const _feature = feature as EntityFeature;
 			_feature.properties._id = id;
 		});

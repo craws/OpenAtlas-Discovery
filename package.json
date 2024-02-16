@@ -7,7 +7,7 @@
 		"node": "20.x",
 		"pnpm": "8.x"
 	},
-	"packageManager": "pnpm@8.15.2",
+	"packageManager": "pnpm@8.15.3",
 	"scripts": {
 		"analyze": "nuxt analyze",
 		"build": "nuxt build --dotenv ./.env.local",
@@ -62,7 +62,7 @@
 		"fast-glob": "^3.3.2",
 		"is-ci": "^3.0.1",
 		"lucide-vue-next": "^0.330.0",
-		"maplibre-gl": "^4.0.0",
+		"maplibre-gl": "^4.0.1",
 		"npm-run-all2": "^6.1.2",
 		"nuxt": "^3.10.2",
 		"openapi-typescript": "^7.0.0-next.7",

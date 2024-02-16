@@ -23,7 +23,7 @@ definePageMeta({
 
 const locale = useLocale();
 const t = useTranslations();
-const prefix = useIdPrefix();
+const { getUnprefixedId } = useIdPrefix();
 
 const route = useRoute();
 const id = computed(() => {
@@ -131,7 +131,7 @@ const typesById = computed(() => {
 									<li v-for="(relation, index) of relations" :key="index">
 										<NavLink
 											class="underline decoration-dotted hover:no-underline"
-											:href="{ path: `/entities/${relation.relationTo?.slice(prefix.length)}` }"
+											:href="{ path: `/entities/${getUnprefixedId(relation.relationTo)}` }"
 										>
 											{{ relation.label }}
 										</NavLink>

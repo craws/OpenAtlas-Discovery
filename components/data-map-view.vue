@@ -170,7 +170,7 @@ watch(data, () => {
 			</GeoMap>
 
 			<Centered v-if="isLoading" class="pointer-events-none">
-				<LoadingIndicator class="text-[#0a0a0a]" size="lg" />
+				<LoadingIndicator class="text-neutral-950" size="lg" />
 			</Centered>
 		</VisualisationContainer>
 	</div>

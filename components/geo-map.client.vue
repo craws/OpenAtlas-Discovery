@@ -181,7 +181,7 @@ function update() {
 
 	if (geojson.features.length > 0) {
 		const bounds = turf.bbox(geojson);
-		map.fitBounds(bounds, { padding: 20 });
+		map.fitBounds(bounds, { padding: 50 });
 	}
 }
 
