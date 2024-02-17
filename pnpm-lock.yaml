@@ -41,8 +41,8 @@ dependencies:
     specifier: ^0.0.3
     version: 0.0.3(openapi-typescript@7.0.0-next.7)
   '@tanstack/vue-query':
-    specifier: ^5.20.5
-    version: 5.20.5(vue@3.4.19)
+    specifier: ^5.21.2
+    version: 5.21.2(vue@3.4.19)
   '@tanstack/vue-table':
     specifier: ^8.12.0
     version: 8.12.0(vue@3.4.19)
@@ -71,7 +71,7 @@ dependencies:
     specifier: ^7.3.0
     version: 7.3.0
   dotenv-expand:
-    specifier: ^11.0.3
+    specifier: ^11.0.4
     version: 11.0.4
   embla-carousel:
     specifier: ^8.0.0-rc22
@@ -86,8 +86,8 @@ dependencies:
     specifier: ^3.0.1
     version: 3.0.1
   lucide-vue-next:
-    specifier: ^0.330.0
-    version: 0.330.0(vue@3.4.19)
+    specifier: ^0.331.0
+    version: 0.331.0(vue@3.4.19)
   maplibre-gl:
     specifier: ^4.0.1
     version: 4.0.1
@@ -104,7 +104,7 @@ dependencies:
     specifier: ^9.0.0
     version: 9.0.0
   radix-vue:
-    specifier: ^1.4.3
+    specifier: ^1.4.6
     version: 1.4.6(vue@3.4.19)
   tailwind-merge:
     specifier: ^2.2.1
@@ -151,8 +151,8 @@ devDependencies:
     specifier: ^2.0.1
     version: 2.0.1(postcss-html@1.6.0)(stylelint-order@6.0.4)(stylelint@16.2.1)
   '@acdh-oeaw/tailwindcss-preset':
-    specifier: ^0.0.20
-    version: 0.0.20(tailwindcss@3.4.1)
+    specifier: ^0.0.21
+    version: 0.0.21(tailwindcss@3.4.1)
   '@nuxt/devtools':
     specifier: ^1.0.8
     version: 1.0.8(nuxt@3.10.2)(rollup@4.11.0)(vite@5.1.3)
@@ -166,7 +166,7 @@ devDependencies:
     specifier: ^7946.0.14
     version: 7946.0.14
   '@types/node':
-    specifier: ^20.11.17
+    specifier: ^20.11.19
     version: 20.11.19
   axe-core:
     specifier: ^4.8.4
@@ -294,8 +294,8 @@ packages:
       - stylelint-order
     dev: true
 
-  /@acdh-oeaw/tailwindcss-preset@0.0.20(tailwindcss@3.4.1):
-    resolution: {integrity: sha512-4EVUZGRou3Qh1wkhgdkFSEFOp4tNCve8O9RXcy7UE0X16r1UenM3t1ZvmcSwv1waVq/rK2gSfRatazoEr/GUHg==}
+  /@acdh-oeaw/tailwindcss-preset@0.0.21(tailwindcss@3.4.1):
+    resolution: {integrity: sha512-nRXJDLgwC9LmIqdLfbvrKwaH2lk3PS2FVHF6rgOK2sGr5VA+wg4CMhcoK0qzhyoWlX2CVfC7BBB+lhcfxNwt4Q==}
     peerDependencies:
       tailwindcss: 3.x
     dependencies:
@@ -2672,8 +2672,8 @@ packages:
       remove-accents: 0.4.2
     dev: false
 
-  /@tanstack/query-core@5.20.5:
-    resolution: {integrity: sha512-T1W28gGgWn0A++tH3lxj3ZuUVZZorsiKcv+R50RwmPYz62YoDEkG4/aXHZELGkRp4DfrW07dyq2K5dvJ4Wl1aA==}
+  /@tanstack/query-core@5.21.2:
+    resolution: {integrity: sha512-jg7OcDG44oLT3uuGQQ9BM65ZBIdAq9xNZXPEk7Gr6w1oM1wo2/95H3dPDjLVs0yZKwrmE/ORUOC2Pyi1sp2fDA==}
     dev: false
 
   /@tanstack/table-core@8.12.0:
@@ -2681,8 +2681,8 @@ packages:
     engines: {node: '>=12'}
     dev: false
 
-  /@tanstack/vue-query@5.20.5(vue@3.4.19):
-    resolution: {integrity: sha512-poIPV6T95tNUu945gqoSZy/JuzvmtIYZHoyfjqEiQRC2H1myTB6bQygdK7ZbDgFRWkJZrAgxdI2xv+nhjZeWIA==}
+  /@tanstack/vue-query@5.21.2(vue@3.4.19):
+    resolution: {integrity: sha512-ojgcXy08oNz7HhQTaQyxL861cFMPoVmXPUeE3zaxso3ecFSBuztvmaGl/B+OkluOxVWBsPf3fB2RPO8HJfRPog==}
     peerDependencies:
       '@vue/composition-api': ^1.1.2
       vue: ^2.6.0 || ^3.3.0
@@ -2691,7 +2691,7 @@ packages:
         optional: true
     dependencies:
       '@tanstack/match-sorter-utils': 8.11.8
-      '@tanstack/query-core': 5.20.5
+      '@tanstack/query-core': 5.21.2
       '@vue/devtools-api': 6.6.1
       vue: 3.4.19(typescript@5.3.3)
       vue-demi: 0.14.7(vue@3.4.19)
@@ -7419,8 +7419,8 @@ packages:
     dependencies:
       yallist: 4.0.0
 
-  /lucide-vue-next@0.330.0(vue@3.4.19):
-    resolution: {integrity: sha512-/rfVjXHSTLzhYhRYxkZlazBpE2Xp0p9rfCg9rgvsJQvNU0JCB6z6q8+TVG6j8WREi6daxGT6DbAFh0F65tyJzw==}
+  /lucide-vue-next@0.331.0(vue@3.4.19):
+    resolution: {integrity: sha512-xMEmEdyuYKVxTwCI94adtWOmjmsG9UZBlEVqJnorxJy8QTBq68ZC5zADXRHN1gehvVaYj9g+H1vdwdVEo3uj7w==}
     peerDependencies:
       vue: '>=3.0.1'
     dependencies:

@@ -37,7 +37,7 @@ This server will _not_ commit content changes to GitHub, but write to the local 
 Set required environment variables in `.env.local`. Start by copying the template file:
 
 ```bash
-cp .env.example .env.local
+cp .env.local.example .env.local
 ```
 
 Environment variables:
