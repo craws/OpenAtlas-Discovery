@@ -23,6 +23,10 @@ export const categories = [
 	"valueTypeID",
 ] as const;
 
+/**
+ * The columns that can be sorted on.
+ * @id apiColumns
+ */
 export const columns = [
 	"id",
 	"name",

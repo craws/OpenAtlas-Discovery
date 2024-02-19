@@ -62,11 +62,16 @@ function sortableHeader(column: Column<EntityFeature, string>, title: string) {
 	}, () => { return [title, h(ArrowUpDown, { class: 'size-4' })] })
 }
 
+/**
+ * collumn.id: 	The ID of the column, should be the key used for sorting in the API.
+ * 							Needs to be explicitly given if the column needs to be sortable.
+ * @see columns
+ */
 const cols = [
 	columnHelper.accessor(
 		'systemClass',
 		{
-			id: 'system_class', // Use columns fore back-end sorting
+			id: 'system_class',
 			header: ({ column }) => { return sortableHeader(column, t("SearchResultsTable.header.class")) },
 			cell: info => {
 				const icon = getEntityIcon(info.getValue())
