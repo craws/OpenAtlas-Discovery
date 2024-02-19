@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import {
+	type CellContext,
 	type Column,
 	type ColumnSort,
 	createColumnHelper,
@@ -42,7 +43,7 @@ const { d } = useI18n();
 
 const columnHelper = createColumnHelper<EntityFeature>();
 
-function dateCellToDateString(info?: any): string {
+function dateCellToDateString(info: CellContext<EntityFeature, string>): string {
 	const date: string | null | undefined = info.getValue();
 
 	if (!date || date.includes('null')) return ''
