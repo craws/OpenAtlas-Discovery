@@ -121,7 +121,9 @@ const typesById = computed(() => {
 					<CardTitle>{{ t("EntityPage.details") }}</CardTitle>
 				</CardHeader>
 				<CardContent>
-					<dl class="grid gap-x-8 gap-y-4 sm:grid-cols-[auto_auto] sm:justify-start">
+					<dl
+						class="grid gap-x-8 gap-y-4 sm:grid-cols-[repeat(auto-fill,minmax(20rem,1fr))] sm:justify-start"
+					>
 						<div v-for="[relationType, relations] of relationsByType" :key="relationType">
 							<dt class="text-xs font-medium uppercase tracking-wider text-muted-foreground">
 								{{ t(`SystemClassNames.${relationType}`) }}
