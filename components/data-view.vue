@@ -54,6 +54,7 @@ const { data, error, isPending, isPlaceholderData, suspense } = useGetSearchResu
 				search.length > 0
 					? [{ [category]: [{ operator: "like", values: [search], logicalOperator: "and" }] }]
 					: [],
+			show: ["description", "when"],
 			view_classes: ["actor", "event", "place", "reference", "source"],
 		};
 	}),
