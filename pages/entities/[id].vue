@@ -130,7 +130,7 @@ const typesById = computed(() => {
 							</dt>
 							<dd>
 								<ul role="list">
-									<li v-for="(relation, index) of relations" :key="index">
+									<li v-for="(relation, index) of relations.slice(0, 10)" :key="index">
 										<NavLink
 											class="underline decoration-dotted hover:no-underline"
 											:href="{ path: `/entities/${getUnprefixedId(relation.relationTo)}` }"
@@ -147,6 +147,29 @@ const typesById = computed(() => {
 										</span>
 									</li>
 								</ul>
+								<details v-if="relations.length > 10">
+									<summary class="cursor-pointer py-1 text-sm text-muted-foreground">
+										Show more
+									</summary>
+									<ul role="list">
+										<li v-for="(relation, index) of relations.slice(10)" :key="index">
+											<NavLink
+												class="underline decoration-dotted hover:no-underline"
+												:href="{ path: `/entities/${getUnprefixedId(relation.relationTo)}` }"
+											>
+												{{ relation.label }}
+											</NavLink>
+											<span
+												v-if="
+													relation.relationSystemClass === 'type' &&
+													typesById.has(relation.relationTo)
+												"
+											>
+												({{ typesById.get(relation.relationTo)?.hierarchy }})
+											</span>
+										</li>
+									</ul>
+								</details>
 							</dd>
 						</div>
 					</dl>
