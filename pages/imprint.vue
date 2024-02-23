@@ -1,14 +1,31 @@
-<script setup lang="ts">
-const imprintServiceURL = "https://imprint.acdh.oeaw.ac.at/";
-const serviceID = "21614";
-const { locale, t } = useI18n();
+<script lang="ts" setup>
+import { project } from "@/config/project.config";
 
-const { data } = await useFetch(imprintServiceURL + serviceID + `/?locale=${locale.value}`);
+defineRouteRules({
+	prerender: true,
+});
+
+definePageMeta({
+	title: "ImprintPage.meta.title",
+	validate() {
+		return project.imprint !== "none";
+	},
+});
+
+const t = useTranslations();
+
+if (project.imprint === "none") {
+	throw createError({ fatal: true, statusCode: 404, statusMessage: "Imprint page is disabled" });
+}
 </script>
 
 <template>
-	<div class="ma-16">
-		<h1>{{ t("global.imprint") }}</h1>
-		<div v-html="data" />
-	</div>
+	<MainContent class="container max-w-3xl py-8">
+		<div>
+			<PageTitle>{{ t("ImprintPage.title") }}</PageTitle>
+		</div>
+
+		<Imprint v-if="project.imprint === 'custom'" />
+		<ImprintAcdhCh v-else-if="project.imprint === 'acdh-ch'" />
+	</MainContent>
 </template>

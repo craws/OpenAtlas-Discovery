@@ -1,86 +1,103 @@
-<script setup lang="ts">
-import type { ParsedContent } from "@nuxt/content/dist/runtime/types";
-import { useDisplay } from "vuetify";
+<script lang="ts" setup>
+import { noop } from "@acdh-oeaw/lib";
+import { useQuery } from "@tanstack/vue-query";
 
-const localePath = useLocalePath();
+import type { SystemPage } from "@/types/content";
 
-const APIBase = useRuntimeConfig().public.APIBase;
-const { smAndUp } = useDisplay();
-const { t, availableLocales, locale, fallbackLocale } = useI18n();
-const data = reactive<Record<string, ParsedContent>>({});
-availableLocales.forEach(async (locale) => {
-	let content = null;
-	try {
-		content = await queryContent(`/${locale}`).findOne();
-	} catch (error: any) {
-		if (!error.message.includes("404 Document not found")) {
-			throw error;
-		}
-	}
-	if (content) {
-		data[locale] = content;
-	}
+defineRouteRules({
+	prerender: true,
 });
-const logoHeight = computed(() => (smAndUp.value ? "350px" : "250px"));
 
-const contentToUse = computed(() => {
-	if (data[locale.value]) {
-		return data[locale.value];
-	}
-	if (typeof fallbackLocale.value === "string" && data[fallbackLocale.value]) {
-		return data[fallbackLocale.value];
-	}
-	return null;
+definePageMeta({
+	title: "IndexPage.meta.title",
+});
+
+const locale = useLocale();
+const t = useTranslations();
+
+const {
+	data: content,
+	error,
+	suspense,
+} = useQuery({
+	queryKey: ["system-pages", locale, "index"] as const,
+	queryFn({ queryKey: [, locale] }) {
+		return queryContent<SystemPage>("system-pages", locale).findOne();
+	},
+});
+useErrorMessage(error, {
+	notFound: t("IndexPage.error.not-found"),
+	unknown: t("IndexPage.error.unknown"),
+});
+onServerPrefetch(async () => {
+	/**
+	 * Delegate errors to the client, to avoid displaying error page with status code 500.
+	 *
+	 * @see https://github.com/TanStack/query/issues/6606
+	 * @see https://github.com/TanStack/query/issues/5976
+	 */
+	await suspense().catch(noop);
 });
 </script>
 
 <template>
-	<VSheet class="landing-page d-flex justify-center pt-5">
-		<VContainer id="content-renderer-container" class="text-center">
-			<ContentRenderer v-if="contentToUse">
-				<ContentRendererMarkdown :value="contentToUse" class="w-50 mx-auto" />
+	<MainContent class="container py-8">
+		<template v-if="content != null && content.leadIn != null">
+			<div class="grid place-items-center gap-8 p-8 sm:py-16">
+				<div>
+					<h1 class="sr-only">{{ content.title }}</h1>
+					<NuxtImg
+						v-if="content.image?.light != null"
+						alt=""
+						class="block h-80 w-full max-w-3xl object-contain dark:hidden"
+						preload
+						:src="content.image?.light"
+						:width="768"
+						:height="320"
+					/>
+					<NuxtImg
+						v-if="content.image?.dark != null"
+						alt=""
+						class="hidden h-80 w-full max-w-3xl object-contain dark:block"
+						preload
+						:src="content.image?.dark"
+						:width="768"
+						:height="320"
+					/>
+				</div>
+
+				<ContentRenderer
+					v-if="content.leadIn != null"
+					class="prose prose-lg max-w-3xl text-balance text-center"
+					:value="content.leadIn"
+				>
+					<template #empty></template>
+				</ContentRenderer>
+
+				<div class="flex items-center gap-6">
+					<Button v-for="(link, key) of content.links" :key="key" as-child variant="default">
+						<NavLink :href="link.href">
+							{{ link.label }}
+						</NavLink>
+					</Button>
+				</div>
+			</div>
+		</template>
+
+		<template v-else-if="content != null">
+			<div class="mx-auto w-full max-w-3xl px-8">
+				<PageTitle>{{ content?.title }}</PageTitle>
+			</div>
+		</template>
+
+		<div>
+			<ContentRenderer
+				v-if="content != null"
+				class="prose mx-auto w-full max-w-3xl"
+				:value="content"
+			>
+				<template #empty></template>
 			</ContentRenderer>
-			<br />
-			<VRow v-if="APIBase" justify="center">
-				<VCol cols="auto">
-					<VBtn
-						size="large"
-						:to="localePath('/map')"
-						min-width="150px"
-						color="primary"
-						width="100px"
-						prepend-icon="mdi-map-marker"
-					>
-						{{ t("global.basics.map") }}
-					</VBtn>
-				</VCol>
-				<VCol cols="auto">
-					<VBtn
-						size="large"
-						:to="localePath('/data')"
-						min-width="150px"
-						variant="outlined"
-						color="primary"
-						width="100px"
-						prepend-icon="mdi-database"
-					>
-						{{ t("global.basics.data") }}
-					</VBtn>
-				</VCol>
-			</VRow>
-		</VContainer>
-	</VSheet>
+		</div>
+	</MainContent>
 </template>
-
-<style scoped>
-.landing-page :deep(p) {
-	max-width: 568px;
-	margin-inline: auto;
-}
-
-.landing-page :deep(img) {
-	object-fit: contain;
-	width: 80%;
-	max-height: v-bind(logoHeight);
-}
-</style>

@@ -1,13 +1,97 @@
-import { execSync } from "node:child_process";
+import { fileURLToPath } from "node:url";
 
-import discoveryConfig from "./config/discoveryConfig.json";
+import { defaultLocale, localesMap } from "./config/i18n.config";
+import { getGitInfo } from "./utils/get-git-info";
 
-const branchName = execSync("git rev-parse --abbrev-ref HEAD").toString().trimEnd();
-const commitHash = execSync("git rev-parse HEAD").toString().trimEnd();
-const gitTag = execSync("git describe --always --tags").toString().trimEnd();
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+const baseUrl = process.env.NUXT_PUBLIC_APP_BASE_URL!;
 
-// https://nuxt.com/docs/api/configuration/nuxt-config
+const { branchName, commitHash, tag } = getGitInfo();
+
 export default defineNuxtConfig({
+	alias: {
+		"@": fileURLToPath(new URL("./", import.meta.url)),
+	},
+	app: {
+		layoutTransition: false,
+		pageTransition: false,
+	},
+	colorMode: {
+		classSuffix: "",
+		dataValue: "ui-color-scheme",
+	},
+	components: [{ path: "@/components", extensions: [".vue"], pathPrefix: false }],
+	content: {
+		defaultLocale,
+		locales: Object.keys(localesMap),
+		markdown: {},
+	},
+	css: ["@fontsource-variable/inter/slnt.css", "tailwindcss/tailwind.css", "@/styles/index.css"],
+	devtools: {
+		enabled: process.env.NODE_ENV === "development",
+	},
+	experimental: {
+		componentIslands: {
+			selectiveClient: true,
+		},
+		defaults: {
+			useAsyncData: {
+				deep: false,
+			},
+			useFetch: {
+				timeout: 250,
+			},
+		},
+		inlineRouteRules: true,
+	},
+	i18n: {
+		baseUrl,
+		defaultLocale,
+		detectBrowserLanguage: {
+			redirectOn: "root",
+		},
+		langDir: "./messages",
+		lazy: true,
+		locales: Object.values(localesMap),
+		strategy: "prefix",
+		vueI18n: "./i18n.config.ts",
+	},
+	image: {
+		domains: [],
+	},
+	imports: {
+		dirs: ["./config/"],
+	},
+	modules: ["@nuxt/content", "@nuxt/image", "@nuxtjs/color-mode", "@nuxtjs/i18n", "@vueuse/nuxt"],
+	nitro: {
+		compressPublicAssets: true,
+		prerender: {
+			routes: ["/manifest.webmanifest", "/robots.txt", "/sitemap.xml"],
+		},
+	},
+	postcss: {
+		plugins: {
+			tailwindcss: {},
+		},
+	},
+	runtimeConfig: {
+		NODE_ENV: process.env.NODE_ENV,
+		public: {
+			NUXT_PUBLIC_API_BASE_URL: process.env.NUXT_PUBLIC_API_BASE_URL,
+			NUXT_PUBLIC_APP_BASE_URL: process.env.NUXT_PUBLIC_APP_BASE_URL,
+			NUXT_PUBLIC_BOTS: process.env.NUXT_PUBLIC_BOTS,
+			NUXT_PUBLIC_DATABASE: process.env.NUXT_PUBLIC_DATABASE,
+			NUXT_PUBLIC_GIT_BRANCH_NAME: branchName,
+			NUXT_PUBLIC_GIT_COMMIT_HASH: commitHash,
+			NUXT_PUBLIC_GIT_TAG: tag,
+			NUXT_PUBLIC_MAP_BASELAYER_URL_DARK: process.env.NUXT_PUBLIC_MAP_BASELAYER_URL_DARK,
+			NUXT_PUBLIC_MAP_BASELAYER_URL_LIGHT: process.env.NUXT_PUBLIC_MAP_BASELAYER_URL_LIGHT,
+			NUXT_PUBLIC_MATOMO_BASE_URL: process.env.NUXT_PUBLIC_MATOMO_BASE_URL,
+			NUXT_PUBLIC_MATOMO_ID: process.env.NUXT_PUBLIC_MATOMO_ID,
+			NUXT_PUBLIC_OPENAPI_BASE_URL: process.env.NUXT_PUBLIC_OPENAPI_BASE_URL,
+			NUXT_PUBLIC_REDMINE_ID: process.env.NUXT_PUBLIC_REDMINE_ID,
+		},
+	},
 	typescript: {
 		shim: false,
 		strict: true,
@@ -19,72 +103,5 @@ export default defineNuxtConfig({
 				},
 			},
 		},
-	},
-	app: {
-		head: {
-			meta: [
-				{
-					name: discoveryConfig.title,
-				},
-			],
-		},
-	},
-	runtimeConfig: {
-		// Keys within public, will be also exposed to the client-side
-		public: {
-			APIBase: process.env.NUXT_PUBLIC_API_BASE_URL,
-			commitHash,
-			branchName,
-			gitTag,
-		},
-	},
-	modules: ["@nuxtjs/i18n", "@nuxt/image", "@nuxt/content", "vuetify-nuxt-module"],
-	i18n: {
-		baseUrl: process.env.NUXT_PUBLIC_APP_BASE_URL,
-		defaultLocale: discoveryConfig.defaultLocale,
-		detectBrowserLanguage: {
-			redirectOn: "root",
-		},
-		locales: [
-			{
-				nativeName: "Deutsch",
-				englishName: "German",
-				code: "de",
-				iso: "de-DE",
-				file: "./de.json",
-			},
-			{
-				nativeName: "English",
-				englishName: "English",
-				code: "en",
-				iso: "en-US",
-				file: "./en.json",
-			},
-		],
-		lazy: true,
-		langDir: "./locales",
-		strategy: "prefix",
-		vueI18n: "./i18n.config.ts",
-	},
-	vuetify: {
-		moduleOptions: {
-			/* module specific options */
-		},
-		vuetifyOptions: {
-			/* vuetify options */
-		},
-	},
-	css: ["vuetify/styles", "@mdi/font/css/materialdesignicons.min.css", "leaflet/dist/leaflet.css"],
-	build: {},
-	vite: {
-		define: {
-			"process.env.DEBUG": false,
-		},
-	},
-	image: {
-		domains: process.env.NUXT_PUBLIC_IMAGE_DOMAINS
-			? JSON.parse(process.env.NUXT_PUBLIC_IMAGE_DOMAINS)
-			: [],
-		inject: true,
 	},
 });
