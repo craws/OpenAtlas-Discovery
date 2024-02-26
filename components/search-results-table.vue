@@ -43,20 +43,31 @@ const { d } = useI18n();
 
 const columnHelper = createColumnHelper<EntityFeature>();
 
+/**
+ * Converts a date cell value to a formatted date string.
+ * @param {CellContext<EntityFeature, string>} info - The cell context containing the date value.
+ * @returns {string} - The formatted date string.
+ */
 function dateCellToDateString(info: CellContext<EntityFeature, string>): string {
 	const date: string | null | undefined = info.getValue();
 
-	if (!date || date.includes('null')) return ''
+	if (!date || date.includes('null')) return '';
 
-	return d(date)
+	return d(date);
 }
 
+/**
+ * Creates a sortable header button for the search results table.
+ *
+ * @param {Column<EntityFeature, string>} column - The column object representing the feature of an entity.
+ * @param {string} title - The title of the sortable header button.
+ * @returns {VNode} - The Vue render function for the sortable header button.
+ */
 function sortableHeader(column: Column<EntityFeature, string>, title: string) {
 	return h(Button, {
 		variant: 'ghost',
 		onClick: () => {
 			const currentSorting = column.getIsSorted();
-
 			emit("update:sorting", [{ id: column.id, desc: currentSorting === 'asc' ? true : false }])
 		},
 	}, () => { return [title, h(ArrowUpDown, { class: 'size-4' })] })
