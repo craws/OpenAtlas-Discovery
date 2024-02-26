@@ -23,6 +23,29 @@ export const categories = [
 	"valueTypeID",
 ] as const;
 
+/**
+ * The columns that can be sorted on.
+ * @id apiColumns
+ */
+export const columns = [
+	"id",
+	"name",
+	"cidoc_class",
+	"system_class",
+	"begin_from",
+	"begin_to",
+	"end_from",
+	"end_to",
+] as const;
+
+export type Column = (typeof columns)[number];
+
+// Write a check to see if an object is of typed column
+export function isColumn(value: unknown): value is Column {
+	return columns.includes(value as Column);
+}
+
+
 export type Category = (typeof categories)[number];
 
 export const operators = [

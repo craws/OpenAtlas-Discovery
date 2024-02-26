@@ -1,81 +1,200 @@
 <script lang="ts" setup>
+import {
+	type CellContext,
+	type Column,
+	type ColumnSort,
+	createColumnHelper,
+	FlexRender,
+	getCoreRowModel,
+	getSortedRowModel,
+	type SortingState,
+	useVueTable
+} from '@tanstack/vue-table'
+import { ArrowUpDown } from 'lucide-vue-next';
+
+import NavLink from "@/components/nav-link.vue";
+import { Button } from '@/components/ui/button';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import type { EntityFeature } from "@/composables/use-create-entity";
+import { isColumn } from '@/composables/use-get-search-results';
+
+const emit = defineEmits({
+	"update:sorting"(sorting: SortingState) {
+		if (!sorting.length) return false;
+		const containsInvalidColumn = sorting.some((sort: ColumnSort) => { // Returns true if any column is invalid
+			if (!isColumn(sort.id)) return true;
+			return false;
+		});
+
+		if (containsInvalidColumn) return false;
+
+		return true;
+
+	}
+})
 
 const props = defineProps<{
 	entities: Array<EntityFeature>;
+	sorting: SortingState;
 }>();
 
 const t = useTranslations();
 const { d } = useI18n();
+
+const columnHelper = createColumnHelper<EntityFeature>();
+
+/**
+ * Converts a date cell value to a formatted date string.
+ * @param {CellContext<EntityFeature, string>} info - The cell context containing the date value.
+ * @returns {string} - The formatted date string.
+ */
+function dateCellToDateString(info: CellContext<EntityFeature, string>): string {
+	const date: string | null | undefined = info.getValue();
+
+	if (!date || date.includes('null')) return '';
+
+	return d(date);
+}
+
+/**
+ * Creates a sortable header button for the search results table.
+ *
+ * @param {Column<EntityFeature, string>} column - The column object representing the feature of an entity.
+ * @param {string} title - The title of the sortable header button.
+ * @returns {VNode} - The Vue render function for the sortable header button.
+ */
+function sortableHeader(column: Column<EntityFeature, string>, title: string) {
+	return h(Button, {
+		variant: 'ghost',
+		onClick: () => {
+			const currentSorting = column.getIsSorted();
+			emit("update:sorting", [{ id: column.id, desc: currentSorting === 'asc' ? true : false }])
+		},
+	}, () => { return [title, h(ArrowUpDown, { class: 'size-4' })] })
+}
+
+/**
+ * collumn.id: 	The ID of the column, should be the key used for sorting in the API.
+ * 							Needs to be explicitly given if the column needs to be sortable.
+ * @see columns
+ */
+const cols = [
+	columnHelper.accessor(
+		'systemClass',
+		{
+			id: 'system_class',
+			header: ({ column }) => { return sortableHeader(column, t("SearchResultsTable.header.class")) },
+			cell: info => {
+				const icon = getEntityIcon(info.getValue())
+
+				const tooltipWrapper = h(TooltipProvider, {}, [
+					h(Tooltip, {}, [
+						h(TooltipTrigger,
+							{ class: "cursor-default" },
+							icon ? h(icon, { class: "size-4 shrink-0" }) : h('span', {}, info.getValue())),
+						h(TooltipContent,
+							{},
+							t(`SystemClassNames.${info.getValue()}`))
+					])
+				])
+
+				const root = h('span', {}, [
+					tooltipWrapper,
+					h('span', { class: "sr-only" }, t(`SystemClassNames.${info.getValue()}`))
+				])
+
+				return root;
+			}
+		}
+	),
+	columnHelper.accessor(
+		'properties.title',
+		{
+			id: 'name',
+			header: ({ column }) => { return sortableHeader(column, t("SearchResultsTable.header.name")) },
+			cell: info => {
+				const title = info.getValue();
+				return h(NavLink,
+					{
+						class: "underline decoration-dotted transition hover:no-underline focus-visible:no-underline",
+						href: { path: `/entities/${encodeURIComponent(info.row.original.properties._id)}` }
+					},
+					title
+				)
+			}
+		}
+	),
+	columnHelper.accessor(
+		'descriptions',
+		{
+			header: t("SearchResultsTable.header.description"),
+			cell: info => {
+				const descriptions = info.getValue()
+				if (!Array.isArray(descriptions)) return ''
+
+				return descriptions
+					.filter(desc => { return desc.value })
+					.map((description, index) => {
+						if (description.value != null) {
+							return h('span', { key: index }, description.value)
+						}
+						return
+					});
+			}
+		}
+	),
+	columnHelper.accessor(
+		row => { return `${row.when?.timespans?.[0]?.start?.earliest} ` },
+		{
+			id: 'begin_from',
+			header: ({ column }) => { return sortableHeader(column, t("SearchResultsTable.header.begin")) },
+			cell: (info) => { return dateCellToDateString(info) }
+		}
+	),
+	columnHelper.accessor(
+		row => { return `${row.when?.timespans?.[0]?.end?.earliest} ` },
+		{
+			id: 'end_from',
+			header: ({ column }) => { return sortableHeader(column, t("SearchResultsTable.header.end")) },
+			cell: (info) => { return dateCellToDateString(info) }
+		}
+	)
+]
+
+const table = useVueTable({
+	get data() { return props.entities },
+	get columns() { return cols },
+	getCoreRowModel: getCoreRowModel(),
+	getSortedRowModel: getSortedRowModel(),
+	state: {
+		get sorting() { return props.sorting },
+	}
+})
+
+
 </script>
 
 <template>
 	<Table>
 		<TableCaption class="sr-only">{{ t("SearchResultsTable.search-results") }}</TableCaption>
 		<TableHeader>
-			<TableRow>
-				<TableHead class="w-14">
-					{{ t("SearchResultsTable.header.class") }}
-				</TableHead>
-				<TableHead>
-					{{ t("SearchResultsTable.header.name") }}
-				</TableHead>
-				<TableHead>
-					{{ t("SearchResultsTable.header.description") }}
-				</TableHead>
-				<TableHead class="text-right">
-					{{ t("SearchResultsTable.header.begin") }}
-				</TableHead>
-				<TableHead class="text-right">
-					{{ t("SearchResultsTable.header.end") }}
+			<TableRow v-for="headerGroup in table.getHeaderGroups()" :key="headerGroup.id">
+				<TableHead v-for="header in headerGroup.headers" :key="header.id">
+					<FlexRender v-if="!header.isPlaceholder" :render="header.column.columnDef.header" :props="header.getContext()" />
 				</TableHead>
 			</TableRow>
 		</TableHeader>
 		<TableBody>
-			<TableRow v-for="entity of props.entities" :key="entity.properties._id">
-				<TableCell class="font-medium">
-					<TooltipProvider>
-						<Tooltip>
-							<TooltipTrigger class="cursor-default">
-								<Component :is="getEntityIcon(entity.systemClass)" class="size-4 shrink-0" />
-							</TooltipTrigger>
-							<TooltipContent>
-								{{ t(`SystemClassNames.${entity.systemClass}`) }}
-							</TooltipContent>
-						</Tooltip>
-					</TooltipProvider>
-					<span class="sr-only">{{ t(`SystemClassNames.${entity.systemClass}`) }}</span>
-				</TableCell>
-				<TableCell>
-					<NavLink
-						class="underline decoration-dotted transition hover:no-underline focus-visible:no-underline"
-						:href="{ path: `/entities/${encodeURIComponent(entity.properties._id)}` }"
-					>
-						{{ entity.properties.title }}
-					</NavLink>
-				</TableCell>
-				<TableCell>
-					<template v-for="(description, index) of entity.descriptions" :key="index">
-						<span v-if="description.value != null">{{ description.value }}</span>
-					</template>
-				</TableCell>
-				<TableCell class="text-right">
-					<template v-for="(timespan, index) of entity.when?.timespans" :key="index">
-						<!-- FIXME: why earliest -->
-						<span v-if="timespan.start?.earliest != null">
-							{{ d(timespan.start.earliest) }}
-						</span>
-					</template>
-				</TableCell>
-				<TableCell class="text-right">
-					<template v-for="(timespan, index) of entity.when?.timespans" :key="index">
-						<!-- FIXME: why earliest -->
-						<span v-if="timespan.end?.earliest != null">
-							{{ d(timespan.end.earliest) }}
-						</span>
-					</template>
-				</TableCell>
-			</TableRow>
+			<template v-if="table.getRowModel().rows?.length">
+				<TableRow
+					v-for="row in table.getRowModel().rows"
+					:key="row.id"
+					:data-state="row.getIsSelected() ? 'selected' : undefined">
+						<TableCell v-for="cell in row.getVisibleCells()" :key="cell.id">
+								<FlexRender :render="cell.column.columnDef.cell" :props="cell.getContext()" />
+						</TableCell>
+				</TableRow>
+			</template>
 		</TableBody>
 	</Table>
 </template>
