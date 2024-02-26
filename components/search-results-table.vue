@@ -136,7 +136,7 @@ const cols = [
 					.filter(desc => { return desc.value })
 					.map((description, index) => {
 						if (description.value != null) {
-							return h('span', { key: index }, description.value)
+							return h('span', { class: "max-w-[30vw] truncate inline-block", key: index }, description.value)
 						}
 						return
 					});
@@ -191,7 +191,7 @@ const table = useVueTable({
 					:key="row.id"
 					:data-state="row.getIsSelected() ? 'selected' : undefined">
 						<TableCell v-for="cell in row.getVisibleCells()" :key="cell.id">
-								<FlexRender :render="cell.column.columnDef.cell" :props="cell.getContext()" />
+							<FlexRender :render="cell.column.columnDef.cell" :props="cell.getContext()" />
 						</TableCell>
 				</TableRow>
 			</template>
