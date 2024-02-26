@@ -65,16 +65,17 @@ test.describe("app", () => {
 		// TODO: use toMatchSnapshot
 		expect(body.toString()).toEqual(
 			JSON.stringify({
-				name: "ACDH-CH App",
-				short_name: "ACDH-CH App",
-				description: "ACDH-CH App",
+				name: "OpenAtlas Discovery",
+				short_name: "OpenAtlas Discovery",
+				description:
+					"OpenAtlas is an open source database software developed especially to acquire, edit and manage research data from various fields of humanities.",
 				start_url: "/",
 				display: "standalone",
 				background_color: "#fff",
 				theme_color: "#fff",
 				icons: [
 					{ src: "/icon.svg", sizes: "any", type: "image/svg+xml" },
-					// { src: "/icon-maskable.svg", sizes: "any", type: "image/svg+xml", purpose: "maskable" },
+					{ src: "/icon-maskable.svg", sizes: "any", type: "image/svg+xml", purpose: "maskable" },
 					{ src: "/android-chrome-192x192.png", sizes: "192x192", type: "image/png" },
 					{ src: "/android-chrome-512x512.png", sizes: "512x512", type: "image/png" },
 				],

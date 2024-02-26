@@ -2,7 +2,7 @@ import { log } from "@acdh-oeaw/lib";
 import { ColorSpace, getLuminance, HSL, OKLCH, parse, sRGB, to as convert } from "colorjs.io/fn";
 import { z } from "zod";
 
-import projectConfig from "../project.config.json";
+import projectConfig from "../project.config.json" assert { type: "json" };
 
 ColorSpace.register(sRGB);
 ColorSpace.register(HSL);

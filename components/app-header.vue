@@ -53,7 +53,10 @@ const contentLinks = computed(() => {
 
 	return Object.fromEntries(
 		pages.map((link) => {
-			return [link._path, { href: { path: link._path.slice(prefix.length) }, label: link.title }];
+			return [
+				link._path,
+				{ href: { path: "/content" + link._path.slice(prefix.length) }, label: link.title },
+			];
 		}),
 	) satisfies Record<string, { href: NavLinkProps["href"]; label: string }>;
 });

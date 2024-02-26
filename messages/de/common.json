@@ -53,6 +53,7 @@
 		"no-descriptions": "Keine Beschreibungen verfügbar."
 	},
 	"EntityPage": {
+		"details": "Details",
 		"images": "Bilder ({count})",
 		"map": "Karte",
 		"meta": {

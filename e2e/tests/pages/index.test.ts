@@ -9,7 +9,7 @@ test.describe("index page", () => {
 			await indexPage.goto();
 
 			await expect(indexPage.page).toHaveTitle(
-				[t("IndexPage.meta.title"), t("DefaultLayout.meta.title")].join(" | "),
+				[t("IndexPage.meta.title"), t("Metadata.name")].join(" | "),
 			);
 		}
 	});

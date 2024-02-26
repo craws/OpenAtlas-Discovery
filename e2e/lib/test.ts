@@ -44,9 +44,14 @@ export const test = base.extend<Fixtures>({
 	async createI18n({ page: _ }, use) {
 		async function createI18n(locale = defaultLocale) {
 			// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-			const _messages = await import(`@/messages/${locale}.json`, { with: { type: "json" } });
+			const _messages = await import(`@/messages/${locale}/common.json`, {
+				with: { type: "json" },
+			});
+			const _project = await import(`@/messages/${locale}/project.json`, {
+				with: { type: "json" },
+			});
 			// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-			const messages = _messages.default as Messages;
+			const messages = { ..._messages.default, ..._project.default } as Messages;
 
 			return _createI18n({
 				legacy: false,

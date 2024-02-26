@@ -31,7 +31,7 @@ const isNotFoundPage = computed(() => {
 /** `error.vue` is *not* wrapped in default layout out of the box. */
 useHead({
 	titleTemplate: computed(() => {
-		return ["%s", t("DefaultLayout.meta.title")].join(" | ");
+		return ["%s", t("Metadata.name")].join(" | ");
 	}),
 	title: computed(() => {
 		return isNotFoundPage.value ? t("NotFoundPage.meta.title") : t("ErrorPage.meta.title");
