@@ -137,6 +137,7 @@
 			"end": "End",
 			"name": "Name"
 		},
+		"no-entries": "No entries found for this search.",
 		"search-results": "Search results"
 	},
 	"SystemClassNames": {
