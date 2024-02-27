@@ -98,14 +98,14 @@ const entities = computed(() => {
 		<SearchForm
 			:filter="searchFilters.category"
 			:search="searchFilters.search"
-			@submit="onChangeSearchFilters"
-		/>
+			@submit="onChangeSearchFilters" />
 
 		<div
 			class="relative isolate grid size-full overflow-y-auto"
-			:class="{ 'opacity-50 grayscale': isLoading }"
-		>
-			<div v-if="useGetSearchResults.length > 0" class="grid gap-8">
+			:class="{ 'opacity-50 grayscale': isLoading }">
+			<div
+				v-if="useGetSearchResults.length > 0"
+				class="grid gap-8">
 				<SearchResultsTable
 					:entities="entities"
 					:sorting="sortingState"
@@ -120,8 +120,7 @@ const entities = computed(() => {
 					:show-edges="true"
 					:total="data.pagination.entities"
 					:items-per-page="data.pagination.entitiesPerPage"
-					@update:page="onUpdatePage"
-				>
+					@update:page="onUpdatePage">
 					<PaginationList v-slot="{ items }" class="flex items-center gap-1">
 						<PaginationFirst />
 						<PaginationPrev />
@@ -131,8 +130,7 @@ const entities = computed(() => {
 								v-if="item.type === 'page'"
 								:key="index"
 								as-child
-								:value="item.value"
-							>
+								:value="item.value">
 								<Button class="size-10 p-0" :variant="item.value === page ? 'default' : 'outline'">
 									{{ item.value }}
 								</Button>
@@ -140,8 +138,8 @@ const entities = computed(() => {
 							<PaginationEllipsis v-else :key="item.type" :index="index" />
 						</template>
 
-						<PaginationNext />
-						<PaginationLast />
+						<PaginationNext :disabled="data.pagination.totalPages < 2" />
+						<PaginationLast :disabled="data.pagination.totalPages < 2" />
 					</PaginationList>
 				</Pagination>
 			</div>
@@ -150,7 +148,9 @@ const entities = computed(() => {
 				<Centered>{{ t("DataView.nothing-found") }}</Centered>
 			</div>
 
-			<Centered v-if="isLoading" class="pointer-events-none">
+			<Centered
+				v-if="isLoading"
+				class="pointer-events-none">
 				<LoadingIndicator size="lg" />
 			</Centered>
 		</div>
