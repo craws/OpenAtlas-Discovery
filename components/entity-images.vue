@@ -6,7 +6,7 @@ const props = defineProps<{
 
 <template>
 	<Carousel class="mx-14">
-		<CarouselPrevious v-if="$props.images.length > 2" />
+		<CarouselPrevious v-if="props.images.length > 2" />
 		<CarouselContent>
 			<CarouselItem v-for="(image, index) of props.images" :key="index" class="h-full">
 				<Card class="pb-3">
@@ -19,6 +19,6 @@ const props = defineProps<{
 				</Card>
 			</CarouselItem>
 		</CarouselContent>
-		<CarouselNext v-if="$props.images.length > 2" />
+		<CarouselNext v-if="props.images.length > 2" />
 	</Carousel>
 </template>
