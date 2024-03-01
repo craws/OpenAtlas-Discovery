@@ -73,7 +73,6 @@ const tabs = computed(() => {
 	return tabs;
 });
 
-
 const relationsByType = computed(() => {
 	return groupByToMap(entity.value?.relations ?? [], (relation) => {
 		// FIXME: This used to use `relationType` (without the prefix)
@@ -124,7 +123,8 @@ const typesById = computed(() => {
 				</CardHeader>
 				<CardContent>
 					<dl
-						class="grid gap-x-8 gap-y-4 sm:grid-cols-[repeat(auto-fill,minmax(20rem,1fr))] sm:justify-start">
+						class="grid gap-x-8 gap-y-4 sm:grid-cols-[repeat(auto-fill,minmax(20rem,1fr))] sm:justify-start"
+					>
 						<div v-for="[relationType, relations] of relationsByType" :key="relationType">
 							<dt class="text-xs font-medium uppercase tracking-wider text-muted-foreground">
 								{{ t(`SystemClassNames.${relationType}`) }}
@@ -134,13 +134,16 @@ const typesById = computed(() => {
 									<li v-for="(relation, index) of relations.slice(0, 10)" :key="index">
 										<NavLink
 											class="underline decoration-dotted hover:no-underline"
-											:href="{ path: `/entities/${getUnprefixedId(relation.relationTo)}` }">
+											:href="{ path: `/entities/${getUnprefixedId(relation.relationTo)}` }"
+										>
 											{{ relation.label }}
 										</NavLink>
 										<span
-											v-if="relation.relationSystemClass === 'type' &&
+											v-if="
+												relation.relationSystemClass === 'type' &&
 												typesById.has(relation.relationTo)
-												">
+											"
+										>
 											({{ typesById.get(relation.relationTo)?.hierarchy }})
 										</span>
 									</li>
@@ -153,13 +156,16 @@ const typesById = computed(() => {
 										<li v-for="(relation, index) of relations.slice(10)" :key="index">
 											<NavLink
 												class="underline decoration-dotted hover:no-underline"
-												:href="{ path: `/entities/${getUnprefixedId(relation.relationTo)}` }">
+												:href="{ path: `/entities/${getUnprefixedId(relation.relationTo)}` }"
+											>
 												{{ relation.label }}
 											</NavLink>
 											<span
-												v-if="relation.relationSystemClass === 'type' &&
+												v-if="
+													relation.relationSystemClass === 'type' &&
 													typesById.has(relation.relationTo)
-													">
+												"
+											>
 												({{ typesById.get(relation.relationTo)?.hierarchy }})
 											</span>
 										</li>

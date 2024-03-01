@@ -23,6 +23,7 @@ node_modules/
 
 # nuxt.js
 dist
+.data/
 .nuxt/
 .nitro/
 .output/

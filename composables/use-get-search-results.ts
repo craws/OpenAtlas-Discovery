@@ -45,7 +45,6 @@ export function isColumn(value: unknown): value is Column {
 	return columns.includes(value as Column);
 }
 
-
 export type Category = (typeof categories)[number];
 
 export const operators = [
