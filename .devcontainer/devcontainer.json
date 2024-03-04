@@ -13,8 +13,7 @@
 				"ms-playwright.playwright",
 				"nuxt.mdc",
 				"stylelint.vscode-stylelint",
-				"vue.volar",
-				"vue.vscode-typescript-vue-plugin"
+				"vue.volar"
 			]
 		}
 	}
