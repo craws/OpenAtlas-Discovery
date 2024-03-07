@@ -7,8 +7,8 @@ A demo website is deplyed at <https://openatlas-discovery-demo.acdh-ch-dev.oeaw.
 ## Content management (CMS)
 
 The website comes with a content management system, which is deployed at `/admin` and commits all
-content chanes to the website repository on GitHub. All content is stored in plain text (markdown or
-json), and can also be edited directly with your favourite text editor.
+content changes to the website repository on GitHub. All content is stored in plain text (markdown
+or json), and can also be edited directly with your favourite text editor.
 
 - "Config" collection: Main configuration file for the website. Allows setting default locale, brand
   colors, logos. Saves to [`project.config.json`](project.config.json).
@@ -80,7 +80,7 @@ pnpm run dev
 The CMS allows signing in with a GitHub account via OAuth.
 
 In local development, this is optional: you can run a CMS proxy server, which commits content to the
-local filesystem, instead of GitHub, and requires to authentication.
+local filesystem, instead of GitHub, and requires no authentication.
 
 ```bash
 pnpm run dev:cms
