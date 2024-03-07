@@ -15,6 +15,8 @@ or json), and can also be edited directly with your favourite text editor.
 - "Metadata" collection: Project metadata which needs translation in all suppoted languages. Saves
   to [`messages/:locale/project.json`](messages/en/project.json).
 - "Pages" collection: Custom content pages. Saves to [`content/pages/*.md`](content/pages).
+- "System pages" collection: Default pages, which cannot be deleted. Saves to
+  [`content/system-pages/*.md`](content/system-pages).
 - "Team" collection: Team members. Saves to [`content/team/*.md`](content/team).
 
 When developing locally, you can run a development CMS server with:
@@ -50,8 +52,8 @@ Environment variables:
   `/database` and `/maps` pages should be added to the website. Allowed values are: "enabled" or
   "disabled".
 
-- `NUXT_PUBLIC_MAP_BASELAYER_URL`: The map base layer used on the "/maps" page. Defaults to an
-  OpenStreetMap map.
+- `NUXT_PUBLIC_MAP_BASELAYER_URL_LIGHT` and `NUXT_PUBLIC_MAP_BASELAYER_URL_DARK`: The map base layer
+  used on the "/maps" page, in "light" and "dark" mode. Defaults to an OpenStreetMap map.
 - `NUXT_PUBLIC_MAP_BASELAYER_ATTRIBUTION`: Attribution text for the above map.
 
 - `NUXT_PUBLIC_MATOMO_BASE_URL` and `NUXT_PUBLIC_MATOMO_ID`: When using `matomo` for website
