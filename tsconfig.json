@@ -1,12 +1,4 @@
 {
 	"$schema": "https://json.schemastore.org/tsconfig",
-	"extends": ["./.nuxt/tsconfig.json", "@acdh-oeaw/tsconfig"],
-	"compilerOptions": {
-		/**
-		 * This should be fixed in typescript 5.4.
-		 *
-		 * @see https://github.com/microsoft/TypeScript/issues/54057
-		 */
-		"incremental": false
-	}
+	"extends": ["./.nuxt/tsconfig.json", "@acdh-oeaw/tsconfig"]
 }
