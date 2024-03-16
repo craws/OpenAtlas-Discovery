@@ -1,7 +1,6 @@
-/* eslint-disable require-atomic-updates, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access */
+/* eslint-disable require-atomic-updates, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-argument */
 
 import { isNonEmptyString } from "@acdh-oeaw/lib";
-// @ts-expect-error Missing type information.
 import { parseMarkdown } from "@nuxtjs/mdc/runtime";
 
 /**
