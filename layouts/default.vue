@@ -81,10 +81,12 @@ useHead({
 			isNonEmptyString(env.public.NUXT_PUBLIC_MATOMO_BASE_URL) &&
 			isNonEmptyString(env.public.NUXT_PUBLIC_MATOMO_ID)
 		) {
+			const baseUrl = env.public.NUXT_PUBLIC_MATOMO_BASE_URL;
+
 			scripts.push({
 				type: "",
 				innerHTML: createAnalyticsScript(
-					env.public.NUXT_PUBLIC_MATOMO_BASE_URL,
+					baseUrl.endsWith("/") ? baseUrl : baseUrl + "/",
 					env.public.NUXT_PUBLIC_MATOMO_ID,
 				),
 			});
