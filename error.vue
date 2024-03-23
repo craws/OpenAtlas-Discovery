@@ -1,13 +1,4 @@
 <script lang="ts" setup>
-/**
- * `error.vue` sits outside the routing structure, so we cannot define page metadata.
- *
- * @see https://github.com/nuxt/nuxt/issues/19344#issuecomment-1449685103
- */
-// definePageMeta({
-// 	title: "ErrorPage.meta.title",
-// });
-
 const props = defineProps<{
 	error:
 		| Error
@@ -50,7 +41,7 @@ function onReset() {
 </script>
 
 <template>
-	<MainContent class="grid min-h-full place-content-center place-items-center">
+	<MainContent class="grid min-h-full place-content-center place-items-center gap-y-3">
 		<template v-if="isNotFoundPage">
 			<h1>{{ t("NotFoundPage.title") }}</h1>
 		</template>

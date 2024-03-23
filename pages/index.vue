@@ -8,12 +8,12 @@ defineRouteRules({
 	prerender: true,
 });
 
-definePageMeta({
-	title: "IndexPage.meta.title",
-});
-
 const locale = useLocale();
 const t = useTranslations();
+
+usePageMetadata({
+	title: t("IndexPage.meta.title"),
+});
 
 const {
 	data: content,

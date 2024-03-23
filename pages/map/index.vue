@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 definePageMeta({
-	title: "MapPage.meta.title",
 	validate() {
 		const env = useRuntimeConfig();
 		return env.public.NUXT_PUBLIC_DATABASE !== "disabled";
@@ -8,6 +7,10 @@ definePageMeta({
 });
 
 const t = useTranslations();
+
+usePageMetadata({
+	title: t("MapPage.meta.title"),
+});
 
 const env = useRuntimeConfig();
 </script>
