@@ -43,6 +43,7 @@
 	"typescript.preferences.preferTypeOnlyAutoImports": true,
 	"typescript.tsdk": "node_modules/typescript/lib",
 	"workbench.editor.labelFormat": "medium",
+	"workbench.tree.enableStickyScroll": true,
 	"[markdown][mdc]": {
 		"editor.wordWrap": "on"
 	}
