@@ -104,7 +104,7 @@ const entities = computed(() => {
 			class="relative isolate grid size-full overflow-y-auto"
 			:class="{ 'opacity-50 grayscale': isLoading }"
 		>
-			<div v-if="useGetSearchResults.length > 0" class="grid gap-8">
+			<div v-if="entities.length > 0" class="grid gap-8">
 				<SearchResultsTable
 					:entities="entities"
 					:sorting="sortingState"
@@ -146,7 +146,7 @@ const entities = computed(() => {
 				</Pagination>
 			</div>
 
-			<div v-else>
+			<div v-else-if="!isLoading">
 				<Centered>{{ t("DataView.nothing-found") }}</Centered>
 			</div>
 

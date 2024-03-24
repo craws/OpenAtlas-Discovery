@@ -37,11 +37,13 @@
 		"end-date": "End date",
 		"start-date": "Start date"
 	},
+	"DataView": {
+		"nothing-found": "No entries found for this search."
+	},
 	"DataPage": {
 		"meta": {
 			"title": "Data"
 		},
-		"nothing-found": "Nothing found",
 		"search": "Search",
 		"title": "Data",
 		"work-in-progress": "The database is currently work in progress."
