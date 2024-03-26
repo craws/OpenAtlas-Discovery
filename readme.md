@@ -102,6 +102,23 @@ To properly configure OAuth, create a "GitHub OAuth App" at
 
 The website is deployed via [GitHub action](./.github/workflows/build-deploy.yml).
 
+Or it can be deployed manually:
+
+As a (currently semi, as data is still being fetched from the API) static website:
+```bash
+pnpm run generate
+```
+
+The generated files are in the `.output/public/` directory.
+
+
+As a node.js server:
+```bash
+pnpm run build
+pnpm start
+```
+
+
 ### Issues
 
 To report bugs, or request new features, file an issue on our
