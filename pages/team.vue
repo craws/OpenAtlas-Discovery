@@ -8,12 +8,12 @@ defineRouteRules({
 	prerender: true,
 });
 
-definePageMeta({
-	title: "TeamPage.meta.title",
-});
-
 const locale = useLocale();
 const t = useTranslations();
+
+usePageMetadata({
+	title: t("TeamPage.meta.title"),
+});
 
 const {
 	data: content,

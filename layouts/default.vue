@@ -8,7 +8,6 @@ const env = useRuntimeConfig();
 
 const locale = useLocale();
 const t = useTranslations();
-const route = useRoute();
 
 const i18nHead = useLocaleHead({
 	addDirAttribute: true,
@@ -28,7 +27,7 @@ useHead({
 		return ["%s", t("Metadata.name")].join(" | ");
 	}),
 	title: computed(() => {
-		return t(route.meta.title);
+		return t("Metadata.name");
 	}),
 	link: computed(() => {
 		return [
@@ -43,7 +42,7 @@ useHead({
 		return [
 			{ name: "description", content: t("Metadata.description") },
 			{ property: "og:type", content: "website" },
-			{ property: "og:title", content: t(route.meta.title) },
+			{ property: "og:title", content: t("Metadata.name") },
 			{ property: "og:site_name", content: t("Metadata.name") },
 			{ property: "og:description", content: t("Metadata.description") },
 			{
@@ -81,10 +80,12 @@ useHead({
 			isNonEmptyString(env.public.NUXT_PUBLIC_MATOMO_BASE_URL) &&
 			isNonEmptyString(env.public.NUXT_PUBLIC_MATOMO_ID)
 		) {
+			const baseUrl = env.public.NUXT_PUBLIC_MATOMO_BASE_URL;
+
 			scripts.push({
 				type: "",
 				innerHTML: createAnalyticsScript(
-					env.public.NUXT_PUBLIC_MATOMO_BASE_URL,
+					baseUrl.endsWith("/") ? baseUrl : baseUrl + "/",
 					env.public.NUXT_PUBLIC_MATOMO_ID,
 				),
 			});

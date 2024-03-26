@@ -10,7 +10,6 @@ import { hasCoordinates } from "@/utils/has-geojson-coordinates";
 // });
 
 definePageMeta({
-	title: "EntityPage.meta.title",
 	validate(route) {
 		const env = useRuntimeConfig();
 		if (env.public.NUXT_PUBLIC_DATABASE === "disabled") return false;
@@ -22,8 +21,12 @@ definePageMeta({
 	},
 });
 
-const locale = useLocale();
 const t = useTranslations();
+
+usePageMetadata({
+	title: t("EntityPage.meta.title"),
+});
+
 const { getUnprefixedId } = useIdPrefix();
 
 const route = useRoute();

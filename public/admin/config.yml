@@ -1,12 +1,12 @@
-site_url: https://openatlas-discovery-new.vercel.app
+site_url: https://openatlas-discovery-demo.acdh-ch-dev.oeaw.ac.at
 logo_url: /icon.svg
 load_config_file: true
 local_backend: true
 backend:
   name: github
-  repo: stefanprobst/openatlas-discovery-new
-  branch: main
-  base_url: https://openatlas-discovery-new.vercel.app
+  repo: acdh-oeaw/openatlas-discovery
+  branch: develop
+  base_url: https://openatlas-discovery-demo.acdh-ch-dev.oeaw.ac.at
   auth_endpoint: /api/oauth/authorize
   auth_scope: repo
   squash_merges: true

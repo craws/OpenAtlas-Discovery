@@ -6,13 +6,16 @@ defineRouteRules({
 });
 
 definePageMeta({
-	title: "ImprintPage.meta.title",
 	validate() {
 		return project.imprint !== "none";
 	},
 });
 
 const t = useTranslations();
+
+usePageMetadata({
+	title: t("ImprintPage.meta.title"),
+});
 
 if (project.imprint === "none") {
 	throw createError({ fatal: true, statusCode: 404, statusMessage: "Imprint page is disabled" });
