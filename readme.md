@@ -109,8 +109,22 @@ As a (currently semi, as data is still being fetched from the API) static websit
 pnpm run generate
 ```
 
+At the moment this will be stuck after the nuxt generate step for about 15 minutes, despite having finished generating successfully.
+So alternatively you can run the following command to generate the static files:
+```bash
+pnpm run generate:server
+```
+Once it says `✔ You can now deploy .output/public to any static hosting!` you can stop the process.
+
+Then, run the following command to generate the `index.html` to fix the current issue of the index page not being generated when using nuxt/i18n:
+```bash
+pnpm run generate:reroute-index
+```
+
+Now you can deploy the static files to a web server.
 The generated files are in the `.output/public/` directory.
 
+---
 
 As a node.js server:
 ```bash
