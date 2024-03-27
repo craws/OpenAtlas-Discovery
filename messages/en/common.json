@@ -62,7 +62,7 @@
 			"title": "Entity"
 		},
 		"sidebar": {
-			"toggle": "entity details"
+			"toggle": "Toggle details for {title}"
 		}
 	},
 	"ErrorBoundary": {

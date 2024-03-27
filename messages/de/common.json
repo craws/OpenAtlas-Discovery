@@ -62,7 +62,7 @@
 			"title": "Entität"
 		},
 		"sidebar": {
-			"toggle": "Entitätsdetails"
+			"toggle": "Details für {title} umschalten"
 		}
 	},
 	"ErrorBoundary": {

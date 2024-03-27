@@ -15,7 +15,7 @@ defineProps<{entity: EntityFeature}>();
 		<summary class=" absolute left-full top-1/2 block ">
 			<ChevronLeftIcon class="ml-auto hidden size-8 group-open:block"/>
 			<ChevronRightIcon class="ml-auto size-8 group-open:hidden" />
-			<span class="sr-only">{{ t("EntityPage.sidebar.toggle") }}</span>
+			<span class="sr-only">{{ t("EntityPage.sidebar.toggle", {title: entity.properties.title}) }}</span>
 		</summary>
 
 		<Card class="h-full">
