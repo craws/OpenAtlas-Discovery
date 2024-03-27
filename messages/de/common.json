@@ -37,9 +37,6 @@
 		"end-date": "End-Datum",
 		"start-date": "Start-Datum"
 	},
-	"DataView": {
-		"nothing-found": "Keine Einträge zu dieser Suche."
-	},
 	"DataPage": {
 		"meta": {
 			"title": "Daten"
@@ -47,6 +44,9 @@
 		"search": "Suche",
 		"title": "Daten",
 		"work-in-progress": "Die Datenbank ist derzeit im Aufbau."
+	},
+	"DataView": {
+		"nothing-found": "Keine Einträge zu dieser Suche."
 	},
 	"DefaultLayout": {
 		"skip-to-main-content": "Zum Hauptinhalt springen"
@@ -60,6 +60,9 @@
 		"map": "Karte",
 		"meta": {
 			"title": "Entität"
+		},
+		"sidebar": {
+			"toggle": "Entitätsdetails"
 		}
 	},
 	"ErrorBoundary": {

@@ -94,6 +94,7 @@ const typesById = computed(() => {
 <template>
 	<MainContent class="container relative grid grid-rows-[auto_1fr] gap-4 py-8">
 		<template v-if="entity != null">
+			<EntitySidebar :entity="entity" />
 			<Card>
 				<CardHeader>
 					<EntitySystemClass :system-class="entity.systemClass" />

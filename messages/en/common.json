@@ -37,9 +37,6 @@
 		"end-date": "End date",
 		"start-date": "Start date"
 	},
-	"DataView": {
-		"nothing-found": "No entries found for this search."
-	},
 	"DataPage": {
 		"meta": {
 			"title": "Data"
@@ -47,6 +44,9 @@
 		"search": "Search",
 		"title": "Data",
 		"work-in-progress": "The database is currently work in progress."
+	},
+	"DataView": {
+		"nothing-found": "No entries found for this search."
 	},
 	"DefaultLayout": {
 		"skip-to-main-content": "Skip to main content"
@@ -60,6 +60,9 @@
 		"map": "Map",
 		"meta": {
 			"title": "Entity"
+		},
+		"sidebar": {
+			"toggle": "entity details"
 		}
 	},
 	"ErrorBoundary": {
