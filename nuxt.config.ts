@@ -24,7 +24,9 @@ export default defineNuxtConfig({
 	content: {
 		defaultLocale,
 		locales: Object.keys(localesMap),
-		markdown: {},
+		markdown: {
+			anchorLinks: false,
+		},
 	},
 	css: ["@fontsource-variable/inter/slnt.css", "tailwindcss/tailwind.css", "@/styles/index.css"],
 	devtools: {
