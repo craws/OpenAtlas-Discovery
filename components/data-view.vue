@@ -104,7 +104,7 @@ const entities = computed(() => {
 			class="relative isolate grid size-full overflow-y-auto"
 			:class="{ 'opacity-50 grayscale': isLoading }"
 		>
-			<div v-if="entities.length > 0" class="grid gap-8">
+			<div v-if="entities.length > 0" class="grid content-start gap-8">
 				<SearchResultsTable
 					:entities="entities"
 					:sorting="sortingState"
