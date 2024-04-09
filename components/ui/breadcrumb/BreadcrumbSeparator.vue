@@ -1,6 +1,7 @@
 <script lang="ts" setup>
+import { ChevronRightIcon } from 'lucide-vue-next'
 import type { HTMLAttributes } from 'vue'
-import { ChevronRightIcon } from '@radix-icons/vue'
+
 import { cn } from '@/utils/styles'
 
 const props = defineProps<{
