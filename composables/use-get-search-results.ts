@@ -124,7 +124,12 @@ export function useGetSearchResults(params: MaybeRef<GetSearchResultsParams>) {
 	return useQuery({
 		queryKey: ["search-results", params] as const,
 		async queryFn({ queryKey, signal }) {
-			const [, params] = queryKey;
+			const [, queryParams] = queryKey;
+			const params = {
+				...defaultFilterParams,
+				...queryParams,
+			};
+
 			const search = params.search?.map((value) => {
 				return JSON.stringify(value);
 			});
