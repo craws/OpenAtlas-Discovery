@@ -5,6 +5,8 @@ import type { LinkedPlaceFeature } from "@/types/api";
 type LpType = NonNullable<LinkedPlaceFeature["types"]> extends Array<(infer U)> ? U : never;
 
 
+const { getUnprefixedId } = useIdPrefix();
+
 defineProps<{type: LpType}>();
 </script>
 
@@ -26,16 +28,24 @@ defineProps<{type: LpType}>();
 					</BreadcrumbItem>
 					<BreadcrumbSeparator />
 					<BreadcrumbItem>
-						{{ type.label }}
+						<NavLink
+							v-if="type.identifier"
+							class="underline decoration-dotted hover:no-underline"
+							:href="{ path: `/entities/${getUnprefixedId(type.identifier)}` }"
+						>
+							{{ type.label }}
+						</NavLink>
+						<span v-else>
+							{{ type.label }}
+						</span>
 					</BreadcrumbItem>
 				</BreadcrumbList>
 			</Breadcrumb>
 			<p>{{ type.descriptions }}</p>
 
-			<span v-if="type.value && type.unit">
-				<p>{{ type.value }}</p>
-				<p>{{ type.unit }}</p>
-			</span>
+			<p v-if="type.value && type.unit" class="mt-2" >
+				{{ type.value }} <span class="text-muted-foreground" > {{ type.unit }}</span>
+			</p>
 
 		</PopoverContent>
 	</Popover>
