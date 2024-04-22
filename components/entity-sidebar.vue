@@ -1,12 +1,25 @@
 <script setup lang="ts">
-import {ChevronLeftIcon,ChevronRightIcon } from "lucide-vue-next"
 
+
+import {ChevronLeftIcon,ChevronRightIcon } from "lucide-vue-next"
 
 const t = useTranslations();
 
-defineProps<{entity: EntityFeature}>();
+const props = defineProps<{entity: EntityFeature}>();
 
+const images = computed(() => {
+	return props.entity.depictions
+		?.reduce((acc: Array<{url: string, license:string}>, depiction) => {
+			if (depiction.url && depiction.license) {
+				acc.push({
+					url: depiction.url,
+					license: depiction.license
+				});
+			}
+			return acc;
+		}, []);
 
+});
 
 </script>
 
@@ -18,7 +31,7 @@ defineProps<{entity: EntityFeature}>();
 			<span class="sr-only">{{ t("EntityPage.sidebar.toggle", {title: entity.properties.title}) }}</span>
 		</summary>
 
-		<!-- <entity-primary-details/> -->
+		<!-- START: <entity-primary-details/> -->
 		<Card class="h-full">
 			<CardHeader>
 				<EntitySystemClass :system-class="entity.systemClass" />
@@ -27,7 +40,6 @@ defineProps<{entity: EntityFeature}>();
 				<EntityTimespans :timespans="entity.when?.timespans" />
 			</CardHeader>
 			<CardContent>
-
 				<div class="grid gap-4">
 					<EntityDescriptions :descriptions="entity?.descriptions ?? []" />
 					<slot name="custom-primary-details" />
@@ -38,7 +50,7 @@ defineProps<{entity: EntityFeature}>();
 							:key="(type.identifier ?? type.label) ?? 'missing'"
 							:type="type" />
 					</div>
-					<EntityImages v-if="entity.depictions" :images="entity.depictions" class="overflow-hidden"/>
+					<EntityImages v-if="images" :images="images" class="overflow-hidden"/>
 				</div>
 			</CardContent>
 		</Card>
