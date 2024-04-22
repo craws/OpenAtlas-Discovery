@@ -75,6 +75,9 @@
 		"title": "Etwas ist schief gelaufen!",
 		"try-again": "Erneut versuchen"
 	},
+	"Global": {
+		"ShowMore": "Mehr Anzeigen"
+	},
 	"ImprintPage": {
 		"error": {
 			"not-found": "Impressum nicht gefunden",

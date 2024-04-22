@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import PopoverTrigger from "@/components/ui/popover/PopoverTrigger.vue";
 import type { LinkedPlaceFeature } from "@/types/api";
 
 type LpType = NonNullable<LinkedPlaceFeature["types"]> extends Array<(infer U)> ? U : never;
 
+const t = useTranslations();
 
 const { getUnprefixedId } = useIdPrefix();
 
@@ -16,6 +16,7 @@ defineProps<{type: LpType}>();
 			<Button variant="outline" class="max-w-48">
 				<span class="overflow-hidden text-ellipsis" >
 					{{ type.label }}
+					<span class="sr-only">{{ t("Global.ShowMore")  }}</span>
 				</span>
 			</Button>
 		</PopoverTrigger>

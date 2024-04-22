@@ -75,6 +75,9 @@
 		"title": "Something went wrong!",
 		"try-again": "Try again"
 	},
+	"Global": {
+		"ShowMore": "show more"
+	},
 	"ImprintPage": {
 		"error": {
 			"not-found": "Imprint not found",
