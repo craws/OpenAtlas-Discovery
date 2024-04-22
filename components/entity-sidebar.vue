@@ -36,7 +36,7 @@ const images = computed(() => {
 			<CardHeader>
 				<EntitySystemClass :system-class="entity.systemClass" />
 				<PageTitle>{{ entity.properties.title }}</PageTitle>
-				<!-- Alisases -->
+				<EntityAliases v-if="entity.names" :aliases="entity.names" />
 				<EntityTimespans :timespans="entity.when?.timespans" />
 			</CardHeader>
 			<CardContent>
