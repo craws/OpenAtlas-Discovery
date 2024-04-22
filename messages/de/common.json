@@ -52,6 +52,7 @@
 		"skip-to-main-content": "Zum Hauptinhalt springen"
 	},
 	"EntityDescriptionsDisplay": {
+		"description": "Keine Beschreibung | Beschreibung | Beschreibungen",
 		"no-descriptions": "Keine Beschreibungen verfügbar."
 	},
 	"EntityPage": {
