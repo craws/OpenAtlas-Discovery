@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { MapPinIcon } from 'lucide-vue-next';
+
 
 const {getUnprefixedId} = useIdPrefix();
 
@@ -22,28 +24,45 @@ const places = computed(() => {
 		return [
 			...acc,
 			{
-				label: relation.label?.replace("Location of", "").trim(),
+				label: relation.label,
 				id,
-				relationType: relation.relationType.replace(/crm:\w{3}/, "").trim()
+				relationType: relation.relationType
 			}]
 	}, []);
 });
 
+// TODO: Move this to a shared location and add localization
+const relationTypeLibrary: Ref<Record<string, string>> = computed(() => {
+	if(props.entity.systemClass === 'person') return {
+		'crm:P74 has current or former residence': 'Residence',
+		'crm:OA9 ends in': 'Died in',
+		'crm:OA8 begins in': 'Born in',
+	}
 
+
+	return {
+		'crm:P74 has current or former residence': 'Residence',
+		'crm:OA9 ends in': 'Ended in',
+		'crm:OA8 begins in': 'Began in',
+	}
+
+});
 
 </script>
 
 <template>
-	<div class="flex w-full gap-2" >
-		<Card v-for="(place, index) in places" :key="place.label || `place-${index}`">
-			<CardHeader>
-				<CardTitle>
-					<EntityPreviewLink :id="useToNumber(place.id).value" :label="place.label" />
-				</CardTitle>
-				<CardDescription>
-					{{ place.relationType }}
-				</CardDescription>
-			</CardHeader>
-		</Card>
+	<div class="flex w-full flex-row flex-wrap gap-4">
+		<EntityPreviewLink
+			v-for="(place, index) in places"
+			:id="useToNumber(place.id).value"
+			:key="place.label || `place-${index}`"
+		>
+			<Card class="max-w-48 p-4">
+				<p class="pb-2 font-bold" >{{ relationTypeLibrary[place.relationType] ?? '' }}</p>
+				<p class="text-wrap text-muted-foreground">
+					<MapPinIcon class="mr-1 inline-block size-4" />{{ place.label }}
+				</p>
+			</Card>
+		</EntityPreviewLink>
 	</div>
 </template>
