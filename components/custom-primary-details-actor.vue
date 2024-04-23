@@ -1,4 +1,7 @@
 <script setup lang="ts">
+
+const {getUnprefixedId} = useIdPrefix();
+
 const t = useTranslations();
 
 const props = defineProps<{entity: EntityFeature}>();
@@ -14,7 +17,7 @@ const places = computed(() => {
 	return props.entity.relations?.reduce((acc: Array<Place>, relation) => {
 		if(relation.relationSystemClass !== "object_location") return acc;
 		if(!relation.label || !relation.relationTo || !relation.relationType) return acc;
-		const id = idFromOpenAtlasUrl(relation.relationTo);
+		const id = getUnprefixedId(relation.relationTo);
 		if(!id) return acc;
 		return [
 			...acc,
