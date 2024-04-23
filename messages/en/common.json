@@ -115,6 +115,9 @@
 		},
 		"title": "Page not found"
 	},
+	"RelationType": {
+		"CurrentOrFormerResidency": "Residency"
+	},
 	"SearchForm": {
 		"filter": "Filter",
 		"filters": {

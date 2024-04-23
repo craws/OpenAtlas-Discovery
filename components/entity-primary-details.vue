@@ -24,6 +24,7 @@ const customPrimaryDetails = computed(() => {
 });
 
 const entityPrimaryDetailsDict: Record<string, Component> = {
+	"person": CustomPrimaryDetailsActor,
 }
 
 </script>
