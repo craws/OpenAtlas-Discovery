@@ -14,14 +14,16 @@ defineProps<{entity: EntityFeature}>();
 			<ChevronRightIcon class="ml-auto size-8 group-open:hidden" />
 			<span class="sr-only">{{ t("EntityPage.sidebar.toggle", {title: entity.properties.title}) }}</span>
 		</summary>
-
-		<EntityPrimaryDetails :entity="entity" />
-
-
-		<slot name="custom-details" />
-		<!-- <component v-if="hasCustomDetails" v-bind:is="entityDetailsDict" bind:entity-data /> -->
+		<Card class="h-full">
+			<EntityPrimaryDetails :entity="entity" />
 
 
-		<!-- <entity-details v-bind="details: {title: title, data: someData}" /> -->
+			<slot name="custom-details" />
+			<!-- <component v-if="hasCustomDetails" v-bind:is="entityDetailsDict" bind:entity-data /> -->
+
+
+			<!-- <entity-details v-bind="details: {title: title, data: someData}" /> -->
+		</Card>
+
 	</details>
 </template>
