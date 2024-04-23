@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const props = defineProps<{entity?: EntityFeature, id:number, label: string}>();
+const props = defineProps<{ id:number, entity?: EntityFeature, label?: string}>();
 
 const previewEntity = computed(() => {
 	if(props.entity) return props.entity;
@@ -17,22 +17,17 @@ const { data, error, isPending, isPlaceholderData } = props.entity ? {data: null
 	}),
 );
 
-
-
-
-
 const isLoading = computed(() => {
 	return isPending || isPlaceholderData;
 });
-
-
 
 </script>
 
 <template v-if="entity || id">
 	<HoverCard>
 		<HoverCardTrigger>
-			<NavLink :href="{ path: `/entities/${id}` }" >{{ label }}</NavLink>
+			<NavLink v-if="label" :href="{ path: `/entities/${id}` }" >{{ label }}</NavLink>
+			<slot v-else />
 		</HoverCardTrigger>
 		<HoverCardContent>
 			<template v-if="previewEntity">
