@@ -12,6 +12,7 @@ import {
 } from "@tanstack/vue-table";
 import { ArrowUpDown } from "lucide-vue-next";
 
+import EntityPreviewLink from "@/components/entity-preview-link.vue";
 import NavLink from "@/components/nav-link.vue";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -120,11 +121,12 @@ const cols = [
 		cell: (info) => {
 			const title = info.getValue();
 			return h(
-				NavLink,
+				EntityPreviewLink,
 				{
 					class:
 						"underline decoration-dotted transition hover:no-underline focus-visible:no-underline",
-					href: { path: `/entities/${encodeURIComponent(info.row.original.properties._id)}` },
+					id: useToNumber(info.row.original.properties._id).value,
+					label: title,
 				},
 				title,
 			);
