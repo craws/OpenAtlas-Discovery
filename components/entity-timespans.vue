@@ -46,7 +46,7 @@ const datespans = computed(() => {
 			</template>
 		</template>
 		<template v-else>
-			<div class="italic">{{ t("TimespansDisplay.no-dates") }}</div>
+			<!-- <div class="italic">{{ t("TimespansDisplay.no-dates") }}</div> -->
 		</template>
 	</div>
 </template>
