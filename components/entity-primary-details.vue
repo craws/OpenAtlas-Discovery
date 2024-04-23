@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import CustomPrimaryDetailsActor } from '@/components/custom-primary-details-actor.vue';
+import CustomPrimaryDetailsActor from '@/components/custom-primary-details-actor.vue';
 
 
 const props = defineProps<{
