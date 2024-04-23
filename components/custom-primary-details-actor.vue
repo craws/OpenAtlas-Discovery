@@ -38,7 +38,7 @@ const places = computed(() => {
 		<Card v-for="(place, index) in places" :key="place.label || `place-${index}`">
 			<CardHeader>
 				<CardTitle>
-					<NavLink v-if="place.id" :href="{ path: `/entities/${place.id}` }" >{{ place?.label }}</NavLink>
+					<EntityPreviewLink :id="useToNumber(place.id).value" :label="place.label" />
 				</CardTitle>
 				<CardDescription>
 					{{ place.relationType }}
