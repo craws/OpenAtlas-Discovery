@@ -1,38 +1,30 @@
 <script setup lang="ts">
-import type { UseQueryReturnType } from '@tanstack/vue-query';
-
-
-const props = defineProps<{entity?: EntityFeature, id?:number}>();
-
-const {getUnprefixedId} = useIdPrefix();
+const props = defineProps<{entity?: EntityFeature, id:number, label: string}>();
 
 const previewEntity = computed(() => {
 	if(props.entity) return props.entity;
 	if(!props.id) return null;
-	if(!loadedEntity.value) return null;
 
-	return loadedEntity.value.data.value?.features[0];
+	if(data?.value) return data.value.features[0];
 
+	return null;
 });
 
-const loadedEntity = computed(() =>{
-	if(props.entity) return null;
-	if(!props.id) return null;
 
-	const id = props.id;
+const { data, error, isPending, isPlaceholderData } = props.entity ? {data: null, error: null, isPending:false, isPlaceholderData:false} : useGetEntity(
+	computed(() => {
+		return { entityId: props.id };
+	}),
+);
 
-	const { data, error, isPending, isPlaceholderData } = useGetEntity(
-		computed(() => {
-			return { entityId: id };
-		}),
-	);
-	return { data, error, isPending, isPlaceholderData };
-});
+
+
 
 
 const isLoading = computed(() => {
-	return loadedEntity.value?.isPending.value ?? loadedEntity.value?.isPlaceholderData.value;
+	return isPending || isPlaceholderData;
 });
+
 
 
 </script>
@@ -40,10 +32,11 @@ const isLoading = computed(() => {
 <template v-if="entity || id">
 	<HoverCard>
 		<HoverCardTrigger>
-
+			<NavLink :href="{ path: `/entities/${id}` }" >{{ label }}</NavLink>
 		</HoverCardTrigger>
 		<HoverCardContent>
 			<template v-if="previewEntity">
+				<EntityPrimaryDetails :entity="previewEntity" />
 			</template>
 			<template v-else-if="isLoading">
 				<Centered class="pointer-events-none opacity-50">
