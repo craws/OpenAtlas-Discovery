@@ -65,4 +65,5 @@ const relationTypeLibrary: Ref<Record<string, string>> = computed(() => {
 			</Card>
 		</EntityPreviewLink>
 	</div>
+	<ActorRelationCollapsible title="Relations" :relations="entity.relations"/>
 </template>
