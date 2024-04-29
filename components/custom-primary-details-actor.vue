@@ -48,6 +48,17 @@ const relationTypeLibrary: Ref<Record<string, string>> = computed(() => {
 
 });
 
+const collapsibleRelations = [
+	{
+		relationType: "crm:OA7 has relationship to",
+		title: t('Actor.Relations')
+	},
+	{
+		relationType: "crm:P107i is current or former member of",
+		title: t('Actor.MemberOf')
+	}
+]
+
 </script>
 
 <template>
@@ -65,6 +76,11 @@ const relationTypeLibrary: Ref<Record<string, string>> = computed(() => {
 			</Card>
 		</EntityPreviewLink>
 	</div>
-	<GroupedRelationCollapsible :title="t('Actor.Relations')" :relations="entity.relations" relation-type="crm:OA7 has relationship to" />
-	<GroupedRelationCollapsible :title="t('Actor.MemberOf')" :relations="entity.relations" relation-type="crm:P107i is current or former member of" />
+	<GroupedRelationCollapsible
+		v-for="rel in collapsibleRelations"
+		:key="rel.relationType"
+		:title="rel.title"
+		:relations="entity.relations"
+		:relation-type="rel.relationType"
+	/>
 </template>
