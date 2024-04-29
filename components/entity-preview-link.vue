@@ -26,7 +26,7 @@ const isLoading = computed(() => {
 <template v-if="entity || id">
 	<HoverCard>
 		<HoverCardTrigger as-child >
-			<NavLink :href="{ path: `/entities/${id}` }">
+			<NavLink class="underline decoration-dotted transition hover:no-underline focus-visible:no-underline" :href="{ path: `/entities/${id}` }">
 				<template v-if="label">
 					{{ label }}
 				</template>
