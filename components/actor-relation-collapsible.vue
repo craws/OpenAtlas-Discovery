@@ -6,8 +6,8 @@ const { getUnprefixedId } = useIdPrefix();
 
 const props = defineProps<{title: string, relations: EntityFeature["relations"]}>();
 
-const actorRelations = computed(() => {
-	const personalRelations = props.relations?.reduce((acc: Array<NonNullable<EntityFeature["relations"]>[0]>, relation) => {
+const personalRelations = computed(() => {
+	return props.relations?.reduce((acc: Array<NonNullable<EntityFeature["relations"]>[0]>, relation) => {
 		if(relation.relationType !== "crm:OA7 has relationship to") return acc;
 		if(!relation.relationTo) return acc;
 		return [
@@ -18,8 +18,10 @@ const actorRelations = computed(() => {
 			}
 		]
 	}, []);
+});
 
-	return [...groupByToMap(personalRelations ?? [], (rel) => {return rel.type})];
+const actorRelations = computed(() => {
+	return [...groupByToMap(personalRelations.value ?? [], (rel) => {return rel.type})];
 
 })
 
@@ -35,7 +37,7 @@ const isOpen = ref(false)
 		>
 			<div class="flex items-center justify-between space-x-4">
 				<h4 class="text-sm font-semibold">
-					{{ title }}
+					{{ title }} {{  personalRelations?.length ? `(${personalRelations.length})` : '' }}
 				</h4>
 				<CollapsibleTrigger as-child>
 					<Button variant="ghost" size="sm" class="w-9 p-0">
