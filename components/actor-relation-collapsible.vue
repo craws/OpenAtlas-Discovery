@@ -39,8 +39,8 @@ const isOpen = ref(false)
 				</h4>
 				<CollapsibleTrigger as-child>
 					<Button variant="ghost" size="sm" class="w-9 p-0">
-						<ChevronDown v-if="isOpen" class="size-4" />
-						<ChevronUp v-else class="size-4" />
+						<ChevronUp v-if="isOpen" class="size-4" />
+						<ChevronDown v-else class="size-4" />
 						<span class="sr-only">Toggle</span>
 					</Button>
 				</CollapsibleTrigger>
