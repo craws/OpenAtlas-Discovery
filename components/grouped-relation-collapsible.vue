@@ -4,11 +4,12 @@ import { ChevronDown, ChevronUp } from 'lucide-vue-next';
 
 const { getUnprefixedId } = useIdPrefix();
 
-const props = defineProps<{title: string, relations: EntityFeature["relations"]}>();
+/** @param relations should be an  */
+const props = defineProps<{title: string, relations: EntityFeature["relations"], relationType: string}>();
 
-const personalRelations = computed(() => {
+const filteredRelations = computed(() => {
 	return props.relations?.reduce((acc: Array<NonNullable<EntityFeature["relations"]>[0]>, relation) => {
-		if(relation.relationType !== "crm:OA7 has relationship to") return acc;
+		if(relation.relationType !== props.relationType) return acc;
 		if(!relation.relationTo) return acc;
 		return [
 			...acc,
@@ -20,10 +21,16 @@ const personalRelations = computed(() => {
 	}, []);
 });
 
-const actorRelations = computed(() => {
-	return [...groupByToMap(personalRelations.value ?? [], (rel) => {return rel.type})];
+const groupedByType = computed(() => {
+	return groupByToMap(filteredRelations.value ?? [], (rel): string | null | undefined => {return rel.type});
+});
 
-})
+const relationsWithoutType = computed(() => {
+	if(groupedByType.value.has(null)) return groupedByType.value.get(null);
+	return [];
+
+});
+
 
 
 const isOpen = ref(false)
@@ -37,7 +44,7 @@ const isOpen = ref(false)
 		>
 			<div class="flex items-center justify-between space-x-4">
 				<h4 class="text-sm font-semibold">
-					{{ title }} {{  personalRelations?.length ? `(${personalRelations.length})` : '' }}
+					{{ title }} {{  filteredRelations?.length ? `(${filteredRelations.length})` : '' }}
 				</h4>
 				<CollapsibleTrigger as-child>
 					<Button variant="ghost" size="sm" class="w-9 p-0">
@@ -48,13 +55,18 @@ const isOpen = ref(false)
 				</CollapsibleTrigger>
 			</div>
 			<CollapsibleContent>
-				<RelationCollapsible
-					v-for="[type, rels] in actorRelations"
-					:key="type"
-					class="mb-8"
-					:title="type ?? 'Type'"
-					:relations="rels"
-				/>
+				<template v-if="relationsWithoutType && relationsWithoutType.length">
+					<RelationListEntry v-for="rel in relationsWithoutType" :key="rel.label" :relation="rel" />
+				</template>
+				<template v-for="[type, rels] in groupedByType">
+					<RelationCollapsible
+						v-if="type !== null"
+						:key="type"
+						class="mb-8"
+						:title="type ?? ''"
+						:relations="rels"
+					/>
+				</template>
 			</CollapsibleContent>
 		</Collapsible>
 	</div>

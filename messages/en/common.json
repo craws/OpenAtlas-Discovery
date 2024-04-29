@@ -1,4 +1,8 @@
 {
+	"Actor": {
+		"MemberOf": "Member of",
+		"Relations": "Relations"
+	},
 	"AppFooter": {
 		"links": {
 			"imprint": "Imprint"

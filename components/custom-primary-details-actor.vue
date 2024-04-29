@@ -65,5 +65,6 @@ const relationTypeLibrary: Ref<Record<string, string>> = computed(() => {
 			</Card>
 		</EntityPreviewLink>
 	</div>
-	<ActorRelationCollapsible title="Relations" :relations="entity.relations"/>
+	<GroupedRelationCollapsible :title="t('Actor.Relations')" :relations="entity.relations" relation-type="crm:OA7 has relationship to" />
+	<GroupedRelationCollapsible :title="t('Actor.MemberOf')" :relations="entity.relations" relation-type="crm:P107i is current or former member of" />
 </template>
