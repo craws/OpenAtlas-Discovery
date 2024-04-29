@@ -33,7 +33,7 @@ const isLoading = computed(() => {
 				<slot v-else />
 			</NavLink>
 		</HoverCardTrigger>
-		<HoverCardContent class="w-[30vw]">
+		<HoverCardContent class="max-h-[50vh] w-[30vw] overflow-scroll">
 			<template v-if="previewEntity">
 				<EntityPrimaryDetails :entity="previewEntity" />
 			</template>
