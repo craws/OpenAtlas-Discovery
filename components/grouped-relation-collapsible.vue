@@ -31,22 +31,23 @@ const relationsWithoutType = computed(() => {
 
 });
 
-
-
 const isOpen = ref(false)
+
+if(filteredRelations.value?.length && filteredRelations.value.length === 1) isOpen.value = true;
+
 </script>
 
-<template v-if="actorRelations?.length">
-	<div class="rounded-md border px-4 py-3 text-sm">
+<template>
+	<div v-if="filteredRelations?.length" class="rounded-md border px-4 py-3 text-sm">
 		<Collapsible
 			v-model:open="isOpen"
 			class="space-y-2"
 		>
 			<div class="flex items-center justify-between space-x-4">
 				<h4 class="text-sm font-semibold">
-					{{ title }} {{  filteredRelations?.length ? `(${filteredRelations.length})` : '' }}
+					{{ title }} {{  filteredRelations?.length && filteredRelations.length > 1 ? `(${filteredRelations.length})` : '' }}
 				</h4>
-				<CollapsibleTrigger as-child>
+				<CollapsibleTrigger v-if="filteredRelations?.length && filteredRelations.length > 1" as-child>
 					<Button variant="ghost" size="sm" class="w-9 p-0">
 						<ChevronUp v-if="isOpen" class="size-4" />
 						<ChevronDown v-else class="size-4" />
@@ -58,10 +59,9 @@ const isOpen = ref(false)
 				<template v-if="relationsWithoutType && relationsWithoutType.length">
 					<RelationListEntry v-for="rel in relationsWithoutType" :key="rel.label" :relation="rel" />
 				</template>
-				<template v-for="[type, rels] in groupedByType">
+				<template v-for="[type, rels] in groupedByType" :key="type">
 					<RelationCollapsible
 						v-if="type !== null"
-						:key="type"
 						class="mb-8"
 						:title="type ?? ''"
 						:relations="rels"
