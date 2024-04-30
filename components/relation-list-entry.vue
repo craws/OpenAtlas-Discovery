@@ -13,6 +13,6 @@ defineProps<{relation: NonNullable<EntityFeature["relations"]>[0]}>();
 				{{ relation.label }}
 			</EntityPreviewLink>
 		</div>
-		<SimpleTimespan :timespans="relation.when?.timespans" />
+		<SimpleTimespan class="ml-4" :timespans="relation.when?.timespans" />
 	</div>
 </template>
