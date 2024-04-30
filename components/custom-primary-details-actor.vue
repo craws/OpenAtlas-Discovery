@@ -56,7 +56,12 @@ const collapsibleRelations = [
 	{
 		relationType: "crm:P107i is current or former member of",
 		title: t('Actor.MemberOf')
+	},
+	{
+		relationType: "crm:P107 has current or former member",
+		title: t('Actor.hasMember')
 	}
+
 ]
 
 </script>

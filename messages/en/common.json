@@ -1,7 +1,8 @@
 {
 	"Actor": {
 		"MemberOf": "Groups",
-		"Relations": "Relations"
+		"Relations": "Relations",
+		"hasMember": "Affiliates"
 	},
 	"AppFooter": {
 		"links": {
