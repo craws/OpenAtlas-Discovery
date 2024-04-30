@@ -14,7 +14,7 @@ defineProps<{entity: EntityFeature}>();
 			<ChevronRightIcon class="ml-auto size-8 group-open:hidden" />
 			<span class="sr-only">{{ t("EntityPage.sidebar.toggle", {title: entity.properties.title}) }}</span>
 		</summary>
-		<Card class="h-full">
+		<Card class="h-full overflow-y-scroll">
 			<EntityPrimaryDetails :entity="entity" />
 
 
