@@ -18,7 +18,7 @@ onMounted(() => {
 		class="
 			group
 			absolute z-10 mb-2 mr-2 h-full w-1/4
-			-translate-x-[25vw]
+			translate-x-[-25vw]
 			transition-transform
 			duration-300 open:translate-x-0 "
 			:open="openState"
@@ -38,7 +38,7 @@ onMounted(() => {
 
 
 			<!-- <entity-details v-bind="details: {title: title, data: someData}" /> -->
-			<EntityDetails :relations="entity.relations" :types="entity.types" class="mx-2" />
+			<EntityDetails :relations="entity.relations" :types="entity.types" class="mx-4 mt-16" />
 
 		</Card>
 
