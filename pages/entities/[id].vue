@@ -92,7 +92,7 @@ const typesById = computed(() => {
 </script>
 
 <template>
-	<MainContent class="relative ">
+	<MainContent class="relative h-full">
 		<template v-if="entity != null">
 			<EntitySidebar :entity="entity" />
 
