@@ -92,9 +92,14 @@ const typesById = computed(() => {
 </script>
 
 <template>
-	<MainContent class="container relative grid grid-rows-[auto_1fr] gap-4 py-8">
+	<MainContent class="relative ">
 		<template v-if="entity != null">
 			<EntitySidebar :entity="entity" />
+
+
+			<EntityGeoMap :entities="entities" />
+
+<!--
 			<Card>
 				<CardHeader>
 					<EntitySystemClass :system-class="entity.systemClass" />
@@ -106,22 +111,22 @@ const typesById = computed(() => {
 						<EntityDescriptions :descriptions="entity?.descriptions ?? []" />
 					</div>
 				</CardContent>
-			</Card>
+			</Card> -->
 
-			<Tabs v-if="tabs.length > 0" :default-value="tabs[0]?.id">
+			<!-- <Tabs v-if="tabs.length > 0" :default-value="tabs[0]?.id">
 				<TabsList>
 					<TabsTrigger v-for="tab of tabs" :key="tab.id" :value="tab.id">
 						{{ tab.label }}
 					</TabsTrigger>
-				</TabsList>
+				</TabsList> -->
 				<!-- TODO: keep map alive -->
-				<TabsContent v-for="tab of tabs" :key="tab.id" :value="tab.id">
+				<!-- <TabsContent v-for="tab of tabs" :key="tab.id" :value="tab.id">
 					<EntityGeoMap v-if="tab.id === 'geo-map'" :entities="entities" />
 					<EntityImages v-else-if="tab.id === 'images'" :images="entity.depictions" />
 				</TabsContent>
-			</Tabs>
+			</Tabs> -->
 
-			<Card>
+			<!-- <Card>
 				<CardHeader>
 					<CardTitle>{{ t("EntityPage.details") }}</CardTitle>
 				</CardHeader>
@@ -179,7 +184,7 @@ const typesById = computed(() => {
 						</div>
 					</dl>
 				</CardContent>
-			</Card>
+			</Card> -->
 		</template>
 
 		<template v-else-if="isLoading">

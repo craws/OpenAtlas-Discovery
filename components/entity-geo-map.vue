@@ -11,7 +11,7 @@ const features = computed(() => {
 </script>
 
 <template>
-	<Card class="h-96 overflow-hidden">
+	<Card class="h-screen overflow-hidden">
 		<VisualisationContainer v-slot="{ height, width }">
 			<GeoMap v-if="height && width" :features="features" :height="height" :width="width" />
 		</VisualisationContainer>
