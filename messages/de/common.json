@@ -11,6 +11,7 @@
 			"data": "Daten",
 			"home": "Startseite",
 			"map": "Karte",
+			"network": "Netzwerk",
 			"team": "Team"
 		},
 		"navigation-main": "Hauptnavigation",
@@ -58,6 +59,7 @@
 		"details": "Details",
 		"images": "Bilder ({count})",
 		"map": "Karte",
+		"network": "Netzwerk-Visualisierung",
 		"meta": {
 			"title": "Entität"
 		}
@@ -100,6 +102,13 @@
 			"title": "Karte"
 		},
 		"title": "Karte",
+		"work-in-progress": "Die Datenbank ist derzeit im Aufbau."
+	},
+	"NetworkPage": {
+		"meta": {
+			"title": "Netzwerk-Visualisierung"
+		},
+		"title": "Netzwerk-Visualisierung",
 		"work-in-progress": "Die Datenbank ist derzeit im Aufbau."
 	},
 	"NotFoundPage": {

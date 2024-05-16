@@ -11,8 +11,26 @@ ColorSpace.register(OKLCH);
 const schema = z.object({
 	colors: z
 		.object({
-			brand: z.string(),
-			geojson: z.string(),
+			brand: z.string().min(1),
+			geojson: z.string().min(1),
+			entityColors: z.object({
+				place: z.string().min(1),
+				source: z.string().min(1),
+				person: z.string().min(1),
+				group: z.string().min(1),
+				move: z.string().min(1),
+				event: z.string().min(1),
+				activity: z.string().min(1),
+				acquisition: z.string().min(1),
+				feature: z.string().min(1),
+				artifact: z.string().min(1),
+				file: z.string().min(1),
+				human_remains: z.string().min(1),
+				stratigraphic_unit: z.string().min(1),
+				type: z.string().min(1),
+			}),
+			entityDefaultColor: z.string().min(1),
+			disabledNodeColor: z.string().min(1),
 		})
 		.transform((values) => {
 			const color = parse(values.brand);

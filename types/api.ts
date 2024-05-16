@@ -17,3 +17,5 @@ export interface LinkedPlace extends LinkedPlacesModel {
 	type: "FeatureCollection";
 	features: Array<LinkedPlaceFeature>;
 }
+
+export type NetworkEntity = components["schemas"]["NetworkVisualisationModel"]["results"];

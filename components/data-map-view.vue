@@ -7,7 +7,6 @@ import { z } from "zod";
 import type { SearchFormData } from "@/components/search-form.vue";
 import type { EntityFeature } from "@/composables/use-create-entity";
 import { categories } from "@/composables/use-get-search-results";
-import { project } from "@/config/project.config";
 import type { GeoJsonFeature } from "@/utils/create-geojson-feature";
 
 const router = useRouter();

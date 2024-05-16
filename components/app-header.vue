@@ -14,6 +14,7 @@ const defaultLinks = computed(() => {
 		home: { href: { path: "/" }, label: t("AppHeader.links.home") },
 		data: { href: { path: "/data" }, label: t("AppHeader.links.data") },
 		map: { href: { path: "/map" }, label: t("AppHeader.links.map") },
+		network: { href: { path: "/network" }, label: t("AppHeader.links.network") },
 		team: { href: { path: "/team" }, label: t("AppHeader.links.team") },
 	} satisfies Record<string, { href: NavLinkProps["href"]; label: string }>;
 });
