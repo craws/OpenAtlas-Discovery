@@ -108,7 +108,7 @@ export interface GetSearchResultsParams
 	 *
 	 * @see https://github.com/LinkedPasts/linked-places-format
 	 */
-	format?: "lp";
+	format?: "lpx";
 	search?: Array<SearchFilter>;
 }
 
