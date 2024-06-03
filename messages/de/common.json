@@ -57,6 +57,7 @@
 	},
 	"EntityPage": {
 		"details": "Details",
+		"iiif": "IIIF-Ansicht",
 		"images": "Bilder ({count})",
 		"map": "Karte",
 		"network": "Netzwerk-Visualisierung",

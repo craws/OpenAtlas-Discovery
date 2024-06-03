@@ -57,6 +57,7 @@
 	},
 	"EntityPage": {
 		"details": "Details",
+		"iiif": "IIIF-Viewer",
 		"images": "Images ({count})",
 		"map": "Map",
 		"network": "Network Visualization",
