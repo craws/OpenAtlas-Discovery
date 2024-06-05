@@ -1,7 +1,8 @@
 {
 	"colors": {
 		"brand": "#b8cf5b",
-		"geojson": "#69c0ef",
+		"geojsonPoints": "#69c0ef",
+		"geojsonAreaCenterPoints": "#b8cf5b",
 		"entityColors": {
 			"place": "#69c0ef",
 			"source": "#D60C19",

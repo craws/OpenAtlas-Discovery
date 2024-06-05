@@ -9,6 +9,8 @@ import type { EntityFeature } from "@/composables/use-create-entity";
 import { categories } from "@/composables/use-get-search-results";
 import type { GeoJsonFeature } from "@/utils/create-geojson-feature";
 
+import { project } from "../config/project.config";
+
 const router = useRouter();
 const route = useRoute();
 const t = useTranslations();
@@ -43,6 +45,7 @@ const { data, error, isPending, isPlaceholderData, suspense } = useGetSearchResu
 					? [{ [category]: [{ operator: "like", values: [search], logicalOperator: "and" }] }]
 					: [],
 			show: ["geometry", "when"],
+			centroid: true,
 			system_classes: ["place"],
 			limit: 0,
 		};
@@ -66,6 +69,12 @@ const entitiesById = computed(() => {
 		return entity.properties._id;
 	});
 });
+
+let show = ref(false);
+
+function togglePolygons() {
+	show.value = !show.value;
+}
 
 /**
  * Reduce size of geojson payload, which has an impact on performance,
@@ -91,10 +100,23 @@ function onLayerClick(features: Array<MapGeoJSONFeature & Pick<GeoJsonFeature, "
 
 	const entities = Array.from(entitiesMap.values());
 
-	const point = turf.center(createFeatureCollection(entities));
-	const coordinates = point.geometry.coordinates;
+	let coordinates = null;
 
-	popover.value = { coordinates, entities };
+	for (const entity of entities) {
+		if (entity.geometry.type === "GeometryCollection") {
+			coordinates = entity.geometry.geometries.find((g) => {
+				return g.type === "Point";
+			})?.coordinates;
+
+			if (coordinates != null) break;
+		}
+	}
+
+	popover.value = {
+		coordinates:
+			coordinates ?? turf.center(createFeatureCollection(entities))?.geometry.coordinates,
+		entities,
+	};
 }
 
 watch(data, () => {
@@ -119,11 +141,37 @@ watch(data, () => {
 			class="border"
 			:class="{ 'opacity-50 grayscale': isLoading }"
 		>
+			<div class="absolute z-10 mt-2 flex w-full justify-center">
+				<Toggle variant="iiif" @click="togglePolygons"> {{ $t("DataMapView.polygon") }} </Toggle>
+			</div>
+			<div class="absolute bottom-0 z-10 mb-2 flex w-full justify-center">
+				<div
+					class="max-h-72 gap-2 overflow-y-auto overflow-x-hidden rounded-md border-2 border-transparent bg-white p-2 text-sm shadow-md"
+				>
+					<div class="grid grid-cols-[auto_1fr] gap-3">
+						<div class="grid grid-cols-[auto_1fr] gap-1">
+							<span
+								class="m-1.5 size-2 rounded-full"
+								:style="`background-color: ${project.colors.geojsonPoints}`"
+							></span>
+							{{ $t("DataMapView.point") }}
+						</div>
+						<div class="grid grid-cols-[auto_1fr] gap-1">
+							<span
+								class="m-1.5 size-2 rounded-full"
+								:style="`background-color: ${project.colors.geojsonAreaCenterPoints}`"
+							></span>
+							{{ $t("DataMapView.centerpoint") }}
+						</div>
+					</div>
+				</div>
+			</div>
 			<GeoMap
 				v-if="height && width"
 				:features="features"
 				:height="height"
 				:width="width"
+				:polygons="show"
 				@layer-click="onLayerClick"
 			>
 				<GeoMapPopup

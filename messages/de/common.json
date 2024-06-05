@@ -36,7 +36,10 @@
 	},
 	"DataMapView": {
 		"end-date": "End-Datum",
-		"start-date": "Start-Datum"
+		"start-date": "Start-Datum",
+		"polygon": "Flächen anzeigen",
+		"centerpoint": "Flächenpunkt",
+		"point": "Ortspunkt"
 	},
 	"DataView": {
 		"nothing-found": "Keine Einträge zu dieser Suche."

@@ -36,7 +36,10 @@
 	},
 	"DataMapView": {
 		"end-date": "End date",
-		"start-date": "Start date"
+		"start-date": "Start date",
+		"polygon": "Display Areas",
+		"centerpoint": "Area Point",
+		"point": "Location Point"
 	},
 	"DataView": {
 		"nothing-found": "No entries found for this search."
