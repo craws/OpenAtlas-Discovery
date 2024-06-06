@@ -183,7 +183,6 @@ watch(() => {
 }, updateScope);
 
 watch(() => {
-	console.log(props.polygons);
 	return props.polygons;
 }, updatePolygons);
 
@@ -199,24 +198,15 @@ function updateScope() {
 	const sourceCenterpoints = map.getSource(sourceCenterPointsId) as GeoJSONSource | undefined;
 
 	const points = props.features.filter((point) => {
-		if (point.geometry.type !== "Point") {
-			return false;
-		}
-		return point;
+		return point.geometry.type === "Point";
 	});
 
 	const polygons = props.features.filter((polygon) => {
-		if (polygon.geometry.type !== "GeometryCollection") {
-			return false;
-		}
-		return polygon;
+		return polygon.geometry.type === "GeometryCollection";
 	});
 
 	const centerpoints = props.features.filter((centerpoint) => {
-		if (centerpoint.geometry.type !== "GeometryCollection") {
-			return false;
-		}
-		return centerpoint;
+		return centerpoint.geometry.type === "GeometryCollection";
 	});
 
 	const geojsonPoints = createFeatureCollection(points);

@@ -2,6 +2,7 @@
 import { keyByToMap } from "@acdh-oeaw/lib";
 import * as turf from "@turf/turf";
 import type { MapGeoJSONFeature } from "maplibre-gl";
+import { createSolutionBuilder } from "typescript";
 import { z } from "zod";
 
 import type { SearchFormData } from "@/components/search-form.vue";
@@ -86,6 +87,18 @@ const features = computed(() => {
 	});
 });
 
+const centerpoints = computed(() => {
+	return features.value.filter((centerpoint) => {
+		return centerpoint.geometry.type === "GeometryCollection";
+	});
+});
+
+const points = computed(() => {
+	return features.value.filter((point) => {
+		return point.geometry.type === "Point";
+	});
+});
+
 const popover = ref<{ coordinates: [number, number]; entities: Array<EntityFeature> } | null>(null);
 
 function onLayerClick(features: Array<MapGeoJSONFeature & Pick<GeoJsonFeature, "properties">>) {
@@ -154,14 +167,14 @@ watch(data, () => {
 								class="m-1.5 size-2 rounded-full"
 								:style="`background-color: ${project.colors.geojsonPoints}`"
 							></span>
-							{{ $t("DataMapView.point") }}
+							{{ $t("DataMapView.point") }} ({{ points.length }})
 						</div>
 						<div class="grid grid-cols-[auto_1fr] gap-1">
 							<span
 								class="m-1.5 size-2 rounded-full"
 								:style="`background-color: ${project.colors.geojsonAreaCenterPoints}`"
 							></span>
-							{{ $t("DataMapView.centerpoint") }}
+							{{ $t("DataMapView.centerpoint") }} ({{ centerpoints.length }})
 						</div>
 					</div>
 				</div>
