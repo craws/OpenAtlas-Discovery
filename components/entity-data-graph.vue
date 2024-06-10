@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import Graph from "graphology";
-import circularpack from "graphology-layout/circlepack";
 import { DotIcon } from "lucide-vue-next";
 
 import type { EntityFeature } from "@/composables/use-create-entity";

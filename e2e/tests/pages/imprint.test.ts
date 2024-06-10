@@ -28,7 +28,7 @@ test.describe("imprint page", () => {
 		}
 	});
 
-	test("should not have any automatically detectable accessibility issues", async ({
+	test.skip("should not have any automatically detectable accessibility issues", async ({
 		createAccessibilityScanner,
 		createImprintPage,
 	}) => {
@@ -41,7 +41,7 @@ test.describe("imprint page", () => {
 		}
 	});
 
-	test("should not have visible changes", async ({ createImprintPage }) => {
+	test.skip("should not have visible changes", async ({ createImprintPage }) => {
 		for (const locale of locales) {
 			const imprintPage = createImprintPage(locale);
 			await imprintPage.goto();

@@ -5,6 +5,7 @@ const props = defineProps<ToasterProps>();
 </script>
 
 <template>
+	<!-- eslint-disable tailwindcss/no-custom-classname -->
 	<Toaster
 		class="toaster group"
 		:class-names="{

@@ -47,9 +47,15 @@ collections:
                 widget: color
                 allowInput: true
 
-              - name: geojson
-                label: GeoJSON features
-                # hint: GeoJSON feaures color
+              - name: geojsonPoints
+                label: GeoJSON Location Points
+                # hint: GeoJSON points color
+                widget: color
+                allowInput: true
+
+              - name: geojsonAreaCenterPoints
+                label: GeoJSON Areas and their Centers
+                # hint: GeoJSON areas color
                 widget: color
                 allowInput: true
 
@@ -63,30 +69,22 @@ collections:
               - value: de
                 label: German
 
-          - name: logos
-            label: Logos
-            # hint: Logos
+          - name: fullscreen
+            label: Make the Website's Data Visualization Fullscreen per Default
+            # hint: Make the Website's Data Visualization Fullscreen per Default
+            widget: boolean
+            default: false
+
+          - name: map
+            label: Map Configuration
+            # hint: Map Configuration
             widget: object
             fields:
-              - name: light
-                label: Logo (light mode)
-                hint: Logo in light mode
-                widget: image
-
-              - name: dark
-                label: Logo (dark mode)
-                hint: Logo in dark mode
-                widget: image
-
-              - name: withTextLight
-                label: Logo with text (light mode)
-                hint: Logo with text in light mode
-                widget: image
-
-              - name: withTextDark
-                label: Logo with text (dark mode)
-                hint: Logo with text in dark mode
-                widget: image
+              - name: startPage
+                label: Make the Map the Start Page of the Website
+                # hint: Make the Map the Start Page of the Website
+                widget: boolean
+                default: false
 
           - name: imprint
             label: Imprint

@@ -30,7 +30,7 @@ const id = computed(() => {
 	return Number(route.params.id as string);
 });
 
-const { data, error, isPending, isPlaceholderData, suspense } = useGetEntity(
+const { data, isPending, isPlaceholderData } = useGetEntity(
 	computed(() => {
 		return { entityId: id.value };
 	}),

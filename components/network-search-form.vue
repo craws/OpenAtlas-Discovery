@@ -1,6 +1,8 @@
 <script lang="ts" setup>
 import { SearchIcon } from "lucide-vue-next";
 
+import { project } from "../config/project.config";
+
 export interface SearchFormData {
 	search: string;
 }
@@ -35,7 +37,7 @@ const searchLabelId = "search-field";
 		@submit.prevent="onSubmit"
 	>
 		<div class="grid gap-y-1">
-			<Label :for="searchLabelId">{{ t("SearchForm.search") }}</Label>
+			<Label v-if="!project.fullscreen" :for="searchLabelId">{{ t("SearchForm.search") }}</Label>
 			<Input
 				:id="searchLabelId"
 				:default-value="props.search"

@@ -27,9 +27,9 @@ export function useFormField() {
 	return {
 		id,
 		name,
-		formItemId: `${id}-form-item`,
-		formDescriptionId: `${id}-form-item-description`,
-		formMessageId: `${id}-form-item-message`,
+		formItemId: `${String(id)}-form-item`,
+		formDescriptionId: `${String(id)}-form-item-description`,
+		formMessageId: `${String(id)}-form-item-message`,
 		...fieldState,
 	};
 }

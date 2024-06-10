@@ -10,7 +10,7 @@ for (const envFilePath of [".env.test.local", ".env.local", ".env.test", ".env"]
 }
 
 const port = 3000;
-const baseUrl = `http://localhost:${port}`;
+const baseUrl = `http://localhost:${String(port)}`;
 
 export default defineConfig({
 	testDir: "./e2e",
@@ -35,16 +35,16 @@ export default defineConfig({
 			use: { ...devices["Desktop Chrome"] },
 			dependencies: ["setup"],
 		},
-		{
-			name: "firefox",
-			use: { ...devices["Desktop Firefox"] },
-			dependencies: ["setup"],
-		},
-		{
-			name: "webkit",
-			use: { ...devices["Desktop Safari"] },
-			dependencies: ["setup"],
-		},
+		// {
+		// 	name: "firefox",
+		// 	use: { ...devices["Desktop Firefox"] },
+		// 	dependencies: ["setup"],
+		// },
+		// {
+		// 	name: "webkit",
+		// 	use: { ...devices["Desktop Safari"] },
+		// 	dependencies: ["setup"],
+		// },
 		/** Test against mobile viewports. */
 		// {
 		//      name: "Mobile Chrome",

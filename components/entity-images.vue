@@ -40,8 +40,6 @@ watch(api, (api) => {
 const currentImage = computed(() => {
 	return props.images[current.value];
 });
-
-onMounted(() => {});
 </script>
 
 <template>

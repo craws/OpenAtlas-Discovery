@@ -16,7 +16,7 @@ const emit = defineEmits<{
 }>();
 
 // TODO: Fix me! Implement filtering by system classes
-function onSubmit(element: string) {
+function _onSubmit(element: string) {
 	emit("submit", {
 		category: element, //Array, checkbox-group html + how do i get teh values in the submit event handler
 	});

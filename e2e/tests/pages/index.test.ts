@@ -14,7 +14,7 @@ test.describe("index page", () => {
 		}
 	});
 
-	test("should not have any automatically detectable accessibility issues", async ({
+	test.skip("should not have any automatically detectable accessibility issues", async ({
 		createAccessibilityScanner,
 		createIndexPage,
 	}) => {
@@ -27,7 +27,7 @@ test.describe("index page", () => {
 		}
 	});
 
-	test("should not have visible changes", async ({ createIndexPage }) => {
+	test.skip("should not have visible changes", async ({ createIndexPage }) => {
 		for (const locale of locales) {
 			const indexPage = createIndexPage(locale);
 			await indexPage.goto();

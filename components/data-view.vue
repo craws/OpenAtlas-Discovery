@@ -63,7 +63,7 @@ function onUpdateSorting(sorting: SortingState) {
 	});
 }
 
-const { data, error, isPending, isPlaceholderData, suspense } = useGetSearchResults(
+const { data, isPending, isPlaceholderData } = useGetSearchResults(
 	computed(() => {
 		const { search, category, ...params } = searchFilters.value;
 

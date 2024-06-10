@@ -2,7 +2,7 @@
 import type Graph from "graphology";
 import circular from "graphology-layout/circular";
 import FA2LayoutSupervisor from "graphology-layout-forceatlas2/worker";
-import Sigma, { type Camera } from "sigma";
+import { type Camera, Sigma } from "sigma";
 import type { EdgeDisplayData, NodeDisplayData } from "sigma/types";
 import { onMounted, ref } from "vue";
 

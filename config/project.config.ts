@@ -40,10 +40,14 @@ const schema = z.object({
 
 			return {
 				...values,
-				brand: `hsl(${h}deg ${s}% ${l}%)`,
+				brand: `hsl(${String(h)}deg ${String(s)}% ${String(l)}%)`,
 				brandContrast: luminance > 0.5 ? "hsl(0deg 0% 0%)" : "hsl(0deg 0% 100%)",
 			};
 		}),
+	fullscreen: z.boolean(),
+	map: z.object({
+		startPage: z.boolean(),
+	}),
 	defaultLocale: z.enum(["de", "en"]),
 	logos: z.object({
 		light: z.string(),

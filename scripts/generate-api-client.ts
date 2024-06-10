@@ -35,7 +35,7 @@ generate()
 	.then(() => {
 		log.success("Successfully generated api client.");
 	})
-	.catch((error) => {
+	.catch((error: unknown) => {
 		log.error("Failed to generate api client.\n", String(error));
 		process.exitCode = 1;
 	});

@@ -5,9 +5,9 @@
 	"type": "module",
 	"engines": {
 		"node": "20.x",
-		"pnpm": "8.x"
+		"pnpm": "9.x"
 	},
-	"packageManager": "pnpm@8.15.5",
+	"packageManager": "pnpm@9.2.0",
 	"scripts": {
 		"analyze": "nuxt analyze",
 		"build": "nuxt build --dotenv ./.env.local",
@@ -34,6 +34,7 @@
 		"test": "exit 0",
 		"test:e2e": "playwright test",
 		"test:e2e:codegen": "playwright codegen",
+		"test:e2e:update-snapshots": "playwright test --update-snapshots",
 		"test:e2e:ui": "playwright test --ui",
 		"types:check": "nuxt typecheck",
 		"validate": "run-p format:check lint:check types:check test test:e2e"

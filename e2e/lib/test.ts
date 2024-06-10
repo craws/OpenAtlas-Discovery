@@ -47,6 +47,7 @@ export const test = base.extend<Fixtures>({
 			const _messages = await import(`@/messages/${locale}/common.json`, {
 				with: { type: "json" },
 			});
+			// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
 			const _project = await import(`@/messages/${locale}/project.json`, {
 				with: { type: "json" },
 			});

@@ -4,6 +4,8 @@ import { useQuery } from "@tanstack/vue-query";
 
 import type { SystemPage } from "@/types/content";
 
+import { project } from "../config/project.config";
+
 defineRouteRules({
 	prerender: true,
 });
@@ -11,9 +13,18 @@ defineRouteRules({
 const locale = useLocale();
 const t = useTranslations();
 
+definePageMeta({
+	validate() {
+		const env = useRuntimeConfig();
+		return env.public.NUXT_PUBLIC_DATABASE !== "disabled";
+	},
+});
+
 usePageMetadata({
 	title: t("IndexPage.meta.title"),
 });
+
+const env = useRuntimeConfig();
 
 const {
 	data: content,
@@ -41,63 +52,79 @@ onServerPrefetch(async () => {
 </script>
 
 <template>
-	<MainContent class="container py-8">
-		<template v-if="content != null && content.leadIn != null">
-			<div class="grid place-items-center gap-8 p-8 sm:py-16">
-				<div>
-					<h1 class="sr-only">{{ content.title }}</h1>
-					<NuxtImg
-						v-if="content.image?.light != null"
-						alt=""
-						class="block h-80 w-full max-w-3xl object-contain dark:hidden"
-						preload
-						:src="content.image?.light"
-						:width="768"
-						:height="320"
-					/>
-					<NuxtImg
-						v-if="content.image?.dark != null"
-						alt=""
-						class="hidden h-80 w-full max-w-3xl object-contain dark:block"
-						preload
-						:src="content.image?.dark"
-						:width="768"
-						:height="320"
-					/>
-				</div>
+	<MainContent class="container grid grid-rows-[auto_1fr] py-8">
+		<div v-if="!project.map.startPage">
+			<template v-if="content != null && content.leadIn != null">
+				<div class="grid place-items-center gap-8 p-8 sm:py-16">
+					<div>
+						<h1 class="sr-only">{{ content.title }}</h1>
+						<NuxtImg
+							v-if="content.image?.light != null"
+							alt=""
+							class="block h-80 w-full max-w-3xl object-contain dark:hidden"
+							preload
+							:src="content.image?.light"
+							:width="768"
+							:height="320"
+						/>
+						<NuxtImg
+							v-if="content.image?.dark != null"
+							alt=""
+							class="hidden h-80 w-full max-w-3xl object-contain dark:block"
+							preload
+							:src="content.image?.dark"
+							:width="768"
+							:height="320"
+						/>
+					</div>
 
+					<ContentRenderer
+						v-if="content.leadIn != null"
+						class="prose prose-lg max-w-3xl text-balance text-center"
+						:value="content.leadIn"
+					>
+						<template #empty></template>
+					</ContentRenderer>
+
+					<div class="flex items-center gap-6">
+						<Button v-for="(link, key) of content.links" :key="key" as-child variant="default">
+							<NavLink :href="link.href">
+								{{ link.label }}
+							</NavLink>
+						</Button>
+					</div>
+				</div>
+			</template>
+
+			<template v-else-if="content != null">
+				<div class="mx-auto w-full max-w-3xl px-8">
+					<PageTitle>{{ content?.title }}</PageTitle>
+				</div>
+			</template>
+
+			<div>
 				<ContentRenderer
-					v-if="content.leadIn != null"
-					class="prose prose-lg max-w-3xl text-balance text-center"
-					:value="content.leadIn"
+					v-if="content != null"
+					class="prose mx-auto w-full max-w-3xl"
+					:value="content"
 				>
 					<template #empty></template>
 				</ContentRenderer>
-
-				<div class="flex items-center gap-6">
-					<Button v-for="(link, key) of content.links" :key="key" as-child variant="default">
-						<NavLink :href="link.href">
-							{{ link.label }}
-						</NavLink>
-					</Button>
-				</div>
 			</div>
-		</template>
-
-		<template v-else-if="content != null">
-			<div class="mx-auto w-full max-w-3xl px-8">
-				<PageTitle>{{ content?.title }}</PageTitle>
-			</div>
-		</template>
-
-		<div>
-			<ContentRenderer
-				v-if="content != null"
-				class="prose mx-auto w-full max-w-3xl"
-				:value="content"
-			>
-				<template #empty></template>
-			</ContentRenderer>
 		</div>
+
+		<template v-if="project.map.startPage">
+			<div>
+				<PageTitle class="sr-only">{{ t("MapPage.title") }}</PageTitle>
+			</div>
+			<template v-if="env.public.NUXT_PUBLIC_DATABASE !== 'disabled'">
+				<ErrorBoundary>
+					<DataMapView />
+				</ErrorBoundary>
+			</template>
+			<template v-else>
+				<div>{{ t("DataPage.work-in-progress") }}</div>
+			</template>
+		</template>
 	</MainContent>
 </template>

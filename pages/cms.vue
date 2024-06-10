@@ -5,11 +5,7 @@ import type { ContentPage } from "@/types/content";
 
 const locale = useLocale();
 
-const {
-	data: content,
-	error,
-	suspense,
-} = useQuery({
+const { data: content } = useQuery({
 	queryKey: ["cms-intro", locale, "intro"] as const,
 	queryFn({ queryKey: [, locale, ...id] }) {
 		return queryContent<ContentPage>("cms-intro", locale, ...id).findOne();

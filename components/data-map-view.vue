@@ -2,7 +2,6 @@
 import { keyByToMap } from "@acdh-oeaw/lib";
 import * as turf from "@turf/turf";
 import type { MapGeoJSONFeature } from "maplibre-gl";
-import { createSolutionBuilder } from "typescript";
 import { z } from "zod";
 
 import type { SearchFormData } from "@/components/search-form.vue";
@@ -35,7 +34,7 @@ function onChangeSearchFilters(values: SearchFormData) {
 	setSearchFilters(values);
 }
 
-const { data, error, isPending, isPlaceholderData, suspense } = useGetSearchResults(
+const { data, isPending, isPlaceholderData } = useGetSearchResults(
 	computed(() => {
 		const { search, category, ...params } = searchFilters.value;
 
@@ -142,26 +141,30 @@ watch(data, () => {
 </script>
 
 <template>
-	<div class="relative grid grid-rows-[auto_1fr] gap-4">
-		<SearchForm
-			:filter="searchFilters.category"
-			:search="searchFilters.search"
-			@submit="onChangeSearchFilters"
-		/>
+	<div :class="project.fullscreen ? 'relative grid' : 'relative grid grid-rows-[auto_1fr] gap-4'">
+		<div :class="project.fullscreen ? 'absolute z-10 flex w-full justify-center' : ''">
+			<SearchForm
+				:class="
+					project.fullscreen
+						? 'bg-white/90 dark:bg-neutral-900 max-w-[800px] w-full mt-2 rounded-md p-6 shadow-md'
+						: ''
+				"
+				:filter="searchFilters.category"
+				:search="searchFilters.search"
+				@submit="onChangeSearchFilters"
+			/>
+		</div>
 
 		<VisualisationContainer
 			v-slot="{ height, width }"
 			class="border"
 			:class="{ 'opacity-50 grayscale': isLoading }"
 		>
-			<div class="absolute z-10 mt-2 flex w-full justify-center">
-				<Toggle variant="iiif" @click="togglePolygons"> {{ $t("DataMapView.polygon") }} </Toggle>
-			</div>
 			<div class="absolute bottom-0 z-10 mb-2 flex w-full justify-center">
 				<div
-					class="max-h-72 gap-2 overflow-y-auto overflow-x-hidden rounded-md border-2 border-transparent bg-white p-2 text-sm shadow-md"
+					class="max-h-72 gap-2 overflow-y-auto overflow-x-hidden rounded-md border-2 border-transparent bg-white/90 p-2 text-sm font-medium shadow-md dark:bg-neutral-900"
 				>
-					<div class="grid grid-cols-[auto_1fr] gap-3">
+					<div class="grid grid-cols-[auto_auto_1fr] items-center gap-3 align-middle">
 						<div class="grid grid-cols-[auto_1fr] gap-1">
 							<span
 								class="m-1.5 size-2 rounded-full"
@@ -175,6 +178,11 @@ watch(data, () => {
 								:style="`background-color: ${project.colors.geojsonAreaCenterPoints}`"
 							></span>
 							{{ $t("DataMapView.centerpoint") }} ({{ centerpoints.length }})
+						</div>
+						<div>
+							<Toggle variant="iiif" @click="togglePolygons">
+								{{ $t("DataMapView.polygon") }}
+							</Toggle>
 						</div>
 					</div>
 				</div>

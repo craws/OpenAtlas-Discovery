@@ -20,7 +20,7 @@ const config = isIndexable
 
 const robots = Object.entries(config)
 	.map(([key, value]) => {
-		return `${key}: ${value}`;
+		return `${key}: ${String(value)}`;
 	})
 	.join("\n");
 

@@ -1,16 +1,17 @@
+import { log } from "@acdh-oeaw/lib";
 import fs from "fs";
 
-import { defaultLocale, localesMap } from "../config/i18n.config";
+import { defaultLocale, localesMap } from "@/config/i18n.config";
 
-console.log("Generating prerender index");
+log.info("Generating prerender index");
 
 const dir = "./.output/public/";
 
 if (Object.keys(localesMap).length <= 1) {
-	console.log("Single or no locales found, skipping rerout index generation");
+	log.info("Single or no locales found, skipping reroute index generation");
 }
 if (Object.keys(localesMap).length > 1) {
-	console.log("Multiple locales found, generating reroute index");
+	log.info("Multiple locales found, generating reroute index");
 	const indexString = `<!DOCTYPE html>
 	<html>
 	<head>
@@ -23,5 +24,5 @@ if (Object.keys(localesMap).length > 1) {
 	}
 
 	fs.writeFileSync(dir + "/index.html", indexString);
-	console.log("Reroute index generated");
+	log.success("Reroute index generated");
 }

@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import Graph from "graphology";
-import { DotIcon } from "lucide-vue-next";
 
 import type { NetworkEntity } from "@/types/api";
 

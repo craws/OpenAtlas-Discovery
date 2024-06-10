@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { miradorConfig } from "@/config/mirador.config";
 
-
 const props = defineProps<{
 	images: Array<{
 		IIIFManifest: string | undefined;
@@ -17,8 +16,6 @@ const imageUrls: Array<string> = [];
 props.images.forEach((url) => {
 	if (url.IIIFManifest != null) imageUrls.push(url.IIIFManifest);
 });
-
-console.log(imageUrls);
 </script>
 
 <template>

@@ -36,6 +36,7 @@ function onKeyDown(event: KeyboardEvent) {
 </script>
 
 <template>
+	<!-- eslint-disable-next-line vuejs-accessibility/no-static-element-interactions -->
 	<div
 		:class="cn('relative', props.class)"
 		role="region"
