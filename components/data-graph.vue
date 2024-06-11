@@ -39,8 +39,14 @@ watch(
 		//** Add edges. */
 		networkData.forEach((entity) => {
 			entity.relations.forEach((element) => {
-				if (!graph.hasEdge(entity.id, element)) {
+				if (!graph.hasEdge(entity.id, element) && graph.hasNode(element)) {
 					graph.addEdge(entity.id, element);
+				} else if (!graph.hasNode(element)) {
+					console.error(
+						"graph does not have the node",
+						element,
+						"for the wanted relation in it's set.",
+					);
 				}
 			});
 		});

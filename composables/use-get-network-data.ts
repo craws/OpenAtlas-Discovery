@@ -16,10 +16,15 @@ export function useGetNetworkData(params: MaybeRef<GetNetworkDataParams>) {
 		async queryFn({ queryKey, signal }) {
 			const [, params] = queryKey;
 
+			const linked_to_ids = defaultFilterParams.type_id?.map((value) => {
+				return value;
+			});
+
 			const response = await api.GET("/network_visualisation/", {
 				params: {
 					query: {
 						...params,
+						linked_to_ids,
 					},
 				},
 				signal,
