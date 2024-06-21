@@ -19,7 +19,7 @@ const {
 	queryKey: ["imprint", redmineId, locale] as const,
 	queryFn({ queryKey: [, redmineId, locale] }) {
 		const url = createImprintUrl(locale, redmineId);
-		return $fetch(String(url), { responseType: "text" });
+		return $fetch<string>(String(url), { responseType: "text" });
 	},
 });
 useErrorMessage(error, {

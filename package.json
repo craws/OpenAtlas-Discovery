@@ -7,7 +7,7 @@
 		"node": "20.x",
 		"pnpm": "9.x"
 	},
-	"packageManager": "pnpm@9.2.0",
+	"packageManager": "pnpm@9.4.0",
 	"scripts": {
 		"analyze": "nuxt analyze",
 		"build": "nuxt build --dotenv ./.env.local",

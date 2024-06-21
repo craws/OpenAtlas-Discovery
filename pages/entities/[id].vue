@@ -118,7 +118,7 @@ const typesById = computed(() => {
 				<!-- TODO: keep map alive -->
 				<TabsContent v-for="tab of tabs" :key="tab.id" :value="tab.id">
 					<EntityGeoMap v-if="tab.id === 'geo-map'" :entities="entities" />
-					<EntityImages v-else-if="tab.id === 'images'" :images="entity.depictions" />
+					<EntityImages v-else-if="tab.id === 'images'" :images="entity.depictions ?? []" />
 					<EntityNetwork v-if="tab.id === 'network'" :id="id" :network-data="entity" />
 				</TabsContent>
 			</Tabs>
@@ -140,7 +140,7 @@ const typesById = computed(() => {
 									<li v-for="(relation, index) of relations.slice(0, 10)" :key="index">
 										<NavLink
 											class="underline decoration-dotted hover:no-underline"
-											:href="{ path: `/entities/${getUnprefixedId(relation.relationTo)}` }"
+											:href="{ path: `/entities/${getUnprefixedId(relation.relationTo!)}` }"
 										>
 											{{ relation.label }}
 										</NavLink>
@@ -162,7 +162,7 @@ const typesById = computed(() => {
 										<li v-for="(relation, index) of relations.slice(10)" :key="index">
 											<NavLink
 												class="underline decoration-dotted hover:no-underline"
-												:href="{ path: `/entities/${getUnprefixedId(relation.relationTo)}` }"
+												:href="{ path: `/entities/${getUnprefixedId(relation.relationTo!)}` }"
 											>
 												{{ relation.label }}
 											</NavLink>

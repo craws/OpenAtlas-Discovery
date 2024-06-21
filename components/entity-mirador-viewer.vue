@@ -3,8 +3,8 @@ import { miradorConfig } from "@/config/mirador.config";
 
 const props = defineProps<{
 	images: Array<{
-		IIIFManifest: string | undefined;
-		license: string | undefined;
+		IIIFManifest?: string | undefined;
+		license?: string | undefined;
 		mimetype?: string | undefined;
 		title?: string | undefined;
 		url?: string | undefined;

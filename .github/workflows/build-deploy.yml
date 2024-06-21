@@ -1,123 +1,131 @@
-name: build and deploy
+name: Build and deploy
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.ref }}
+  group: ${{ github.workflow }}-${{ github.ref }}-build-deploy
   cancel-in-progress: true
 
 on:
-  push:
-    branches:
-      - main
-      - develop
-  pull_request:
-    branches:
-      - main
-      - develop
+  workflow_call:
   workflow_dispatch:
 
 jobs:
-  setup_workflow_env:
+  env:
+    name: Generate environment variables
     runs-on: ubuntu-latest
-    outputs:
-      environment: ${{ steps.get_environment_from_git_ref.outputs.environment }}
-      environment_short: ${{ steps.get_environment_from_git_ref.outputs.environment_short }}
-      image_name: openatlas-discovery
-      registry_root: ghcr.io/acdh-oeaw/openatlas-discovery/
-      default_port: "3000"
-      fetch-depth: 10
-      submodules: "false"
-      herokuish_base_image: ghcr.io/acdh-oeaw/herokuish-for-cypress/main:latest-22
-      BUILDPACK_URL: https://github.com/unfold/heroku-buildpack-pnpm
-      APP_NAME: openatlas-discovery
-      APP_ROOT: "/"
-      # SERVICE_ID: "99999"
-      # PUBLIC_URL: "https://some-stuff.acdh-ch-dev.oeaw.ac.at"
-    # You should not need to have to change anything below this line
-    #-----------------------------------------------------------------------------------------------------
     steps:
-      - name: Get environment from git ref
-        id: get_environment_from_git_ref
+      - name: Derive environment from git ref
+        id: environment
         run: |
-          echo "Running on branch ${{ github.ref_name }}"
           if [ "${{ github.ref }}" = "refs/heads/main" ]; then
-            echo "environment=production"
-            echo "environment=production" >> $GITHUB_OUTPUT
-            echo "environment_short=prod" >> $GITHUB_OUTPUT
+            ENVIRONMENT="production"
+            APP_NAME_SUFFIX=""
+          elif [ "${{ github.ref }}" = "refs/heads/develop" ]; then
+            ENVIRONMENT="development"
+            APP_NAME_SUFFIX="-development"
+          elif [ "${{github.event_name}}" = "pull_request"]; then
+            ENVIRONMENT="pr/${{ github.event.pull_request.number }}"
+            APP_NAME_SUFFIX="-pr-${{ github.event.pull_request.number }}"
           else
-            echo "environment=review/${{ github.ref_name }}"
-            echo "environment=review/${{ github.ref_name }}" >> $GITHUB_OUTPUT
-            echo "environment_short=$(echo -n ${{ github.ref_name }} | sed 's/\(feat\|feature\|fix\)\{0,1\}[_/]//' | tr '_' '-' | tr '[:upper:]' '[:lower:]' | cut -c -63 )" >> $GITHUB_OUTPUT
+            exit 1
           fi
-  generate_workflow_vars:
-    needs: [setup_workflow_env]
-    environment:
-      name: ${{ needs.setup_workflow_env.outputs.environment }}
-    runs-on: ubuntu-latest
-    steps:
-      - name: Generate PUBLIC_URL if not set
-        id: generate_public_url
-        run: |
-          kube_ingress_base_domain="${{ vars.KUBE_INGRESS_BASE_DOMAIN }}"
-          public_url="${{ needs.setup_workflow_env.outputs.PUBLIC_URL || vars.PUBLIC_URL }}"
-          if [ "${public_url}x" == 'x' ]
-          then public_url=https://${{ needs.setup_workflow_env.outputs.environment_short }}.${kube_ingress_base_domain}
-          fi
-          echo "public_url=$public_url" >> $GITHUB_OUTPUT
+
+          echo "ENVIRONMENT=$ENVIRONMENT" >> $GITHUB_OUTPUT
+          echo "APP_NAME_SUFFIX=$APP_NAME_SUFFIX" >> $GITHUB_OUTPUT
     outputs:
-      PUBLIC_URL: ${{ steps.generate_public_url.outputs.public_url }}
-  _1:
-    needs: [setup_workflow_env, generate_workflow_vars]
-    uses: acdh-oeaw/gl-autodevops-minimal-port/.github/workflows/build-herokuish-and-push-to-registry.yaml@main
-    secrets: inherit
-    # if you run this outside of of an org that provides KUBE_CONFIG etc as a secret, you need to specify every secret you want to pass by name
-    with:
-      environment: ${{ needs.setup_workflow_env.outputs.environment }}
-      registry_root: ${{ needs.setup_workflow_env.outputs.registry_root }}
-      image_name: ${{ needs.setup_workflow_env.outputs.image_name }}
-      BUILDPACK_URL: ${{ needs.setup_workflow_env.outputs.BUILDPACK_URL }}
-      default_port: ${{ needs.setup_workflow_env.outputs.default_port }}
-      PUBLIC_URL: ${{ needs.generate_workflow_vars.outputs.PUBLIC_URL }}
-      fetch-depth: ${{ fromJson(needs.setup_workflow_env.outputs.fetch-depth) }}
-      submodules: ${{ needs.setup_workflow_env.outputs.submodules }}
-  _2:
-    needs: [setup_workflow_env, generate_workflow_vars]
-    uses: acdh-oeaw/gl-autodevops-minimal-port/.github/workflows/herokuish-tests-db-url.yaml@main
-    secrets: inherit
-    # if you run this outside of acdh-oeaw yo uneed to specify every secret you want to pass by name
-    with:
-      environment: ${{ needs.setup_workflow_env.outputs.environment}}
-      registry_root: ${{ needs.setup_workflow_env.outputs.registry_root }}
-      image_name: ${{ needs.setup_workflow_env.outputs.image_name }}
-      default_port: ${{ needs.setup_workflow_env.outputs.default_port }}
-      fetch-depth: ${{ fromJson(needs.setup_workflow_env.outputs.fetch-depth) }}
-      herokuish_base_image: ${{ needs.setup_workflow_env.outputs.herokuish_base_image }}
-      POSTGRES_ENABLED: ${{ needs.setup_workflow_env.outputs.POSTGRES_ENABLED }}
-      PUBLIC_URL: ${{ needs.generate_workflow_vars.outputs.PUBLIC_URL }}
-      BUILDPACK_URL: ${{ needs.setup_workflow_env.outputs.BUILDPACK_URL }}
-      submodules: ${{ needs.setup_workflow_env.outputs.submodules }}
-  _3:
-    needs: [setup_workflow_env, generate_workflow_vars, _1, _2]
+      environment: "${{ steps.environment.outputs.ENVIRONMENT }}"
+      app_name: "openatlas-discovery${{ steps.environment.outputs.APP_NAME_SUFFIX }}"
+      registry: ghcr.io
+      image: ${{ github.repository }}
+
+  vars:
+    name: Generate public url
+    needs: [env]
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ needs.env.outputs.environment }}
+    steps:
+      - name: Generate public URL
+        id: public_url
+        run: |
+          if [ -z "${{ vars.PUBLIC_URL }}" ]; then
+            PUBLIC_URL="https://${{ needs.env.outputs.app_name }}.${{ vars.KUBE_INGRESS_BASE_DOMAIN }}"
+          else
+            PUBLIC_URL="${{ vars.PUBLIC_URL }}"
+          fi
+
+          echo "PUBLIC_URL=$PUBLIC_URL" >> $GITHUB_OUTPUT
+    outputs:
+      public_url: ${{ steps.public_url.outputs.PUBLIC_URL }}
+
+  build:
+    name: Build and push docker image
+    needs: [env, vars]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    environment:
+      name: "${{ needs.env.outputs.environment }}"
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to the Container registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ needs.env.outputs.registry }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ needs.env.outputs.registry }}/${{ needs.env.outputs.image }}
+          tags: |
+            type=raw,value={{sha}}
+            type=ref,event=branch
+          #   type=ref,event=pr
+          #   type=semver,pattern={{version}}
+          #   type=semver,pattern={{major}}.{{minor}}
+          #   type=raw,value=latest
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          build-args: |
+            "NUXT_PUBLIC_API_BASE_URL=${{ vars.NUXT_PUBLIC_API_BASE_URL }}"
+            "NUXT_PUBLIC_APP_BASE_URL=${{ needs.vars.outputs.public_url }}"
+            "NUXT_PUBLIC_BOTS=${{ vars.NUXT_PUBLIC_BOTS }}"
+            "NUXT_PUBLIC_DATABASE=${{ vars.NUXT_PUBLIC_DATABASE }}"
+            "NUXT_PUBLIC_GOOGLE_SITE_VERIFICATION=${{ vars.NUXT_PUBLIC_GOOGLE_SITE_VERIFICATION }}"
+            "NUXT_PUBLIC_MAP_BASELAYER_URL_DARK=${{ vars.NUXT_PUBLIC_MAP_BASELAYER_URL_DARK }}"
+            "NUXT_PUBLIC_MAP_BASELAYER_URL_LIGHT=${{ vars.NUXT_PUBLIC_MAP_BASELAYER_URL_LIGHT }}"
+            "NUXT_PUBLIC_MATOMO_BASE_URL=${{ vars.NUXT_PUBLIC_MATOMO_BASE_URL }}"
+            "NUXT_PUBLIC_MATOMO_ID=${{ vars.NUXT_PUBLIC_MATOMO_ID }}"
+            "NUXT_PUBLIC_OPENAPI_BASE_URL=${{ vars.NUXT_PUBLIC_OPENAPI_BASE_URL }}"
+            "NUXT_PUBLIC_REDMINE_ID=${{ vars.SERVICE_ID }}"
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  deploy:
+    name: Deploy docker image
+    needs: [env, vars, build]
     uses: acdh-oeaw/gl-autodevops-minimal-port/.github/workflows/deploy.yml@main
     secrets: inherit
-    # if you run this outside of acdh-oeaw yo uneed to specify every secret you want to pass by name
-    #      KUBE_CONFIG: ${{ secrets.KUBE_CONFIG }}
-    #      KUBE_INGRESS_BASE_DOMAIN: ${{ secrets.KUBE_INGRESS_BASE_DOMAIN }}
-    #      POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-    #      POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-    #      POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
-    #      K8S_SECRET_A_VAR_NAME: ${{  }}
     with:
-      environment: ${{ needs.setup_workflow_env.outputs.environment}}
-      fetch-depth: ${{ fromJson(needs.setup_workflow_env.outputs.fetch-depth) }}
-      DOCKER_TAG:
-        ${{ needs.setup_workflow_env.outputs.registry_root }}${{
-        needs.setup_workflow_env.outputs.image_name }}
-      APP_NAME:
-        ${{ needs.setup_workflow_env.outputs.APP_NAME }}-${{
-        needs.setup_workflow_env.outputs.environment_short }}
-      APP_ROOT: ${{ needs.setup_workflow_env.outputs.APP_ROOT }}
-      SERVICE_ID: ${{ needs.setup_workflow_env.outputs.SERVICE_ID }}
-      PUBLIC_URL: ${{ needs.generate_workflow_vars.outputs.PUBLIC_URL }}
-      POSTGRES_ENABLED: ${{ needs.setup_workflow_env.outputs.POSTGRES_ENABLED == 'true'}}
-      default_port: "${{ needs.setup_workflow_env.outputs.default_port}}"
-      submodules: ${{ needs.setup_workflow_env.outputs.submodules }}
+      environment: ${{ needs.env.outputs.environment }}
+      DOCKER_TAG: ${{ needs.env.outputs.registry }}/${{ needs.env.outputs.image }}
+      APP_NAME: "${{ needs.env.outputs.app_name }}"
+      APP_ROOT: "/"
+      SERVICE_ID: "${{ vars.SERVICE_ID }}"
+      PUBLIC_URL: "${{ needs.vars.outputs.public_url }}"
+      default_port: "3000"
