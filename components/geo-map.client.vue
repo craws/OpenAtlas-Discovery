@@ -218,7 +218,7 @@ function updateScope() {
 	sourceCenterpoints?.setData(geojsonCenterPoints);
 
 	if (geojsonPoints.features.length > 0) {
-		const bounds = turf.bbox(geojsonPoints);
+		const bounds = turf.bbox(geojsonPoints) as [number, number, number, number];
 		map.fitBounds(bounds, { padding: 50 });
 	}
 }

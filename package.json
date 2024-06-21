@@ -52,7 +52,7 @@
 		"@stefanprobst/openapi-client": "^0.0.3",
 		"@tanstack/vue-query": "^5.28.4",
 		"@tanstack/vue-table": "^8.13.2",
-		"@turf/turf": "^6.5.0",
+		"@turf/turf": "^7.0.0",
 		"@vee-validate/zod": "^4.12.6",
 		"@vueuse/core": "^10.9.0",
 		"@vueuse/nuxt": "^10.9.0",
@@ -120,11 +120,6 @@
 		"typescript": "^5.4.2",
 		"vite": "^5.1.6",
 		"vue-tsc": "^2.0.6"
-	},
-	"pnpm": {
-		"patchedDependencies": {
-			"@turf/turf@6.5.0": "patches/@turf__turf@6.5.0.patch"
-		}
 	},
 	"browserslist": {
 		"development": [

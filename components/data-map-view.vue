@@ -118,7 +118,7 @@ function onLayerClick(features: Array<MapGeoJSONFeature & Pick<GeoJsonFeature, "
 		if (entity.geometry.type === "GeometryCollection") {
 			coordinates = entity.geometry.geometries.find((g) => {
 				return g.type === "Point";
-			})?.coordinates;
+			})?.coordinates as [number, number] | undefined;
 
 			if (coordinates != null) break;
 		}
@@ -126,7 +126,8 @@ function onLayerClick(features: Array<MapGeoJSONFeature & Pick<GeoJsonFeature, "
 
 	popover.value = {
 		coordinates:
-			coordinates ?? turf.center(createFeatureCollection(entities))?.geometry.coordinates,
+			coordinates ??
+			(turf.center(createFeatureCollection(entities)).geometry.coordinates as [number, number]),
 		entities,
 	};
 }
