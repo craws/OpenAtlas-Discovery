@@ -21,7 +21,7 @@ const props = defineProps<{
 	features: Array<GeoJsonFeature>;
 	height: number;
 	width: number;
-	polygons: boolean;
+	polygons?: boolean;
 }>();
 
 const emit = defineEmits<{

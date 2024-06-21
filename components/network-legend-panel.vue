@@ -56,7 +56,7 @@ const systemClassColors = colors.entityColors;
 			v-for="el in props.systemClasses"
 			:key="el"
 			class="grid grid-cols-[auto_1fr] gap-3"
-			:style="`color: ${systemClassColors[el] ? systemClassColors[el] : '#666'}`"
+			:style="`color: ${el in systemClassColors ? systemClassColors[el as keyof typeof systemClassColors] : '#666'}`"
 		>
 			<div class="grid grid-cols-[auto_1fr] gap-2">
 				<!-- <input
@@ -69,9 +69,9 @@ const systemClassColors = colors.entityColors;
 				/> -->
 				<span
 					class="m-1.5 size-2 rounded-full"
-					:style="`background-color: ${systemClassColors[el] ? systemClassColors[el] : '#666'}`"
-				></span>
-				<span v-if="labels[el]">{{ labels[el] }}</span>
+					:style="`background-color: ${el in systemClassColors ? systemClassColors[el as keyof typeof systemClassColors] : '#666'}`"
+				/>
+				<span v-if="el in labels">{{ labels[el as keyof typeof labels] }}</span>
 				<span v-else> {{ el }}</span>
 			</div>
 		</div>

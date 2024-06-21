@@ -9,7 +9,10 @@ import type { ContentPage } from "@/types/content";
 const locale = useLocale();
 const t = useTranslations();
 
-const defaultLinks = computed(() => {
+const defaultLinks = computed<
+	// eslint-disable-next-line @typescript-eslint/ban-types
+	Record<"home" & (string & {}), { href: NavLinkProps["href"]; label: string }>
+>(() => {
 	if (!project.map.startPage) {
 		return {
 			home: { href: { path: "/" }, label: t("AppHeader.links.home") },
@@ -17,14 +20,14 @@ const defaultLinks = computed(() => {
 			map: { href: { path: "/map" }, label: t("AppHeader.links.map") },
 			network: { href: { path: "/network" }, label: t("AppHeader.links.network") },
 			team: { href: { path: "/team" }, label: t("AppHeader.links.team") },
-		} satisfies Record<string, { href: NavLinkProps["href"]; label: string }>;
+		};
 	}
 	return {
 		home: { href: { path: "/" }, label: t("AppHeader.links.home") },
 		data: { href: { path: "/data" }, label: t("AppHeader.links.data") },
 		network: { href: { path: "/network" }, label: t("AppHeader.links.network") },
 		team: { href: { path: "/team" }, label: t("AppHeader.links.team") },
-	} satisfies Record<string, { href: NavLinkProps["href"]; label: string }>;
+	};
 });
 
 const { data: navigation, suspense } = useQuery({
