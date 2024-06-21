@@ -14,18 +14,16 @@ WORKDIR /app
 USER node
 
 COPY --chown=node:node .npmrc package.json pnpm-lock.yaml ./
-COPY ./patches ./patches
-RUN sed -i "s/use-node-version/# use-node-version/" .npmrc
 
 RUN pnpm fetch
 
 COPY --chown=node:node ./ ./
-RUN sed -i "s/use-node-version/# use-node-version/" .npmrc
 
 ARG NUXT_PUBLIC_API_BASE_URL
 ARG NUXT_PUBLIC_APP_BASE_URL
 ARG NUXT_PUBLIC_BOTS
 ARG NUXT_PUBLIC_DATABASE
+ARG NUXT_PUBLIC_GOOGLE_SITE_VERIFICATION
 ARG NUXT_PUBLIC_MAP_BASELAYER_ATTRIBUTION
 ARG NUXT_PUBLIC_MAP_BASELAYER_URL_DARK
 ARG NUXT_PUBLIC_MAP_BASELAYER_URL_LIGHT
