@@ -1,83 +1,46 @@
 import { test as base } from "@playwright/test";
-import type { ElementContext, Result, RunOptions } from "axe-core";
-import { checkA11y, getViolations, injectAxe } from "axe-playwright";
-import { createI18n as _createI18n, type I18n } from "vue-i18n";
 
-import { defaultLocale, type Locale, type Messages } from "@/config/i18n.config";
+import { defaultLocale, type Locale } from "@/config/i18n.config";
+import { type AccessibilityScanner, createAccessibilityScanner } from "@/e2e/lib/fixtures/a11y";
+import { createI18n, type I18n, type WithI18n } from "@/e2e/lib/fixtures/i18n";
 import { ImprintPage } from "@/e2e/lib/fixtures/imprint-page";
 import { IndexPage } from "@/e2e/lib/fixtures/index-page";
 
 interface Fixtures {
-	createAccessibilityScanner: () => Promise<{
-		check: (params?: { selector?: ElementContext; skipFailures?: boolean }) => Promise<void>;
-		getViolations: (params?: {
-			options?: RunOptions;
-			selector?: ElementContext;
-		}) => Promise<Array<Result>>;
-	}>;
-	createI18n: (
-		locale?: Locale,
-		// eslint-disable-next-line @typescript-eslint/ban-types
-	) => Promise<I18n<{ [K in Locale]: Messages }, {}, {}, Locale, false>["global"]>;
-	createImprintPage: (locale: Locale) => ImprintPage;
-	createIndexPage: (locale: Locale) => IndexPage;
+	createAccessibilityScanner: () => Promise<AccessibilityScanner>;
+	createI18n: (locale: Locale) => Promise<I18n>;
+	createImprintPage: (locale: Locale) => Promise<WithI18n<{ imprintPage: ImprintPage }>>;
+	createIndexPage: (locale: Locale) => Promise<WithI18n<{ indexPage: IndexPage }>>;
 }
 
 export const test = base.extend<Fixtures>({
 	async createAccessibilityScanner({ page }, use) {
-		async function createAccessibilityScanner() {
-			await injectAxe(page);
-
-			return {
-				check(params?: { selector?: ElementContext; skipFailures?: boolean }) {
-					return checkA11y(page, params?.selector, { detailedReport: true }, params?.skipFailures);
-				},
-				getViolations(params?: { options?: RunOptions; selector?: ElementContext }) {
-					return getViolations(page, params?.selector, params?.options);
-				},
-			};
-		}
-
-		await use(createAccessibilityScanner);
+		await use(() => {
+			return createAccessibilityScanner(page);
+		});
 	},
 
-	async createI18n({ page: _ }, use) {
-		async function createI18n(locale = defaultLocale) {
-			// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-			const _messages = await import(`@/messages/${locale}/common.json`, {
-				with: { type: "json" },
-			});
-			// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
-			const _project = await import(`@/messages/${locale}/project.json`, {
-				with: { type: "json" },
-			});
-			// eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
-			const messages = { ..._messages.default, ..._project.default } as Messages;
-
-			return _createI18n({
-				legacy: false,
-				locale,
-				messages: {
-					[locale]: messages,
-				},
-			}).global;
-		}
-
-		// @ts-expect-error Only messages for single locale provided.
-		await use(createI18n);
+	async createI18n({ page }, use) {
+		await use((locale = defaultLocale) => {
+			return createI18n(page, locale);
+		});
 	},
 
 	async createImprintPage({ page }, use) {
-		function createImprintPage(locale = defaultLocale) {
-			return new ImprintPage(page, locale);
+		async function createImprintPage(locale = defaultLocale) {
+			const i18n = await createI18n(page, locale);
+			const imprintPage = new ImprintPage(page, locale, i18n);
+			return { i18n, imprintPage };
 		}
 
 		await use(createImprintPage);
 	},
 
 	async createIndexPage({ page }, use) {
-		function createIndexPage(locale = defaultLocale) {
-			return new IndexPage(page, locale);
+		async function createIndexPage(locale = defaultLocale) {
+			const i18n = await createI18n(page, locale);
+			const indexPage = new IndexPage(page, locale, i18n);
+			return { i18n, indexPage };
 		}
 
 		await use(createIndexPage);

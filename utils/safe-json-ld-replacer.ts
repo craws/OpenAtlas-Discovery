@@ -14,6 +14,10 @@ function replacer(t: string): string {
 	return entities[t as keyof typeof entities];
 }
 
+export function escape(value: string) {
+	return value.replace(regex, replacer);
+}
+
 /**
  * A replacer for JSON.stringify to strip JSON-LD of illegal HTML entities.
  *
@@ -34,7 +38,7 @@ export function safeJsonLdReplacer(_key: string, value: JsonValue): JsonValue | 
 		}
 
 		case "string": {
-			return value.replace(regex, replacer);
+			return escape(value);
 		}
 
 		default: {

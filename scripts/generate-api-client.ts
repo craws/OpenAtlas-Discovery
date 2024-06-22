@@ -3,23 +3,23 @@ import { join } from "node:path";
 
 import { log } from "@acdh-oeaw/lib";
 import openapi, { astToString } from "openapi-typescript";
-import { z } from "zod";
+import * as v from "valibot";
 
-const schema = z.object({
-	NUXT_PUBLIC_OPENAPI_BASE_URL: z.string().url(),
+const schema = v.object({
+	NUXT_PUBLIC_OPENAPI_BASE_URL: v.pipe(v.string(), v.url()),
 });
 
-const result = schema.safeParse(process.env);
+const result = v.safeParse(schema, process.env);
 
 if (!result.success) {
 	const message = "Invalid environment variables";
-	log.error(`${message}:`, result.error.flatten().fieldErrors);
+	log.error(`${message}:`, v.flatten(result.issues).nested);
 	const error = new Error(message);
 	delete error.stack;
 	throw error;
 }
 
-const url = result.data.NUXT_PUBLIC_OPENAPI_BASE_URL;
+const url = result.output.NUXT_PUBLIC_OPENAPI_BASE_URL;
 
 async function generate() {
 	const ast = await openapi(url, {

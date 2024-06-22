@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/vue-query";
-import { z } from "zod";
+import * as v from "valibot";
 
 import { type Entity, useCreateEntity } from "@/composables/use-create-entity";
 import type { components, operations } from "@/lib/api-client/api";
@@ -63,39 +63,39 @@ export const logicalOperators = ["and", "or"] as const;
 
 export type LogicalOperator = (typeof logicalOperators)[number];
 
-export const searchFilter = z
-	.record(
-		z.enum(categories),
-		z.object({
-			operator: z.enum(operators),
-			values: z.array(z.union([z.string(), z.number()])),
-			logicalOperator: z.enum(logicalOperators).default("and"),
+export const searchFilter = v.pipe(
+	v.record(
+		v.picklist(categories),
+		v.object({
+			operator: v.picklist(operators),
+			values: v.array(v.union([v.string(), v.number()])),
+			logicalOperator: v.optional(v.picklist(logicalOperators), "and"),
 		}),
-	)
-	.refine(
-		(value) => {
-			return Object.keys(value).length > 0;
-		},
-		{ message: "At least one search filter category required" },
-	);
+	),
+	v.check((input) => {
+		return Object.keys(input).length > 0;
+	}, "At least one search filter category required"),
+);
 
-export const searchFilterString = z
-	.string()
-	.transform((value, context) => {
+export const searchFilterString = v.pipe(
+	v.string(),
+	v.transform((input) => {
 		try {
 			// eslint-disable-next-line @typescript-eslint/no-unsafe-return
-			return JSON.parse(value);
+			return JSON.parse(input);
 		} catch {
-			context.addIssue({
-				code: z.ZodIssueCode.custom,
-				message: "Invalid JSON passed as search filter",
-			});
-			return z.NEVER;
+			// FIXME: currently not possible, @see https://github.com/fabian-hiller/valibot/issues/182
+			// info.issues?.push({
+			// 	message: "Invalid JSON passed as search filter",
+			// });
+			// throw new v.ValiError()
+			return v.never();
 		}
-	})
-	.pipe(searchFilter);
+	}),
+	searchFilter,
+);
 
-export type SearchFilter = z.infer<typeof searchFilter>;
+export type SearchFilter = v.InferOutput<typeof searchFilter>;
 
 export interface GetSearchResultsParams
 	extends Omit<NonNullable<operations["GetQuery"]["parameters"]["query"]>, "format" | "search"> {

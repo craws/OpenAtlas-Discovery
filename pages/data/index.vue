@@ -2,7 +2,7 @@
 definePageMeta({
 	validate() {
 		const env = useRuntimeConfig();
-		return env.public.NUXT_PUBLIC_DATABASE !== "disabled";
+		return env.public.database !== "disabled";
 	},
 });
 
@@ -21,7 +21,7 @@ const env = useRuntimeConfig();
 			<PageTitle class="sr-only">{{ t("DataPage.title") }}</PageTitle>
 		</div>
 
-		<template v-if="env.public.NUXT_PUBLIC_DATABASE !== 'disabled'">
+		<template v-if="env.public.database !== 'disabled'">
 			<ErrorBoundary>
 				<DataView />
 			</ErrorBoundary>

@@ -1,4 +1,4 @@
-/* eslint-disable require-atomic-updates, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-argument */
+/* eslint-disable require-atomic-updates, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access */
 
 import { isNonEmptyString } from "@acdh-oeaw/lib";
 import { parseMarkdown } from "@nuxtjs/mdc/runtime";

@@ -9,6 +9,8 @@ const env = useRuntimeConfig();
 const locale = useLocale();
 const t = useTranslations();
 
+const router = useRouter();
+
 const i18nHead = useLocaleHead({
 	addDirAttribute: true,
 	identifierAttribute: "id",
@@ -49,7 +51,7 @@ useHead({
 				property: "og:image",
 				content: String(
 					createUrl({
-						baseUrl: env.public.NUXT_PUBLIC_APP_BASE_URL,
+						baseUrl: env.public.appBaseUrl,
 						pathname: "/opengraph-image.png",
 					}),
 				),
@@ -76,23 +78,24 @@ useHead({
 			{ type: "application/ld+json", innerHTML: JSON.stringify(jsonLd, safeJsonLdReplacer) },
 		];
 
-		if (
-			isNonEmptyString(env.public.NUXT_PUBLIC_MATOMO_BASE_URL) &&
-			isNonEmptyString(env.public.NUXT_PUBLIC_MATOMO_ID)
-		) {
-			const baseUrl = env.public.NUXT_PUBLIC_MATOMO_BASE_URL;
+		if (isNonEmptyString(env.public.matomoBaseUrl) && isNonEmptyString(env.public.matomoId)) {
+			const baseUrl = env.public.matomoBaseUrl;
 
 			scripts.push({
 				type: "",
 				innerHTML: createAnalyticsScript(
 					baseUrl.endsWith("/") ? baseUrl : baseUrl + "/",
-					env.public.NUXT_PUBLIC_MATOMO_ID,
+					env.public.matomoId,
 				),
 			});
 		}
 
 		return scripts;
 	}),
+});
+
+router.afterEach((to, from) => {
+	trackPageView(to, from);
 });
 
 const fullscreen = "--container-width: ;";
@@ -113,6 +116,5 @@ const container = "--container-width: 1536px;";
 		<AppFooter />
 
 		<Toaster position="bottom-right" />
-		<RouteAnnouncer />
 	</div>
 </template>

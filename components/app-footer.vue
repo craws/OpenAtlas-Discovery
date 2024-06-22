@@ -47,11 +47,7 @@ const links = computed(() => {
 
 			<div class="sm:justify-self-end sm:text-right">
 				Version:
-				{{
-					[env.public.NUXT_PUBLIC_GIT_TAG, env.public.NUXT_PUBLIC_GIT_BRANCH_NAME]
-						.filter(isNonEmptyString)
-						.join(" - ")
-				}}
+				{{ [env.public.gitTag, env.public.gitBranchName].filter(isNonEmptyString).join(" - ") }}
 			</div>
 		</div>
 	</footer>

@@ -1,8 +1,8 @@
 import { createUrl } from "@acdh-oeaw/lib";
-import { z } from "zod";
+import * as v from "valibot";
 
-const baseUrl = z.string().url().parse(process.env.NUXT_PUBLIC_APP_BASE_URL);
-const bots = z.enum(["disabled", "enabled"]).optional().parse(process.env.NUXT_PUBLIC_BOTS);
+const baseUrl = v.parse(v.pipe(v.string(), v.url()), process.env.NUXT_PUBLIC_APP_BASE_URL);
+const bots = v.parse(v.optional(v.picklist(["disabled", "enabled"])), process.env.NUXT_PUBLIC_BOTS);
 const isIndexable = bots === "enabled";
 
 const config = isIndexable

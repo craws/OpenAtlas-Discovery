@@ -27,7 +27,7 @@ export default defineNuxtConfig({
 	},
 	css: ["@fontsource-variable/inter/slnt.css", "tailwindcss/tailwind.css", "@/styles/index.css"],
 	devtools: {
-		enabled: process.env.NODE_ENV === "development",
+		enabled: true,
 	},
 	experimental: {
 		componentIslands: {
@@ -47,6 +47,9 @@ export default defineNuxtConfig({
 		/** @see https://github.com/nuxt/nuxt/issues/21821 */
 		inlineStyles: false,
 	},
+	future: {
+		compatibilityVersion: 4,
+	},
 	i18n: {
 		baseUrl,
 		defaultLocale,
@@ -59,9 +62,6 @@ export default defineNuxtConfig({
 		strategy: "prefix",
 		vueI18n: "./i18n.config.ts",
 	},
-	image: {
-		domains: [],
-	},
 	imports: {
 		dirs: ["./config/"],
 	},
@@ -70,7 +70,6 @@ export default defineNuxtConfig({
 		compressPublicAssets: true,
 		prerender: {
 			routes: ["/manifest.webmanifest", "/robots.txt", "/sitemap.xml"],
-			failOnError: false,
 		},
 	},
 	postcss: {
@@ -81,19 +80,20 @@ export default defineNuxtConfig({
 	runtimeConfig: {
 		NODE_ENV: process.env.NODE_ENV,
 		public: {
-			NUXT_PUBLIC_API_BASE_URL: process.env.NUXT_PUBLIC_API_BASE_URL,
-			NUXT_PUBLIC_APP_BASE_URL: process.env.NUXT_PUBLIC_APP_BASE_URL,
-			NUXT_PUBLIC_BOTS: process.env.NUXT_PUBLIC_BOTS,
-			NUXT_PUBLIC_DATABASE: process.env.NUXT_PUBLIC_DATABASE,
-			NUXT_PUBLIC_GIT_BRANCH_NAME: branchName,
-			NUXT_PUBLIC_GIT_COMMIT_HASH: commitHash,
-			NUXT_PUBLIC_GIT_TAG: tag,
-			NUXT_PUBLIC_MAP_BASELAYER_URL_DARK: process.env.NUXT_PUBLIC_MAP_BASELAYER_URL_DARK,
-			NUXT_PUBLIC_MAP_BASELAYER_URL_LIGHT: process.env.NUXT_PUBLIC_MAP_BASELAYER_URL_LIGHT,
-			NUXT_PUBLIC_MATOMO_BASE_URL: process.env.NUXT_PUBLIC_MATOMO_BASE_URL,
-			NUXT_PUBLIC_MATOMO_ID: process.env.NUXT_PUBLIC_MATOMO_ID,
-			NUXT_PUBLIC_OPENAPI_BASE_URL: process.env.NUXT_PUBLIC_OPENAPI_BASE_URL,
-			NUXT_PUBLIC_REDMINE_ID: process.env.NUXT_PUBLIC_REDMINE_ID,
+			apiBaseUrl: process.env.NUXT_PUBLIC_API_BASE_URL,
+			appBaseUrl: process.env.NUXT_PUBLIC_APP_BASE_URL,
+			bots: process.env.NUXT_PUBLIC_BOTS,
+			database: process.env.NUXT_PUBLIC_DATABASE,
+			gitBranchName: branchName,
+			gitCommitHash: commitHash,
+			gitTag: tag,
+			googleSiteVerification: process.env.NUXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+			mapBaselayerUrlDark: process.env.NUXT_PUBLIC_MAP_BASELAYER_URL_DARK,
+			mapBaselayerUrlLight: process.env.NUXT_PUBLIC_MAP_BASELAYER_URL_LIGHT,
+			matomoBaseUrl: process.env.NUXT_PUBLIC_MATOMO_BASE_URL,
+			matomoId: process.env.NUXT_PUBLIC_MATOMO_ID,
+			openapiBaseUrl: process.env.NUXT_PUBLIC_OPENAPI_BASE_URL,
+			redmineId: process.env.NUXT_PUBLIC_REDMINE_ID,
 		},
 	},
 	typescript: {

@@ -9,7 +9,7 @@ const env = useRuntimeConfig();
 const locale = useLocale();
 const t = useTranslations();
 
-const redmineId = env.public.NUXT_PUBLIC_REDMINE_ID;
+const redmineId = env.public.redmineId;
 
 const {
 	data: imprint,
