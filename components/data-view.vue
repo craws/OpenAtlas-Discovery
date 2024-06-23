@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import type { SortingState } from "@tanstack/vue-table";
-import { z } from "zod";
+import * as v from "valibot";
 
 import type { SearchFormData } from "@/components/search-form.vue";
 import {
@@ -18,17 +18,30 @@ const router = useRouter();
 const route = useRoute();
 const t = useTranslations();
 
-const searchFiltersSchema = z.object({
-	category: z.enum(categories).catch("entityName"),
-	search: z.string().catch(""),
-	column: z.enum(columns).catch("name"),
-	sort: z.enum(["asc", "desc"]).catch("asc"),
-	page: z.coerce.number().int().positive().catch(1),
-	limit: z.coerce.number().int().positive().max(100).catch(20),
+const searchFiltersSchema = v.object({
+	category: v.fallback(v.picklist(categories), "entityName"),
+	search: v.fallback(v.string(), ""),
+	column: v.fallback(v.picklist(columns), "name"),
+	sort: v.fallback(v.picklist(["asc", "desc"]), "asc"),
+	page: v.fallback(
+		v.pipe(v.unknown(), v.transform(Number), v.number(), v.integer(), v.minValue(1)),
+		1,
+	),
+	limit: v.fallback(
+		v.pipe(
+			v.unknown(),
+			v.transform(Number),
+			v.number(),
+			v.integer(),
+			v.minValue(1),
+			v.maxValue(100),
+		),
+		20,
+	),
 });
 
 const searchFilters = computed(() => {
-	return searchFiltersSchema.parse(route.query);
+	return v.parse(searchFiltersSchema, route.query);
 });
 
 const sortingState = computed(() => {
@@ -37,7 +50,7 @@ const sortingState = computed(() => {
 	] as SortingState;
 });
 
-type SearchFilters = z.infer<typeof searchFiltersSchema>;
+type SearchFilters = v.InferOutput<typeof searchFiltersSchema>;
 
 function setSearchFilters(query: Partial<SearchFilters>) {
 	void router.push({ query });

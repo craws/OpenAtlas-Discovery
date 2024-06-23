@@ -1,38 +1,38 @@
 {
 	"colors": {
 		"brand": "#b8cf5b",
-		"geojsonPoints": "#69c0ef",
-		"geojsonAreaCenterPoints": "#b8cf5b",
+		"disabledNodeColor": "#aaa",
 		"entityColors": {
-			"stratigraphic_unit": "#9723c1",
-			"place": "#69c0ef",
 			"acquisition": "#6a040f",
 			"activity": "#9d0208",
-			"move": "#e85d04",
 			"artifact": "#ee6c4d",
-			"human_remains": "#3d0066",
-			"person": "#ffca3a",
-			"feature": "#b8cf5b",
 			"event": "#ff595e",
-			"type": "#6a4c93",
-			"source": "#d60C19",
+			"feature": "#b8cf5b",
 			"file": "#9d4edd",
-			"group": "#f48c06"
+			"group": "#f48c06",
+			"human_remains": "#3d0066",
+			"move": "#e85d04",
+			"person": "#ffca3a",
+			"place": "#69c0ef",
+			"source": "#d60C19",
+			"stratigraphic_unit": "#9723c1",
+			"type": "#6a4c93"
 		},
 		"entityDefaultColor": "#666",
-		"disabledNodeColor": "#aaa"
+		"geojsonPoints": "#69c0ef",
+		"geojsonAreaCenterPoints": "#b8cf5b"
 	},
-	"map": {
-		"startPage": false
-	},
-	"fullscreen": false,
 	"defaultLocale": "en",
+	"fullscreen": false,
+	"imprint": "acdh-ch",
 	"logos": {
 		"light": "/assets/images/logo.svg",
 		"dark": "/assets/images/logo.svg",
 		"withTextLight": "/assets/images/logo-with-text-light.svg",
 		"withTextDark": "/assets/images/logo-with-text-dark.svg"
 	},
-	"imprint": "acdh-ch",
+	"map": {
+		"startPage": false
+	},
 	"twitter": "@openatlas_eu"
 }

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { groupByToMap, keyByToMap } from "@acdh-oeaw/lib";
-import { z } from "zod";
+import * as v from "valibot";
 
 import { useIdPrefix } from "@/composables/use-id-prefix";
 import { hasCoordinates } from "@/utils/has-geojson-coordinates";
@@ -8,12 +8,12 @@ import { hasCoordinates } from "@/utils/has-geojson-coordinates";
 definePageMeta({
 	validate(route) {
 		const env = useRuntimeConfig();
-		if (env.public.NUXT_PUBLIC_DATABASE === "disabled") return false;
+		if (env.public.database === "disabled") return false;
 
-		const paramsSchema = z.object({
-			id: z.coerce.number().int().positive(),
+		const paramsSchema = v.object({
+			id: v.pipe(v.unknown(), v.transform(Number), v.number(), v.integer(), v.minValue(1)),
 		});
-		return paramsSchema.safeParse(route.params).success;
+		return v.safeParse(paramsSchema, route.params).success;
 	},
 });
 

@@ -8,14 +8,16 @@ if (process.env.NUXT_PUBLIC_MATOMO_BASE_URL && process.env.NUXT_PUBLIC_MATOMO_ID
 	);
 
 	test.describe("analytics service", () => {
-		test("should track page views", async ({ page }) => {
+		test("should track page views", async ({ createIndexPage }) => {
+			const { indexPage, i18n } = await createIndexPage(defaultLocale);
+			const { page } = indexPage;
 			const initialResponsePromise = page.waitForResponse(baseUrl);
-			await page.goto("/en");
+			await indexPage.goto();
 			const initialResponse = await initialResponsePromise;
 			expect(initialResponse.status()).toBe(204);
 
 			const responsePromise = page.waitForResponse(baseUrl);
-			await page.getByRole("link", { name: "Imprint" }).click();
+			await page.getByRole("link", { name: i18n.t("AppFooter.links.imprint") }).click();
 			const response = await responsePromise;
 			expect(response.status()).toBe(204);
 		});

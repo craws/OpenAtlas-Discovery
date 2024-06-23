@@ -40,9 +40,7 @@ const colors = {
 };
 
 const mapStyle = computed(() => {
-	return theme.value === "dark"
-		? env.public.NUXT_PUBLIC_MAP_BASELAYER_URL_DARK
-		: env.public.NUXT_PUBLIC_MAP_BASELAYER_URL_LIGHT;
+	return theme.value === "dark" ? env.public.mapBaselayerUrlDark : env.public.mapBaselayerUrlLight;
 });
 
 const elementRef = ref<HTMLElement | null>(null);

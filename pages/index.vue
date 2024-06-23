@@ -2,9 +2,8 @@
 import { noop } from "@acdh-oeaw/lib";
 import { useQuery } from "@tanstack/vue-query";
 
+import { project } from "@/config/project.config";
 import type { SystemPage } from "@/types/content";
-
-import { project } from "../config/project.config";
 
 defineRouteRules({
 	prerender: true,
@@ -16,7 +15,7 @@ const t = useTranslations();
 definePageMeta({
 	validate() {
 		const env = useRuntimeConfig();
-		return env.public.NUXT_PUBLIC_DATABASE !== "disabled";
+		return env.public.database !== "disabled";
 	},
 });
 
@@ -117,7 +116,7 @@ onServerPrefetch(async () => {
 			<div>
 				<PageTitle class="sr-only">{{ t("MapPage.title") }}</PageTitle>
 			</div>
-			<template v-if="env.public.NUXT_PUBLIC_DATABASE !== 'disabled'">
+			<template v-if="env.public.database !== 'disabled'">
 				<ErrorBoundary>
 					<DataMapView />
 				</ErrorBoundary>

@@ -2,7 +2,7 @@
 import { keyByToMap } from "@acdh-oeaw/lib";
 import * as turf from "@turf/turf";
 import type { MapGeoJSONFeature } from "maplibre-gl";
-import { z } from "zod";
+import * as v from "valibot";
 
 import type { SearchFormData } from "@/components/search-form.vue";
 import type { EntityFeature } from "@/composables/use-create-entity";
@@ -15,16 +15,16 @@ const router = useRouter();
 const route = useRoute();
 const t = useTranslations();
 
-const searchFiltersSchema = z.object({
-	category: z.enum(categories).catch("entityName"),
-	search: z.string().catch(""),
+const searchFiltersSchema = v.object({
+	category: v.fallback(v.picklist(categories), "entityName"),
+	search: v.fallback(v.string(), ""),
 });
 
 const searchFilters = computed(() => {
-	return searchFiltersSchema.parse(route.query);
+	return v.parse(searchFiltersSchema, route.query);
 });
 
-type SearchFilters = z.infer<typeof searchFiltersSchema>;
+type SearchFilters = v.InferOutput<typeof searchFiltersSchema>;
 
 function setSearchFilters(query: Partial<SearchFilters>) {
 	void router.push({ query });
