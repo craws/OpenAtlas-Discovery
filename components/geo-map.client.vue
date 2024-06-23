@@ -40,7 +40,7 @@ const colors = {
 };
 
 const mapStyle = computed(() => {
-	return theme.value === "dark" ? env.public.mapBaselayerDark : env.public.mapBaselayerLight;
+	return theme.value === "dark" ? env.public.mapBaselayerUrlDark : env.public.mapBaselayerUrlLight;
 });
 
 const elementRef = ref<HTMLElement | null>(null);
