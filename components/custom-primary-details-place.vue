@@ -1,46 +1,44 @@
 <script setup lang="ts">
-
 const t = useTranslations();
 
-const props = defineProps<{entity: EntityFeature}>();
+const props = defineProps<{ entity: EntityFeature }>();
 
 const collapsibleRelations: Array<{
-	relationType: RelationType,
-	systemClass?: string,
-	title: string
+	relationType: RelationType;
+	systemClass?: string;
+	title: string;
 }> = [
 	{
 		relationType: {
-			crmCode:"P46"
+			crmCode: "P46",
 		},
 		systemClass: "artifact",
-		title: t("Relations.Artifacts")
+		title: t("Relations.Artifacts"),
 	},
 	{
 		relationType: {
-			crmCode:"P46"
+			crmCode: "P46",
 		},
 		systemClass: "human_remains",
-		title: t("Relations.HumanRemains")
+		title: t("Relations.HumanRemains"),
 	},
-]
+];
 
 const emit = defineEmits({
 	handledRelations(payload: Array<RelationType>) {
 		return payload;
-	}}
-);
+	},
+});
 
 const handledRelations: Array<RelationType> = [
 	{
-		crmCode: "P46"
+		crmCode: "P46",
 	},
-]
+];
 
 onMounted(() => {
 	emit("handledRelations", handledRelations);
-})
-
+});
 </script>
 
 <template>

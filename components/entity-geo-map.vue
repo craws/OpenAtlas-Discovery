@@ -14,7 +14,13 @@ const features = computed(() => {
 <template>
 	<Card class="h-full overflow-hidden">
 		<VisualisationContainer v-slot="{ height, width }">
-			<GeoMap v-if="height && width" :features="features" :height="height" :width="width" :has-polygons="true"/>
+			<GeoMap
+				v-if="height && width"
+				:features="features"
+				:height="height"
+				:width="width"
+				:has-polygons="true"
+			/>
 		</VisualisationContainer>
 	</Card>
 </template>

@@ -1,3 +1,3 @@
 export default () => {
-  return 'Hello Util'
-}
+	return "Hello Util";
+};

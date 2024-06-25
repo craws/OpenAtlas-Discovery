@@ -8,29 +8,31 @@ const { getUnprefixedId } = useIdPrefix();
 const t = useTranslations();
 
 const props = defineProps<{
-	relations: EntityFeature["relations"],
-	handledRelations: Array<RelationType>
-}	>();
+	relations: EntityFeature["relations"];
+	handledRelations: Array<RelationType>;
+}>();
 
 const filteredRelations = computed(() => {
 	return props.relations?.filter((relation) => {
-		if(props.handledRelations.length === 0) return true;
+		if (props.handledRelations.length === 0) return true;
 		return !props.handledRelations.some((handledRelation) => {
 			const relationType = extractRelationTypeFromRelationString(relation.relationType);
 			if (!relationType) return false;
 			return handledRelation.crmCode === relationType.crmCode;
 		});
 	});
-})
-
-const relationsByType = computed(() => {
-	return groupByToMap(filteredRelations.value ?? [], (relation: NonNullable<EntityFeature["relations"]>[0]) => {
-		// FIXME: This used to use `relationType` (without the prefix)
-		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-		return relation.relationSystemClass!;
-	});
 });
 
+const relationsByType = computed(() => {
+	return groupByToMap(
+		filteredRelations.value ?? [],
+		(relation: NonNullable<EntityFeature["relations"]>[0]) => {
+			// FIXME: This used to use `relationType` (without the prefix)
+			// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+			return relation.relationSystemClass!;
+		},
+	);
+});
 </script>
 
 <template>
@@ -60,9 +62,7 @@ const relationsByType = computed(() => {
 							</li>
 						</ul>
 						<details v-if="relations.length > 10">
-							<summary class="cursor-pointer py-1 text-sm text-muted-foreground">
-								Show more
-							</summary>
+							<summary class="cursor-pointer py-1 text-sm text-muted-foreground">Show more</summary>
 							<ul role="list">
 								<li v-for="(relation, index) of relations.slice(10)" :key="index">
 									<NavLink

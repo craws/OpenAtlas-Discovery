@@ -28,14 +28,24 @@ const descriptions = computed(() => {
 		<template v-else>
 			<Tabs default-value="0">
 				<TabsList>
-					<span class="mx-2 font-bold">{{ t("EntityDescriptionsDisplay.description", descriptions.length) + ": " }}</span>
-					<TabsTrigger v-for="(description, index) in descriptions" :key="`desc-tab-trigger-${index}`" :value="index.toString()">
-						<p class=" max-w-20 overflow-hidden text-ellipsis text-nowrap">{{description}}</p>
+					<span class="mx-2 font-bold">{{
+						t("EntityDescriptionsDisplay.description", descriptions.length) + ": "
+					}}</span>
+					<TabsTrigger
+						v-for="(description, index) in descriptions"
+						:key="`desc-tab-trigger-${index}`"
+						:value="index.toString()"
+					>
+						<p class="max-w-20 overflow-hidden text-ellipsis text-nowrap">{{ description }}</p>
 					</TabsTrigger>
 				</TabsList>
-				<TabsContent v-for="(description, index) in descriptions" :key="`desc-tab-${index}`" :value="index.toString()">
+				<TabsContent
+					v-for="(description, index) in descriptions"
+					:key="`desc-tab-${index}`"
+					:value="index.toString()"
+				>
 					<Card class="p-4">
-							<p class="text-md">{{ description }}</p>
+						<p class="text-md">{{ description }}</p>
 					</Card>
 				</TabsContent>
 			</Tabs>

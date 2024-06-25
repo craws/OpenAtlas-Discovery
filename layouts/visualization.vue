@@ -28,20 +28,22 @@ const id = computed(() => {
 });
 
 const currentView = useGetCurrentView();
-
-
 </script>
 <template>
 	<NuxtLayout name="default">
 		<MainContent class="container relative grid h-full py-8">
-			<div class="absolute right-4 top-1/2 z-20 bg-white/90 dark:bg-neutral-900 rounded-md p-6 shadow-md">
+			<div
+				class="absolute right-4 top-1/2 z-20 bg-white/90 dark:bg-neutral-900 rounded-md p-6 shadow-md"
+			>
 				<NavLink
 					class="flex items-center gap-1 underline decoration-dotted hover:no-underline"
 					:href="{ path: `/entities/${id}/${currentView === 'network' ? 'map' : 'network'}` }"
 				>
 					<MapIcon v-if="currentView === 'network'" class="size-6" />
 					<WaypointsIcon v-else class="size-6" />
-					<span class="sr-only">{{ currentView === 'network' ? t('MapPage.title') : t('NetworkPage.title') }}</span>
+					<span class="sr-only">{{
+						currentView === "network" ? t("MapPage.title") : t("NetworkPage.title")
+					}}</span>
 				</NavLink>
 			</div>
 			<template v-if="env.public.NUXT_PUBLIC_DATABASE !== 'disabled'">

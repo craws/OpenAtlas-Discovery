@@ -1,30 +1,30 @@
 <script setup lang="ts">
 import type { LinkedPlaceFeature } from "@/types/api";
 
-type LpType = NonNullable<LinkedPlaceFeature["types"]> extends Array<(infer U)> ? U : never;
+type LpType = NonNullable<LinkedPlaceFeature["types"]> extends Array<infer U> ? U : never;
 
 const t = useTranslations();
 
 const { getUnprefixedId } = useIdPrefix();
 
-const props = defineProps<{type: LpType}>();
+const props = defineProps<{ type: LpType }>();
 
 const hierarchy = computed(() => {
 	return props.type.typeHierarchy ?? [];
-})
+});
 
 const hiddenHierarchy = computed(() => {
 	return hierarchy.value.slice(1);
-})
+});
 </script>
 
 <template>
-	<Popover >
+	<Popover>
 		<PopoverTrigger>
 			<Button variant="outline" class="max-w-48">
-				<span class="overflow-hidden text-ellipsis" >
+				<span class="overflow-hidden text-ellipsis">
 					{{ type.label }}
-					<span class="sr-only">{{ t("Global.ShowMore")  }}</span>
+					<span class="sr-only">{{ t("Global.ShowMore") }}</span>
 				</span>
 			</Button>
 		</PopoverTrigger>
@@ -44,14 +44,17 @@ const hiddenHierarchy = computed(() => {
 						</span>
 					</BreadcrumbItem>
 					<BreadcrumbSeparator v-if="hiddenHierarchy.length > 0" />
-					<BreadcrumbItem v-if="hiddenHierarchy.length > 1" >
+					<BreadcrumbItem v-if="hiddenHierarchy.length > 1">
 						<DropdownMenu>
 							<DropdownMenuTrigger class="flex items-center gap-1">
 								<BreadcrumbEllipsis class="size-4" />
 								<span class="sr-only">Toggle menu</span>
 							</DropdownMenuTrigger>
 							<DropdownMenuContent align="start">
-								<DropdownMenuItem v-for="(hierarchyItem, index) in hiddenHierarchy" :key="hierarchyItem.label ?? index" >
+								<DropdownMenuItem
+									v-for="(hierarchyItem, index) in hiddenHierarchy"
+									:key="hierarchyItem.label ?? index"
+								>
 									<NavLink
 										v-if="hierarchyItem.identifier"
 										class="underline decoration-dotted hover:no-underline"
@@ -95,10 +98,9 @@ const hiddenHierarchy = computed(() => {
 			</Breadcrumb>
 			<p>{{ type.descriptions }}</p>
 
-			<p v-if="type.value && type.unit" class="mt-2" >
-				{{ type.value }} <span class="text-muted-foreground" > {{ type.unit }}</span>
+			<p v-if="type.value && type.unit" class="mt-2">
+				{{ type.value }} <span class="text-muted-foreground"> {{ type.unit }}</span>
 			</p>
-
 		</PopoverContent>
 	</Popover>
 </template>

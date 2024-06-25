@@ -2,9 +2,8 @@
 definePageMeta({
 	middleware: [
 		function (to, from) {
-			return navigateTo(`${to.path}/map`) // TODO: Enable setting the default view through config
-    },
-  ],
+			return navigateTo(`${to.path}/map`); // TODO: Enable setting the default view through config
+		},
+	],
 });
-
 </script>
