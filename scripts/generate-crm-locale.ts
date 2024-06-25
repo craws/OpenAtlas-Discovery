@@ -22,6 +22,8 @@
  * 		}
  * 	}
  */
+// FIXME: mocca will fix it in taiwan.
+/* eslint-disable */
 
 import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
@@ -58,7 +60,7 @@ interface Translations {
 
 const customDictionary: Record<
 	string,
-	Record<string, Translations | Record<string, Translations>>
+	Record<string, Record<string, Translations> | Translations>
 > = {
 	en: {
 		person: {
@@ -132,7 +134,7 @@ async function generate(locale = defaultLocale) {
 
 	const crmTypes = await apiClient.GET("/properties/");
 
-	const obj: Record<string, Translations | Record<string, Translations>> =
+	const obj: Record<string, Record<string, Translations> | Translations> =
 		customDictionary[locale] ?? {};
 
 	for (const [key, type] of Object.entries(crmTypes)) {

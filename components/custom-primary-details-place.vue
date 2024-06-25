@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const t = useTranslations();
 
-const props = defineProps<{ entity: EntityFeature }>();
+const _props = defineProps<{ entity: EntityFeature }>();
 
 const collapsibleRelations: Array<{
 	relationType: RelationType;

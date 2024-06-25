@@ -1,7 +1,8 @@
 <script lang="ts" setup>
-import { useFilterRelations } from "@/composables/use-filter-relations";
 import { groupByToMap } from "@acdh-oeaw/lib";
 import { ChevronDown, ChevronUp } from "lucide-vue-next";
+
+import { useFilterRelations } from "@/composables/use-filter-relations";
 
 const { getUnprefixedId } = useIdPrefix();
 
@@ -47,7 +48,7 @@ computed(() => {
 });
 
 const groupedByType = computed(() => {
-	return groupByToMap(filteredRelations ?? [], (rel): string | null | undefined => {
+	return groupByToMap(filteredRelations, (rel): string | null | undefined => {
 		return rel.type;
 	});
 });
@@ -59,7 +60,7 @@ const relationsWithoutType = computed(() => {
 
 const isOpen = ref(false);
 
-if (filteredRelations?.length && filteredRelations.length === 1) isOpen.value = true;
+if (filteredRelations.length && filteredRelations.length === 1) isOpen.value = true;
 </script>
 
 <template>

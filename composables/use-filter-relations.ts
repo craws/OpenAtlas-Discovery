@@ -15,7 +15,7 @@ export const useFilterRelations = (
 	const test = rels.reduce((acc: Relations, relation): Relations => {
 		if (!relation.relationType) return acc;
 
-		// eslint-disable-next-line @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call
+		 
 		const { crmCode, inverse } = extractRelationTypeFromRelationString(relation.relationType) ?? {};
 
 		if (

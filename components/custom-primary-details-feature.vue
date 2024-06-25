@@ -7,7 +7,7 @@ const { getUnprefixedId } = useIdPrefix();
 
 const props = defineProps<{ entity: EntityFeature }>();
 
-const { data, error, isPending, isPlaceholderData, suspense } = useGetBySystemClass(
+const { data } = useGetBySystemClass(
 	computed(() => {
 		return { system_class: "feature" };
 	}),
@@ -15,10 +15,6 @@ const { data, error, isPending, isPlaceholderData, suspense } = useGetBySystemCl
 		return { show: ["none"], limit: 0 };
 	}),
 );
-
-const isLoading = computed(() => {
-	return isPending.value || isPlaceholderData.value;
-});
 
 const features = computed(() => {
 	return (
@@ -29,7 +25,9 @@ const features = computed(() => {
 });
 
 const currentFeatureIndex = computed(() => {
-	return features.value.findIndex((feature) => feature?.["@id"] === props.entity["@id"]);
+	return features.value.findIndex((feature) => {
+		return feature?.["@id"] === props.entity["@id"];
+	});
 });
 
 const previousFeature = computed(() => {

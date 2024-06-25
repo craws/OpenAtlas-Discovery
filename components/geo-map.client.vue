@@ -201,7 +201,7 @@ function updateScope() {
 	});
 
 	const polygons = props.features.filter((polygon) => {
-		return polygon.geometry.type === "GeometryCollection" || "Polygon";
+		return polygon.geometry.type === "GeometryCollection" || polygon.geometry.type === "Polygon";
 	});
 
 	const centerpoints = props.features.filter((centerpoint) => {
@@ -220,7 +220,7 @@ function updateScope() {
 		const bounds = turf.bbox(geojsonPoints) as [number, number, number, number];
 		map.fitBounds(bounds, { padding: 50, maxZoom: 16 });
 	} else if (geojsonCenterPoints.features.length > 0) {
-		const bounds = turf.bbox(geojsonCenterPoints);
+		const bounds = turf.bbox(geojsonCenterPoints) as [number, number, number, number];
 		map.fitBounds(bounds, { padding: 50 });
 	}
 }

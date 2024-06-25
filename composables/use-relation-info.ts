@@ -2,6 +2,7 @@ import type { Locale, Schema } from "@/config/i18n.config";
 import type { RelationType } from "@/utils/extract-crm-code";
 
 export const useRelationTitle = (relation: RelationType, systemClass?: string): string => {
+	// eslint-disable-next-line @typescript-eslint/unbound-method
 	const { te } = useI18n<Schema, Locale>();
 	const t = useTranslations();
 
@@ -15,6 +16,7 @@ export const useRelationTitle = (relation: RelationType, systemClass?: string): 
 };
 
 export const useRelationGroupTitle = (relation: RelationType, systemClass?: string): string => {
+	// eslint-disable-next-line @typescript-eslint/unbound-method
 	const { te } = useI18n<Schema, Locale>();
 	const t = useTranslations();
 

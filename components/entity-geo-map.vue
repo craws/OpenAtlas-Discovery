@@ -5,7 +5,6 @@ const props = defineProps<{
 
 const features = computed(() => {
 	return props.entities.map((entity) => {
-		console.log(entity);
 		return createGeoJsonFeature(entity);
 	});
 });

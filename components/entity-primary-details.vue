@@ -1,15 +1,12 @@
 <script setup lang="ts">
-import CustomPrimaryDetailsActor from "@/components/custom-primary-details-actor.vue";
-import CustomPrimaryDetailsPlace from "@/components/custom-primary-details-place.vue";
-import CustomPrimaryDetailsFeature from "@/components/custom-primary-details-feature.vue";
 import { MapPinIcon } from "lucide-vue-next";
+
+import CustomPrimaryDetailsActor from "@/components/custom-primary-details-actor.vue";
+import CustomPrimaryDetailsFeature from "@/components/custom-primary-details-feature.vue";
+import CustomPrimaryDetailsPlace from "@/components/custom-primary-details-place.vue";
 
 const getRelationTitle = (relation: RelationType) => {
 	return useRelationTitle(relation, props.entity.systemClass);
-};
-
-const getRelationGroupTitle = (relation: RelationType) => {
-	return useRelationGroupTitle(relation, props.entity.systemClass);
 };
 
 const { getUnprefixedId } = useIdPrefix();
@@ -52,7 +49,7 @@ const entityPrimaryDetailsDict: Record<string, Component> = {
 	feature: CustomPrimaryDetailsFeature,
 };
 
-const handledRelations: Set<RelationType> = new Set([
+const handledRelations = new Set<RelationType>([
 	{
 		crmCode: "P1", // "is identified by" are the aliases
 	},
@@ -107,7 +104,9 @@ const places = computed(() => {
 
 watchEffect(() => {
 	if (!places.value || places.value.length === 0) return;
-	const relTypes = places.value.map((place) => place.relationType);
+	const relTypes = places.value.map((place) => {
+		return place.relationType;
+	});
 	for (const type of relTypes) {
 		if (type) handledRelations.add(type);
 	}
@@ -119,7 +118,11 @@ watchEffect(() => {
 	<CardHeader>
 		<EntitySystemClass :system-class="entity.systemClass" />
 		<PageTitle>{{ entity.properties.title }}</PageTitle>
-		<EntityAliases v-if="entity.names" :aliases="entity.names" />
+		<!-- @ts-expect FIXME: Incorrect information provided by openapi document. -->
+		<EntityAliases
+			v-if="entity.names"
+			:aliases="entity.names as unknown as Array<{ alias: string }>"
+		/>
 		<EntityTimespans :timespans="entity.when?.timespans" />
 	</CardHeader>
 	<CardContent>
@@ -127,7 +130,7 @@ watchEffect(() => {
 			<EntityDescriptions :descriptions="entity?.descriptions ?? []" />
 
 			<div class="flex w-full flex-row flex-wrap gap-4">
-				<template v-for="place in places" :key="place.label || `place-${index}`">
+				<template v-for="(place, index) in places" :key="place.label || `place-${index}`">
 					<InfoCard
 						v-if="place.relationType"
 						class="max-w-48 p-4"

@@ -10,8 +10,8 @@ const previewEntity = computed(() => {
 	return null;
 });
 
-const { data, error, isPending, isPlaceholderData } = props.entity
-	? { data: null, error: null, isPending: false, isPlaceholderData: false }
+const { data, isPending, isPlaceholderData } = props.entity
+	? { data: null, isPending: false, isPlaceholderData: false }
 	: useGetEntity(
 			computed(() => {
 				return { entityId: props.id };

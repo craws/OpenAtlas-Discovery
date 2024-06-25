@@ -1,17 +1,7 @@
 <script setup lang="ts">
-import { MapPinIcon } from "lucide-vue-next";
-
-const { getUnprefixedId } = useIdPrefix();
-
 const t = useTranslations();
 
 const props = defineProps<{ entity: EntityFeature }>();
-
-interface Place {
-	label: string;
-	id: string;
-	relationType: RelationType | null;
-}
 
 const getRelationGroupTitle = (relation: RelationType) => {
 	if (props.entity.systemClass === "person") {

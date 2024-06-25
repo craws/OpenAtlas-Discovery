@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { groupByToMap, keyByToMap } from "@acdh-oeaw/lib";
+import { groupByToMap } from "@acdh-oeaw/lib";
 
 import { useIdPrefix } from "@/composables/use-id-prefix";
 

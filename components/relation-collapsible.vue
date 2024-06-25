@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { ChevronDown, ChevronsUpDown, ChevronUp } from "lucide-vue-next";
+import { ChevronDown, ChevronUp } from "lucide-vue-next";
 
 defineProps<{ title: string; relations: Array<NonNullable<EntityFeature["relations"]>[0]> }>();
 

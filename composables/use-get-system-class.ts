@@ -9,7 +9,7 @@ export interface GetSystemClassParams
 
 export type GetSystemClassQueryParams = operations["GetBySystemClass"]["parameters"]["query"];
 
-export type GetBySystemClassResponse = {
+export interface GetBySystemClassResponse {
 	pagination: {
 		entities: number;
 		entitiesPerPage: number;
@@ -20,7 +20,7 @@ export type GetBySystemClassResponse = {
 		totalPages: number;
 	};
 	results: Array<LinkedPlace>;
-};
+}
 
 export function useGetBySystemClass(
 	pathParams: MaybeRef<GetSystemClassParams>,
