@@ -1,4 +1,5 @@
 import {
+	BoneIcon,
 	CalendarFoldIcon,
 	CodeSquareIcon,
 	MapPinIcon,
@@ -23,7 +24,7 @@ const icons: Record<string, Icon> = {
 	file: TextIcon,
 	find: MapPinIcon,
 	group: UserIcon,
-	human_remains: MapPinIcon,
+	human_remains: BoneIcon,
 	move: CalendarFoldIcon,
 	object_location: MapPinIcon,
 	person: UserIcon,

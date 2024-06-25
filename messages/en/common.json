@@ -1,4 +1,9 @@
 {
+	"Actor": {
+		"MemberOf": "Groups",
+		"Relations": "Relations",
+		"hasMember": "Affiliates"
+	},
 	"AppFooter": {
 		"links": {
 			"imprint": "Imprint"
@@ -35,14 +40,11 @@
 		}
 	},
 	"DataMapView": {
-		"end-date": "End date",
-		"start-date": "Start date",
-		"polygon": "Display Areas",
 		"centerpoint": "Area Point",
-		"point": "Location Point"
-	},
-	"DataView": {
-		"nothing-found": "No entries found for this search."
+		"end-date": "End date",
+		"point": "Location Point",
+		"polygon": "Display Areas",
+		"start-date": "Start date"
 	},
 	"DataPage": {
 		"meta": {
@@ -52,10 +54,14 @@
 		"title": "Data",
 		"work-in-progress": "The database is currently work in progress."
 	},
+	"DataView": {
+		"nothing-found": "No entries found for this search."
+	},
 	"DefaultLayout": {
 		"skip-to-main-content": "Skip to main content"
 	},
 	"EntityDescriptionsDisplay": {
+		"description": "No Description | Description | Descriptions",
 		"no-descriptions": "No descriptions available."
 	},
 	"EntityPage": {
@@ -63,10 +69,17 @@
 		"iiif": "IIIF-Viewer",
 		"images": "Images ({count})",
 		"map": "Map",
-		"network": "Network Visualization",
 		"meta": {
 			"title": "Entity"
+		},
+		"network": "Network Visualization",
+		"sidebar": {
+			"toggle": "Toggle details for {title}"
 		}
+	},
+	"EntitySidebar": {
+		"NextFeature": "NextFeature",
+		"PreviousFeature": "Previous Feature"
 	},
 	"ErrorBoundary": {
 		"error": "Error"
@@ -77,6 +90,12 @@
 		},
 		"title": "Something went wrong!",
 		"try-again": "Try again"
+	},
+	"Global": {
+		"Next": "Next",
+		"Previous": "Previous",
+		"ShowMore": "show more",
+		"TitleMissing": "Title Missing"
 	},
 	"ImprintPage": {
 		"error": {
@@ -120,6 +139,13 @@
 			"title": "Page not found"
 		},
 		"title": "Page not found"
+	},
+	"RelationType": {
+		"CurrentOrFormerResidency": "Residency"
+	},
+	"Relations": {
+		"Artifacts": "Artifacts",
+		"HumanRemains": "Human Remains"
 	},
 	"SearchForm": {
 		"filter": "Filter",

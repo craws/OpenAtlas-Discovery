@@ -81,15 +81,17 @@ const systemClasses = computed(() => {
 
 <template>
 	<div :class="project.fullscreen ? 'relative grid' : 'relative grid grid-rows-[auto_1fr] gap-4'">
-		<NetworkSearchForm
-			:class="
-				project.fullscreen
-					? 'absolute z-10 bg-white/90 dark:bg-neutral-900 max-w-[800px] w-full m-3 rounded-md p-6 shadow-md'
-					: ''
-			"
-			:search="searchFilters.search"
-			@submit="onChangeSearchFilters"
-		/>
+		<div :class="project.fullscreen ? 'absolute z-10 flex w-full justify-center' : ''">
+			<NetworkSearchForm
+				:class="
+					project.fullscreen
+						? 'absolute z-10 bg-white/90 dark:bg-neutral-900 max-w-[800px] w-full m-3 rounded-md p-6 shadow-md'
+						: ''
+				"
+				:search="searchFilters.search"
+				@submit="onChangeSearchFilters"
+			/>
+		</div>
 
 		<VisualisationContainer
 			v-slot="{ height, width }"

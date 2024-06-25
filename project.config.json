@@ -22,17 +22,17 @@
 		"geojsonPoints": "#69c0ef",
 		"geojsonAreaCenterPoints": "#b8cf5b"
 	},
+	"map": {
+		"startPage": true
+	},
+	"fullscreen": true,
 	"defaultLocale": "en",
-	"fullscreen": false,
 	"imprint": "acdh-ch",
 	"logos": {
 		"light": "/assets/images/logo.svg",
 		"dark": "/assets/images/logo.svg",
 		"withTextLight": "/assets/images/logo-with-text-light.svg",
 		"withTextDark": "/assets/images/logo-with-text-dark.svg"
-	},
-	"map": {
-		"startPage": false
 	},
 	"twitter": "@openatlas_eu"
 }

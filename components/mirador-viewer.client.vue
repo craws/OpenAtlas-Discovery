@@ -1,45 +1,28 @@
 <script lang="ts" setup>
 import Mirador from "mirador";
-import { defineProps, onMounted } from "vue";
 
-// Props
-const props = defineProps({
-	config: {
-		type: Object,
-		required: true,
-	},
-	images: Array<string>,
-});
+const props = defineProps<{
+	config: object;
+	images: Array<string>;
+}>();
 
-// Refs
+const id = "mirador";
 
-// TODO: At the moment I assume there is a race condition where the div element isn't available yet,
-// at time of mounting.
+onMounted(async () => {
+	await nextTick();
 
-// Methods
-const initMirador = () => {
-	Mirador.viewer({
-		id: mirador,
-		...props.config,
-		windows: props.images?.map((url) => {
-			return { manifestId: url };
-		}),
+	const windows = props.images.map((url) => {
+		return { manifestId: url };
 	});
-};
 
-const delayedInitMirador = () => {
-	setTimeout(initMirador, 100);
-};
-
-const mirador = "mirador";
-
-// Lifecycle
-onMounted(() => {
-	// TODO: We shouldn't rely on timeouts here, and find a more reliable solution
-	delayedInitMirador();
+	Mirador.viewer({
+		...props.config,
+		id,
+		windows,
+	});
 });
 </script>
 
 <template>
-	<div :id="mirador" class="relative"></div>
+	<div :id="id" class="relative" />
 </template>

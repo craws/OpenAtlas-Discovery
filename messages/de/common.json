@@ -1,4 +1,9 @@
 {
+	"Actor": {
+		"MemberOf": "Gruppen",
+		"Relations": "Beziehungen",
+		"hasMember": "Mitglieder"
+	},
 	"AppFooter": {
 		"links": {
 			"imprint": "Impressum"
@@ -35,14 +40,11 @@
 		}
 	},
 	"DataMapView": {
-		"end-date": "End-Datum",
-		"start-date": "Start-Datum",
-		"polygon": "Flächen anzeigen",
 		"centerpoint": "Flächenpunkt",
-		"point": "Ortspunkt"
-	},
-	"DataView": {
-		"nothing-found": "Keine Einträge zu dieser Suche."
+		"end-date": "End-Datum",
+		"point": "Ortspunkt",
+		"polygon": "Flächen anzeigen",
+		"start-date": "Start-Datum"
 	},
 	"DataPage": {
 		"meta": {
@@ -52,10 +54,14 @@
 		"title": "Daten",
 		"work-in-progress": "Die Datenbank ist derzeit im Aufbau."
 	},
+	"DataView": {
+		"nothing-found": "Keine Einträge zu dieser Suche."
+	},
 	"DefaultLayout": {
 		"skip-to-main-content": "Zum Hauptinhalt springen"
 	},
 	"EntityDescriptionsDisplay": {
+		"description": "Keine Beschreibung | Beschreibung | Beschreibungen",
 		"no-descriptions": "Keine Beschreibungen verfügbar."
 	},
 	"EntityPage": {
@@ -63,10 +69,17 @@
 		"iiif": "IIIF-Ansicht",
 		"images": "Bilder ({count})",
 		"map": "Karte",
-		"network": "Netzwerk-Visualisierung",
 		"meta": {
 			"title": "Entität"
+		},
+		"network": "Netzwerk-Visualisierung",
+		"sidebar": {
+			"toggle": "Details für {title} umschalten"
 		}
+	},
+	"EntitySidebar": {
+		"NextFeature": "Nächste Funktion",
+		"PreviousFeature": "Vorheriges Feature"
 	},
 	"ErrorBoundary": {
 		"error": "Fehler"
@@ -77,6 +90,12 @@
 		},
 		"title": "Etwas ist schief gelaufen!",
 		"try-again": "Erneut versuchen"
+	},
+	"Global": {
+		"Next": "Nächste",
+		"Previous": "Vorherige",
+		"ShowMore": "Mehr Anzeigen",
+		"TitleMissing": "Titel fehlt"
 	},
 	"ImprintPage": {
 		"error": {
@@ -120,6 +139,13 @@
 			"title": "Seite nicht gefunden"
 		},
 		"title": "Seite nicht gefunden"
+	},
+	"RelationType": {
+		"CurrentOrFormerResidency": "Residenz"
+	},
+	"Relations": {
+		"Artifacts": "Artefakte",
+		"HumanRemains": "Menschliche Überreste"
 	},
 	"SearchForm": {
 		"filter": "Filter",

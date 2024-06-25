@@ -59,7 +59,7 @@ async function create() {
 	const map = new GeoMap({
 		center: [initialViewState.longitude, initialViewState.latitude],
 		container: elementRef.value,
-		maxZoom: 16,
+		maxZoom: 24,
 		minZoom: 1,
 		pitch: initialViewState.pitch,
 		style: mapStyle.value,
@@ -170,6 +170,7 @@ function init() {
 	//
 
 	updateScope();
+	updatePolygons();
 }
 
 function dispose() {
@@ -200,7 +201,7 @@ function updateScope() {
 	});
 
 	const polygons = props.features.filter((polygon) => {
-		return polygon.geometry.type === "GeometryCollection";
+		return polygon.geometry.type === "GeometryCollection" || "Polygon";
 	});
 
 	const centerpoints = props.features.filter((centerpoint) => {
@@ -217,6 +218,9 @@ function updateScope() {
 
 	if (geojsonPoints.features.length > 0) {
 		const bounds = turf.bbox(geojsonPoints) as [number, number, number, number];
+		map.fitBounds(bounds, { padding: 50, maxZoom: 16 });
+	} else if (geojsonCenterPoints.features.length > 0) {
+		const bounds = turf.bbox(geojsonCenterPoints);
 		map.fitBounds(bounds, { padding: 50 });
 	}
 }

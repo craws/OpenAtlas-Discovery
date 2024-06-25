@@ -100,6 +100,7 @@ router.afterEach((to, from) => {
 
 const fullscreen = "--container-width: ;";
 const container = "--container-width: 1536px;";
+
 </script>
 
 <template>

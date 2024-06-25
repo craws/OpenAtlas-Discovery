@@ -15,6 +15,8 @@ const router = useRouter();
 const route = useRoute();
 const t = useTranslations();
 
+const currentView = useGetCurrentView();
+
 const searchFiltersSchema = v.object({
 	category: v.fallback(v.picklist(categories), "entityName"),
 	search: v.fallback(v.string(), ""),
@@ -46,7 +48,7 @@ const { data, isPending, isPlaceholderData } = useGetSearchResults(
 					: [],
 			show: ["geometry", "when"],
 			centroid: true,
-			system_classes: ["place"],
+			system_classes: ["place", "object_location"],
 			limit: 0,
 		};
 	}),
@@ -188,12 +190,13 @@ watch(data, () => {
 					</div>
 				</div>
 			</div>
+
 			<GeoMap
 				v-if="height && width"
 				:features="features"
 				:height="height"
 				:width="width"
-				:polygons="show"
+				:has-polygons="show"
 				@layer-click="onLayerClick"
 			>
 				<GeoMapPopup
@@ -209,7 +212,7 @@ watch(data, () => {
 						<strong class="font-medium">
 							<NavLink
 								class="flex items-center gap-1 underline decoration-dotted hover:no-underline"
-								:href="{ path: `/entities/${entity.properties._id}` }"
+								:href="{ path: `/entities/${entity.properties._id}/${currentView}` }"
 							>
 								<Component :is="getEntityIcon(entity.systemClass)" class="size-3.5 shrink-0" />
 								{{ entity.properties.title }}

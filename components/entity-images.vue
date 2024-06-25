@@ -4,11 +4,11 @@ import { Toggle } from "@/components/ui/toggle";
 
 const props = defineProps<{
 	images: Array<{
-		IIIFManifest?: string | undefined;
-		license?: string | undefined;
-		mimetype?: string | undefined;
-		title?: string | undefined;
-		url?: string | undefined;
+		IIIFManifest?: string;
+		license?: string;
+		mimetype?: string;
+		title?: string;
+		url?: string;
 	}>;
 }>();
 

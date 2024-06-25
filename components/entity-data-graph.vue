@@ -17,7 +17,7 @@ const graph = new Graph();
 
 const { entityColors } = colors;
 const defaultColor = project.colors.entityDefaultColor;
-const legendEntities: [string | undefined] = [""];
+const legendEntities = [""];
 
 watch(
 	() => {

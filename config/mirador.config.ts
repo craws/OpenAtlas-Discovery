@@ -1,5 +1,5 @@
-// Configuration for Mirador
-export const miradorConfig = ref({
+// FIXME: why is this reactive?
+export const config = ref({
 	layout: "1x1",
 	mainMenuSettings: {
 		show: false,

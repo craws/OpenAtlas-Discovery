@@ -91,6 +91,8 @@ watch(
 	{ immediate: true },
 );
 
+const currentView = useGetCurrentView();
+
 onMounted(async () => {
 	layout.start();
 
@@ -110,7 +112,7 @@ onMounted(async () => {
 	context.camera = context.renderer.getCamera();
 
 	context.renderer.on("clickNode", ({ node }) => {
-		void router.push(`/${locale.value}/entities/` + node);
+		void router.push(`/${locale.value}/entities/${node}/${currentView.value}`);
 	});
 
 	context.renderer.on("enterNode", ({ node }) => {

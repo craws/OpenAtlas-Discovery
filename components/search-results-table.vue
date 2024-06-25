@@ -12,11 +12,11 @@ import {
 } from "@tanstack/vue-table";
 import { ArrowUpDown } from "lucide-vue-next";
 
-import NavLink from "@/components/nav-link.vue";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import type { EntityFeature } from "@/composables/use-create-entity";
 import { isColumn } from "@/composables/use-get-search-results";
+import NavLink from "@/components/nav-link.vue";
 
 const emit = defineEmits({
 	"update:sorting"(sorting: SortingState) {
