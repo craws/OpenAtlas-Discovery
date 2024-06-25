@@ -15,7 +15,6 @@ export const useFilterRelations = (
 	const test = rels.reduce((acc: Relations, relation): Relations => {
 		if (!relation.relationType) return acc;
 
-		 
 		const { crmCode, inverse } = extractRelationTypeFromRelationString(relation.relationType) ?? {};
 
 		if (
