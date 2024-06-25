@@ -50,6 +50,19 @@ export default defineNuxtConfig({
 	future: {
 		compatibilityVersion: 4,
 	},
+	/**
+	 * FIXME: some dependency does not properly clean up,
+	 * so the build hangs without this workaround.
+	 *
+	 * @see https://github.com/nuxt/cli/issues/169
+	 */
+	hooks: {
+		close(nuxt) {
+			if (!nuxt.options._prepare) {
+				process.exit();
+			}
+		},
+	},
 	i18n: {
 		baseUrl,
 		defaultLocale,
