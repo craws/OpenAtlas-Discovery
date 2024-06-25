@@ -39,6 +39,9 @@ dist
 # generated api-client
 /lib/api-client/api.ts
 
+# generated content
+/messages/*/crm.json
+
 
 ## .dockerignore ##
 
