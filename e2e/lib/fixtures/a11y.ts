@@ -25,4 +25,3 @@ export async function createAccessibilityScanner(page: Page): Promise<Accessibil
 		},
 	};
 }
-("select-name");
