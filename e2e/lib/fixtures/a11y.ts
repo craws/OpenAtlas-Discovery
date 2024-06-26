@@ -2,7 +2,7 @@ import type { Page } from "@playwright/test";
 import type { ElementContext, Result, RunOptions } from "axe-core";
 import { checkA11y, configureAxe, getViolations, injectAxe } from "axe-playwright";
 
-import { config as axeConfig } from "@/config/axe.config";
+import { axeConfig } from "@/config/axe.config";
 
 export interface AccessibilityScanner {
 	check: (params?: { selector?: ElementContext; skipFailures?: boolean }) => Promise<void>;

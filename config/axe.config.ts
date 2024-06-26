@@ -1,6 +1,6 @@
 import type { Spec } from "axe-core";
 
-export const config: Pick<Spec, "rules"> = {
+export const axeConfig: Pick<Spec, "rules"> = {
 	rules: [
 		/**
 		 * Radix adds a hidden select.

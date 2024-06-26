@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { config as miradorConfig } from "@/config/mirador.config";
+import { miradorConfig } from "@/config/mirador.config";
 
 const props = defineProps<{
 	images: Array<{

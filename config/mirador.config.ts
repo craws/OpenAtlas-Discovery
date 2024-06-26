@@ -1,5 +1,4 @@
-// FIXME: why is this reactive?
-export const config = ref({
+export const miradorConfig = {
 	layout: "1x1",
 	mainMenuSettings: {
 		show: false,
@@ -27,4 +26,4 @@ export const config = ref({
 			thumbnailNavigationPosition: "off",
 		},
 	],
-});
+};
