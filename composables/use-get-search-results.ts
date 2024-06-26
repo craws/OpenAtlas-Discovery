@@ -79,17 +79,15 @@ export const searchFilter = v.pipe(
 
 export const searchFilterString = v.pipe(
 	v.string(),
-	v.transform((input) => {
+	v.rawTransform(({ dataset: input, addIssue, NEVER }) => {
 		try {
 			// eslint-disable-next-line @typescript-eslint/no-unsafe-return
-			return JSON.parse(input);
+			return JSON.parse(input.value);
 		} catch {
-			// FIXME: currently not possible, @see https://github.com/fabian-hiller/valibot/issues/182
-			// info.issues?.push({
-			// 	message: "Invalid JSON passed as search filter",
-			// });
-			// throw new v.ValiError()
-			return v.never();
+			addIssue({
+				message: "Invalid JSON passed as search filter",
+			});
+			return NEVER;
 		}
 	}),
 	searchFilter,
