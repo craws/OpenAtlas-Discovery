@@ -10,7 +10,7 @@ const emit = defineEmits<{
 	(event: "close"): void;
 }>();
 
-const { map } = useGeoMap();
+const geoMapContext = useGeoMap();
 
 const elementRef = ref<HTMLElement | null>(null);
 
@@ -24,6 +24,7 @@ const context: Context = {
 
 onMounted(async () => {
 	await nextTick();
+	const { map } = geoMapContext;
 	assert(elementRef.value != null);
 	assert(map != null);
 
