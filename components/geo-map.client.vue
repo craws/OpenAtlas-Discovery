@@ -54,9 +54,7 @@ onScopeDispose(dispose);
 
 async function create() {
 	await nextTick();
-	assert(elementRef.value != null, "assert");
-
-	console.log("map mounted");
+	assert(elementRef.value != null);
 
 	const map = new GeoMap({
 		center: [initialViewState.longitude, initialViewState.latitude],
@@ -71,13 +69,11 @@ async function create() {
 	context.map = map;
 
 	map.on("load", init);
-	console.log("map loaded: ", map);
 }
 
 function init() {
 	assert(context.map != null);
 	const map = context.map;
-	console.log("map init fn");
 
 	//
 
@@ -179,7 +175,6 @@ function init() {
 
 function dispose() {
 	context.map?.remove();
-	console.log("Disposing map", context.map);
 }
 
 watch(() => {

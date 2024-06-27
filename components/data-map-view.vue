@@ -64,7 +64,6 @@ const isLoading = computed(() => {
 });
 
 const entities = computed(() => {
-	console.log("entities watcher");
 	return (
 		data.value?.results.flatMap((result) => {
 			return result.features;
@@ -141,7 +140,6 @@ function onLayerClick(features: Array<MapGeoJSONFeature & Pick<GeoJsonFeature, "
 }
 
 watch(data, () => {
-	console.log("data watcher");
 	/**
 	 * Close popover when search results change, to avoid displaying popup for features which are
 	 * no longer in the search results set.
@@ -150,13 +148,11 @@ watch(data, () => {
 });
 
 watchEffect(() => {
-	console.log("detailviewId watcher");
 	const entity = entities.value.find((feature) => {
 		const id = getUnprefixedId(feature["@id"]);
 		return id === detailEntityId.value;
 	});
 
-	console.log({ entity });
 	if (entity) {
 		let coordinates = null;
 
@@ -170,8 +166,6 @@ watchEffect(() => {
 			coordinates = entity.geometry.coordinates as unknown as [number, number];
 		}
 
-		console.log({ coordinates, type: entity.geometry.type });
-
 		popover.value = {
 			coordinates:
 				coordinates ??
@@ -181,9 +175,6 @@ watchEffect(() => {
 	}
 });
 
-onMounted(() => {
-	console.log("hellloooo");
-});
 </script>
 
 <template>

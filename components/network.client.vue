@@ -138,7 +138,6 @@ watch(
 const currentView = useGetCurrentView();
 
 onMounted(async () => {
-	console.log("network mounted");
 	layout.start();
 
 	// await the layout algorithm so the initial circular layout does not flash for a sec

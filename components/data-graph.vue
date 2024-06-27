@@ -4,7 +4,6 @@ import Graph from "graphology";
 import type { NetworkEntity } from "@/types/api";
 
 import { colors } from "../project.config.json";
-import { number } from "zod";
 
 const props = defineProps<{
 	networkData: NetworkEntity;
