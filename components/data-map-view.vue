@@ -174,7 +174,6 @@ watchEffect(() => {
 		};
 	}
 });
-
 </script>
 
 <template>
