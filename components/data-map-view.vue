@@ -16,10 +16,15 @@ const route = useRoute();
 const t = useTranslations();
 
 const currentView = useGetCurrentView();
+const { getUnprefixedId } = useIdPrefix();
 
 const searchFiltersSchema = v.object({
 	category: v.fallback(v.picklist(categories), "entityName"),
 	search: v.fallback(v.string(), ""),
+});
+
+const detailEntityId = computed(() => {
+	return route.params.id as string;
 });
 
 const searchFilters = computed(() => {
@@ -48,7 +53,7 @@ const { data, isPending, isPlaceholderData } = useGetSearchResults(
 					: [],
 			show: ["geometry", "when"],
 			centroid: true,
-			system_classes: ["place", "object_location"],
+			system_classes: ["place"],
 			limit: 0,
 		};
 	}),
@@ -140,6 +145,26 @@ watch(data, () => {
 	 * no longer in the search results set.
 	 */
 	popover.value = null;
+});
+
+watch(
+	detailEntityId,
+	(detailEntityId) => {
+		const entity = entities.value.find((feature) => {
+			const id = getUnprefixedId(feature["@id"]);
+			return id === detailEntityId;
+		});
+	},
+	{ immediate: true },
+);
+
+onMounted(() => {
+	if (detailEntityId) {
+		const entity = features.value.find((feature) => {
+			const id = feature.id as string;
+			return id === detailEntityId.value;
+		});
+	}
 });
 </script>
 

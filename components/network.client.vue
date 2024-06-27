@@ -23,6 +23,7 @@ interface State {
 const props = defineProps<{
 	graph: Graph;
 	searchNode?: string;
+	detailNode?: string;
 }>();
 
 interface NetworkContext {
@@ -41,6 +42,7 @@ circular.assign(context.graph);
 
 const locale = useLocale();
 const router = useRouter();
+
 let hoverTimeOut: ReturnType<typeof setTimeout>;
 
 const state = ref<State>({});
@@ -69,6 +71,48 @@ watch(
 				});
 
 			if (results.length >= 1) {
+				state.value.selectedNodes = results;
+				state.value.selectedNodes.forEach((el) => {
+					context.graph.setNodeAttribute(el.id, "highlighted", true);
+				});
+			}
+		}
+		// If the query is empty, then we reset the selectedNode
+		else {
+			state.value.selectedNodes = undefined;
+		}
+
+		// Refresh rendering
+		// You can directly call `renderer.refresh()`, but if you need performances
+		// you can provide some options to the refresh method.
+		// In this case, we don't touch the graph data so we can skip its reindexation
+		context.renderer?.refresh({
+			skipIndexation: true,
+		});
+	},
+	{ immediate: true },
+);
+
+watch(
+	() => {
+		return props.detailNode;
+	},
+	(detailNode) => {
+		context.graph.nodes().forEach((el) => {
+			context.graph.removeNodeAttribute(el, "highlighted");
+		});
+
+		if (detailNode) {
+			const results = context.graph
+				.nodes()
+				.map((n) => {
+					return { id: n, label: context.graph.getNodeAttribute(n, "id") as string };
+				})
+				.filter(({ id }) => {
+					return id === detailNode;
+				});
+
+			if (results.length === 1) {
 				state.value.selectedNodes = results;
 				state.value.selectedNodes.forEach((el) => {
 					context.graph.setNodeAttribute(el.id, "highlighted", true);
