@@ -23,16 +23,7 @@ const updateHandledRelations = (relations: Array<RelationType>) => {
 		class="group absolute z-10 mb-2 mr-2 h-full w-1/4 translate-x-[-25vw] transition-transform duration-300 open:translate-x-0"
 		:open="openState"
 	>
-		<summary
-			class="absolute left-full top-1/2 block -translate-x-2 rounded-md bg-[hsl(var(--card))] py-2"
-		>
-			<ChevronLeftIcon class="ml-auto hidden size-8 group-open:block" />
-			<ChevronRightIcon class="ml-auto size-8 group-open:hidden" />
-			<span class="sr-only">{{
-				t("EntityPage.sidebar.toggle", { title: entity.properties.title })
-			}}</span>
-		</summary>
-		<Card class="h-full overflow-y-scroll">
+		<Card class="h-full overflow-y-scroll relative">
 			<EntityPrimaryDetails :entity="entity" @handled-relations="updateHandledRelations" />
 
 			<slot name="custom-details" />
@@ -44,5 +35,15 @@ const updateHandledRelations = (relations: Array<RelationType>) => {
 				class="mx-4 mt-16"
 			/>
 		</Card>
+		<summary
+			class="absolute left-full top-1/2 block -translate-x-2 rounded-md bg-[hsl(var(--card))] py-2 pl-1 shadow-md"
+			style="top: calc(50% - 40px)"
+		>
+			<ChevronLeftIcon class="ml-auto hidden size-8 group-open:block" />
+			<ChevronRightIcon class="ml-auto size-8 group-open:hidden" />
+			<span class="sr-only">{{
+				t("EntityPage.sidebar.toggle", { title: entity.properties.title })
+			}}</span>
+		</summary>
 	</details>
 </template>

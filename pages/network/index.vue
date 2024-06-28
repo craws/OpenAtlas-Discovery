@@ -16,7 +16,7 @@ const env = useRuntimeConfig();
 </script>
 
 <template>
-	<MainContent class="container grid grid-rows-[auto_1fr] py-8">
+	<MainContent class="grid grid-rows-[auto_1fr]">
 		<div>
 			<PageTitle class="sr-only">{{ t("NetworkPage.title") }}</PageTitle>
 		</div>

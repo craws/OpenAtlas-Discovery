@@ -51,9 +51,9 @@ onServerPrefetch(async () => {
 </script>
 
 <template>
-	<MainContent class="container grid grid-rows-[auto_1fr] py-8">
+	<MainContent class="grid grid-rows-[auto_1fr]">
 		<div v-if="!project.map.startPage">
-			<template v-if="content != null && content.leadIn != null">
+			<template v-if="content != null && content.leadIn != null" class="container py-8">
 				<div class="grid place-items-center gap-8 p-8 sm:py-16">
 					<div>
 						<h1 class="sr-only">{{ content.title }}</h1>

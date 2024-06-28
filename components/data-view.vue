@@ -103,10 +103,11 @@ const entities = computed(() => {
 		}) ?? []
 	);
 });
+
 </script>
 
 <template>
-	<div class="relative grid grid-rows-[auto_1fr] gap-4">
+	<div class="container relative grid grid-rows-[auto_1fr] gap-4">
 		<SearchForm
 			:filter="searchFilters.category"
 			:search="searchFilters.search"
