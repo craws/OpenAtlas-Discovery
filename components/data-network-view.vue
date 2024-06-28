@@ -9,6 +9,10 @@ import { project } from "../config/project.config";
 const router = useRouter();
 const route = useRoute();
 
+const detailEntityId = computed(() => {
+	return route.params.id as string;
+});
+
 const searchFiltersSchema = z.object({
 	search: z.string().catch(""),
 });
@@ -104,7 +108,11 @@ const systemClasses = computed(() => {
 				:system-classes="systemClasses"
 				@submit="onChangeCategory"
 			/>
-			<DataGraph :network-data="entities" :search-node="searchFilters.search" />
+			<DataGraph
+				:network-data="entities"
+				:search-node="searchFilters.search"
+				:detail-node="detailEntityId"
+			/>
 			<Centered v-if="isLoading" class="pointer-events-none">
 				<LoadingIndicator class="text-neutral-950" size="lg" />
 			</Centered>
