@@ -37,26 +37,25 @@ const currentView = useGetCurrentView();
 <template>
 	<NuxtLayout name="default">
 		<MainContent class="relative grid h-full">
-			<div
-				class="absolute right-4 z-20 rounded-md bg-white/90 p-6 shadow-md dark:bg-neutral-900"
-				style="top: calc(50% - 48px)"
-			>
+			<div class="absolute right-4 z-20" style="top: calc(50% - 40px)">
 				<TooltipProvider>
 					<Tooltip>
 						<TooltipTrigger>
-							<NavLink
-								class="flex items-center gap-1 underline decoration-dotted hover:no-underline"
-								:href="{
-									path: `/entities/${id}/${currentView === 'network' ? 'map' : 'network'}`,
-								}"
-							>
-								<MapIcon v-if="currentView === 'network'" class="size-6" />
-								<WaypointsIcon v-else class="size-6" />
-								<span class="sr-only">{{
-									currentView === "network" ? t("MapPage.title") : t("NetworkPage.title")
-								}}</span>
-							</NavLink></TooltipTrigger
-						>
+							<div class="rounded-md bg-white/90 p-4 shadow-md dark:bg-neutral-900">
+								<NavLink
+									class="flex items-center gap-1 underline decoration-dotted hover:no-underline"
+									:href="{
+										path: `/entities/${id}/${currentView === 'network' ? 'map' : 'network'}`,
+									}"
+								>
+									<MapIcon v-if="currentView === 'network'" class="size-6" />
+									<WaypointsIcon v-else class="size-6" />
+									<span class="sr-only">{{
+										currentView === "network" ? t("MapPage.title") : t("NetworkPage.title")
+									}}</span>
+								</NavLink>
+							</div>
+						</TooltipTrigger>
 						<TooltipContent>
 							<p v-if="currentView === 'map'">{{ t("EntityPage.network") }}</p>
 							<p v-if="currentView === 'network'">{{ t("EntityPage.map") }}</p>
