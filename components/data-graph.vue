@@ -8,6 +8,7 @@ import { colors } from "../project.config.json";
 const props = defineProps<{
 	networkData: NetworkEntity;
 	searchNode: string;
+	detailNode?: string;
 }>();
 
 const graph = new Graph();
@@ -62,5 +63,10 @@ function getNodeColor(nodeClass: string) {
 
 <template>
 	<div class="absolute z-10 m-3 flex w-full"></div>
-	<Network v-if="graph.size > 0" :graph="graph" :search-node="props.searchNode" />
+	<Network
+		v-if="graph.size > 0"
+		:graph="graph"
+		:search-node="props.searchNode"
+		:detail-node="props.detailNode"
+	/>
 </template>

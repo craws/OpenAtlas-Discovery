@@ -16,10 +16,15 @@ const route = useRoute();
 const t = useTranslations();
 
 const currentView = useGetCurrentView();
+const { getUnprefixedId } = useIdPrefix();
 
 const searchFiltersSchema = v.object({
 	category: v.fallback(v.picklist(categories), "entityName"),
 	search: v.fallback(v.string(), ""),
+});
+
+const detailEntityId = computed(() => {
+	return route.params.id as string;
 });
 
 const searchFilters = computed(() => {
@@ -48,7 +53,7 @@ const { data, isPending, isPlaceholderData } = useGetSearchResults(
 					: [],
 			show: ["geometry", "when"],
 			centroid: true,
-			system_classes: ["place", "object_location"],
+			system_classes: ["place"],
 			limit: 0,
 		};
 	}),
@@ -140,6 +145,34 @@ watch(data, () => {
 	 * no longer in the search results set.
 	 */
 	popover.value = null;
+});
+
+watchEffect(() => {
+	const entity = entities.value.find((feature) => {
+		const id = getUnprefixedId(feature["@id"]);
+		return id === detailEntityId.value;
+	});
+
+	if (entity) {
+		let coordinates = null;
+
+		if (entity.geometry.type === "GeometryCollection") {
+			coordinates = entity.geometry.geometries.find((g) => {
+				return g.type === "Point";
+			})?.coordinates as [number, number] | undefined;
+		}
+
+		if (entity.geometry.type === "Point") {
+			coordinates = entity.geometry.coordinates as unknown as [number, number];
+		}
+
+		popover.value = {
+			coordinates:
+				coordinates ??
+				(turf.center(createFeatureCollection([entity])).geometry.coordinates as [number, number]),
+			entities: [entity],
+		};
+	}
 });
 </script>
 
