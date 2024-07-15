@@ -1,4 +1,8 @@
 {
-  // https://v3.nuxtjs.org/concepts/typescript
-  "extends": "./.nuxt/tsconfig.json"
+	"$schema": "https://json.schemastore.org/tsconfig",
+	"extends": ["./.nuxt/tsconfig.json", "@acdh-oeaw/tsconfig"],
+	"compilerOptions": {
+		// @see https://github.com/microsoft/TypeScript/issues/58975
+		"module": "esnext"
+	}
 }

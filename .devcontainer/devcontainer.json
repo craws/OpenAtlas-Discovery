@@ -1,0 +1,20 @@
+{
+	"name": "Nuxt",
+	"image": "ghcr.io/acdh-oeaw/devcontainer-frontend:20",
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"bradlc.vscode-tailwindcss",
+				"dbaeumer.vscode-eslint",
+				"editorconfig.editorconfig",
+				"esbenp.prettier-vscode",
+				"lokalise.i18n-ally",
+				"mikestead.dotenv",
+				"ms-playwright.playwright",
+				"nuxt.mdc",
+				"stylelint.vscode-stylelint",
+				"vue.volar"
+			]
+		}
+	}
+}

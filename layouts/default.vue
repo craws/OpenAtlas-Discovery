@@ -1,29 +1,120 @@
+<script lang="ts" setup>
+import { createUrl, isNonEmptyString } from "@acdh-oeaw/lib";
+import type { WebSite, WithContext } from "schema-dts";
 
-<script setup lang="ts">
+import { project } from "@/config/project.config";
+
+const env = useRuntimeConfig();
+
+const locale = useLocale();
+const t = useTranslations();
+
+const router = useRouter();
+
+const i18nHead = useLocaleHead({
+	addDirAttribute: true,
+	identifierAttribute: "id",
+	addSeoAttributes: true,
+});
+
+useHead({
+	htmlAttrs: {
+		lang: computed(() => {
+			return locale.value;
+		}),
+		// TODO: move to tailwind config
+		style: `--color-brand: ${project.colors.brand}; --color-brand-foreground: ${project.colors.brandContrast};`,
+	},
+	titleTemplate: computed(() => {
+		return ["%s", t("Metadata.name")].join(" | ");
+	}),
+	title: computed(() => {
+		return t("Metadata.name");
+	}),
+	link: computed(() => {
+		return [
+			{ href: "/favicon.ico", rel: "icon", sizes: "any" },
+			{ href: "/icon.svg", rel: "icon", type: "image/svg+xml", sizes: "any" },
+			{ href: "/apple-icon.png", rel: "apple-touch-icon" },
+			{ href: "/manifest.webmanifest", rel: "manifest" },
+			...(i18nHead.value.link ?? []),
+		];
+	}),
+	meta: computed(() => {
+		return [
+			{ name: "description", content: t("Metadata.description") },
+			{ property: "og:type", content: "website" },
+			{ property: "og:title", content: t("Metadata.name") },
+			{ property: "og:site_name", content: t("Metadata.name") },
+			{ property: "og:description", content: t("Metadata.description") },
+			{
+				property: "og:image",
+				content: String(
+					createUrl({
+						baseUrl: env.public.appBaseUrl,
+						pathname: "/opengraph-image.png",
+					}),
+				),
+			},
+			{ name: "twitter:card", content: "summary_large_image" },
+			...(isNonEmptyString(project.twitter)
+				? [
+						{ name: "twitter:creator", content: project.twitter },
+						{ name: "twitter:site", content: project.twitter },
+					]
+				: []),
+			...(i18nHead.value.meta ?? []),
+		];
+	}),
+	script: computed(() => {
+		const jsonLd: WithContext<WebSite> = {
+			"@context": "https://schema.org",
+			"@type": "WebSite",
+			name: t("Metadata.name"),
+			description: t("Metadata.description"),
+		};
+
+		const scripts = [
+			{ type: "application/ld+json", innerHTML: JSON.stringify(jsonLd, safeJsonLdReplacer) },
+		];
+
+		if (isNonEmptyString(env.public.matomoBaseUrl) && isNonEmptyString(env.public.matomoId)) {
+			const baseUrl = env.public.matomoBaseUrl;
+
+			scripts.push({
+				type: "",
+				innerHTML: createAnalyticsScript(
+					baseUrl.endsWith("/") ? baseUrl : baseUrl + "/",
+					env.public.matomoId,
+				),
+			});
+		}
+
+		return scripts;
+	}),
+});
+
+router.afterEach((to, from) => {
+	trackPageView(to, from);
+});
+
+const fullscreen = "--container-width: ;";
+const container = "--container-width: 1536px;";
 </script>
+
 <template>
-  <v-app>
-    <v-main>
-      <HeaderBar />
-      <v-divider />
-      <nuxt-page />
-    </v-main>
-  </v-app>
+	<div
+		class="grid min-h-full grid-rows-[auto_1fr_auto]"
+		:style="project.fullscreen ? fullscreen : container"
+	>
+		<SkipLink target-id="main-content">{{ t("DefaultLayout.skip-to-main-content") }}</SkipLink>
+
+		<AppHeader />
+		<ErrorBoundary>
+			<slot />
+		</ErrorBoundary>
+		<AppFooter />
+
+		<Toaster position="bottom-right" />
+	</div>
 </template>
-
-<style>
-.nav-item {
-  text-decoration: none;
-  transition: all 200ms ease-in-out;
-  min-width: 50px;
-}
-
-.nav-item:hover {
-  background-color: rgba(0, 0, 0, 0.05);
-}
-
-.language-menu .v-overlay__content {
-  border-top-right-radius: 0 !important;
-  border-top-left-radius: 0 !important;
-}
-</style>

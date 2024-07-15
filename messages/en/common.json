@@ -1,0 +1,233 @@
+{
+	"Actor": {
+		"MemberOf": "Groups",
+		"Relations": "Relations",
+		"hasMember": "Affiliates"
+	},
+	"AppFooter": {
+		"links": {
+			"imprint": "Imprint"
+		},
+		"navigation-secondary": "Secondary",
+		"with-love": "With {0} from {1}"
+	},
+	"AppHeader": {
+		"links": {
+			"data": "Data",
+			"home": "Home",
+			"map": "Map",
+			"network": "Network",
+			"team": "Team"
+		},
+		"navigation-main": "Main",
+		"navigation-menu": "Navigation menu"
+	},
+	"ColorSchemeSwitcher": {
+		"change-color-scheme": "Change color scheme",
+		"color-schemes": {
+			"dark": "Dark",
+			"light": "Light",
+			"system": "System"
+		}
+	},
+	"ContentPage": {
+		"error": {
+			"not-found": "Document not found",
+			"unknown": "Failed to display document"
+		},
+		"meta": {
+			"title": "Content"
+		}
+	},
+	"DataMapView": {
+		"centerpoint": "Area Point",
+		"end-date": "End date",
+		"point": "Location Point",
+		"polygon": "Display Areas",
+		"start-date": "Start date"
+	},
+	"DataPage": {
+		"meta": {
+			"title": "Data"
+		},
+		"search": "Search",
+		"title": "Data",
+		"work-in-progress": "The database is currently work in progress."
+	},
+	"DataView": {
+		"nothing-found": "No entries found for this search."
+	},
+	"DefaultLayout": {
+		"skip-to-main-content": "Skip to main content"
+	},
+	"EntityDescriptionsDisplay": {
+		"description": "No Description | Description | Descriptions",
+		"no-descriptions": "No descriptions available."
+	},
+	"EntityPage": {
+		"details": "Details",
+		"iiif": "IIIF-Viewer",
+		"images": "Images ({count})",
+		"map": "Map",
+		"meta": {
+			"title": "Entity"
+		},
+		"network": "Network Visualization",
+		"sidebar": {
+			"toggle": "Toggle details for {title}"
+		}
+	},
+	"EntitySidebar": {
+		"NextFeature": "NextFeature",
+		"PreviousFeature": "Previous Feature"
+	},
+	"ErrorBoundary": {
+		"error": "Error"
+	},
+	"ErrorPage": {
+		"meta": {
+			"title": "Error"
+		},
+		"title": "Something went wrong!",
+		"try-again": "Try again"
+	},
+	"Global": {
+		"Next": "Next",
+		"Previous": "Previous",
+		"ShowMore": "show more",
+		"TitleMissing": "Title Missing"
+	},
+	"ImprintPage": {
+		"error": {
+			"not-found": "Imprint not found",
+			"unknown": "Internal Error"
+		},
+		"meta": {
+			"title": "Imprint"
+		},
+		"title": "Imprint"
+	},
+	"IndexPage": {
+		"error": {
+			"not-found": "Page not found",
+			"unknown": "Internal Error"
+		},
+		"meta": {
+			"title": "Home"
+		}
+	},
+	"LocaleSwitcher": {
+		"current-locale": "Current language: {locale}",
+		"switch-locale": "Switch to {locale}"
+	},
+	"MapPage": {
+		"meta": {
+			"title": "Map"
+		},
+		"title": "Map",
+		"work-in-progress": "The database is currently work in progress."
+	},
+	"NetworkPage": {
+		"meta": {
+			"title": "Network Visualization"
+		},
+		"title": "Network Visualization",
+		"work-in-progress": "The database is currently work in progress."
+	},
+	"NotFoundPage": {
+		"meta": {
+			"title": "Page not found"
+		},
+		"title": "Page not found"
+	},
+	"RelationType": {
+		"CurrentOrFormerResidency": "Residency"
+	},
+	"Relations": {
+		"Artifacts": "Artifacts",
+		"HumanRemains": "Human Remains"
+	},
+	"SearchForm": {
+		"filter": "Filter",
+		"filters": {
+			"beginFrom": "Begin from",
+			"beginTo": "Begin to",
+			"endFrom": "End from",
+			"endTo": "End to",
+			"entityAliases": "Alias",
+			"entityCidocClass": "CIDOC class",
+			"entityDescription": "Description",
+			"entityID": "ID",
+			"entityName": "Name",
+			"entitySystemClass": "System class",
+			"relationToID": "Relation to ID",
+			"typeID": "Type ID",
+			"typeIDWithSubs": "Type ID with subs",
+			"typeName": "Type name",
+			"valueTypeID": "Value type ID"
+		},
+		"search": "Search",
+		"select-filter": "Select filter"
+	},
+	"SearchResultsTable": {
+		"header": {
+			"begin": "Begin",
+			"class": "Class",
+			"dates": "Dates",
+			"description": "Description",
+			"end": "End",
+			"name": "Name"
+		},
+		"no-entries": "No entries found for this search.",
+		"search-results": "Search results"
+	},
+	"SystemClassNames": {
+		"acquisition": "Acquisition",
+		"activity": "Activity",
+		"actor_function": "Actor function",
+		"actor_relation": "Actor relation",
+		"administrative_unit": "Administrative unit",
+		"appellation": "Appellation",
+		"artifact": "Artifact",
+		"bibliography": "Bibliography",
+		"creation": "Creation",
+		"edition": "Edition",
+		"event": "Event",
+		"external_reference": "External reference",
+		"feature": "Feature",
+		"file": "File",
+		"group": "Group",
+		"human_remains": "Human remains",
+		"involvement": "Involvement",
+		"modification": "Modification",
+		"move": "Move",
+		"object_location": "Object location",
+		"person": "Person",
+		"place": "Place",
+		"production": "Production",
+		"reference_system": "Reference system",
+		"source": "Source",
+		"source_translation": "Source translation",
+		"stratigraphic_unit": "Stratigraphic unit",
+		"type": "Type",
+		"type_tools": "Type tools"
+	},
+	"TeamPage": {
+		"error": {
+			"not-found": "Page not found",
+			"unknown": "Internal Error"
+		},
+		"meta": {
+			"title": "Team"
+		},
+		"team-members": "Team members"
+	},
+	"TimespansDisplay": {
+		"end": "End",
+		"no-dates": "No known calendar dates",
+		"start": "Start"
+	},
+	"Toast": {
+		"error": "Error"
+	}
+}

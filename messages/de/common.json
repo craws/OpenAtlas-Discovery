@@ -1,0 +1,233 @@
+{
+	"Actor": {
+		"MemberOf": "Gruppen",
+		"Relations": "Beziehungen",
+		"hasMember": "Mitglieder"
+	},
+	"AppFooter": {
+		"links": {
+			"imprint": "Impressum"
+		},
+		"navigation-secondary": "Sekundärnavigation",
+		"with-love": "Mit {0} von {1}"
+	},
+	"AppHeader": {
+		"links": {
+			"data": "Daten",
+			"home": "Startseite",
+			"map": "Karte",
+			"network": "Netzwerk",
+			"team": "Team"
+		},
+		"navigation-main": "Hauptnavigation",
+		"navigation-menu": "Navigationsmenü"
+	},
+	"ColorSchemeSwitcher": {
+		"change-color-scheme": "Farbschema ändern",
+		"color-schemes": {
+			"dark": "Dunkel",
+			"light": "Hell",
+			"system": "System"
+		}
+	},
+	"ContentPage": {
+		"error": {
+			"not-found": "Dokument nicht gefunden",
+			"unknown": "Dokument kann nicht angezeigt werden"
+		},
+		"meta": {
+			"title": "Inhalt"
+		}
+	},
+	"DataMapView": {
+		"centerpoint": "Flächenpunkt",
+		"end-date": "End-Datum",
+		"point": "Ortspunkt",
+		"polygon": "Flächen anzeigen",
+		"start-date": "Start-Datum"
+	},
+	"DataPage": {
+		"meta": {
+			"title": "Daten"
+		},
+		"search": "Suche",
+		"title": "Daten",
+		"work-in-progress": "Die Datenbank ist derzeit im Aufbau."
+	},
+	"DataView": {
+		"nothing-found": "Keine Einträge zu dieser Suche."
+	},
+	"DefaultLayout": {
+		"skip-to-main-content": "Zum Hauptinhalt springen"
+	},
+	"EntityDescriptionsDisplay": {
+		"description": "Keine Beschreibung | Beschreibung | Beschreibungen",
+		"no-descriptions": "Keine Beschreibungen verfügbar."
+	},
+	"EntityPage": {
+		"details": "Details",
+		"iiif": "IIIF-Ansicht",
+		"images": "Bilder ({count})",
+		"map": "Karte",
+		"meta": {
+			"title": "Entität"
+		},
+		"network": "Netzwerk-Visualisierung",
+		"sidebar": {
+			"toggle": "Details für {title} umschalten"
+		}
+	},
+	"EntitySidebar": {
+		"NextFeature": "Nächste Funktion",
+		"PreviousFeature": "Vorheriges Feature"
+	},
+	"ErrorBoundary": {
+		"error": "Fehler"
+	},
+	"ErrorPage": {
+		"meta": {
+			"title": "Fehler"
+		},
+		"title": "Etwas ist schief gelaufen!",
+		"try-again": "Erneut versuchen"
+	},
+	"Global": {
+		"Next": "Nächste",
+		"Previous": "Vorherige",
+		"ShowMore": "Mehr Anzeigen",
+		"TitleMissing": "Titel fehlt"
+	},
+	"ImprintPage": {
+		"error": {
+			"not-found": "Impressum nicht gefunden",
+			"unknown": "Interner Fehler"
+		},
+		"meta": {
+			"title": "Impressum"
+		},
+		"title": "Impressum"
+	},
+	"IndexPage": {
+		"error": {
+			"not-found": "Seite nicht gefunden",
+			"unknown": "Interner Fehler"
+		},
+		"meta": {
+			"title": "Startseite"
+		}
+	},
+	"LocaleSwitcher": {
+		"current-locale": "Aktuelle Sprache: {locale}",
+		"switch-locale": "Zu {locale} wechseln"
+	},
+	"MapPage": {
+		"meta": {
+			"title": "Karte"
+		},
+		"title": "Karte",
+		"work-in-progress": "Die Datenbank ist derzeit im Aufbau."
+	},
+	"NetworkPage": {
+		"meta": {
+			"title": "Netzwerk-Visualisierung"
+		},
+		"title": "Netzwerk-Visualisierung",
+		"work-in-progress": "Die Datenbank ist derzeit im Aufbau."
+	},
+	"NotFoundPage": {
+		"meta": {
+			"title": "Seite nicht gefunden"
+		},
+		"title": "Seite nicht gefunden"
+	},
+	"RelationType": {
+		"CurrentOrFormerResidency": "Residenz"
+	},
+	"Relations": {
+		"Artifacts": "Artefakte",
+		"HumanRemains": "Menschliche Überreste"
+	},
+	"SearchForm": {
+		"filter": "Filter",
+		"filters": {
+			"beginFrom": "Beginn von",
+			"beginTo": "Beginn bis",
+			"endFrom": "Ende von",
+			"endTo": "Ende bis",
+			"entityAliases": "Alias",
+			"entityCidocClass": "CIDOC Klasse",
+			"entityDescription": "Beschreibung",
+			"entityID": "ID",
+			"entityName": "Name",
+			"entitySystemClass": "System Klasse",
+			"relationToID": "Beziehung-ID",
+			"typeID": "Typ-ID",
+			"typeIDWithSubs": "Typ-ID mit Subtypen",
+			"typeName": "Typname",
+			"valueTypeID": "Werttyp-ID"
+		},
+		"search": "Suche",
+		"select-filter": "Filter auswählen"
+	},
+	"SearchResultsTable": {
+		"header": {
+			"begin": "Anfang",
+			"class": "Klasse",
+			"dates": "Datum",
+			"description": "Beschreibung",
+			"end": "Ende",
+			"name": "Name"
+		},
+		"no-entries": "Keine Einträge zu dieser Suche.",
+		"search-results": "Suchergebnisse"
+	},
+	"SystemClassNames": {
+		"acquisition": "Erwerb",
+		"activity": "Aktivität",
+		"actor_function": "Akteursfunktion",
+		"actor_relation": "Akteursbeziehung",
+		"administrative_unit": "Verwaltungseinheit",
+		"appellation": "Bezeichnung",
+		"artifact": "Artefakt",
+		"bibliography": "Bibliographie",
+		"creation": "Kreation",
+		"edition": "Edition",
+		"event": "Ereignis",
+		"external_reference": "Externe Referenz",
+		"feature": "Feature",
+		"file": "Datei",
+		"group": "Gruppe",
+		"human_remains": "Menschliche Überreste",
+		"involvement": "Beteiligung",
+		"modification": "Modifikation",
+		"move": "Move",
+		"object_location": "Objektstandort",
+		"person": "Person",
+		"place": "Ort",
+		"production": "Produktion",
+		"reference_system": "Referenzsystem",
+		"source": "Quelle",
+		"source_translation": "Quellenübersetzung",
+		"stratigraphic_unit": "Stratigraphische Einheit",
+		"type": "Typ",
+		"type_tools": "Typ-Werkzeuge"
+	},
+	"TeamPage": {
+		"error": {
+			"not-found": "Seite nicht gefunden",
+			"unknown": "Interner Fehler"
+		},
+		"meta": {
+			"title": "Team"
+		},
+		"team-members": "Teammitglieder"
+	},
+	"TimespansDisplay": {
+		"end": "Ende",
+		"no-dates": "Keine Kalenderdaten bekannt",
+		"start": "Beginn"
+	},
+	"Toast": {
+		"error": "Fehler"
+	}
+}

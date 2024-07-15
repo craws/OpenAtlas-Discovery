@@ -1,80 +1,129 @@
-<script setup lang="ts">
-import { ParsedContent } from '@nuxt/content/dist/runtime/types';
-import { useI18n } from 'vue-i18n';
-import { useDisplay } from 'vuetify';
+<script lang="ts" setup>
+import { noop } from "@acdh-oeaw/lib";
+import { useQuery } from "@tanstack/vue-query";
 
-const { smAndUp } = useDisplay();
-const t = useI18n();
-const data = reactive<{ [name: string]: ParsedContent }>({});
-t.availableLocales.forEach(async (locale) => {
-  let content = null;
-  try {
-    content = await queryContent(`/${locale}`).findOne();
-  } catch (error: any) {
-    if (!error.message.includes('404 Document not found')) { throw error; }
-  }
-  if (content) { data[locale] = content; }
-});
-const logoHeight = computed(() => smAndUp.value ? '350px' : '250px');
-const { $discoveryConfig } = useNuxtApp();
+import { project } from "@/config/project.config";
+import type { SystemPage } from "@/types/content";
 
-const contentToUse = computed(() => {
-  if (data[t.locale.value]) { return data[t.locale.value]; }
-  if (typeof t.fallbackLocale.value === 'string' && data[t.fallbackLocale.value]) { return data[t.fallbackLocale.value]; }
-  return null;
+defineRouteRules({
+	prerender: true,
 });
 
+const locale = useLocale();
+const t = useTranslations();
+
+definePageMeta({
+	validate() {
+		const env = useRuntimeConfig();
+		return env.public.database !== "disabled";
+	},
+});
+
+usePageMetadata({
+	title: t("IndexPage.meta.title"),
+});
+
+const env = useRuntimeConfig();
+
+const {
+	data: content,
+	error,
+	suspense,
+} = useQuery({
+	queryKey: ["system-pages", locale, "index"] as const,
+	queryFn({ queryKey: [, locale] }) {
+		return queryContent<SystemPage>("system-pages", locale).findOne();
+	},
+});
+useErrorMessage(error, {
+	notFound: t("IndexPage.error.not-found"),
+	unknown: t("IndexPage.error.unknown"),
+});
+onServerPrefetch(async () => {
+	/**
+	 * Delegate errors to the client, to avoid displaying error page with status code 500.
+	 *
+	 * @see https://github.com/TanStack/query/issues/6606
+	 * @see https://github.com/TanStack/query/issues/5976
+	 */
+	await suspense().catch(noop);
+});
 </script>
+
 <template>
-  <v-sheet height="calc(100vh - 65px)" class="landing-page d-flex justify-center pt-5">
-    <v-container class="text-center" data-test="main-content-renderer">
-      <ContentRenderer v-if="contentToUse">
-        <ContentRendererMarkdown :value="contentToUse" class="w-50 mx-auto" />
-      </ContentRenderer>
-      <br>
-      <v-row v-if="$discoveryConfig.APIbase" justify="center">
-        <v-col cols="auto">
-          <v-btn
-            size="large"
-            to="/map"
-            min-width="150px"
-            color="primary"
-            width="100px"
-            prepend-icon="mdi-map-marker"
-            data-test="main-map-btn"
-          >
-            {{ $t('global.basics.map') }}
-          </v-btn>
-        </v-col>
-        <v-col cols="auto">
-          <v-btn
-            size="large"
-            to="/data"
-            min-width="150px"
-            variant="outlined"
-            color="primary"
-            width="100px"
-            prepend-icon="mdi-database"
-            data-test="main-data-btn"
-          >
-            {{ $t('global.basics.data') }}
-          </v-btn>
-        </v-col>
-      </v-row>
-    </v-container>
-  </v-sheet>
+	<MainContent class="container grid grid-rows-[auto_1fr] py-8">
+		<div v-if="!project.map.startPage">
+			<template v-if="content != null && content.leadIn != null">
+				<div class="grid place-items-center gap-8 p-8 sm:py-16">
+					<div>
+						<h1 class="sr-only">{{ content.title }}</h1>
+						<NuxtImg
+							v-if="content.image?.light != null"
+							alt=""
+							class="block h-80 w-full max-w-3xl object-contain dark:hidden"
+							preload
+							:src="content.image?.light"
+							:width="768"
+							:height="320"
+						/>
+						<NuxtImg
+							v-if="content.image?.dark != null"
+							alt=""
+							class="hidden h-80 w-full max-w-3xl object-contain dark:block"
+							preload
+							:src="content.image?.dark"
+							:width="768"
+							:height="320"
+						/>
+					</div>
+
+					<ContentRenderer
+						v-if="content.leadIn != null"
+						class="prose prose-lg max-w-3xl text-balance text-center"
+						:value="content.leadIn"
+					>
+						<template #empty></template>
+					</ContentRenderer>
+
+					<div class="flex items-center gap-6">
+						<Button v-for="(link, key) of content.links" :key="key" as-child variant="default">
+							<NavLink :href="link.href">
+								{{ link.label }}
+							</NavLink>
+						</Button>
+					</div>
+				</div>
+			</template>
+
+			<template v-else-if="content != null">
+				<div class="mx-auto w-full max-w-3xl px-8">
+					<PageTitle>{{ content?.title }}</PageTitle>
+				</div>
+			</template>
+
+			<div>
+				<ContentRenderer
+					v-if="content != null"
+					class="prose mx-auto w-full max-w-3xl"
+					:value="content"
+				>
+					<template #empty></template>
+				</ContentRenderer>
+			</div>
+		</div>
+
+		<template v-if="project.map.startPage">
+			<div>
+				<PageTitle class="sr-only">{{ t("MapPage.title") }}</PageTitle>
+			</div>
+			<template v-if="env.public.database !== 'disabled'">
+				<ErrorBoundary>
+					<DataMapView />
+				</ErrorBoundary>
+			</template>
+			<template v-else>
+				<div>{{ t("DataPage.work-in-progress") }}</div>
+			</template>
+		</template>
+	</MainContent>
 </template>
-
-<style scoped>
-.landing-page :deep(p) {
-  max-width: 568px;
-  margin-inline: auto;
-}
-
-.landing-page :deep(img){
-  width:80%;
-  max-height: v-bind(logoHeight);
-  object-fit: contain;
-
-}
-</style>

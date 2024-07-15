@@ -1,57 +1,124 @@
-import { resolve, dirname } from 'node:path';
-import { fileURLToPath } from 'url';
-import vuetify from 'vite-plugin-vuetify';
-import VueI18nVitePlugin from '@intlify/unplugin-vue-i18n/vite';
-import { DiscoveryConfig } from './config/discoveryConfig';
-import discoveryConfig from './config/discoveryConfig.json';
+import { fileURLToPath } from "node:url";
 
-const config : DiscoveryConfig = (discoveryConfig as DiscoveryConfig);
+import { defaultLocale, localesMap } from "./config/i18n.config";
+import { getGitInfo } from "./utils/get-git-info";
 
-// https://nuxt.com/docs/api/configuration/nuxt-config
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+const baseUrl = process.env.NUXT_PUBLIC_APP_BASE_URL!;
+
+const { branchName, commitHash, tag } = getGitInfo();
+
 export default defineNuxtConfig({
-  app: {
-    head: {
-      meta: [{
-        name: config.title ?? 'OpenAtlas Discovery'
-      }]
-    }
-  },
-  runtimeConfig: {
-    // Keys within public, will be also exposed to the client-side
-    public: { }
-  },
-  modules: [
-    '@nuxt/image-edge',
-    '@nuxt/content',
-    (_options, nuxt) => {
-      nuxt.hooks.hook('vite:extendConfig',
-        config => config?.plugins?.push(vuetify()));
-    }],
-  css: ['vuetify/styles',
-    '@mdi/font/css/materialdesignicons.min.css',
-    'leaflet/dist/leaflet.css'],
-  build: {
-    transpile: ['vuetify']
-  },
-  vite: {
-    // @ts-ignore
-    // curently this will lead to a type error, but hopefully will be fixed soon #justBetaThings
-    ssr: {
-
-      noExternal: ['vuetify'] // add the vuetify vite plugin
-    },
-    define: {
-      'process.env.DEBUG': false
-    },
-    plugins: [
-      VueI18nVitePlugin({
-        include: [
-          resolve(dirname(fileURLToPath(import.meta.url)), './locales/*.json')
-        ]
-      })
-    ]
-  },
-  image: {
-    domains: config.imageDomains ?? ['openatlas.eu']
-  }
+	alias: {
+		"@": fileURLToPath(new URL("./", import.meta.url)),
+	},
+	app: {
+		layoutTransition: false,
+		pageTransition: false,
+	},
+	colorMode: {
+		classSuffix: "",
+		dataValue: "ui-color-scheme",
+	},
+	components: [{ path: "@/components", extensions: [".vue"], pathPrefix: false }],
+	content: {
+		defaultLocale,
+		locales: Object.keys(localesMap),
+	},
+	css: ["@fontsource-variable/inter/slnt.css", "tailwindcss/tailwind.css", "@/styles/index.css"],
+	devtools: {
+		enabled: true,
+	},
+	experimental: {
+		componentIslands: {
+			selectiveClient: true,
+		},
+		defaults: {
+			useAsyncData: {
+				deep: false,
+			},
+			useFetch: {
+				timeout: 250,
+			},
+		},
+		inlineRouteRules: true,
+	},
+	features: {
+		/** @see https://github.com/nuxt/nuxt/issues/21821 */
+		inlineStyles: false,
+	},
+	future: {
+		compatibilityVersion: 4,
+	},
+	/**
+	 * FIXME: some dependency does not properly clean up,
+	 * so the build hangs without this workaround.
+	 *
+	 * @see https://github.com/nuxt/cli/issues/169
+	 */
+	hooks: {
+		close(nuxt) {
+			if (!nuxt.options._prepare) {
+				process.exit();
+			}
+		},
+	},
+	i18n: {
+		baseUrl,
+		defaultLocale,
+		detectBrowserLanguage: {
+			redirectOn: "root",
+		},
+		langDir: "./messages",
+		lazy: true,
+		locales: Object.values(localesMap),
+		strategy: "prefix",
+		vueI18n: "./i18n.config.ts",
+	},
+	imports: {
+		dirs: ["./config/"],
+	},
+	modules: ["@nuxt/content", "@nuxt/image", "@nuxtjs/color-mode", "@nuxtjs/i18n", "@vueuse/nuxt"],
+	nitro: {
+		compressPublicAssets: true,
+		prerender: {
+			routes: ["/manifest.webmanifest", "/robots.txt", "/sitemap.xml"],
+		},
+	},
+	postcss: {
+		plugins: {
+			tailwindcss: {},
+		},
+	},
+	runtimeConfig: {
+		NODE_ENV: process.env.NODE_ENV,
+		public: {
+			apiBaseUrl: process.env.NUXT_PUBLIC_API_BASE_URL,
+			appBaseUrl: process.env.NUXT_PUBLIC_APP_BASE_URL,
+			bots: process.env.NUXT_PUBLIC_BOTS,
+			database: process.env.NUXT_PUBLIC_DATABASE,
+			gitBranchName: branchName,
+			gitCommitHash: commitHash,
+			gitTag: tag,
+			googleSiteVerification: process.env.NUXT_PUBLIC_GOOGLE_SITE_VERIFICATION,
+			mapBaselayerUrlDark: process.env.NUXT_PUBLIC_MAP_BASELAYER_URL_DARK,
+			mapBaselayerUrlLight: process.env.NUXT_PUBLIC_MAP_BASELAYER_URL_LIGHT,
+			matomoBaseUrl: process.env.NUXT_PUBLIC_MATOMO_BASE_URL,
+			matomoId: process.env.NUXT_PUBLIC_MATOMO_ID,
+			openapiBaseUrl: process.env.NUXT_PUBLIC_OPENAPI_BASE_URL,
+			redmineId: process.env.NUXT_PUBLIC_REDMINE_ID,
+		},
+	},
+	typescript: {
+		shim: false,
+		strict: true,
+		// https://github.com/nuxt/nuxt/issues/14816#issuecomment-1484918081
+		tsConfig: {
+			compilerOptions: {
+				paths: {
+					"@/*": ["./*"],
+				},
+			},
+		},
+	},
 });
