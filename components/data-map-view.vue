@@ -178,11 +178,15 @@ watchEffect(() => {
 
 <template>
 	<div :class="project.fullscreen ? 'relative grid' : 'relative grid grid-rows-[auto_1fr] gap-4'">
-		<div :class="project.fullscreen ? 'absolute z-10 flex w-full justify-center' : ''">
+		<div
+			:class="
+				project.fullscreen ? 'absolute z-10 flex w-full justify-center pointer-events-none' : ''
+			"
+		>
 			<SearchForm
 				:class="
 					project.fullscreen
-						? 'bg-white/90 dark:bg-neutral-900 max-w-[800px] w-full mt-2 rounded-md p-6 shadow-md'
+						? 'bg-white/90 dark:bg-neutral-900 max-w-[800px] w-full mt-2 rounded-md p-6 shadow-md pointer-events-auto'
 						: ''
 				"
 				:filter="searchFilters.category"
