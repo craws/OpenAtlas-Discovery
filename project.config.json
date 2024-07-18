@@ -23,7 +23,7 @@
 		"geojsonAreaCenterPoints": "#b8cf5b"
 	},
 	"map": {
-		"startPage": true
+		"startPage": false
 	},
 	"fullscreen": true,
 	"defaultLocale": "en",

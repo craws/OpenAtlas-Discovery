@@ -40,9 +40,9 @@
 		}
 	},
 	"DataMapView": {
-		"centerpoint": "Area Point",
+		"centerpoint": "Areas",
 		"end-date": "End date",
-		"point": "Location Point",
+		"point": "Locations",
 		"polygon": "Display Areas",
 		"start-date": "Start date"
 	},
@@ -105,7 +105,8 @@
 		"meta": {
 			"title": "Imprint"
 		},
-		"title": "Imprint"
+		"title": "Imprint",
+		"contact": "Contact: {'alexander.watzinger@oeaw.ac.at'}"
 	},
 	"IndexPage": {
 		"error": {
