@@ -40,9 +40,9 @@
 		}
 	},
 	"DataMapView": {
-		"centerpoint": "Flächenpunkt",
+		"centerpoint": "Flächen",
 		"end-date": "End-Datum",
-		"point": "Ortspunkt",
+		"point": "Orte",
 		"polygon": "Flächen anzeigen",
 		"start-date": "Start-Datum"
 	},
@@ -105,7 +105,8 @@
 		"meta": {
 			"title": "Impressum"
 		},
-		"title": "Impressum"
+		"title": "Impressum",
+		"contact": "Kontakt: {'alexander.watzinger@oeaw.ac.at'}"
 	},
 	"IndexPage": {
 		"error": {
