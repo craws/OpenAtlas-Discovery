@@ -10,7 +10,7 @@ const router = useRouter();
 const route = useRoute();
 
 const detailEntityId = computed(() => {
-	return route.params.id as string;
+	return route.query.selection as string;
 });
 
 const searchFiltersSchema = z.object({

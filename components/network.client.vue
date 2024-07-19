@@ -49,7 +49,6 @@ const state = ref<State>({});
 const layout = new FA2LayoutSupervisor(context.graph, { settings: layoutOptions });
 
 const disabledNodeColor = project.colors.disabledNodeColor;
-
 watch(
 	() => {
 		return props.searchNode;
@@ -135,8 +134,6 @@ watch(
 	{ immediate: true },
 );
 
-const currentView = useGetCurrentView();
-
 onMounted(async () => {
 	layout.start();
 
@@ -156,7 +153,7 @@ onMounted(async () => {
 	context.camera = context.renderer.getCamera();
 
 	context.renderer.on("clickNode", ({ node }) => {
-		void router.push(`/${locale.value}/entities/${node}/${currentView.value}`);
+		void router.push(`/${locale.value}/network?selection=${node}`);
 	});
 
 	context.renderer.on("enterNode", ({ node }) => {

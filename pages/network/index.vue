@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 definePageMeta({
+	layout: "visualization",
 	validate() {
 		const env = useRuntimeConfig();
 		return env.public.database !== "disabled";

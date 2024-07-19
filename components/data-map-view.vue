@@ -15,7 +15,6 @@ const router = useRouter();
 const route = useRoute();
 const t = useTranslations();
 
-const currentView = useGetCurrentView();
 const { getUnprefixedId } = useIdPrefix();
 
 const searchFiltersSchema = v.object({
@@ -23,15 +22,28 @@ const searchFiltersSchema = v.object({
 	search: v.fallback(v.string(), ""),
 });
 
-const detailEntityId = computed(() => {
-	return route.params.id as string;
+const entitySelectionSchema = v.object({
+	selection: v.fallback(v.array(v.string()), []),
 });
 
 const searchFilters = computed(() => {
 	return v.parse(searchFiltersSchema, route.query);
 });
 
+type EntitySelection = v.InferOutput<typeof entitySelectionSchema>;
+
 type SearchFilters = v.InferOutput<typeof searchFiltersSchema>;
+
+function setEntitySelection(query: Partial<EntitySelection>) {
+	void router.push({ query });
+}
+
+function onChangeEntitySelection(values: EntityFeature) {
+	const temp: EntitySelection = {
+		selection: [getUnprefixedId(values["@id"])],
+	};
+	setEntitySelection(temp);
+}
 
 function setSearchFilters(query: Partial<SearchFilters>) {
 	void router.push({ query });
@@ -83,6 +95,9 @@ function togglePolygons() {
 	show.value = !show.value;
 }
 
+const selection = computed(() => {
+	return route.query.selection;
+});
 /**
  * Reduce size of geojson payload, which has an impact on performance,
  * because `maplibre-gl` will serialize geojson features when sending them to the webworker.
@@ -150,7 +165,7 @@ watch(data, () => {
 watchEffect(() => {
 	const entity = entities.value.find((feature) => {
 		const id = getUnprefixedId(feature["@id"]);
-		return id === detailEntityId.value;
+		return id === selection.value;
 	});
 
 	if (entity) {
@@ -248,8 +263,9 @@ watchEffect(() => {
 					>
 						<strong class="font-medium">
 							<NavLink
-								class="flex items-center gap-1 underline decoration-dotted hover:no-underline"
-								:href="{ path: `/entities/${entity.properties._id}/${currentView}` }"
+								href="#"
+								class="flex cursor-pointer items-center gap-1 underline decoration-dotted hover:no-underline"
+								@click="onChangeEntitySelection(entity)"
 							>
 								<Component :is="getEntityIcon(entity.systemClass)" class="size-3.5 shrink-0" />
 								{{ entity.properties.title }}

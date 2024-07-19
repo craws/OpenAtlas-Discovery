@@ -1,11 +1,8 @@
 <script lang="ts" setup>
 import { MapIcon, WaypointsIcon } from "lucide-vue-next";
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { z } from "zod";
 
-const env = useRuntimeConfig();
-
-const isVisible = false;
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 const t = useTranslations();
 
@@ -28,7 +25,9 @@ usePageMetadata({
 });
 
 const id = computed(() => {
-	return Number(route.params.id as string);
+	if (route.query.selection != null) {
+		return Number(route.query.selection);
+	} else return null;
 });
 
 const currentView = useGetCurrentView();
@@ -36,7 +35,10 @@ const currentView = useGetCurrentView();
 
 <template>
 	<NuxtLayout name="default">
-		<MainContent class="relative grid h-full">
+		<MainContent class="relative h-full">
+			<template v-if="id != null">
+				<EntitySidebar :id="id" />
+			</template>
 			<div class="absolute right-4 z-20" style="top: calc(50% - 40px)">
 				<TooltipProvider>
 					<Tooltip>
@@ -45,7 +47,8 @@ const currentView = useGetCurrentView();
 								<NavLink
 									class="flex items-center gap-1 underline decoration-dotted hover:no-underline"
 									:href="{
-										path: `/entities/${id}/${currentView === 'network' ? 'map' : 'network'}`,
+										path: `/${currentView === 'network' ? 'map' : 'network'}`,
+										query: id ? { selection: id } : {},
 									}"
 								>
 									<MapIcon v-if="currentView === 'network'" class="size-6" />
@@ -63,16 +66,9 @@ const currentView = useGetCurrentView();
 					</Tooltip>
 				</TooltipProvider>
 			</div>
-			<template v-if="env.public.NUXT_PUBLIC_DATABASE !== 'disabled'">
-				<ErrorBoundary>
-					<DataMapView v-if="currentView === 'map'" />
-					<DataNetworkView v-if="currentView === 'network'" />
-				</ErrorBoundary>
-			</template>
-			<template v-else>
-				<div>{{ t("DataPage.work-in-progress") }}</div>
-			</template>
-			<slot />
+			<div class="relative grid h-full">
+				<slot />
+			</div>
 		</MainContent>
 	</NuxtLayout>
 </template>
