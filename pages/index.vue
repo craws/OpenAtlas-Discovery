@@ -11,8 +11,15 @@ defineRouteRules({
 
 const locale = useLocale();
 const t = useTranslations();
+const route = useRoute();
+const router = useRouter();
+
+onMounted(() => {
+	return router.push({ query: { mode: "map" } });
+});
 
 definePageMeta({
+	layout: project.map.startPage ? "visualization" : "default",
 	validate() {
 		const env = useRuntimeConfig();
 		return env.public.database !== "disabled";
@@ -47,6 +54,10 @@ onServerPrefetch(async () => {
 	 * @see https://github.com/TanStack/query/issues/5976
 	 */
 	await suspense().catch(noop);
+});
+
+const currentMode = computed(() => {
+	return route.query.mode;
 });
 </script>
 
@@ -118,7 +129,8 @@ onServerPrefetch(async () => {
 			</div>
 			<template v-if="env.public.database !== 'disabled'">
 				<ErrorBoundary>
-					<DataMapView />
+					<DataMapView v-show="currentMode === 'map'" />
+					<DataNetworkView v-show="currentMode === 'network'" />
 				</ErrorBoundary>
 			</template>
 			<template v-else>

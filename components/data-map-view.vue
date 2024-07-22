@@ -35,7 +35,7 @@ type EntitySelection = v.InferOutput<typeof entitySelectionSchema>;
 type SearchFilters = v.InferOutput<typeof searchFiltersSchema>;
 
 function setEntitySelection(query: Partial<EntitySelection>) {
-	void router.push({ query });
+	void router.push({ query: { ...route.query, ...query } });
 }
 
 function onChangeEntitySelection(values: EntityFeature) {

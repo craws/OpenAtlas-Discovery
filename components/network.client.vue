@@ -42,7 +42,14 @@ circular.assign(context.graph);
 
 const locale = useLocale();
 const router = useRouter();
+const route = useRoute();
 
+function getPath() {
+	if (route.path.includes("visualization")) {
+		return "visualization";
+	}
+	return "";
+}
 let hoverTimeOut: ReturnType<typeof setTimeout>;
 
 const state = ref<State>({});
@@ -153,7 +160,7 @@ onMounted(async () => {
 	context.camera = context.renderer.getCamera();
 
 	context.renderer.on("clickNode", ({ node }) => {
-		void router.push(`/${locale.value}/network?selection=${node}`);
+		void router.push(`/${getPath()}?mode=network&selection=${node}`);
 	});
 
 	context.renderer.on("enterNode", ({ node }) => {

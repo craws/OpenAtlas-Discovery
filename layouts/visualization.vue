@@ -8,17 +8,12 @@ const t = useTranslations();
 
 const route = useRoute();
 
-definePageMeta({
-	validate(route) {
-		const env = useRuntimeConfig();
-		if (env.public.NUXT_PUBLIC_DATABASE === "disabled") return false;
-
-		const paramsSchema = z.object({
-			id: z.coerce.number().int().positive(),
-		});
-		return paramsSchema.safeParse(route.params).success;
-	},
-});
+function getPath() {
+	if (route.path.includes("visualization")) {
+		return "visualization";
+	}
+	return "";
+}
 
 usePageMetadata({
 	title: t("EntityPage.meta.title"),
@@ -30,7 +25,9 @@ const id = computed(() => {
 	} else return null;
 });
 
-const currentView = useGetCurrentView();
+const currentMode = computed(() => {
+	return route.query.mode;
+});
 </script>
 
 <template>
@@ -47,21 +44,24 @@ const currentView = useGetCurrentView();
 								<NavLink
 									class="flex items-center gap-1 underline decoration-dotted hover:no-underline"
 									:href="{
-										path: `/${currentView === 'network' ? 'map' : 'network'}`,
-										query: id ? { selection: id } : {},
+										path: `/${getPath()}`,
+										query: {
+											mode: currentMode === 'network' ? 'map' : 'network',
+											...(id && { selection: id }),
+										},
 									}"
 								>
-									<MapIcon v-if="currentView === 'network'" class="size-6" />
+									<MapIcon v-if="currentMode === 'network'" class="size-6" />
 									<WaypointsIcon v-else class="size-6" />
 									<span class="sr-only">{{
-										currentView === "network" ? t("MapPage.title") : t("NetworkPage.title")
+										currentMode === "network" ? t("MapPage.title") : t("NetworkPage.title")
 									}}</span>
 								</NavLink>
 							</div>
 						</TooltipTrigger>
 						<TooltipContent>
-							<p v-if="currentView === 'map'">{{ t("EntityPage.network") }}</p>
-							<p v-if="currentView === 'network'">{{ t("EntityPage.map") }}</p>
+							<p v-if="currentMode === 'map'">{{ t("EntityPage.network") }}</p>
+							<p v-if="currentMode === 'network'">{{ t("EntityPage.map") }}</p>
 						</TooltipContent>
 					</Tooltip>
 				</TooltipProvider>

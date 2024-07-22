@@ -6,6 +6,7 @@ const t = useTranslations();
 const { getUnprefixedId } = useIdPrefix();
 
 const props = defineProps<{ entity: EntityFeature }>();
+const route = useRoute();
 
 const { data } = useGetBySystemClass(
 	computed(() => {
@@ -80,13 +81,27 @@ const handledRelations: Array<RelationType> = [
 onMounted(() => {
 	emit("handledRelations", handledRelations);
 });
+
+function getPath() {
+	if (route.path.includes("visualization")) {
+		return "visualization";
+	}
+	return "";
+}
+
+const currentMode = computed(() => {
+	return route.query.mode;
+});
 </script>
 
 <template>
 	<div class="flex justify-between">
 		<NavLink
 			v-if="previousFeature"
-			:href="{ path: `/entities/${getUnprefixedId(previousFeature['@id'])}` }"
+			:href="{
+				path: `/${getPath()}`,
+				query: { mode: currentMode, selection: getUnprefixedId(previousFeature['@id']) },
+			}"
 			class="flex items-center underline decoration-dotted transition hover:no-underline focus-visible:no-underline"
 		>
 			<ChevronLeftIcon class="size-4" />
@@ -95,7 +110,10 @@ onMounted(() => {
 		</NavLink>
 		<NavLink
 			v-if="nextFeature"
-			:href="{ path: `/entities/${getUnprefixedId(nextFeature['@id'])}` }"
+			:href="{
+				path: `/${getPath()}`,
+				query: { mode: currentMode, selection: getUnprefixedId(nextFeature['@id']) },
+			}"
 			class="flex items-center underline decoration-dotted transition hover:no-underline focus-visible:no-underline"
 		>
 			<span>{{ nextFeature.properties.title }}</span>

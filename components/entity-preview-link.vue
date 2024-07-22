@@ -1,4 +1,5 @@
 <script setup lang="ts">
+const route = useRoute();
 const props = defineProps<{ id: number; entity?: EntityFeature; label?: string }>();
 
 const previewEntity = computed(() => {
@@ -21,6 +22,17 @@ const { data, isPending, isPlaceholderData } = props.entity
 const isLoading = computed(() => {
 	return isPending || isPlaceholderData;
 });
+
+function getPath() {
+	if (route.path.includes("visualization")) {
+		return "visualization";
+	}
+	return "";
+}
+
+const currentMode = computed(() => {
+	return route.query.mode;
+});
 </script>
 
 <template v-if="entity || id">
@@ -28,7 +40,10 @@ const isLoading = computed(() => {
 		<HoverCardTrigger as-child>
 			<NavLink
 				class="underline decoration-dotted transition hover:no-underline focus-visible:no-underline"
-				:href="{ path: `/entities/${id}` }"
+				:href="{
+					path: `/${getPath()}`,
+					query: { mode: currentMode, selection: id },
+				}"
 			>
 				<template v-if="label">
 					{{ label }}

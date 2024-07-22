@@ -13,7 +13,13 @@ usePageMetadata({
 	title: t("MapPage.meta.title"),
 });
 
+const route = useRoute();
+
 const env = useRuntimeConfig();
+
+const currentMode = computed(() => {
+	return route.query.mode;
+});
 </script>
 
 <template>
@@ -23,7 +29,8 @@ const env = useRuntimeConfig();
 		</div>
 		<template v-if="env.public.database !== 'disabled'">
 			<ErrorBoundary>
-				<DataMapView />
+				<DataMapView v-if="currentMode === 'map'" />
+				<DataNetworkView v-if="currentMode === 'network'" />
 			</ErrorBoundary>
 		</template>
 		<template v-else>
