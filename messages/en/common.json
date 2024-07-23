@@ -75,7 +75,8 @@
 		"network": "Network Visualization",
 		"sidebar": {
 			"toggle": "Toggle details for {title}"
-		}
+		},
+		"no-map": "Not visible on the map."
 	},
 	"EntitySidebar": {
 		"NextFeature": "NextFeature",

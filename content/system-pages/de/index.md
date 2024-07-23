@@ -12,7 +12,7 @@ links:
   - label: Daten anzeigen
     href: /data
   - label: Karte anzeigen
-    href: /map
+    href: /visualization?mode=map
 ---
 
 THANADOS (Die Anthropologische und Archäologische Datenbank von Sepulturen) beschäftigt sich mit der
