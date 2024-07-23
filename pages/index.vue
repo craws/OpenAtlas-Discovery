@@ -15,7 +15,13 @@ const route = useRoute();
 const router = useRouter();
 
 onMounted(() => {
-	return router.push({ query: { mode: "map" } });
+	if (project.map.startPage) {
+		if (!route.query.mode) {
+			return router.push({ query: { mode: "map" } });
+		}
+		return null;
+	}
+	return null;
 });
 
 definePageMeta({
@@ -64,8 +70,8 @@ const currentMode = computed(() => {
 <template>
 	<MainContent class="grid grid-rows-[auto_1fr]">
 		<div v-if="!project.map.startPage">
-			<template v-if="content != null && content.leadIn != null" class="container py-8">
-				<div class="grid place-items-center gap-8 p-8 sm:py-16">
+			<template v-if="content != null && content.leadIn != null">
+				<div class="container grid place-items-center gap-8 p-8 sm:py-16">
 					<div>
 						<h1 class="sr-only">{{ content.title }}</h1>
 						<NuxtImg

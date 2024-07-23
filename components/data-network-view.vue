@@ -22,7 +22,7 @@ const searchFilters = computed(() => {
 });
 
 function onChangeSearchFilters(values: SearchFormData) {
-	const query = { ...searchFilters.value, ...values };
+	const query = { mode: route.query.mode, ...searchFilters.value, ...values };
 
 	if (values.search === "") {
 		// @ts-expect-error Fix me later please
@@ -33,7 +33,7 @@ function onChangeSearchFilters(values: SearchFormData) {
 }
 
 function onChangeCategory(values: CategoryFormData) {
-	void router.push({ query: { ...searchFilters.value, ...values } });
+	void router.push({ query: { mode: route.query.mode, ...searchFilters.value, ...values } });
 }
 
 const { data, isPending, isPlaceholderData } = useGetNetworkData(
