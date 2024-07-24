@@ -126,6 +126,7 @@ watch(
 			skipIndexation: true,
 		});
 	},
+	{ immediate: true, deep: true },
 );
 
 watch(
@@ -137,7 +138,7 @@ watch(
 			setSearchHighlight(searchNode);
 		}
 	},
-	{ immediate: true },
+	{ immediate: true, deep: true },
 );
 
 onMounted(async () => {
