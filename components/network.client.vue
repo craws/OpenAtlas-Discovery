@@ -51,6 +51,7 @@ const layout = new FA2LayoutSupervisor(context.graph, { settings: layoutOptions 
 const disabledNodeColor = project.colors.disabledNodeColor;
 
 function setSearchHighlight(searchNode: string) {
+	console.log("RECEIVING SEARCH TERM", searchNode);
 	context.graph.nodes().forEach((el) => {
 		context.graph.removeNodeAttribute(el, "highlighted");
 	});
@@ -92,39 +93,41 @@ watch(
 		return props.detailNode;
 	},
 	(detailNode) => {
-		context.graph.nodes().forEach((el) => {
-			context.graph.removeNodeAttribute(el, "highlighted");
-		});
-
 		if (detailNode) {
-			const results = context.graph
-				.nodes()
-				.map((n) => {
-					return { id: n, label: context.graph.getNodeAttribute(n, "id") as string };
-				})
-				.filter(({ id }) => {
-					return id === detailNode;
-				});
+			context.graph.nodes().forEach((el) => {
+				context.graph.removeNodeAttribute(el, "highlighted");
+			});
 
-			if (results.length === 1) {
-				state.value.selectedNodes = results;
-				state.value.selectedNodes.forEach((el) => {
-					context.graph.setNodeAttribute(el.id, "highlighted", true);
-				});
+			if (detailNode) {
+				const results = context.graph
+					.nodes()
+					.map((n) => {
+						return { id: n, label: context.graph.getNodeAttribute(n, "id") as string };
+					})
+					.filter(({ id }) => {
+						return id === detailNode;
+					});
+
+				if (results.length === 1) {
+					state.value.selectedNodes = results;
+					state.value.selectedNodes.forEach((el) => {
+						context.graph.setNodeAttribute(el.id, "highlighted", true);
+					});
+				}
 			}
-		}
-		// If the query is empty, then we reset the selectedNode
-		else {
-			state.value.selectedNodes = undefined;
-		}
+			// If the query is empty, then we reset the selectedNode
+			else {
+				state.value.selectedNodes = undefined;
+			}
 
-		// Refresh rendering
-		// You can directly call `renderer.refresh()`, but if you need performances
-		// you can provide some options to the refresh method.
-		// In this case, we don't touch the graph data so we can skip its reindexation
-		context.renderer?.refresh({
-			skipIndexation: true,
-		});
+			// Refresh rendering
+			// You can directly call `renderer.refresh()`, but if you need performances
+			// you can provide some options to the refresh method.
+			// In this case, we don't touch the graph data so we can skip its reindexation
+			context.renderer?.refresh({
+				skipIndexation: true,
+			});
+		}
 	},
 	{ immediate: true, deep: true },
 );
