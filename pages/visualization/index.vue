@@ -31,6 +31,7 @@ const currentMode = computed(() => {
 			<ErrorBoundary>
 				<DataMapView v-if="currentMode === 'map'" />
 				<DataNetworkView v-if="currentMode === 'network'" />
+				<DataView v-if="currentMode === 'table'"></DataView>
 			</ErrorBoundary>
 		</template>
 		<template v-else>

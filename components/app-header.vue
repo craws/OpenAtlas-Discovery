@@ -16,7 +16,10 @@ const defaultLinks = computed<
 	if (!project.map.startPage) {
 		return {
 			home: { href: { path: "/" }, label: t("AppHeader.links.home") },
-			data: { href: { path: "/data" }, label: t("AppHeader.links.data") },
+			data: {
+				href: { path: "/visualization", query: { mode: "table" } },
+				label: t("AppHeader.links.data"),
+			},
 			map: {
 				href: { path: "/visualization", query: { mode: "map" } },
 				label: t("AppHeader.links.map"),

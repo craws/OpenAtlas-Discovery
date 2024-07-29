@@ -5,6 +5,7 @@ const t = useTranslations();
 
 const props = defineProps<{
 	id: number;
+	noTableSidebar: boolean;
 }>();
 
 const { data } = useGetEntity(
@@ -33,7 +34,11 @@ const updateHandledRelations = (relations: Array<RelationType>) => {
 <template>
 	<div v-if="entity != null && props.id != null">
 		<details
-			class="group absolute z-10 mb-2 mr-2 h-full w-1/4 translate-x-[-25vw] transition-transform duration-300 open:translate-x-0"
+			:class="
+				props.noTableSidebar
+					? 'group z-10 mb-2 mr-2 h-full translate-x-[-25vw] transition-transform duration-300 open:translate-x-0 absolute w-1/4'
+					: 'group z-10 mb-2 mr-2 h-full translate-x-[-25vw] transition-transform duration-300 open:translate-x-0'
+			"
 			:open="openState"
 		>
 			<Card class="relative h-full overflow-y-scroll">

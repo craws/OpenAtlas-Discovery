@@ -32,10 +32,14 @@ function getPath() {
 <template>
 	<NuxtLayout name="default">
 		<MainContent class="relative h-full">
-			<template v-if="id != null">
-				<EntitySidebar :id="id" />
+			<template v-if="id != null && currentMode !== 'table'">
+				<EntitySidebar :id="id" :no-table-sidebar="true" />
 			</template>
-			<div class="absolute right-4 z-20" style="top: calc(50% - 40px)">
+			<div
+				v-if="currentMode !== 'table'"
+				class="absolute right-4 z-20"
+				style="top: calc(50% - 40px)"
+			>
 				<ModeSwitch v-if="id != null" :id="id" :current-mode="currentMode" />
 				<div v-else>
 					<TooltipProvider>
@@ -67,7 +71,13 @@ function getPath() {
 					</TooltipProvider>
 				</div>
 			</div>
-			<div class="relative grid h-full">
+			<div
+				class="relative grid h-full grid-cols-[0px_1fr] transition-all delay-150 ease-in-out data-[sidepanel]:grid-cols-[25vw_1fr]"
+				:data-sidepanel="id != null && currentMode === 'table' ? 'true' : undefined"
+			>
+				<div class="grid h-full">
+					<EntitySidebar v-if="id != null && currentMode === 'table'" :id="id" :no-table-sidebar="false" />
+				</div>
 				<slot />
 			</div>
 		</MainContent>

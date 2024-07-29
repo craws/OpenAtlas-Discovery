@@ -40,8 +40,15 @@ const props = defineProps<{
 
 const t = useTranslations();
 const { d } = useI18n();
+const route = useRoute();
 
 const columnHelper = createColumnHelper<EntityFeature>();
+function getPath() {
+	if (route.path.includes("visualization")) {
+		return "visualization";
+	}
+	return "";
+}
 
 /**
  * Converts a date cell value to a formatted date string.
@@ -124,7 +131,14 @@ const cols = [
 				{
 					class:
 						"underline decoration-dotted transition hover:no-underline focus-visible:no-underline",
-					href: { path: `/entities/${encodeURIComponent(info.row.original.properties._id)}` },
+					href: {
+						path: `/${getPath()}`,
+						query: {
+							...route.query,
+							mode: route.query.mode,
+							selection: encodeURIComponent(info.row.original.properties._id),
+						},
+					},
 				},
 				title,
 			);
