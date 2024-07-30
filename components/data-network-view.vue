@@ -40,20 +40,8 @@ const { data, isPending, isPlaceholderData } = useGetNetworkData(
 	// @ts-expect-error Includes custom, per-instance system classes.
 	computed(() => {
 		return {
-			exclude_system_classes: [
-				// TO-DO: Currently there is an issue: filtering by case study and system_class type will return no results
-				"type",
-				"object_location",
-				"reference_system",
-				"file",
-				"source_translation",
-				"source",
-				"bibliography",
-				"external_reference",
-				"administrative_unit",
-				"edition",
-				"type_tools",
-			],
+			// TO-DO: Currently there is an issue: filtering by case study and system_class type will return no results
+			exclude_system_classes: project.network.exclude,
 		};
 	}),
 );

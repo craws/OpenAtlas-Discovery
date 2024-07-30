@@ -48,10 +48,10 @@
 	},
 	"DataPage": {
 		"meta": {
-			"title": "Data"
+			"title": "Datalist"
 		},
 		"search": "Search",
-		"title": "Data",
+		"title": "Datalist",
 		"work-in-progress": "The database is currently work in progress."
 	},
 	"DataView": {
@@ -76,7 +76,8 @@
 		"sidebar": {
 			"toggle": "Toggle details for {title}"
 		},
-		"no-map": "Not visible on the map."
+		"no-map": "Not visible on the map.",
+		"no-network": "Not visible in the network."
 	},
 	"EntitySidebar": {
 		"NextFeature": "NextFeature",

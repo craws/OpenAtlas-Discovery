@@ -22,6 +22,21 @@
 		"geojsonPoints": "#69c0ef",
 		"geojsonAreaCenterPoints": "#b8cf5b"
 	},
+	"network": {
+		"exclude": [
+			"type",
+			"object_location",
+			"reference_system",
+			"file",
+			"source_translation",
+			"source",
+			"bibliography",
+			"external_reference",
+			"administrative_unit",
+			"edition",
+			"type_tools"
+		]
+	},
 	"map": {
 		"startPage": false
 	},

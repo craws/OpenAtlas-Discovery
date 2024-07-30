@@ -24,6 +24,15 @@ onMounted(() => {
 	openState.value = true;
 });
 
+watch(
+	() => {
+		return props.id;
+	},
+	() => {
+		openState.value = true;
+	},
+	{ immediate: true, deep: true },
+);
 const handledRelations = ref<Array<RelationType>>([]);
 
 const updateHandledRelations = (relations: Array<RelationType>) => {

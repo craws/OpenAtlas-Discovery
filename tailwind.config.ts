@@ -2,7 +2,7 @@ import { createPreset as createDesignTokenPreset } from "@acdh-oeaw/tailwindcss-
 import type { Config } from "tailwindcss";
 import createPlugin from "tailwindcss/plugin";
 
-// import { project } from "./config/project.config";
+import { project } from "./config/project.config";
 
 const shadcnPlugin = createPlugin(
 	({ addBase }) => {
@@ -75,6 +75,7 @@ const shadcnPlugin = createPlugin(
 			},
 			extend: {
 				colors: {
+					brand: project.colors.brand,
 					border: "hsl(var(--border))",
 					input: "hsl(var(--input))",
 					ring: "hsl(var(--ring))",
