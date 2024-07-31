@@ -36,7 +36,6 @@ const defaultLinks = computed<
 			href: { path: "/", query: { mode: "map" } },
 			label: t("AppHeader.links.home"),
 		},
-		data: { href: { path: "/data" }, label: t("AppHeader.links.data") },
 		team: { href: { path: "/team" }, label: t("AppHeader.links.team") },
 	};
 });

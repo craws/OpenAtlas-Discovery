@@ -51,7 +51,6 @@ const layout = new FA2LayoutSupervisor(context.graph, { settings: layoutOptions 
 const disabledNodeColor = project.colors.disabledNodeColor;
 
 function setSearchHighlight(searchNode: string) {
-	console.log("RECEIVING SEARCH TERM", searchNode);
 	context.graph.nodes().forEach((el) => {
 		context.graph.removeNodeAttribute(el, "highlighted");
 	});

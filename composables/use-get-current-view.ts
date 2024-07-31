@@ -6,7 +6,6 @@ export function useGetCurrentView() {
 	const route = useRoute();
 
 	return computed(() => {
-		console.log(route.path.split("/").pop());
 		const view = viewSchema.parse(route.path.split("/").pop());
 		return view;
 	});

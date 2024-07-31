@@ -98,6 +98,10 @@ function togglePolygons() {
 const selection = computed(() => {
 	return route.query.selection;
 });
+
+const mode = computed(() => {
+	return route.query.mode;
+});
 /**
  * Reduce size of geojson payload, which has an impact on performance,
  * because `maplibre-gl` will serialize geojson features when sending them to the webworker.
@@ -163,30 +167,32 @@ watch(data, () => {
 });
 
 watchEffect(() => {
-	const entity = entities.value.find((feature) => {
-		const id = getUnprefixedId(feature["@id"]);
-		return id === selection.value;
-	});
+	if (mode.value && selection.value) {
+		const entity = entities.value.find((feature) => {
+			const id = getUnprefixedId(feature["@id"]);
+			return id === selection.value;
+		});
 
-	if (entity) {
-		let coordinates = null;
+		if (entity) {
+			let coordinates = null;
 
-		if (entity.geometry.type === "GeometryCollection") {
-			coordinates = entity.geometry.geometries.find((g) => {
-				return g.type === "Point";
-			})?.coordinates as [number, number] | undefined;
+			if (entity.geometry.type === "GeometryCollection") {
+				coordinates = entity.geometry.geometries.find((g) => {
+					return g.type === "Point";
+				})?.coordinates as [number, number] | undefined;
+			}
+
+			if (entity.geometry.type === "Point") {
+				coordinates = entity.geometry.coordinates as unknown as [number, number];
+			}
+
+			popover.value = {
+				coordinates:
+					coordinates ??
+					(turf.center(createFeatureCollection([entity])).geometry.coordinates as [number, number]),
+				entities: [entity],
+			};
 		}
-
-		if (entity.geometry.type === "Point") {
-			coordinates = entity.geometry.coordinates as unknown as [number, number];
-		}
-
-		popover.value = {
-			coordinates:
-				coordinates ??
-				(turf.center(createFeatureCollection([entity])).geometry.coordinates as [number, number]),
-			entities: [entity],
-		};
 	}
 });
 </script>
