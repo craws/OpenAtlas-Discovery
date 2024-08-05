@@ -10,7 +10,7 @@ leadIn: >-
   Archäologische Datenbank von Sepulturen
 links:
   - label: Daten anzeigen
-    href: /data
+    href: /visualization?mode=table
   - label: Karte anzeigen
     href: /visualization?mode=map
 ---
