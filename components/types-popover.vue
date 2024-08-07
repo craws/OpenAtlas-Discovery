@@ -6,6 +6,7 @@ type LpType = NonNullable<LinkedPlaceFeature["types"]> extends Array<infer U> ? 
 const t = useTranslations();
 
 const { getUnprefixedId } = useIdPrefix();
+const route = useRoute();
 
 const props = defineProps<{ type: LpType }>();
 
@@ -15,6 +16,17 @@ const hierarchy = computed(() => {
 
 const hiddenHierarchy = computed(() => {
 	return hierarchy.value.slice(1);
+});
+
+function getPath() {
+	if (route.path.includes("visualization")) {
+		return "visualization";
+	}
+	return "";
+}
+
+const currentMode = computed(() => {
+	return route.query.mode;
 });
 </script>
 
@@ -58,7 +70,13 @@ const hiddenHierarchy = computed(() => {
 									<NavLink
 										v-if="hierarchyItem.identifier"
 										class="underline decoration-dotted hover:no-underline"
-										:href="{ path: `/entities/${getUnprefixedId(hierarchyItem.identifier)}` }"
+										:href="{
+											path: `/${getPath()}`,
+											query: {
+												mode: currentMode,
+												selection: getUnprefixedId(hierarchyItem.identifier),
+											},
+										}"
 									>
 										{{ hierarchyItem.label }}
 									</NavLink>
@@ -73,7 +91,13 @@ const hiddenHierarchy = computed(() => {
 						<NavLink
 							v-if="hiddenHierarchy[0].identifier"
 							class="underline decoration-dotted hover:no-underline"
-							:href="{ path: `/entities/${getUnprefixedId(hiddenHierarchy[0].identifier)}` }"
+							:href="{
+								path: `/${getPath()}`,
+								query: {
+									mode: currentMode,
+									selection: getUnprefixedId(hiddenHierarchy[0].identifier),
+								},
+							}"
 						>
 							{{ hiddenHierarchy[0].label }}
 						</NavLink>
@@ -86,7 +110,13 @@ const hiddenHierarchy = computed(() => {
 						<NavLink
 							v-if="type.identifier"
 							class="underline decoration-dotted hover:no-underline"
-							:href="{ path: `/entities/${getUnprefixedId(type.identifier)}` }"
+							:href="{
+								path: `/${getPath()}`,
+								query: {
+									mode: currentMode,
+									selection: getUnprefixedId(type.identifier),
+								},
+							}"
 						>
 							{{ type.label }}
 						</NavLink>
