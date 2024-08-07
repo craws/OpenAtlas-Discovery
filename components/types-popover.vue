@@ -47,7 +47,13 @@ const currentMode = computed(() => {
 						<NavLink
 							v-if="hierarchy[0]?.identifier"
 							class="underline decoration-dotted hover:no-underline"
-							:href="{ path: `/entities/${getUnprefixedId(hierarchy[0]?.identifier)}` }"
+							:href="{
+								path: `/${getPath()}`,
+								query: {
+									mode: currentMode,
+									selection: getUnprefixedId(hierarchy[0]?.identifier),
+								},
+							}"
 						>
 							{{ hierarchy[0].label }}
 						</NavLink>
