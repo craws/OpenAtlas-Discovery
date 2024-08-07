@@ -53,7 +53,9 @@ const sortingState = computed(() => {
 type SearchFilters = v.InferOutput<typeof searchFiltersSchema>;
 
 function setSearchFilters(query: Partial<SearchFilters>) {
-	void router.push({ query });
+	void router.push({
+		query: { mode: route.query.mode, selection: route.query.selection, ...query },
+	});
 	document.body.scrollTo(0, 0);
 }
 
@@ -106,7 +108,7 @@ const entities = computed(() => {
 </script>
 
 <template>
-	<div class="relative grid grid-rows-[auto_1fr] gap-4">
+	<div class="container relative grid grid-rows-[auto_1fr] gap-4 p-8">
 		<SearchForm
 			:filter="searchFilters.category"
 			:search="searchFilters.search"

@@ -1,7 +1,19 @@
 <script lang="ts" setup>
 const { getUnprefixedId } = useIdPrefix();
+const route = useRoute();
 
 defineProps<{ relation: NonNullable<EntityFeature["relations"]>[0] }>();
+
+function getPath() {
+	if (route.path.includes("visualization")) {
+		return "visualization";
+	}
+	return "";
+}
+
+const currentMode = computed(() => {
+	return route.query.mode;
+});
 </script>
 
 <template>
@@ -14,7 +26,10 @@ defineProps<{ relation: NonNullable<EntityFeature["relations"]>[0] }>();
 			/>
 			<NavLink
 				class="underline decoration-dotted hover:no-underline"
-				:href="{ path: `/entities/${getUnprefixedId(relation.relationTo ?? '')}` }"
+				:href="{
+					path: `/${getPath()}`,
+					query: { mode: currentMode, selection: getUnprefixedId(relation.relationTo ?? '') },
+				}"
 			>
 				{{ relation.label }}
 			</NavLink>

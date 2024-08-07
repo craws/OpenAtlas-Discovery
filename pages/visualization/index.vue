@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 definePageMeta({
+	layout: "visualization",
 	validate() {
 		const env = useRuntimeConfig();
 		return env.public.database !== "disabled";
@@ -12,17 +13,25 @@ usePageMetadata({
 	title: t("MapPage.meta.title"),
 });
 
+const route = useRoute();
+
 const env = useRuntimeConfig();
+
+const currentMode = computed(() => {
+	return route.query.mode;
+});
 </script>
 
 <template>
-	<MainContent class="container grid grid-rows-[auto_1fr] py-8">
+	<MainContent class="grid grid-rows-[auto_1fr]">
 		<div>
 			<PageTitle class="sr-only">{{ t("MapPage.title") }}</PageTitle>
 		</div>
 		<template v-if="env.public.database !== 'disabled'">
 			<ErrorBoundary>
-				<DataMapView />
+				<DataMapView v-if="currentMode === 'map'" />
+				<DataNetworkView v-if="currentMode === 'network'" />
+				<DataView v-if="currentMode === 'table'"></DataView>
 			</ErrorBoundary>
 		</template>
 		<template v-else>

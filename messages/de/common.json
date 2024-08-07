@@ -48,10 +48,10 @@
 	},
 	"DataPage": {
 		"meta": {
-			"title": "Daten"
+			"title": "Datenliste"
 		},
 		"search": "Suche",
-		"title": "Daten",
+		"title": "Datenliste",
 		"work-in-progress": "Die Datenbank ist derzeit im Aufbau."
 	},
 	"DataView": {
@@ -75,7 +75,9 @@
 		"network": "Netzwerk-Visualisierung",
 		"sidebar": {
 			"toggle": "Details für {title} umschalten"
-		}
+		},
+		"no-map": "Nicht auf der Karte vorhanden.",
+		"no-network": "Nicht im Netzwerk vorhanden."
 	},
 	"EntitySidebar": {
 		"NextFeature": "Nächste Funktion",

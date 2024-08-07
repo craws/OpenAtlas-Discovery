@@ -20,6 +20,7 @@ const icons: Record<string, Icon> = {
 	bibliography: TextIcon,
 	edition: TextIcon,
 	external_reference: TextIcon,
+	event: CalendarFoldIcon,
 	feature: MapPinIcon,
 	file: TextIcon,
 	find: MapPinIcon,

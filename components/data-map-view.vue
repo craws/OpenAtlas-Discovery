@@ -15,7 +15,6 @@ const router = useRouter();
 const route = useRoute();
 const t = useTranslations();
 
-const currentView = useGetCurrentView();
 const { getUnprefixedId } = useIdPrefix();
 
 const searchFiltersSchema = v.object({
@@ -23,18 +22,31 @@ const searchFiltersSchema = v.object({
 	search: v.fallback(v.string(), ""),
 });
 
-const detailEntityId = computed(() => {
-	return route.params.id as string;
+const entitySelectionSchema = v.object({
+	selection: v.fallback(v.array(v.string()), []),
 });
 
 const searchFilters = computed(() => {
 	return v.parse(searchFiltersSchema, route.query);
 });
 
+type EntitySelection = v.InferOutput<typeof entitySelectionSchema>;
+
 type SearchFilters = v.InferOutput<typeof searchFiltersSchema>;
 
+function setEntitySelection(query: Partial<EntitySelection>) {
+	void router.push({ query: { mode: route.query.mode, ...query } });
+}
+
+function onChangeEntitySelection(values: EntityFeature) {
+	const temp: EntitySelection = {
+		selection: [getUnprefixedId(values["@id"])],
+	};
+	setEntitySelection(temp);
+}
+
 function setSearchFilters(query: Partial<SearchFilters>) {
-	void router.push({ query });
+	void router.push({ query: { mode: route.query.mode, ...query } });
 }
 
 function onChangeSearchFilters(values: SearchFormData) {
@@ -83,6 +95,13 @@ function togglePolygons() {
 	show.value = !show.value;
 }
 
+const selection = computed(() => {
+	return route.query.selection;
+});
+
+const mode = computed(() => {
+	return route.query.mode;
+});
 /**
  * Reduce size of geojson payload, which has an impact on performance,
  * because `maplibre-gl` will serialize geojson features when sending them to the webworker.
@@ -148,30 +167,32 @@ watch(data, () => {
 });
 
 watchEffect(() => {
-	const entity = entities.value.find((feature) => {
-		const id = getUnprefixedId(feature["@id"]);
-		return id === detailEntityId.value;
-	});
+	if (mode.value && selection.value) {
+		const entity = entities.value.find((feature) => {
+			const id = getUnprefixedId(feature["@id"]);
+			return id === selection.value;
+		});
 
-	if (entity) {
-		let coordinates = null;
+		if (entity) {
+			let coordinates = null;
 
-		if (entity.geometry.type === "GeometryCollection") {
-			coordinates = entity.geometry.geometries.find((g) => {
-				return g.type === "Point";
-			})?.coordinates as [number, number] | undefined;
+			if (entity.geometry.type === "GeometryCollection") {
+				coordinates = entity.geometry.geometries.find((g) => {
+					return g.type === "Point";
+				})?.coordinates as [number, number] | undefined;
+			}
+
+			if (entity.geometry.type === "Point") {
+				coordinates = entity.geometry.coordinates as unknown as [number, number];
+			}
+
+			popover.value = {
+				coordinates:
+					coordinates ??
+					(turf.center(createFeatureCollection([entity])).geometry.coordinates as [number, number]),
+				entities: [entity],
+			};
 		}
-
-		if (entity.geometry.type === "Point") {
-			coordinates = entity.geometry.coordinates as unknown as [number, number];
-		}
-
-		popover.value = {
-			coordinates:
-				coordinates ??
-				(turf.center(createFeatureCollection([entity])).geometry.coordinates as [number, number]),
-			entities: [entity],
-		};
 	}
 });
 </script>
@@ -248,8 +269,9 @@ watchEffect(() => {
 					>
 						<strong class="font-medium">
 							<NavLink
-								class="flex items-center gap-1 underline decoration-dotted hover:no-underline"
-								:href="{ path: `/entities/${entity.properties._id}/${currentView}` }"
+								href="#"
+								class="flex cursor-pointer items-center gap-1 underline decoration-dotted hover:no-underline"
+								@click="onChangeEntitySelection(entity)"
 							>
 								<Component :is="getEntityIcon(entity.systemClass)" class="size-3.5 shrink-0" />
 								{{ entity.properties.title }}

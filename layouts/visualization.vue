@@ -1,63 +1,144 @@
 <script lang="ts" setup>
-import { MapIcon, WaypointsIcon } from "lucide-vue-next";
-import { z } from "zod";
+import { MapPinIcon, RadiusIcon, TablePropertiesIcon } from "lucide-vue-next";
 
-const env = useRuntimeConfig();
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 
 const t = useTranslations();
 
 const route = useRoute();
-
-definePageMeta({
-	validate(route) {
-		const env = useRuntimeConfig();
-		if (env.public.NUXT_PUBLIC_DATABASE === "disabled") return false;
-
-		const paramsSchema = z.object({
-			id: z.coerce.number().int().positive(),
-		});
-		return paramsSchema.safeParse(route.params).success;
-	},
-});
 
 usePageMetadata({
 	title: t("EntityPage.meta.title"),
 });
 
 const id = computed(() => {
-	return Number(route.params.id as string);
+	if (route.query.selection != null) {
+		return Number(route.query.selection);
+	} else return null;
 });
 
-const currentView = useGetCurrentView();
+const currentMode = computed(() => {
+	return route.query.mode as string;
+});
+
+function getPath() {
+	if (route.path.includes("visualization")) {
+		return "visualization";
+	}
+	return "";
+}
 </script>
 
 <template>
 	<NuxtLayout name="default">
-		<MainContent class="container relative grid h-full py-8">
-			<div
-				class="absolute right-4 top-1/2 z-20 rounded-md bg-white/90 p-6 shadow-md dark:bg-neutral-900"
-			>
-				<NavLink
-					class="flex items-center gap-1 underline decoration-dotted hover:no-underline"
-					:href="{ path: `/entities/${id}/${currentView === 'network' ? 'map' : 'network'}` }"
-				>
-					<MapIcon v-if="currentView === 'network'" class="size-6" />
-					<WaypointsIcon v-else class="size-6" />
-					<span class="sr-only">{{
-						currentView === "network" ? t("MapPage.title") : t("NetworkPage.title")
-					}}</span>
-				</NavLink>
+		<div class="absolute right-4 z-20" style="top: calc(50% - 110px)">
+			<ModeSwitch v-if="id != null" :id="id" :current-mode="currentMode" />
+			<div v-else>
+				<div class="grid gap-2 rounded-md bg-white/90 p-4 shadow-md dark:bg-black/90">
+					<TooltipProvider>
+						<Tooltip>
+							<TooltipTrigger>
+								<div
+									:class="
+										currentMode === 'map'
+											? 'rounded-md bg-brand p-4 shadow-md'
+											: 'rounded-md bg-primary/90 p-4 shadow-md dark:bg-white'
+									"
+								>
+									<NavLink
+										class="flex items-center gap-1 underline decoration-dotted hover:no-underline"
+										:href="{
+											path: `/${getPath()}`,
+											query: {
+												mode: 'map',
+											},
+										}"
+									>
+										<MapPinIcon class="size-6 text-white dark:text-black" />
+									</NavLink>
+								</div>
+							</TooltipTrigger>
+							<TooltipContent>
+								<p>{{ t("EntityPage.map") }}</p>
+							</TooltipContent>
+						</Tooltip>
+					</TooltipProvider>
+					<TooltipProvider>
+						<Tooltip>
+							<TooltipTrigger>
+								<div
+									:class="
+										currentMode === 'network'
+											? 'rounded-md bg-brand p-4 shadow-md'
+											: 'rounded-md bg-primary/90 p-4 shadow-md dark:bg-white'
+									"
+								>
+									<NavLink
+										class="flex items-center gap-1 underline decoration-dotted hover:no-underline"
+										:href="{
+											path: `/${getPath()}`,
+											query: {
+												mode: 'network',
+											},
+										}"
+									>
+										<RadiusIcon class="size-6 text-white dark:text-black" />
+									</NavLink>
+								</div>
+							</TooltipTrigger>
+							<TooltipContent>
+								<p>{{ t("EntityPage.network") }}</p>
+							</TooltipContent>
+						</Tooltip>
+					</TooltipProvider>
+					<TooltipProvider>
+						<Tooltip>
+							<TooltipTrigger>
+								<div
+									:class="
+										currentMode === 'table'
+											? 'rounded-md bg-brand p-4 shadow-md'
+											: 'rounded-md bg-primary/90 p-4 shadow-md dark:bg-white'
+									"
+								>
+									<NavLink
+										class="flex items-center gap-1 underline decoration-dotted hover:no-underline"
+										:href="{
+											path: `/${getPath()}`,
+											query: {
+												mode: 'table',
+											},
+										}"
+									>
+										<TablePropertiesIcon class="size-6 text-white dark:text-black" />
+									</NavLink>
+								</div>
+							</TooltipTrigger>
+							<TooltipContent>
+								<p>{{ t("DataPage.title") }}</p>
+							</TooltipContent>
+						</Tooltip>
+					</TooltipProvider>
+				</div>
 			</div>
-			<template v-if="env.public.NUXT_PUBLIC_DATABASE !== 'disabled'">
-				<ErrorBoundary>
-					<DataMapView v-if="currentView === 'map'" />
-					<DataNetworkView v-if="currentView === 'network'" />
-				</ErrorBoundary>
+		</div>
+		<MainContent class="relative h-full">
+			<template v-if="id != null && currentMode !== 'table'">
+				<EntitySidebar :id="id" :no-table-sidebar="true" />
 			</template>
-			<template v-else>
-				<div>{{ t("DataPage.work-in-progress") }}</div>
-			</template>
-			<slot />
+			<div
+				class="relative grid h-full grid-cols-[0px_1fr] transition-all delay-150 ease-in-out data-[sidepanel]:grid-cols-[25vw_1fr]"
+				:data-sidepanel="id != null && currentMode === 'table' ? 'true' : undefined"
+			>
+				<div class="grid h-full">
+					<EntitySidebar
+						v-if="id != null && currentMode === 'table'"
+						:id="id"
+						:no-table-sidebar="false"
+					/>
+				</div>
+				<slot />
+			</div>
 		</MainContent>
 	</NuxtLayout>
 </template>

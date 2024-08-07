@@ -6,6 +6,7 @@ import { useIdPrefix } from "@/composables/use-id-prefix";
 const { getUnprefixedId } = useIdPrefix();
 
 const t = useTranslations();
+const route = useRoute();
 
 const props = defineProps<{
 	relations: EntityFeature["relations"];
@@ -33,6 +34,17 @@ const relationsByType = computed(() => {
 		},
 	);
 });
+
+function getPath() {
+	if (route.path.includes("visualization")) {
+		return "visualization";
+	}
+	return "";
+}
+
+const currentMode = computed(() => {
+	return route.query.mode;
+});
 </script>
 
 <template>
@@ -54,7 +66,13 @@ const relationsByType = computed(() => {
 								<NavLink
 									v-if="relation.relationTo"
 									class="underline decoration-dotted hover:no-underline"
-									:href="{ path: `/entities/${getUnprefixedId(relation.relationTo)}` }"
+									:href="{
+										path: `/${getPath()}`,
+										query: {
+											mode: currentMode,
+											selection: getUnprefixedId(relation.relationTo),
+										},
+									}"
 								>
 									{{ relation.label }}
 								</NavLink>
@@ -68,7 +86,13 @@ const relationsByType = computed(() => {
 									<NavLink
 										v-if="relation.relationTo"
 										class="underline decoration-dotted hover:no-underline"
-										:href="{ path: `/entities/${getUnprefixedId(relation.relationTo)}` }"
+										:href="{
+											path: `/${getPath()}`,
+											query: {
+												mode: currentMode,
+												selection: getUnprefixedId(relation.relationTo),
+											},
+										}"
 									>
 										{{ relation.label }}
 									</NavLink>

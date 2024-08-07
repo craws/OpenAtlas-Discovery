@@ -16,16 +16,26 @@ const defaultLinks = computed<
 	if (!project.map.startPage) {
 		return {
 			home: { href: { path: "/" }, label: t("AppHeader.links.home") },
-			data: { href: { path: "/data" }, label: t("AppHeader.links.data") },
-			map: { href: { path: "/map" }, label: t("AppHeader.links.map") },
-			network: { href: { path: "/network" }, label: t("AppHeader.links.network") },
+			data: {
+				href: { path: "/visualization", query: { mode: "table" } },
+				label: t("AppHeader.links.data"),
+			},
+			map: {
+				href: { path: "/visualization", query: { mode: "map" } },
+				label: t("AppHeader.links.map"),
+			},
+			network: {
+				href: { path: "/visualization", query: { mode: "network" } },
+				label: t("AppHeader.links.network"),
+			},
 			team: { href: { path: "/team" }, label: t("AppHeader.links.team") },
 		};
 	}
 	return {
-		home: { href: { path: "/" }, label: t("AppHeader.links.home") },
-		data: { href: { path: "/data" }, label: t("AppHeader.links.data") },
-		network: { href: { path: "/network" }, label: t("AppHeader.links.network") },
+		home: {
+			href: { path: "/", query: { mode: "map" } },
+			label: t("AppHeader.links.home"),
+		},
 		team: { href: { path: "/team" }, label: t("AppHeader.links.team") },
 	};
 });
