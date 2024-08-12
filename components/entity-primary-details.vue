@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { MapPinIcon } from "lucide-vue-next";
+import { CheckIcon, CopyIcon, MapPinIcon } from "lucide-vue-next";
 
 import CustomPrimaryDetailsActor from "@/components/custom-primary-details-actor.vue";
 import CustomPrimaryDetailsFeature from "@/components/custom-primary-details-feature.vue";
@@ -10,6 +10,8 @@ const getRelationTitle = (relation: RelationType) => {
 };
 
 const { getUnprefixedId } = useIdPrefix();
+const route = useRoute();
+const t = useTranslations();
 
 const props = defineProps<{
 	entity: EntityFeature;
@@ -82,6 +84,8 @@ interface Place {
 	relationType: RelationType | null;
 }
 
+const isCopied = ref(false);
+
 // TODO: For instances where there is no location set (at least for actors), make use of first and last event if no places are available
 const places = computed(() => {
 	return props.entity.relations?.reduce((acc: Array<Place>, relation) => {
@@ -103,6 +107,9 @@ const places = computed(() => {
 });
 
 watchEffect(() => {
+	if (route.query.selection) {
+		isCopied.value = false;
+	}
 	if (!places.value || places.value.length === 0) return;
 	const relTypes = places.value.map((place) => {
 		return place.relationType;
@@ -112,11 +119,35 @@ watchEffect(() => {
 	}
 	emitHandledRelations([]);
 });
+
+function copyEntity() {
+	const fullUrl = window.location.href;
+	const baseUrl = fullUrl.split(route.path)[0];
+	if (baseUrl) {
+		isCopied.value = true;
+		return navigator.clipboard.writeText(`${baseUrl}/entity/${route.query.selection as string}`);
+	}
+	return null;
+}
 </script>
 
 <template>
 	<CardHeader>
-		<EntitySystemClass :system-class="entity.systemClass" />
+		<div class="grid grid-cols-[auto_auto]">
+			<EntitySystemClass :system-class="entity.systemClass" />
+			<div v-if="!isCopied" class="ml-auto">
+				<Button variant="outline" @click="copyEntity">
+					<CopyIcon :size="16" />
+					{{ t("EntitySidebar.copy") }}
+				</Button>
+			</div>
+			<div v-if="isCopied" class="ml-auto">
+				<Button variant="brand" @click="copyEntity">
+					<CheckIcon :size="16" />
+					{{ t("EntitySidebar.copied") }}
+				</Button>
+			</div>
+		</div>
 		<PageTitle>{{ entity.properties.title }}</PageTitle>
 		<!-- @ts-expect FIXME: Incorrect information provided by openapi document. -->
 		<EntityAliases

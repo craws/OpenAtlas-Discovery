@@ -40,7 +40,7 @@ const searchLabelId = "search-field";
 	>
 		<div class="grid gap-y-1">
 			<!-- eslint-disable-next-line vuejs-accessibility/form-control-has-label -->
-			<Select name="category" :default-value="props.filter">
+			<Select name="category" :default-value="props.category">
 				<SelectTrigger :aria-label="t('SearchForm.filter')" class="min-w-48">
 					<SelectValue :placeholder="t('SearchForm.select-filter')" />
 				</SelectTrigger>

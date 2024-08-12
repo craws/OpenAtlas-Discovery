@@ -81,7 +81,9 @@
 	},
 	"EntitySidebar": {
 		"NextFeature": "Nächste Funktion",
-		"PreviousFeature": "Vorheriges Feature"
+		"PreviousFeature": "Vorheriges Feature",
+		"copy": "Kopiere Zitation",
+		"copied": "Kopiert!"
 	},
 	"ErrorBoundary": {
 		"error": "Fehler"
