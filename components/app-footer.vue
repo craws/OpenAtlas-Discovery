@@ -44,11 +44,6 @@ const links = computed(() => {
 					</li>
 				</ul>
 			</nav>
-
-			<div class="sm:justify-self-end sm:text-right">
-				Version:
-				{{ [env.public.gitTag, env.public.gitBranchName].filter(isNonEmptyString).join(" - ") }}
-			</div>
 		</div>
 	</footer>
 </template>
