@@ -210,7 +210,7 @@ watchEffect(() => {
 						? 'bg-white/90 dark:bg-neutral-900 max-w-[800px] w-full mt-2 rounded-md p-6 shadow-md pointer-events-auto'
 						: ''
 				"
-				:filter="searchFilters.category"
+				:category="searchFilters.category"
 				:search="searchFilters.search"
 				@submit="onChangeSearchFilters"
 			/>

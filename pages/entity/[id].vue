@@ -22,7 +22,6 @@ definePageMeta({
 	},
 });
 
-const locale = useLocale();
 const t = useTranslations();
 const { getUnprefixedId } = useIdPrefix();
 
@@ -31,7 +30,7 @@ const id = computed(() => {
 	return Number(route.params.id as string);
 });
 
-const { data, error, isPending, isPlaceholderData, suspense } = useGetEntity(
+const { data, isPending, isPlaceholderData } = useGetEntity(
 	computed(() => {
 		return { entityId: id.value };
 	}),
@@ -113,7 +112,10 @@ const typesById = computed(() => {
 				<!-- TODO: keep map alive -->
 				<TabsContent v-for="tab of tabs" :key="tab.id" class="h-full max-h-full" :value="tab.id">
 					<EntityGeoMap v-if="tab.id === 'geo-map'" :entities="entities" />
-					<EntityImages v-else-if="tab.id === 'images'" :images="entity.depictions" />
+					<EntityImages
+						v-else-if="tab.id === 'images' && entity.depictions"
+						:images="entity.depictions"
+					/>
 				</TabsContent>
 			</Tabs>
 
@@ -133,8 +135,15 @@ const typesById = computed(() => {
 								<ul role="list">
 									<li v-for="(relation, index) of relations.slice(0, 10)" :key="index">
 										<NavLink
+											v-if="relation.relationTo"
 											class="underline decoration-dotted hover:no-underline"
-											:href="{ path: `/entities/${getUnprefixedId(relation.relationTo)}` }"
+											:href="{
+												path: `/visualization/`,
+												query: {
+													mode: 'table',
+													selection: getUnprefixedId(relation.relationTo),
+												},
+											}"
 										>
 											{{ relation.label }}
 										</NavLink>
@@ -155,8 +164,15 @@ const typesById = computed(() => {
 									<ul role="list">
 										<li v-for="(relation, index) of relations.slice(10)" :key="index">
 											<NavLink
+												v-if="relation.relationTo"
 												class="underline decoration-dotted hover:no-underline"
-												:href="{ path: `/entities/${getUnprefixedId(relation.relationTo)}` }"
+												:href="{
+													path: `/visualization/`,
+													query: {
+														mode: 'table',
+														selection: getUnprefixedId(relation.relationTo),
+													},
+												}"
 											>
 												{{ relation.label }}
 											</NavLink>
