@@ -5,7 +5,7 @@ import { categories, type Category } from "@/composables/use-get-search-results"
 
 export interface SearchFormData {
 	search: string;
-	filter: Category;
+	category: Category;
 }
 
 const props = defineProps<SearchFormData>();
@@ -22,7 +22,7 @@ function onSubmit(event: Event) {
 
 	emit("submit", {
 		search: formData.get("q") as string,
-		filter: formData.get("category") as Category,
+		category: formData.get("category") as Category,
 	});
 }
 
