@@ -110,7 +110,7 @@ const typesById = computed(() => {
 					</TabsTrigger>
 				</TabsList>
 				<!-- TODO: keep map alive -->
-				<TabsContent v-for="tab of tabs" :key="tab.id" class="h-full max-h-full" :value="tab.id">
+				<TabsContent v-for="tab of tabs" :key="tab.id" :value="tab.id">
 					<EntityGeoMap v-if="tab.id === 'geo-map'" :entities="entities" />
 					<EntityImages
 						v-else-if="tab.id === 'images' && entity.depictions"
