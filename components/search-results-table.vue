@@ -100,16 +100,22 @@ const cols = [
 		cell: (info) => {
 			const icon = getEntityIcon(info.getValue());
 
-			const tooltipWrapper = h(TooltipProvider, {}, [
-				h(Tooltip, {}, [
-					h(
-						TooltipTrigger,
-						{ class: "cursor-default" },
-						icon ? h(icon, { class: "size-4 shrink-0" }) : h("span", {}, info.getValue()),
-					),
-					h(TooltipContent, {}, t(`SystemClassNames.${info.getValue()}`)),
-				]),
-			]);
+			const tooltipWrapper = h(TooltipProvider, {}, () => {
+				return [
+					h(Tooltip, {}, () => {
+						return [
+							h(TooltipTrigger, { class: "cursor-default" }, () => {
+								return icon
+									? h(icon, { class: "size-4 shrink-0" })
+									: h("span", {}, info.getValue());
+							}),
+							h(TooltipContent, {}, () => {
+								return t(`SystemClassNames.${info.getValue()}`);
+							}),
+						];
+					}),
+				];
+			});
 
 			const root = h("span", {}, [
 				tooltipWrapper,
@@ -140,7 +146,9 @@ const cols = [
 						},
 					},
 				},
-				title,
+				() => {
+					return title;
+				},
 			);
 		},
 	}),
