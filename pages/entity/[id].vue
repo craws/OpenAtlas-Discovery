@@ -99,6 +99,14 @@ const typesById = computed(() => {
 					<div class="grid gap-4">
 						<EntityTimespans :timespans="entity.when?.timespans" />
 						<EntityDescriptions :descriptions="entity?.descriptions ?? []" />
+						<!-- Types -->
+						<div class="flex flex-row flex-wrap gap-1">
+							<TypesPopover
+								v-for="type in entity.types"
+								:key="type.identifier ?? type.label ?? 'missing'"
+								:type="type"
+							/>
+						</div>
 					</div>
 				</CardContent>
 			</Card>
@@ -159,7 +167,7 @@ const typesById = computed(() => {
 								</ul>
 								<details v-if="relations.length > 10">
 									<summary class="cursor-pointer py-1 text-sm text-muted-foreground">
-										Show more
+										{{ t("Global.ShowMore") }}
 									</summary>
 									<ul role="list">
 										<li v-for="(relation, index) of relations.slice(10)" :key="index">
