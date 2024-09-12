@@ -8,6 +8,7 @@ import {
 } from "lucide-vue-next";
 
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { project } from "@/config/project.config";
 
 const props = defineProps<{
 	currentMode: string;
@@ -49,10 +50,10 @@ watch(
 );
 
 function entityHasCoordinates(entity: EntityFeature) {
-	if (entity.systemClass !== "place") {
+	if (!project.map.mapDisplayedSystemClasses.includes(entity.systemClass)) {
 		hasPlace.value = false;
 	}
-	if (entity.systemClass === "place") {
+	if (project.map.mapDisplayedSystemClasses.includes(entity.systemClass)) {
 		hasPlace.value = true;
 	}
 }
