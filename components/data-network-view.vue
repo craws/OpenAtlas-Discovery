@@ -41,7 +41,7 @@ const { data, isPending, isPlaceholderData } = useGetNetworkData(
 	computed(() => {
 		return {
 			// TO-DO: Currently there is an issue: filtering by case study and system_class type will return no results
-			exclude_system_classes: project.network.exclude,
+			exclude_system_classes: project.network.excludeSystemClasses,
 		};
 	}),
 );

@@ -12,24 +12,6 @@ const schema = v.object({
 	colors: v.pipe(
 		v.object({
 			brand: v.pipe(v.string(), v.nonEmpty()),
-			disabledNodeColor: v.pipe(v.string(), v.nonEmpty()),
-			entityColors: v.object({
-				acquisition: v.pipe(v.string(), v.nonEmpty()),
-				activity: v.pipe(v.string(), v.nonEmpty()),
-				artifact: v.pipe(v.string(), v.nonEmpty()),
-				event: v.pipe(v.string(), v.nonEmpty()),
-				feature: v.pipe(v.string(), v.nonEmpty()),
-				file: v.pipe(v.string(), v.nonEmpty()),
-				group: v.pipe(v.string(), v.nonEmpty()),
-				human_remains: v.pipe(v.string(), v.nonEmpty()),
-				move: v.pipe(v.string(), v.nonEmpty()),
-				person: v.pipe(v.string(), v.nonEmpty()),
-				place: v.pipe(v.string(), v.nonEmpty()),
-				source: v.pipe(v.string(), v.nonEmpty()),
-				stratigraphic_unit: v.pipe(v.string(), v.nonEmpty()),
-				type: v.pipe(v.string(), v.nonEmpty()),
-			}),
-			entityDefaultColor: v.pipe(v.string(), v.nonEmpty()),
 			geojsonPoints: v.pipe(v.string(), v.nonEmpty()),
 			geojsonAreaCenterPoints: v.pipe(v.string(), v.nonEmpty()),
 		}),
@@ -46,7 +28,7 @@ const schema = v.object({
 		}),
 	),
 	network: v.object({
-		exclude: v.array(v.string()),
+		excludeSystemClasses: v.array(v.string()),
 	}),
 	defaultLocale: v.picklist(["de", "en"]),
 	fullscreen: v.boolean(),
@@ -59,6 +41,7 @@ const schema = v.object({
 	}),
 	map: v.object({
 		startPage: v.boolean(),
+		mapDisplayedSystemClasses: v.array(v.string()),
 	}),
 	twitter: v.optional(v.string()),
 });

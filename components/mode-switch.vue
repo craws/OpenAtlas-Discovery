@@ -58,7 +58,7 @@ function entityHasCoordinates(entity: EntityFeature) {
 }
 
 function entityInNetwork(entity: EntityFeature) {
-	if (project.network.exclude.includes(entity.systemClass)) {
+	if (project.network.excludeSystemClasses.includes(entity.systemClass)) {
 		inNetwork.value = false;
 	} else inNetwork.value = true;
 }

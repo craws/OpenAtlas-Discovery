@@ -65,7 +65,7 @@ const { data, isPending, isPlaceholderData } = useGetSearchResults(
 					: [],
 			show: ["geometry", "when"],
 			centroid: true,
-			system_classes: ["place"],
+			system_classes: project.map.mapDisplayedSystemClasses,
 			limit: 0,
 		};
 	}),

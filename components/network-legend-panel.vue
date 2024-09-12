@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { colors } from "@/project.config.json";
+import { networkConfig } from "@/config/network-visualisation.config";
 
 const t = useTranslations();
 
@@ -45,7 +45,7 @@ const labels = {
 	source_translation: t("SystemClassNames.source_translation"),
 };
 
-const systemClassColors = colors.entityColors;
+const systemClassColors = networkConfig.colors.entityColors;
 </script>
 
 <template>
