@@ -54,6 +54,7 @@ function onChangeSearchFilters(values: SearchFormData) {
 }
 
 const { data, isPending, isPlaceholderData } = useGetSearchResults(
+	// @ts-expect-error Includes custom, per-instance system classes.
 	computed(() => {
 		const { search, category, ...params } = searchFilters.value;
 
