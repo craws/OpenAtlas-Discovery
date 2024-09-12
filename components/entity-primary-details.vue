@@ -160,24 +160,6 @@ function copyEntity() {
 		<div class="grid gap-4">
 			<EntityDescriptions :descriptions="entity?.descriptions ?? []" />
 
-			<div class="flex w-full flex-row flex-wrap gap-4">
-				<template v-for="(place, index) in places" :key="place.label || `place-${index}`">
-					<InfoCard
-						v-if="place.relationType"
-						class="max-w-48 p-4"
-						:icon="MapPinIcon"
-						:title="getRelationTitle(place.relationType)"
-					>
-						<template #content>
-							<EntityPreviewLink v-if="place.id" :id="useToNumber(place.id).value">
-								{{ place.label }}
-							</EntityPreviewLink>
-							{{ place.id ? "" : place.label }}
-						</template>
-					</InfoCard>
-				</template>
-			</div>
-
 			<!-- Types -->
 			<div class="flex flex-row flex-wrap gap-1">
 				<TypesPopover
