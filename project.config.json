@@ -7,7 +7,6 @@
 	"network": {
 		"excludeSystemClasses": [
 			"type",
-			"object_location",
 			"reference_system",
 			"source_translation",
 			"source",
