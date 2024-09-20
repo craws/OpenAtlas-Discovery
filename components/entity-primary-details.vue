@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { CheckIcon, CopyIcon, MapPinIcon } from "lucide-vue-next";
+import { CheckIcon, CopyIcon } from "lucide-vue-next";
 
 import CustomPrimaryDetailsActor from "@/components/custom-primary-details-actor.vue";
 import CustomPrimaryDetailsFeature from "@/components/custom-primary-details-feature.vue";
 import CustomPrimaryDetailsPlace from "@/components/custom-primary-details-place.vue";
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const getRelationTitle = (relation: RelationType) => {
 	return useRelationTitle(relation, props.entity.systemClass);
 };
