@@ -6,7 +6,7 @@ import { type Camera, Sigma } from "sigma";
 import type { EdgeDisplayData, NodeDisplayData } from "sigma/types";
 import { onMounted, ref } from "vue";
 
-import { layoutOptions } from "@/config/network-visualisation.config";
+import { layoutOptions, networkConfig } from "@/config/network-visualisation.config";
 
 interface State {
 	hoveredNode?: string;
@@ -48,7 +48,7 @@ let hoverTimeOut: ReturnType<typeof setTimeout>;
 const state = ref<State>({});
 const layout = new FA2LayoutSupervisor(context.graph, { settings: layoutOptions });
 
-const disabledNodeColor = project.colors.disabledNodeColor;
+const disabledNodeColor = networkConfig.colors.disabledNodeColor;
 
 function setSearchHighlight(searchNode: string) {
 	context.graph.nodes().forEach((el) => {
