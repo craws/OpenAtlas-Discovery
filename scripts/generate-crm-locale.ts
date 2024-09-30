@@ -29,7 +29,7 @@ import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 import * as v from "valibot";
 
-import { log } from "@acdh-oeaw/lib";
+import { assert, log } from "@acdh-oeaw/lib";
 import createApiClient from "@stefanprobst/openapi-client";
 
 import { defaultLocale, locales } from "@/config/i18n.config";
@@ -37,7 +37,7 @@ import type { paths } from "@/lib/api-client/api";
 
 const schema = v.object({
 	NUXT_PUBLIC_DATABASE: v.optional(v.picklist(["enabled", "disabled"]), "enabled"),
-	NUXT_PUBLIC_API_BASE_URL: v.pipe(v.string(), v.url()),
+	NUXT_PUBLIC_API_BASE_URL: v.optional(v.pipe(v.string(), v.url())),
 });
 
 interface Translations {
@@ -134,6 +134,8 @@ async function generate(locale = defaultLocale) {
 	if (!isDatabaseEnabled) {
 		return false;
 	}
+
+	assert(baseUrl, "NUXT_PUBLIC_API_BASE_URL environment variable not provided.");
 
 	log.info(`Generating crm messages for locale: "${locale}" from url: ${baseUrl} ...`);
 	const apiClient = createApiClient<paths>({ baseUrl });

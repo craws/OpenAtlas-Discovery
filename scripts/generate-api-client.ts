@@ -1,13 +1,13 @@
 import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 
-import { log } from "@acdh-oeaw/lib";
+import { assert, log } from "@acdh-oeaw/lib";
 import openapi, { astToString } from "openapi-typescript";
 import * as v from "valibot";
 
 const schema = v.object({
 	NUXT_PUBLIC_DATABASE: v.optional(v.picklist(["enabled", "disabled"]), "enabled"),
-	NUXT_PUBLIC_OPENAPI_BASE_URL: v.pipe(v.string(), v.url()),
+	NUXT_PUBLIC_OPENAPI_BASE_URL: v.optional(v.pipe(v.string(), v.url())),
 });
 
 async function generate() {
@@ -28,6 +28,8 @@ async function generate() {
 	}
 
 	const url = result.output.NUXT_PUBLIC_OPENAPI_BASE_URL;
+
+	assert(url, "NUXT_PUBLIC_OPENAPI_BASE_URL environment variable not provided.");
 
 	const ast = await openapi(url, {
 		arrayLength: true,
