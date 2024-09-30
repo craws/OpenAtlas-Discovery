@@ -27,29 +27,18 @@
 
 import { mkdir, writeFile } from "node:fs/promises";
 import { join } from "node:path";
+import * as v from "valibot";
 
 import { log } from "@acdh-oeaw/lib";
 import createApiClient from "@stefanprobst/openapi-client";
-import { z } from "zod";
 
 import { defaultLocale, locales } from "@/config/i18n.config";
 import type { paths } from "@/lib/api-client/api";
 
-const schema = z.object({
-	NUXT_PUBLIC_API_BASE_URL: z.string().url(),
+const schema = v.object({
+	NUXT_PUBLIC_DATABASE: v.optional(v.picklist(["enabled", "disabled"]), "enabled"),
+	NUXT_PUBLIC_API_BASE_URL: v.pipe(v.string(), v.url()),
 });
-
-const result = schema.safeParse(process.env);
-
-if (!result.success) {
-	const message = "Invalid environment variables";
-	log.error(`${message}:`, result.error.flatten().fieldErrors);
-	const error = new Error(message);
-	delete error.stack;
-	throw error;
-}
-
-const baseUrl = result.data.NUXT_PUBLIC_API_BASE_URL;
 
 interface Translations {
 	title?: string;
@@ -129,6 +118,23 @@ const customDictionary: Record<
  * @returns A Promise that resolves when the CRM messages have been generated.
  */
 async function generate(locale = defaultLocale) {
+	const result = v.safeParse(schema, process.env);
+
+	if (!result.success) {
+		const message = "Invalid environment variables";
+		const error = new Error(message);
+		delete error.stack;
+		throw error;
+	}
+
+	const baseUrl = result.output.NUXT_PUBLIC_API_BASE_URL;
+
+	const isDatabaseEnabled = result.output.NUXT_PUBLIC_DATABASE === "enabled";
+
+	if (!isDatabaseEnabled) {
+		return false;
+	}
+
 	log.info(`Generating crm messages for locale: "${locale}" from url: ${baseUrl} ...`);
 	const apiClient = createApiClient<paths>({ baseUrl });
 
@@ -165,12 +171,18 @@ async function generate(locale = defaultLocale) {
 	await writeFile(join(folderPath, `crm.json`), content, {
 		encoding: "utf-8",
 	});
+
+	return true;
 }
 
 for (const locale of locales) {
 	generate(locale)
-		.then(() => {
-			log.success(`Successfully generated crm messages for ${locale}.`);
+		.then((isGenerated) => {
+			if (isGenerated) {
+				log.success(`Successfully generated crm messages for ${locale}.`);
+			} else {
+				log.info("Skipped generating crm messages.");
+			}
 		})
 		.catch((error) => {
 			log.error(`Failed to generate crm messages for ${locale}.\n`, String(error));

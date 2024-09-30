@@ -14,6 +14,8 @@ const t = useTranslations();
 const route = useRoute();
 const router = useRouter();
 
+const env = useRuntimeConfig();
+
 onMounted(() => {
 	if (project.map.startPage) {
 		if (!route.query.mode) {
@@ -26,17 +28,12 @@ onMounted(() => {
 
 definePageMeta({
 	layout: project.map.startPage ? "visualization" : "default",
-	validate() {
-		const env = useRuntimeConfig();
-		return env.public.database !== "disabled";
-	},
+	middleware: project.map.startPage ? "database-check" : undefined,
 });
 
 usePageMetadata({
 	title: t("IndexPage.meta.title"),
 });
-
-const env = useRuntimeConfig();
 
 const {
 	data: content,
@@ -102,12 +99,14 @@ const currentMode = computed(() => {
 						<template #empty></template>
 					</ContentRenderer>
 
-					<div class="flex items-center gap-6">
-						<Button v-for="(link, key) of content.links" :key="key" as-child variant="default">
-							<NavLink :href="link.href">
-								{{ link.label }}
-							</NavLink>
-						</Button>
+					<div v-if="env.public.database === 'enabled'">
+						<div class="flex items-center gap-6">
+							<Button v-for="(link, key) of content.links" :key="key" as-child variant="default">
+								<NavLink :href="link.href">
+									{{ link.label }}
+								</NavLink>
+							</Button>
+						</div>
 					</div>
 				</div>
 			</template>
@@ -133,16 +132,11 @@ const currentMode = computed(() => {
 			<div>
 				<PageTitle class="sr-only">{{ t("MapPage.title") }}</PageTitle>
 			</div>
-			<template v-if="env.public.database !== 'disabled'">
-				<ErrorBoundary>
-					<DataMapView v-show="currentMode === 'map'" />
-					<DataNetworkView v-show="currentMode === 'network'" />
-					<DataView v-if="currentMode === 'table'" />
-				</ErrorBoundary>
-			</template>
-			<template v-else>
-				<div>{{ t("DataPage.work-in-progress") }}</div>
-			</template>
+			<ErrorBoundary>
+				<DataMapView v-show="currentMode === 'map'" />
+				<DataNetworkView v-show="currentMode === 'network'" />
+				<DataView v-if="currentMode === 'table'" />
+			</ErrorBoundary>
 		</template>
 	</MainContent>
 </template>

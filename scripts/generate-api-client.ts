@@ -6,22 +6,29 @@ import openapi, { astToString } from "openapi-typescript";
 import * as v from "valibot";
 
 const schema = v.object({
+	NUXT_PUBLIC_DATABASE: v.optional(v.picklist(["enabled", "disabled"]), "enabled"),
 	NUXT_PUBLIC_OPENAPI_BASE_URL: v.pipe(v.string(), v.url()),
 });
 
-const result = v.safeParse(schema, process.env);
-
-if (!result.success) {
-	const message = "Invalid environment variables";
-	log.error(`${message}:`, v.flatten(result.issues).nested);
-	const error = new Error(message);
-	delete error.stack;
-	throw error;
-}
-
-const url = result.output.NUXT_PUBLIC_OPENAPI_BASE_URL;
-
 async function generate() {
+	const result = v.safeParse(schema, process.env);
+
+	if (!result.success) {
+		const message = "Invalid environment variables";
+		log.error(`${message}:`, v.flatten(result.issues).nested);
+		const error = new Error(message);
+		delete error.stack;
+		throw error;
+	}
+
+	const isDatabaseEnabled = result.output.NUXT_PUBLIC_DATABASE === "enabled";
+
+	if (!isDatabaseEnabled) {
+		return false;
+	}
+
+	const url = result.output.NUXT_PUBLIC_OPENAPI_BASE_URL;
+
 	const ast = await openapi(url, {
 		arrayLength: true,
 	});
@@ -29,11 +36,17 @@ async function generate() {
 	const folderPath = join(process.cwd(), "lib", "api-client");
 	await mkdir(folderPath, { recursive: true });
 	await writeFile(join(folderPath, "api.ts"), content, { encoding: "utf-8" });
+
+	return true;
 }
 
 generate()
-	.then(() => {
-		log.success("Successfully generated api client.");
+	.then((isGenerated) => {
+		if (isGenerated) {
+			log.success("Successfully generated api client.");
+		} else {
+			log.info("Skipped generating api client.");
+		}
 	})
 	.catch((error: unknown) => {
 		log.error("Failed to generate api client.\n", String(error));

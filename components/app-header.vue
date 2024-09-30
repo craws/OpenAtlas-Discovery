@@ -9,13 +9,18 @@ import type { ContentPage } from "@/types/content";
 const locale = useLocale();
 const t = useTranslations();
 
+const env = useRuntimeConfig();
+
 const defaultLinks = computed<
 	// eslint-disable-next-line @typescript-eslint/ban-types
 	Record<"home" & (string & {}), { href: NavLinkProps["href"]; label: string }>
 >(() => {
-	if (!project.map.startPage) {
+	if (env.public.database === "enabled" && !project.map.startPage) {
 		return {
-			home: { href: { path: "/" }, label: t("AppHeader.links.home") },
+			home: {
+				href: { path: "/" },
+				label: t("AppHeader.links.home"),
+			},
 			data: {
 				href: { path: "/visualization", query: { mode: "table" } },
 				label: t("AppHeader.links.data"),
@@ -33,7 +38,7 @@ const defaultLinks = computed<
 	}
 	return {
 		home: {
-			href: { path: "/", query: { mode: "map" } },
+			href: project.map.startPage ? { path: "/", mode: "map" } : { path: "/" },
 			label: t("AppHeader.links.home"),
 		},
 		team: { href: { path: "/team" }, label: t("AppHeader.links.team") },

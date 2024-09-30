@@ -1,10 +1,7 @@
 <script lang="ts" setup>
 definePageMeta({
 	layout: "visualization",
-	validate() {
-		const env = useRuntimeConfig();
-		return env.public.database !== "disabled";
-	},
+	middleware: "database-check",
 });
 
 const t = useTranslations();
@@ -14,8 +11,6 @@ usePageMetadata({
 });
 
 const route = useRoute();
-
-const env = useRuntimeConfig();
 
 const currentMode = computed(() => {
 	return route.query.mode;
@@ -27,15 +22,10 @@ const currentMode = computed(() => {
 		<div>
 			<PageTitle class="sr-only">{{ t("MapPage.title") }}</PageTitle>
 		</div>
-		<template v-if="env.public.database !== 'disabled'">
-			<ErrorBoundary>
-				<DataMapView v-if="currentMode === 'map'" />
-				<DataNetworkView v-if="currentMode === 'network'" />
-				<DataView v-if="currentMode === 'table'"></DataView>
-			</ErrorBoundary>
-		</template>
-		<template v-else>
-			<div>{{ t("DataPage.work-in-progress") }}</div>
-		</template>
+		<ErrorBoundary>
+			<DataMapView v-if="currentMode === 'map'" />
+			<DataNetworkView v-if="currentMode === 'network'" />
+			<DataView v-if="currentMode === 'table'"></DataView>
+		</ErrorBoundary>
 	</MainContent>
 </template>

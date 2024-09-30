@@ -11,10 +11,8 @@ import { hasCoordinates } from "@/utils/has-geojson-coordinates";
 
 definePageMeta({
 	title: "EntityPage.meta.title",
+	middleware: "database-check",
 	validate(route) {
-		const env = useRuntimeConfig();
-		if (env.public.NUXT_PUBLIC_DATABASE === "disabled") return false;
-
 		const paramsSchema = z.object({
 			id: z.coerce.number().int().positive(),
 		});
