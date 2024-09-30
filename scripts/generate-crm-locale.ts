@@ -112,6 +112,15 @@ const customDictionary: Record<
 	},
 };
 
+async function writeCrmMessages(obj: object, locale: string) {
+	const content = JSON.stringify(obj, null, "\t");
+
+	const folderPath = join(process.cwd(), "messages", locale);
+	await mkdir(folderPath, { recursive: true });
+	await writeFile(join(folderPath, `crm.json`), content, {
+		encoding: "utf-8",
+	});
+}
 /**
  * Generates CRM messages for the specified locale.
  * @param locale - The locale for which to generate CRM messages. Defaults to `defaultLocale` if not provided.
@@ -132,6 +141,7 @@ async function generate(locale = defaultLocale) {
 	const isDatabaseEnabled = result.output.NUXT_PUBLIC_DATABASE === "enabled";
 
 	if (!isDatabaseEnabled) {
+		await writeCrmMessages({}, locale);
 		return false;
 	}
 
@@ -166,13 +176,7 @@ async function generate(locale = defaultLocale) {
 		obj[key] = typeTranslations;
 	}
 
-	const content = JSON.stringify(obj, null, "\t");
-
-	const folderPath = join(process.cwd(), "messages", locale);
-	await mkdir(folderPath, { recursive: true });
-	await writeFile(join(folderPath, `crm.json`), content, {
-		encoding: "utf-8",
-	});
+	await writeCrmMessages(obj, locale);
 
 	return true;
 }
