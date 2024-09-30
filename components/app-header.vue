@@ -126,7 +126,7 @@ const links = computed(() => {
 
 				<div class="ml-auto flex items-center gap-4">
 					<ColorSchemeSwitcher />
-					<LocaleSwitcher v-if="locales.length > 0" />
+					<LocaleSwitcher v-if="locales.length > 1" />
 					<nav :aria-label="t('AppHeader.navigation-main')" class="flex shrink-0 lg:hidden">
 						<AppNavigationMobileMenu :title="t('AppHeader.navigation-menu')" :links="links" />
 					</nav>
