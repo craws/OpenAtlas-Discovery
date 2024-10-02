@@ -28,9 +28,8 @@ async function generate() {
 	}
 
 	const isDatabaseEnabled = result.output.NUXT_PUBLIC_DATABASE === "enabled";
-
 	if (!isDatabaseEnabled) {
-		return false;
+		return { isOverriden: false, api: "" };
 	}
 
 	const url = result.output.NUXT_PUBLIC_OPENAPI_BASE_URL;
@@ -45,15 +44,17 @@ async function generate() {
 	await mkdir(folderPath, { recursive: true });
 	await writeFile(join(folderPath, "api.ts"), content, { encoding: "utf-8" });
 
-	return true;
+	return { isOverriden: true, api: url };
 }
 
 generate()
-	.then((isGenerated) => {
-		if (isGenerated) {
-			log.success("Successfully generated api client.");
+	.then(({ isOverriden, api }) => {
+		if (isOverriden) {
+			log.success("Successfully generated api client from ", api);
 		} else {
-			log.info("Skipped generating api client.");
+			log.info(
+				"Used default api client from the demo data, because no other database is provided.",
+			);
 		}
 	})
 	.catch((error: unknown) => {
