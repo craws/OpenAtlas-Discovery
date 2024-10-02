@@ -7,7 +7,13 @@ import * as v from "valibot";
 
 const schema = v.object({
 	NUXT_PUBLIC_DATABASE: v.optional(v.picklist(["enabled", "disabled"]), "enabled"),
-	NUXT_PUBLIC_OPENAPI_BASE_URL: v.optional(v.pipe(v.string(), v.url())),
+	NUXT_PUBLIC_OPENAPI_BASE_URL: v.pipe(
+		v.unknown(),
+		v.transform((v) => {
+			return v === "" ? undefined : v;
+		}),
+		v.optional(v.pipe(v.string(), v.url())),
+	),
 });
 
 async function generate() {

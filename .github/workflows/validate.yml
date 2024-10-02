@@ -65,6 +65,7 @@ jobs:
         run: pnpm install --frozen-lockfile
         env:
           NUXT_PUBLIC_API_BASE_URL: "${{ vars.NUXT_PUBLIC_API_BASE_URL }}"
+          NUXT_PUBLIC_DATABASE: "${{ vars.NUXT_PUBLIC_DATABASE }}"
           NUXT_PUBLIC_OPENAPI_BASE_URL: "${{ vars.NUXT_PUBLIC_OPENAPI_BASE_URL }}"
 
       - name: Format
@@ -103,6 +104,7 @@ jobs:
         env:
           NUXT_PUBLIC_API_BASE_URL: "${{ vars.NUXT_PUBLIC_API_BASE_URL }}"
           NUXT_PUBLIC_APP_BASE_URL: "http://localhost:3000"
+          NUXT_PUBLIC_DATABASE: "${{ vars.NUXT_PUBLIC_DATABASE }}"
           NUXT_PUBLIC_OPENAPI_BASE_URL: "${{ vars.NUXT_PUBLIC_OPENAPI_BASE_URL }}"
           NUXT_PUBLIC_REDMINE_ID: "${{ vars.SERVICE_ID }}"
 
