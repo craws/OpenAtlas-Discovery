@@ -50,11 +50,19 @@ watch(
 );
 
 function entityHasCoordinates(entity: EntityFeature) {
+	console.log(entity);
 	if (!project.map.mapDisplayedSystemClasses.includes(entity.systemClass)) {
 		hasPlace.value = false;
 	}
 	if (project.map.mapDisplayedSystemClasses.includes(entity.systemClass)) {
-		hasPlace.value = true;
+		if (entity.geometry.type === "GeometryCollection" && entity.geometry.geometries.length === 0) {
+			hasPlace.value = false;
+		} else if (
+			entity.geometry.type !== "GeometryCollection" &&
+			entity.geometry.coordinates.length === 0
+		) {
+			hasPlace.value = false;
+		} else hasPlace.value = true;
 	}
 }
 
