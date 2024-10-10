@@ -50,7 +50,6 @@ watch(
 );
 
 function entityHasCoordinates(entity: EntityFeature) {
-	console.log(entity);
 	if (!project.map.mapDisplayedSystemClasses.includes(entity.systemClass)) {
 		hasPlace.value = false;
 	}
