@@ -82,7 +82,7 @@
 	"EntitySidebar": {
 		"NextFeature": "NextFeature",
 		"PreviousFeature": "Previous Feature",
-		"copy": "Copy Citation",
+		"copy": "Permalink",
 		"copied": "Copied!"
 	},
 	"ErrorBoundary": {
