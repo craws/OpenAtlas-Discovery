@@ -36,6 +36,9 @@ const currentMode = computed(() => {
 			<Button variant="outline" class="max-w-48">
 				<span class="overflow-hidden text-ellipsis">
 					{{ type.label }}
+					<span v-if="type.value && type.unit" class="ml-1 text-muted-foreground">
+						{{ type.value }} <span> {{ type.unit }}</span>
+					</span>
 					<span class="sr-only">{{ t("Global.ShowMore") }}</span>
 				</span>
 			</Button>
@@ -133,10 +136,6 @@ const currentMode = computed(() => {
 				</BreadcrumbList>
 			</Breadcrumb>
 			<p>{{ type.descriptions }}</p>
-
-			<p v-if="type.value && type.unit" class="mt-2">
-				{{ type.value }} <span class="text-muted-foreground"> {{ type.unit }}</span>
-			</p>
 		</PopoverContent>
 	</Popover>
 </template>
