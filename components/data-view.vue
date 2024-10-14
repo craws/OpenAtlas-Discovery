@@ -40,6 +40,8 @@ const searchFiltersSchema = v.object({
 	),
 });
 
+const idCategories = ["entityID", "typeID", "valueTypeID", "typeIDWithSubs"];
+
 const searchFilters = computed(() => {
 	return v.parse(searchFiltersSchema, route.query);
 });
@@ -82,18 +84,21 @@ const { data, isPending, isPlaceholderData } = useGetSearchResults(
 	computed(() => {
 		const { search, category, ...params } = searchFilters.value;
 
+		const operator = idCategories.includes(category) ? "equal" : "like";
+
+		const searchQuery =
+			search && search.length > 0
+				? [{ [category]: [{ operator, values: [search], logicalOperator: "and" }] }]
+				: [];
+
 		return {
 			...params,
-			search:
-				search.length > 0
-					? [{ [category]: [{ operator: "like", values: [search], logicalOperator: "and" }] }]
-					: [],
+			search: searchQuery,
 			show: ["description", "when"],
 			view_classes: ["actor", "event", "place", "reference", "source"],
 		};
 	}),
 );
-
 const isLoading = computed(() => {
 	return isPending.value || isPlaceholderData.value;
 });
