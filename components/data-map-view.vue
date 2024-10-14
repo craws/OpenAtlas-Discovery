@@ -22,6 +22,8 @@ const searchFiltersSchema = v.object({
 	search: v.fallback(v.string(), ""),
 });
 
+const idCategories = ["entityID", "typeID", "valueTypeID", "typeIDWithSubs"];
+
 const entitySelectionSchema = v.object({
 	selection: v.fallback(v.array(v.string()), []),
 });
@@ -58,11 +60,13 @@ const { data, isPending, isPlaceholderData } = useGetSearchResults(
 	computed(() => {
 		const { search, category, ...params } = searchFilters.value;
 
+		const operator = idCategories.includes(category) ? "equal" : "like";
+
 		return {
 			...params,
 			search:
 				search.length > 0
-					? [{ [category]: [{ operator: "like", values: [search], logicalOperator: "and" }] }]
+					? [{ [category]: [{ operator: operator, values: [search], logicalOperator: "and" }] }]
 					: [],
 			show: ["geometry", "when"],
 			centroid: true,
