@@ -40,18 +40,18 @@
 		}
 	},
 	"DataMapView": {
-		"centerpoint": "Flächenpunkt",
+		"centerpoint": "Flächen",
 		"end-date": "End-Datum",
-		"point": "Ortspunkt",
+		"point": "Orte",
 		"polygon": "Flächen anzeigen",
 		"start-date": "Start-Datum"
 	},
 	"DataPage": {
 		"meta": {
-			"title": "Daten"
+			"title": "Datenliste"
 		},
 		"search": "Suche",
-		"title": "Daten",
+		"title": "Datenliste",
 		"work-in-progress": "Die Datenbank ist derzeit im Aufbau."
 	},
 	"DataView": {
@@ -75,11 +75,15 @@
 		"network": "Netzwerk-Visualisierung",
 		"sidebar": {
 			"toggle": "Details für {title} umschalten"
-		}
+		},
+		"no-map": "Nicht auf der Karte vorhanden.",
+		"no-network": "Nicht im Netzwerk vorhanden."
 	},
 	"EntitySidebar": {
 		"NextFeature": "Nächste Funktion",
-		"PreviousFeature": "Vorheriges Feature"
+		"PreviousFeature": "Vorheriges Feature",
+		"copy": "Permalink",
+		"copied": "Kopiert!"
 	},
 	"ErrorBoundary": {
 		"error": "Fehler"
@@ -105,7 +109,8 @@
 		"meta": {
 			"title": "Impressum"
 		},
-		"title": "Impressum"
+		"title": "Impressum",
+		"contact": "Kontakt: {'alexander.watzinger@oeaw.ac.at'}"
 	},
 	"IndexPage": {
 		"error": {

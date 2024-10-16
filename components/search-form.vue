@@ -5,7 +5,7 @@ import { categories, type Category } from "@/composables/use-get-search-results"
 
 export interface SearchFormData {
 	search: string;
-	filter: Category;
+	category: Category;
 }
 
 const props = defineProps<SearchFormData>();
@@ -22,7 +22,7 @@ function onSubmit(event: Event) {
 
 	emit("submit", {
 		search: formData.get("q") as string,
-		filter: formData.get("category") as Category,
+		category: formData.get("category") as Category,
 	});
 }
 
@@ -40,7 +40,7 @@ const searchLabelId = "search-field";
 	>
 		<div class="grid gap-y-1">
 			<!-- eslint-disable-next-line vuejs-accessibility/form-control-has-label -->
-			<Select name="category" :default-value="props.filter">
+			<Select name="category" :default-value="props.category">
 				<SelectTrigger :aria-label="t('SearchForm.filter')" class="min-w-48">
 					<SelectValue :placeholder="t('SearchForm.select-filter')" />
 				</SelectTrigger>

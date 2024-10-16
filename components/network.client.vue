@@ -6,7 +6,7 @@ import { type Camera, Sigma } from "sigma";
 import type { EdgeDisplayData, NodeDisplayData } from "sigma/types";
 import { onMounted, ref } from "vue";
 
-import { layoutOptions } from "@/config/network-visualisation.config";
+import { layoutOptions, networkConfig } from "@/config/network-visualisation.config";
 
 interface State {
 	hoveredNode?: string;
@@ -40,102 +40,108 @@ const context: NetworkContext = {
 
 circular.assign(context.graph);
 
-const locale = useLocale();
 const router = useRouter();
+const route = useRoute();
 
 let hoverTimeOut: ReturnType<typeof setTimeout>;
 
 const state = ref<State>({});
 const layout = new FA2LayoutSupervisor(context.graph, { settings: layoutOptions });
 
-const disabledNodeColor = project.colors.disabledNodeColor;
+const disabledNodeColor = networkConfig.colors.disabledNodeColor;
 
-watch(
-	() => {
-		return props.searchNode;
-	},
-	(searchNode) => {
-		context.graph.nodes().forEach((el) => {
-			context.graph.removeNodeAttribute(el, "highlighted");
-		});
-		const query = searchNode?.toLowerCase();
+function setSearchHighlight(searchNode: string) {
+	context.graph.nodes().forEach((el) => {
+		context.graph.removeNodeAttribute(el, "highlighted");
+	});
+	const query = searchNode.toLowerCase();
 
-		if (query) {
-			const results = context.graph
-				.nodes()
-				.map((n) => {
-					return { id: n, label: context.graph.getNodeAttribute(n, "label") as string };
-				})
-				.filter(({ label }) => {
-					return label.toLowerCase().includes(query);
-				});
+	if (query) {
+		const results = context.graph
+			.nodes()
+			.map((n) => {
+				return { id: n, label: context.graph.getNodeAttribute(n, "label") as string };
+			})
+			.filter(({ label }) => {
+				return label.toLowerCase().includes(query);
+			});
 
-			if (results.length >= 1) {
-				state.value.selectedNodes = results;
-				state.value.selectedNodes.forEach((el) => {
-					context.graph.setNodeAttribute(el.id, "highlighted", true);
-				});
-			}
+		if (results.length >= 1) {
+			state.value.selectedNodes = results;
+			state.value.selectedNodes.forEach((el) => {
+				context.graph.setNodeAttribute(el.id, "highlighted", true);
+			});
 		}
-		// If the query is empty, then we reset the selectedNode
-		else {
-			state.value.selectedNodes = undefined;
-		}
+	}
+	// If the query is empty, then we reset the selectedNode
+	else {
+		state.value.selectedNodes = undefined;
+	}
 
-		// Refresh rendering
-		// You can directly call `renderer.refresh()`, but if you need performances
-		// you can provide some options to the refresh method.
-		// In this case, we don't touch the graph data so we can skip its reindexation
-		context.renderer?.refresh({
-			skipIndexation: true,
-		});
-	},
-	{ immediate: true },
-);
+	// Refresh rendering
+	// You can directly call `renderer.refresh()`, but if you need performances
+	// you can provide some options to the refresh method.
+	// In this case, we don't touch the graph data so we can skip its reindexation
+	context.renderer?.refresh({
+		skipIndexation: true,
+	});
+}
 
 watch(
 	() => {
 		return props.detailNode;
 	},
 	(detailNode) => {
-		context.graph.nodes().forEach((el) => {
-			context.graph.removeNodeAttribute(el, "highlighted");
-		});
-
 		if (detailNode) {
-			const results = context.graph
-				.nodes()
-				.map((n) => {
-					return { id: n, label: context.graph.getNodeAttribute(n, "id") as string };
-				})
-				.filter(({ id }) => {
-					return id === detailNode;
-				});
+			context.graph.nodes().forEach((el) => {
+				context.graph.removeNodeAttribute(el, "highlighted");
+			});
 
-			if (results.length === 1) {
-				state.value.selectedNodes = results;
-				state.value.selectedNodes.forEach((el) => {
-					context.graph.setNodeAttribute(el.id, "highlighted", true);
-				});
+			if (detailNode) {
+				const results = context.graph
+					.nodes()
+					.map((n) => {
+						return { id: n, label: context.graph.getNodeAttribute(n, "id") as string };
+					})
+					.filter(({ id }) => {
+						return id === detailNode;
+					});
+
+				if (results.length === 1) {
+					state.value.selectedNodes = results;
+					state.value.selectedNodes.forEach((el) => {
+						context.graph.setNodeAttribute(el.id, "highlighted", true);
+					});
+				}
 			}
-		}
-		// If the query is empty, then we reset the selectedNode
-		else {
-			state.value.selectedNodes = undefined;
-		}
+			// If the query is empty, then we reset the selectedNode
+			else {
+				state.value.selectedNodes = undefined;
+			}
 
-		// Refresh rendering
-		// You can directly call `renderer.refresh()`, but if you need performances
-		// you can provide some options to the refresh method.
-		// In this case, we don't touch the graph data so we can skip its reindexation
-		context.renderer?.refresh({
-			skipIndexation: true,
-		});
+			// Refresh rendering
+			// You can directly call `renderer.refresh()`, but if you need performances
+			// you can provide some options to the refresh method.
+			// In this case, we don't touch the graph data so we can skip its reindexation
+			context.renderer?.refresh({
+				skipIndexation: true,
+			});
+		}
 	},
-	{ immediate: true },
+	{ immediate: true, deep: true },
 );
 
-const currentView = useGetCurrentView();
+watch(
+	() => {
+		return props.searchNode;
+	},
+	(searchNode) => {
+		if (searchNode) {
+			setSearchHighlight(searchNode);
+		}
+	},
+	{ immediate: true, deep: true },
+);
 
 onMounted(async () => {
 	layout.start();
@@ -155,8 +161,12 @@ onMounted(async () => {
 
 	context.camera = context.renderer.getCamera();
 
+	if (props.searchNode) {
+		setSearchHighlight(props.searchNode);
+	}
+
 	context.renderer.on("clickNode", ({ node }) => {
-		void router.push(`/${locale.value}/entities/${node}/${currentView.value}`);
+		void router.push({ query: { mode: route.query.mode, selection: node } });
 	});
 
 	context.renderer.on("enterNode", ({ node }) => {

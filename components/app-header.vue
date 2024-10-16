@@ -9,23 +9,38 @@ import type { ContentPage } from "@/types/content";
 const locale = useLocale();
 const t = useTranslations();
 
+const env = useRuntimeConfig();
+
 const defaultLinks = computed<
 	// eslint-disable-next-line @typescript-eslint/ban-types
 	Record<"home" & (string & {}), { href: NavLinkProps["href"]; label: string }>
 >(() => {
-	if (!project.map.startPage) {
+	if (env.public.database === "enabled" && !project.map.startPage) {
 		return {
-			home: { href: { path: "/" }, label: t("AppHeader.links.home") },
-			data: { href: { path: "/data" }, label: t("AppHeader.links.data") },
-			map: { href: { path: "/map" }, label: t("AppHeader.links.map") },
-			network: { href: { path: "/network" }, label: t("AppHeader.links.network") },
+			home: {
+				href: { path: "/" },
+				label: t("AppHeader.links.home"),
+			},
+			data: {
+				href: { path: "/visualization", query: { mode: "table" } },
+				label: t("AppHeader.links.data"),
+			},
+			map: {
+				href: { path: "/visualization", query: { mode: "map" } },
+				label: t("AppHeader.links.map"),
+			},
+			network: {
+				href: { path: "/visualization", query: { mode: "network" } },
+				label: t("AppHeader.links.network"),
+			},
 			team: { href: { path: "/team" }, label: t("AppHeader.links.team") },
 		};
 	}
 	return {
-		home: { href: { path: "/" }, label: t("AppHeader.links.home") },
-		data: { href: { path: "/data" }, label: t("AppHeader.links.data") },
-		network: { href: { path: "/network" }, label: t("AppHeader.links.network") },
+		home: {
+			href: project.map.startPage ? { path: "/", mode: "map" } : { path: "/" },
+			label: t("AppHeader.links.home"),
+		},
 		team: { href: { path: "/team" }, label: t("AppHeader.links.team") },
 	};
 });
@@ -111,7 +126,7 @@ const links = computed(() => {
 
 				<div class="ml-auto flex items-center gap-4">
 					<ColorSchemeSwitcher />
-					<LocaleSwitcher v-if="locales.length > 0" />
+					<LocaleSwitcher v-if="locales.length > 1" />
 					<nav :aria-label="t('AppHeader.navigation-main')" class="flex shrink-0 lg:hidden">
 						<AppNavigationMobileMenu :title="t('AppHeader.navigation-menu')" :links="links" />
 					</nav>

@@ -15,7 +15,6 @@ const router = useRouter();
 const route = useRoute();
 const t = useTranslations();
 
-const currentView = useGetCurrentView();
 const { getUnprefixedId } = useIdPrefix();
 
 const searchFiltersSchema = v.object({
@@ -23,18 +22,33 @@ const searchFiltersSchema = v.object({
 	search: v.fallback(v.string(), ""),
 });
 
-const detailEntityId = computed(() => {
-	return route.params.id as string;
+const idCategories = ["entityID", "typeID", "valueTypeID", "typeIDWithSubs"];
+
+const entitySelectionSchema = v.object({
+	selection: v.fallback(v.array(v.string()), []),
 });
 
 const searchFilters = computed(() => {
 	return v.parse(searchFiltersSchema, route.query);
 });
 
+type EntitySelection = v.InferOutput<typeof entitySelectionSchema>;
+
 type SearchFilters = v.InferOutput<typeof searchFiltersSchema>;
 
+function setEntitySelection(query: Partial<EntitySelection>) {
+	void router.push({ query: { mode: route.query.mode, ...query } });
+}
+
+function onChangeEntitySelection(values: EntityFeature) {
+	const temp: EntitySelection = {
+		selection: [getUnprefixedId(values["@id"])],
+	};
+	setEntitySelection(temp);
+}
+
 function setSearchFilters(query: Partial<SearchFilters>) {
-	void router.push({ query });
+	void router.push({ query: { mode: route.query.mode, ...query } });
 }
 
 function onChangeSearchFilters(values: SearchFormData) {
@@ -42,18 +56,21 @@ function onChangeSearchFilters(values: SearchFormData) {
 }
 
 const { data, isPending, isPlaceholderData } = useGetSearchResults(
+	// @ts-expect-error Includes custom, per-instance system classes.
 	computed(() => {
 		const { search, category, ...params } = searchFilters.value;
+
+		const operator = idCategories.includes(category) ? "equal" : "like";
 
 		return {
 			...params,
 			search:
 				search.length > 0
-					? [{ [category]: [{ operator: "like", values: [search], logicalOperator: "and" }] }]
+					? [{ [category]: [{ operator: operator, values: [search], logicalOperator: "and" }] }]
 					: [],
 			show: ["geometry", "when"],
 			centroid: true,
-			system_classes: ["place"],
+			system_classes: project.map.mapDisplayedSystemClasses,
 			limit: 0,
 		};
 	}),
@@ -83,6 +100,13 @@ function togglePolygons() {
 	show.value = !show.value;
 }
 
+const selection = computed(() => {
+	return route.query.selection;
+});
+
+const mode = computed(() => {
+	return route.query.mode;
+});
 /**
  * Reduce size of geojson payload, which has an impact on performance,
  * because `maplibre-gl` will serialize geojson features when sending them to the webworker.
@@ -148,44 +172,50 @@ watch(data, () => {
 });
 
 watchEffect(() => {
-	const entity = entities.value.find((feature) => {
-		const id = getUnprefixedId(feature["@id"]);
-		return id === detailEntityId.value;
-	});
+	if (mode.value && selection.value) {
+		const entity = entities.value.find((feature) => {
+			const id = getUnprefixedId(feature["@id"]);
+			return id === selection.value;
+		});
 
-	if (entity) {
-		let coordinates = null;
+		if (entity) {
+			let coordinates = null;
 
-		if (entity.geometry.type === "GeometryCollection") {
-			coordinates = entity.geometry.geometries.find((g) => {
-				return g.type === "Point";
-			})?.coordinates as [number, number] | undefined;
+			if (entity.geometry.type === "GeometryCollection") {
+				coordinates = entity.geometry.geometries.find((g) => {
+					return g.type === "Point";
+				})?.coordinates as [number, number] | undefined;
+			}
+
+			if (entity.geometry.type === "Point") {
+				coordinates = entity.geometry.coordinates as unknown as [number, number];
+			}
+
+			popover.value = {
+				coordinates:
+					coordinates ??
+					(turf.center(createFeatureCollection([entity])).geometry.coordinates as [number, number]),
+				entities: [entity],
+			};
 		}
-
-		if (entity.geometry.type === "Point") {
-			coordinates = entity.geometry.coordinates as unknown as [number, number];
-		}
-
-		popover.value = {
-			coordinates:
-				coordinates ??
-				(turf.center(createFeatureCollection([entity])).geometry.coordinates as [number, number]),
-			entities: [entity],
-		};
 	}
 });
 </script>
 
 <template>
 	<div :class="project.fullscreen ? 'relative grid' : 'relative grid grid-rows-[auto_1fr] gap-4'">
-		<div :class="project.fullscreen ? 'absolute z-10 flex w-full justify-center' : ''">
+		<div
+			:class="
+				project.fullscreen ? 'absolute z-10 flex w-full justify-center pointer-events-none' : ''
+			"
+		>
 			<SearchForm
 				:class="
 					project.fullscreen
-						? 'bg-white/90 dark:bg-neutral-900 max-w-[800px] w-full mt-2 rounded-md p-6 shadow-md'
+						? 'bg-white/90 dark:bg-neutral-900 max-w-[800px] w-full mt-2 rounded-md p-6 shadow-md pointer-events-auto'
 						: ''
 				"
-				:filter="searchFilters.category"
+				:category="searchFilters.category"
 				:search="searchFilters.search"
 				@submit="onChangeSearchFilters"
 			/>
@@ -244,8 +274,9 @@ watchEffect(() => {
 					>
 						<strong class="font-medium">
 							<NavLink
-								class="flex items-center gap-1 underline decoration-dotted hover:no-underline"
-								:href="{ path: `/entities/${entity.properties._id}/${currentView}` }"
+								href="#"
+								class="flex cursor-pointer items-center gap-1 underline decoration-dotted hover:no-underline"
+								@click="onChangeEntitySelection(entity)"
 							>
 								<Component :is="getEntityIcon(entity.systemClass)" class="size-3.5 shrink-0" />
 								{{ entity.properties.title }}

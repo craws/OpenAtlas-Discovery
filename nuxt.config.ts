@@ -91,7 +91,6 @@ export default defineNuxtConfig({
 		},
 	},
 	runtimeConfig: {
-		NODE_ENV: process.env.NODE_ENV,
 		public: {
 			apiBaseUrl: process.env.NUXT_PUBLIC_API_BASE_URL,
 			appBaseUrl: process.env.NUXT_PUBLIC_APP_BASE_URL,
@@ -107,6 +106,7 @@ export default defineNuxtConfig({
 			matomoId: process.env.NUXT_PUBLIC_MATOMO_ID,
 			openapiBaseUrl: process.env.NUXT_PUBLIC_OPENAPI_BASE_URL,
 			redmineId: process.env.NUXT_PUBLIC_REDMINE_ID,
+			specialImprint: process.env.NUXT_PUBLIC_SPECIAL_IMPRINT,
 		},
 	},
 	typescript: {

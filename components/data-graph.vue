@@ -1,9 +1,8 @@
 <script setup lang="ts">
 import Graph from "graphology";
 
+import { networkConfig } from "@/config/network-visualisation.config";
 import type { NetworkEntity } from "@/types/api";
-
-import { colors } from "../project.config.json";
 
 const props = defineProps<{
 	networkData: NetworkEntity;
@@ -13,8 +12,8 @@ const props = defineProps<{
 
 const graph = new Graph();
 
-const { entityColors } = colors;
-const defaultColor = colors.entityDefaultColor;
+const { entityColors } = networkConfig.colors;
+const defaultColor = networkConfig.colors.entityDefaultColor;
 
 watch(
 	() => {

@@ -1,11 +1,9 @@
 <script lang="ts" setup>
-import { isNonEmptyString } from "@acdh-oeaw/lib";
 import { HeartIcon } from "lucide-vue-next";
 
 import type { NavLinkProps } from "@/components/nav-link.vue";
 import { project } from "@/config/project.config";
 
-const env = useRuntimeConfig();
 const t = useTranslations();
 
 const links = computed(() => {
@@ -44,11 +42,6 @@ const links = computed(() => {
 					</li>
 				</ul>
 			</nav>
-
-			<div class="sm:justify-self-end sm:text-right">
-				Version:
-				{{ [env.public.gitTag, env.public.gitBranchName].filter(isNonEmptyString).join(" - ") }}
-			</div>
 		</div>
 	</footer>
 </template>

@@ -40,8 +40,15 @@ const props = defineProps<{
 
 const t = useTranslations();
 const { d } = useI18n();
+const route = useRoute();
 
 const columnHelper = createColumnHelper<EntityFeature>();
+function getPath() {
+	if (route.path.includes("visualization")) {
+		return "visualization";
+	}
+	return "";
+}
 
 /**
  * Converts a date cell value to a formatted date string.
@@ -93,16 +100,22 @@ const cols = [
 		cell: (info) => {
 			const icon = getEntityIcon(info.getValue());
 
-			const tooltipWrapper = h(TooltipProvider, {}, [
-				h(Tooltip, {}, [
-					h(
-						TooltipTrigger,
-						{ class: "cursor-default" },
-						icon ? h(icon, { class: "size-4 shrink-0" }) : h("span", {}, info.getValue()),
-					),
-					h(TooltipContent, {}, t(`SystemClassNames.${info.getValue()}`)),
-				]),
-			]);
+			const tooltipWrapper = h(TooltipProvider, {}, () => {
+				return [
+					h(Tooltip, {}, () => {
+						return [
+							h(TooltipTrigger, { class: "cursor-default" }, () => {
+								return icon
+									? h(icon, { class: "size-4 shrink-0" })
+									: h("span", {}, info.getValue());
+							}),
+							h(TooltipContent, {}, () => {
+								return t(`SystemClassNames.${info.getValue()}`);
+							}),
+						];
+					}),
+				];
+			});
 
 			const root = h("span", {}, [
 				tooltipWrapper,
@@ -124,9 +137,18 @@ const cols = [
 				{
 					class:
 						"underline decoration-dotted transition hover:no-underline focus-visible:no-underline",
-					href: { path: `/entities/${encodeURIComponent(info.row.original.properties._id)}` },
+					href: {
+						path: `/${getPath()}`,
+						query: {
+							...route.query,
+							mode: route.query.mode,
+							selection: encodeURIComponent(info.row.original.properties._id),
+						},
+					},
 				},
-				title,
+				() => {
+					return title;
+				},
 			);
 		},
 	}),

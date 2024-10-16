@@ -21,7 +21,7 @@ const props = defineProps<{
 	features: Array<GeoJsonFeature>;
 	height: number;
 	width: number;
-	polygons?: boolean;
+	hasPolygons?: boolean;
 }>();
 
 const emit = defineEmits<{
@@ -182,7 +182,7 @@ watch(() => {
 }, updateScope);
 
 watch(() => {
-	return props.polygons;
+	return props.hasPolygons;
 }, updatePolygons);
 
 function updateScope() {
@@ -229,7 +229,7 @@ function updatePolygons() {
 	assert(context.map != null);
 	const sourcePolygonsId = "polygon-data";
 
-	if (props.polygons) {
+	if (props.hasPolygons) {
 		context.map.addLayer({
 			id: "polygons",
 			type: "fill",
@@ -240,7 +240,7 @@ function updatePolygons() {
 			},
 		});
 	}
-	if (!props.polygons && context.map.getLayer("polygons")) {
+	if (!props.hasPolygons && context.map.getLayer("polygons")) {
 		context.map.removeLayer("polygons");
 	}
 }

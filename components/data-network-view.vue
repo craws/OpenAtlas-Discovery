@@ -10,7 +10,7 @@ const router = useRouter();
 const route = useRoute();
 
 const detailEntityId = computed(() => {
-	return route.params.id as string;
+	return route.query.selection as string;
 });
 
 const searchFiltersSchema = z.object({
@@ -22,7 +22,7 @@ const searchFilters = computed(() => {
 });
 
 function onChangeSearchFilters(values: SearchFormData) {
-	const query = { ...searchFilters.value, ...values };
+	const query = { mode: route.query.mode, ...searchFilters.value, ...values };
 
 	if (values.search === "") {
 		// @ts-expect-error Fix me later please
@@ -33,27 +33,15 @@ function onChangeSearchFilters(values: SearchFormData) {
 }
 
 function onChangeCategory(values: CategoryFormData) {
-	void router.push({ query: { ...searchFilters.value, ...values } });
+	void router.push({ query: { mode: route.query.mode, ...searchFilters.value, ...values } });
 }
 
 const { data, isPending, isPlaceholderData } = useGetNetworkData(
 	// @ts-expect-error Includes custom, per-instance system classes.
 	computed(() => {
 		return {
-			exclude_system_classes: [
-				// TO-DO: Currently there is an issue: filtering by case study and system_class type will return no results
-				"type",
-				"object_location",
-				"reference_system",
-				"file",
-				"source_translation",
-				"source",
-				"bibliography",
-				"external_reference",
-				"administrative_unit",
-				"edition",
-				"type_tools",
-			],
+			// TO-DO: Currently there is an issue: filtering by case study and system_class type will return no results
+			exclude_system_classes: project.network.excludeSystemClasses,
 		};
 	}),
 );

@@ -40,6 +40,8 @@ const searchFiltersSchema = v.object({
 	),
 });
 
+const idCategories = ["entityID", "typeID", "valueTypeID", "typeIDWithSubs"];
+
 const searchFilters = computed(() => {
 	return v.parse(searchFiltersSchema, route.query);
 });
@@ -53,7 +55,9 @@ const sortingState = computed(() => {
 type SearchFilters = v.InferOutput<typeof searchFiltersSchema>;
 
 function setSearchFilters(query: Partial<SearchFilters>) {
-	void router.push({ query });
+	void router.push({
+		query: { mode: route.query.mode, selection: route.query.selection, ...query },
+	});
 	document.body.scrollTo(0, 0);
 }
 
@@ -80,18 +84,21 @@ const { data, isPending, isPlaceholderData } = useGetSearchResults(
 	computed(() => {
 		const { search, category, ...params } = searchFilters.value;
 
+		const operator = idCategories.includes(category) ? "equal" : "like";
+
+		const searchQuery =
+			search && search.length > 0
+				? [{ [category]: [{ operator, values: [search], logicalOperator: "and" }] }]
+				: [];
+
 		return {
 			...params,
-			search:
-				search.length > 0
-					? [{ [category]: [{ operator: "like", values: [search], logicalOperator: "and" }] }]
-					: [],
+			search: searchQuery,
 			show: ["description", "when"],
 			view_classes: ["actor", "event", "place", "reference", "source"],
 		};
 	}),
 );
-
 const isLoading = computed(() => {
 	return isPending.value || isPlaceholderData.value;
 });
@@ -106,9 +113,9 @@ const entities = computed(() => {
 </script>
 
 <template>
-	<div class="relative grid grid-rows-[auto_1fr] gap-4">
+	<div class="container relative grid grid-rows-[auto_1fr] gap-4 p-8">
 		<SearchForm
-			:filter="searchFilters.category"
+			:category="searchFilters.category"
 			:search="searchFilters.search"
 			@submit="onChangeSearchFilters"
 		/>

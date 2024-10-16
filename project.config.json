@@ -1,29 +1,26 @@
 {
 	"colors": {
 		"brand": "#b8cf5b",
-		"disabledNodeColor": "#aaa",
-		"entityColors": {
-			"acquisition": "#6a040f",
-			"activity": "#9d0208",
-			"artifact": "#ee6c4d",
-			"event": "#ff595e",
-			"feature": "#b8cf5b",
-			"file": "#9d4edd",
-			"group": "#f48c06",
-			"human_remains": "#3d0066",
-			"move": "#e85d04",
-			"person": "#ffca3a",
-			"place": "#69c0ef",
-			"source": "#d60C19",
-			"stratigraphic_unit": "#9723c1",
-			"type": "#6a4c93"
-		},
-		"entityDefaultColor": "#666",
 		"geojsonPoints": "#69c0ef",
 		"geojsonAreaCenterPoints": "#b8cf5b"
 	},
+	"network": {
+		"excludeSystemClasses": [
+			"type",
+			"reference_system",
+			"source_translation",
+			"source",
+			"bibliography",
+			"external_reference",
+			"administrative_unit",
+			"edition",
+			"type_tools",
+			"file"
+		]
+	},
 	"map": {
-		"startPage": true
+		"startPage": false,
+		"mapDisplayedSystemClasses": ["place", "feature"]
 	},
 	"fullscreen": true,
 	"defaultLocale": "en",

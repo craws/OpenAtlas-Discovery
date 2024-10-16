@@ -86,6 +86,78 @@ collections:
                 widget: boolean
                 default: false
 
+              - name: mapDisplayedSystemClasses
+                label: Configure which system classes with coordinates are displayed on the map
+                # hint: Consider which are relevant for your research, the more you select, the map will take longer to load
+                widget: select
+                multiple: true
+                options:
+                  [
+                    "place",
+                    "feature",
+                    "move",
+                    "statigraphic_unit",
+                    "artifact",
+                    "person",
+                    "group",
+                    "event",
+                    "acquisition",
+                    "human_remains",
+                    "activity",
+                  ]
+                default: ["place"]
+
+          - name: network
+            label: Network Configuration
+            # hint: Network Configuration
+            widget: object
+            fields:
+              - name: excludeSystemClasses
+                label: Configure which system classes should be excluded from the network
+                # hint: Configure which system classes are not displayed in the network
+                widget: select
+                multiple: true
+                options:
+                  [
+                    "place",
+                    "feature",
+                    "move",
+                    "statigraphic_unit",
+                    "artifact",
+                    "appellation",
+                    "creation",
+                    "production",
+                    "person",
+                    "group",
+                    "event",
+                    "acquisition",
+                    "human_remains",
+                    "activity",
+                    "type",
+                    "reference_system",
+                    "file",
+                    "source_translation",
+                    "source",
+                    "bibliography",
+                    "external_reference",
+                    "administrative_unit",
+                    "edition",
+                    "type_tools",
+                  ]
+                default:
+                  [
+                    "type",
+                    "reference_system",
+                    "file",
+                    "source_translation",
+                    "source",
+                    "bibliography",
+                    "external_reference",
+                    "administrative_unit",
+                    "edition",
+                    "type_tools",
+                  ]
+
           - name: imprint
             label: Imprint
             # hint: Imprint page

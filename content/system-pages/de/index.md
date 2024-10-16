@@ -10,9 +10,9 @@ leadIn: >-
   Archäologische Datenbank von Sepulturen
 links:
   - label: Daten anzeigen
-    href: /data
+    href: /visualization?mode=table
   - label: Karte anzeigen
-    href: /map
+    href: /visualization?mode=map
 ---
 
 THANADOS (Die Anthropologische und Archäologische Datenbank von Sepulturen) beschäftigt sich mit der

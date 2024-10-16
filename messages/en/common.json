@@ -40,18 +40,18 @@
 		}
 	},
 	"DataMapView": {
-		"centerpoint": "Area Point",
+		"centerpoint": "Areas",
 		"end-date": "End date",
-		"point": "Location Point",
+		"point": "Locations",
 		"polygon": "Display Areas",
 		"start-date": "Start date"
 	},
 	"DataPage": {
 		"meta": {
-			"title": "Data"
+			"title": "Datalist"
 		},
 		"search": "Search",
-		"title": "Data",
+		"title": "Datalist",
 		"work-in-progress": "The database is currently work in progress."
 	},
 	"DataView": {
@@ -75,11 +75,15 @@
 		"network": "Network Visualization",
 		"sidebar": {
 			"toggle": "Toggle details for {title}"
-		}
+		},
+		"no-map": "Not visible on the map.",
+		"no-network": "Not visible in the network."
 	},
 	"EntitySidebar": {
 		"NextFeature": "NextFeature",
-		"PreviousFeature": "Previous Feature"
+		"PreviousFeature": "Previous Feature",
+		"copy": "Permalink",
+		"copied": "Copied!"
 	},
 	"ErrorBoundary": {
 		"error": "Error"
@@ -105,7 +109,8 @@
 		"meta": {
 			"title": "Imprint"
 		},
-		"title": "Imprint"
+		"title": "Imprint",
+		"contact": "Contact: {'alexander.watzinger@oeaw.ac.at'}"
 	},
 	"IndexPage": {
 		"error": {

@@ -9,9 +9,9 @@ leadIn: >-
   [THANADOS](https://thanados.net/) - The Anthropological and Archaeological Database of Sepultures
 links:
   - label: View data
-    href: /data
+    href: /visualization?mode=table
   - label: View map
-    href: /map
+    href: /visualization?mode=map
 ---
 
 THANADOS (The Anthropological and Archaeological Database of Sepultures) deals with the digital
