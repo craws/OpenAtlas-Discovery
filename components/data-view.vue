@@ -12,7 +12,7 @@ import {
 	PaginationListItem,
 	PaginationNext,
 } from "@/components/ui/pagination";
-import { categories, columns, isColumn } from "@/composables/use-get-search-results";
+import { categories, columns, isColumn, operatorMap } from "@/composables/use-get-search-results";
 
 const router = useRouter();
 const route = useRoute();
@@ -39,8 +39,6 @@ const searchFiltersSchema = v.object({
 		20,
 	),
 });
-
-const idCategories = ["entityID", "typeID", "valueTypeID", "typeIDWithSubs"];
 
 const searchFilters = computed(() => {
 	return v.parse(searchFiltersSchema, route.query);
@@ -84,7 +82,7 @@ const { data, isPending, isPlaceholderData } = useGetSearchResults(
 	computed(() => {
 		const { search, category, ...params } = searchFilters.value;
 
-		const operator = idCategories.includes(category) ? "equal" : "like";
+		const operator = operatorMap[category];
 
 		const searchQuery =
 			search && search.length > 0

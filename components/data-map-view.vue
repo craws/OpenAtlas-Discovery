@@ -6,7 +6,7 @@ import * as v from "valibot";
 
 import type { SearchFormData } from "@/components/search-form.vue";
 import type { EntityFeature } from "@/composables/use-create-entity";
-import { categories } from "@/composables/use-get-search-results";
+import { categories, operatorMap } from "@/composables/use-get-search-results";
 import type { GeoJsonFeature } from "@/utils/create-geojson-feature";
 
 import { project } from "../config/project.config";
@@ -21,8 +21,6 @@ const searchFiltersSchema = v.object({
 	category: v.fallback(v.picklist(categories), "entityName"),
 	search: v.fallback(v.string(), ""),
 });
-
-const idCategories = ["entityID", "typeID", "valueTypeID", "typeIDWithSubs"];
 
 const entitySelectionSchema = v.object({
 	selection: v.fallback(v.array(v.string()), []),
@@ -60,7 +58,7 @@ const { data, isPending, isPlaceholderData } = useGetSearchResults(
 	computed(() => {
 		const { search, category, ...params } = searchFilters.value;
 
-		const operator = idCategories.includes(category) ? "equal" : "like";
+		const operator = operatorMap[category];
 
 		return {
 			...params,

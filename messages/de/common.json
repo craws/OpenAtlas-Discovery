@@ -155,8 +155,8 @@
 	"SearchForm": {
 		"filter": "Filter",
 		"filters": {
-			"beginFrom": "Beginn von",
-			"beginTo": "Beginn bis",
+			"beginFrom": "Beginn nach",
+			"beginTo": "Beginn vor",
 			"endFrom": "Ende von",
 			"endTo": "Ende bis",
 			"entityAliases": "Alias",
