@@ -8,20 +8,20 @@ import type { LinkedPlace } from "@/types/api";
 export const categories = [
 	"beginFrom",
 	"beginTo",
-	"endFrom",
-	"endTo",
-	"entityAliases",
-	"entityCidocClass",
 	"entityDescription",
 	"entityID",
 	"entityName",
-	"entitySystemClass",
-	"relationToID",
-	"typeID",
-	"typeIDWithSubs",
 	"typeName",
-	"valueTypeID",
 ] as const;
+
+export const operatorMap = {
+	beginFrom: "greaterThanEqual",
+	beginTo: "lesserThanEqual",
+	entityDescription: "like",
+	entityID: "equal",
+	entityName: "like",
+	typeName: "like",
+} as const;
 
 /**
  * The columns that can be sorted on.
