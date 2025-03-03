@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { keyByToMap } from "@acdh-oeaw/lib";
 import * as turf from "@turf/turf";
+import type { Feature } from "geojson";
 import type { MapGeoJSONFeature } from "maplibre-gl";
 import * as v from "valibot";
 
@@ -110,9 +111,13 @@ const mode = computed(() => {
  * because `maplibre-gl` will serialize geojson features when sending them to the webworker.
  */
 const features = computed(() => {
-	return entities.value.map((entity) => {
-		return createGeoJsonFeature(entity);
-	});
+	return entities.value
+		.filter((entity) => {
+			return entity.geometry;
+		})
+		.map((entity) => {
+			return createGeoJsonFeature(entity);
+		});
 });
 
 const centerpoints = computed(() => {
@@ -139,12 +144,14 @@ function onLayerClick(features: Array<MapGeoJSONFeature & Pick<GeoJsonFeature, "
 		}
 	});
 
-	const entities = Array.from(entitiesMap.values());
+	const entities = Array.from(entitiesMap.values()).filter((e) => {
+		return e.geometry != null;
+	});
 
 	let coordinates = null;
 
 	for (const entity of entities) {
-		if (entity.geometry.type === "GeometryCollection") {
+		if (entity.geometry?.type === "GeometryCollection") {
 			coordinates = entity.geometry.geometries.find((g) => {
 				return g.type === "Point";
 			})?.coordinates as [number, number] | undefined;
@@ -156,7 +163,10 @@ function onLayerClick(features: Array<MapGeoJSONFeature & Pick<GeoJsonFeature, "
 	popover.value = {
 		coordinates:
 			coordinates ??
-			(turf.center(createFeatureCollection(entities)).geometry.coordinates as [number, number]),
+			(turf.center(createFeatureCollection(entities as Array<Feature>)).geometry.coordinates as [
+				number,
+				number,
+			]),
 		entities,
 	};
 }
@@ -179,20 +189,23 @@ watchEffect(() => {
 		if (entity) {
 			let coordinates = null;
 
-			if (entity.geometry.type === "GeometryCollection") {
+			if (entity.geometry?.type === "GeometryCollection") {
 				coordinates = entity.geometry.geometries.find((g) => {
 					return g.type === "Point";
 				})?.coordinates as [number, number] | undefined;
 			}
 
-			if (entity.geometry.type === "Point") {
+			if (entity.geometry?.type === "Point") {
 				coordinates = entity.geometry.coordinates as unknown as [number, number];
 			}
 
 			popover.value = {
 				coordinates:
 					coordinates ??
-					(turf.center(createFeatureCollection([entity])).geometry.coordinates as [number, number]),
+					(turf.center(createFeatureCollection([entity as Feature])).geometry.coordinates as [
+						number,
+						number,
+					]),
 				entities: [entity],
 			};
 		}

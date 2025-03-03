@@ -54,11 +54,11 @@ function entityHasCoordinates(entity: EntityFeature) {
 		hasPlace.value = false;
 	}
 	if (project.map.mapDisplayedSystemClasses.includes(entity.systemClass)) {
-		if (entity.geometry.type === "GeometryCollection" && entity.geometry.geometries.length === 0) {
+		if (entity.geometry?.type === "GeometryCollection" && entity.geometry.geometries.length === 0) {
 			hasPlace.value = false;
 		} else if (
-			entity.geometry.type !== "GeometryCollection" &&
-			entity.geometry.coordinates.length === 0
+			entity.geometry?.type !== "GeometryCollection" &&
+			entity.geometry?.coordinates.length === 0
 		) {
 			hasPlace.value = false;
 		} else hasPlace.value = true;
@@ -81,7 +81,7 @@ function entityInNetwork(entity: EntityFeature) {
 						:class="
 							props.currentMode === 'map'
 								? 'rounded-md bg-brand p-4 shadow-md'
-								: 'rounded-md bg-primary/90 p-4 shadow-md dark:bg-white' && !hasPlace
+								: !hasPlace
 									? 'rounded-md bg-neutral-300 p-4 shadow-md'
 									: 'rounded-md bg-primary/90 p-4 shadow-md dark:bg-white'
 						"
@@ -115,7 +115,7 @@ function entityInNetwork(entity: EntityFeature) {
 						:class="
 							props.currentMode === 'network'
 								? 'rounded-md bg-brand p-4 shadow-md'
-								: 'rounded-md bg-primary/90 p-4 shadow-md dark:bg-white' && !inNetwork
+								: !inNetwork
 									? 'rounded-md bg-neutral-300 p-4 shadow-md'
 									: 'rounded-md bg-primary/90 p-4 shadow-md dark:bg-white'
 						"
