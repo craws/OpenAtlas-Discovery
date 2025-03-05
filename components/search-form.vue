@@ -45,7 +45,13 @@ const searchLabelId = "search-field";
 					<SelectValue :placeholder="t('SearchForm.select-filter')" />
 				</SelectTrigger>
 				<SelectContent>
-					<SelectItem v-for="category of categories" :key="category" :value="category">
+					<SelectItem
+						v-for="category of categories.toSorted((a, b) =>
+							t(`SearchForm.filters.${a}`).localeCompare(t(`SearchForm.filters.${b}`)),
+						)"
+						:key="category"
+						:value="category"
+					>
 						{{ t(`SearchForm.filters.${category}`) }}
 					</SelectItem>
 				</SelectContent>

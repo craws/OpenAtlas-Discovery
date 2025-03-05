@@ -2,7 +2,8 @@
 	"colors": {
 		"brand": "#b8cf5b",
 		"geojsonPoints": "#69c0ef",
-		"geojsonAreaCenterPoints": "#b8cf5b"
+		"geojsonAreaCenterPoints": "#b8cf5b",
+		"geojsonMovement": "#D0031E"
 	},
 	"network": {
 		"excludeSystemClasses": [

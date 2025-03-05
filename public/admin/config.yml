@@ -59,6 +59,12 @@ collections:
                 widget: color
                 allowInput: true
 
+              - name: geojsonMovement
+                label: GeoJSON Movement Points
+                # hint: GeoJSON areas color
+                widget: color
+                allowInput: true
+
           - name: defaultLocale
             label: Default locale
             # hint: Default locale

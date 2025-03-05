@@ -14,6 +14,7 @@ const schema = v.object({
 			brand: v.pipe(v.string(), v.nonEmpty()),
 			geojsonPoints: v.pipe(v.string(), v.nonEmpty()),
 			geojsonAreaCenterPoints: v.pipe(v.string(), v.nonEmpty()),
+			geojsonMovement: v.pipe(v.string(), v.nonEmpty()),
 		}),
 		v.transform((values) => {
 			const color = parse(values.brand);

@@ -44,7 +44,11 @@
 		"end-date": "End-Datum",
 		"point": "Orte",
 		"polygon": "Flächen anzeigen",
-		"start-date": "Start-Datum"
+		"movement": "Bewegung",
+		"showMovement": "Bewegungen anzeigen"
+	},
+	"DataView": {
+		"nothing-found": "Keine Einträge zu dieser Suche."
 	},
 	"DataPage": {
 		"meta": {
@@ -155,8 +159,8 @@
 	"SearchForm": {
 		"filter": "Filter",
 		"filters": {
-			"beginFrom": "Beginn von",
-			"beginTo": "Beginn bis",
+			"beginFrom": "Beginn nach",
+			"beginTo": "Beginn vor",
 			"endFrom": "Ende von",
 			"endTo": "Ende bis",
 			"entityAliases": "Alias",
@@ -164,7 +168,7 @@
 			"entityDescription": "Beschreibung",
 			"entityID": "ID",
 			"entityName": "Name",
-			"entitySystemClass": "System Klasse",
+			"entitySystemClass": "Kategorie",
 			"relationToID": "Beziehung-ID",
 			"typeID": "Typ-ID",
 			"typeIDWithSubs": "Typ-ID mit Subtypen",

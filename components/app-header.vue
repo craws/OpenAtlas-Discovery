@@ -38,7 +38,7 @@ const defaultLinks = computed<
 	}
 	return {
 		home: {
-			href: project.map.startPage ? { path: "/", mode: "map" } : { path: "/" },
+			href: project.map.startPage ? { path: "/", query: { mode: "map" } } : { path: "/" },
 			label: t("AppHeader.links.home"),
 		},
 		team: { href: { path: "/team" }, label: t("AppHeader.links.team") },

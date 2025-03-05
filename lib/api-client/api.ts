@@ -67,7 +67,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/display/{entityId}": {
+    "/display/{fileId}": {
         parameters: {
             query?: never;
             header?: never;
@@ -118,6 +118,55 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/entity_presentation_view/{entityId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** @description Retrieves an Entity with its linked data for presentation sites */
+        get: {
+            parameters: {
+                query?: never;
+                header?: never;
+                path: {
+                    /**
+                     * @description Specific entity ID
+                     * @example 40
+                     */
+                    entityId: components["parameters"]["entityId"];
+                };
+                cookie?: never;
+            };
+            requestBody?: never;
+            responses: {
+                /** @description Successful response */
+                200: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content: {
+                        "application/json": components["schemas"]["PresentationViewModel"];
+                    };
+                };
+                /** @description Something went wrong. Please consult the error message. */
+                404: {
+                    headers: {
+                        [name: string]: unknown;
+                    };
+                    content?: never;
+                };
+            };
+        };
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/export_database/{format}": {
         parameters: {
             query?: never;
@@ -152,7 +201,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/iiif_manifest/{version}/{entityId}": {
+    "/iiif_manifest/{version}/{fileId}": {
         parameters: {
             query?: never;
             header?: never;
@@ -466,22 +515,33 @@ export interface components {
             pagination: components["schemas"]["PaginationModel"];
             results: (components["schemas"]["LinkedPlacesModel"] | components["schemas"]["GeoJSONModel"])[];
         };
+        EntityTypeModel: {
+            descriptions?: string | null;
+            id: number;
+            isStandard: boolean;
+            title: string;
+            typeHierarchy?: components["schemas"]["TypeHierarchyEntryModel"][] | null;
+        } | null;
+        ExternalReferenceModel: {
+            id: string;
+            identifier: string;
+            referenceSystem: string;
+            referenceURL: string;
+            resolverURL: string;
+            type: string;
+        } | null;
         GeoJSONModel: {
             features: {
                 geometry: components["schemas"]["Polygon"] | components["schemas"]["Point"] | components["schemas"]["LineString"] | components["schemas"]["GeometryCollection"];
                 properties: {
                     "@id": number;
-                    /** Format: nullable */
-                    begin_comment: string;
+                    begin_comment: string | null;
                     begin_earliest: string;
-                    /** Format: nullable */
-                    begin_latest: string;
+                    begin_latest: string | null;
                     description: string;
-                    /** Format: nullable */
-                    end_comment: string;
+                    end_comment: string | null;
                     end_earliest: string;
-                    /** Format: nullable */
-                    end_latest: string;
+                    end_latest: string | null;
                     name: string;
                     systemClass: string;
                     types: {
@@ -539,6 +599,7 @@ export interface components {
         LineString: {
             coordinates: components["schemas"]["LineStringCoordinates"];
             description?: string;
+            locationId?: string;
             /** @enum {string} */
             shapeType?: "polyline";
             title?: string;
@@ -562,9 +623,9 @@ export interface components {
             features: {
                 "@id": string;
                 crmClass: string;
-                /** Format: nullable */
                 depictions?: {
                     "@id"?: string;
+                    IIIFBasePath?: string;
                     IIIFManifest?: string;
                     creator?: string;
                     license?: string;
@@ -573,53 +634,42 @@ export interface components {
                     publicShareable?: boolean;
                     title?: string;
                     url?: string;
-                }[];
-                descriptions: {
+                }[] | null;
+                descriptions?: {
                     value?: string;
                 }[];
-                geometry: components["schemas"]["Polygon"] | components["schemas"]["Point"] | components["schemas"]["LineString"] | components["schemas"]["GeometryCollection"];
-                /** Format: nullable */
-                links?: string;
-                /** Format: nullable */
-                names?: string;
-                properties: {
+                geometry?: (components["schemas"]["Polygon"] | components["schemas"]["Point"] | components["schemas"]["LineString"] | components["schemas"]["GeometryCollection"]) | null;
+                links?: string | null;
+                names?: string | null;
+                properties?: {
                     title: string;
                 };
                 relations?: {
                     label?: string;
-                    /** Format: nullable */
-                    relationDescription?: string;
+                    relationDescription?: string | null;
                     relationSystemClass?: string;
                     relationTo?: string;
                     relationType?: string;
-                    /** Format: nullable */
-                    type?: string;
+                    type?: string | null;
                     when?: {
                         timespans?: {
                             end?: {
-                                /** Format: nullable */
-                                comment?: string;
-                                /** Format: nullable */
-                                earliest?: string;
-                                /** Format: nullable */
-                                latest?: string;
+                                comment?: string | null;
+                                earliest?: string | null;
+                                latest?: string | null;
                             };
                             start?: {
-                                /** Format: nullable */
-                                comment?: string;
-                                /** Format: nullable */
-                                earliest?: string;
-                                /** Format: nullable */
-                                latest?: string;
+                                comment?: string | null;
+                                earliest?: string | null;
+                                latest?: string | null;
                             };
                         }[];
-                    };
-                }[];
+                    } | null;
+                }[] | null;
                 systemClass: string;
                 type: string;
                 types?: {
-                    /** Format: nullable */
-                    descriptions?: string;
+                    descriptions?: string | null;
                     hierarchy?: string;
                     identifier?: string;
                     label?: string;
@@ -628,32 +678,25 @@ export interface components {
                         identifier?: string;
                         label?: string;
                     }[];
-                    /** Format: nullable */
-                    unit?: string;
+                    unit?: string | null;
                     /** Format: float */
                     value?: number;
-                }[];
+                }[] | null;
                 viewClass: string;
                 when?: {
                     timespans?: {
                         end?: {
-                            /** Format: nullable */
-                            comment?: string;
-                            /** Format: nullable */
-                            earliest?: string;
-                            /** Format: nullable */
-                            latest?: string;
+                            comment?: string | null;
+                            earliest?: string | null;
+                            latest?: string | null;
                         };
                         start?: {
-                            /** Format: nullable */
-                            comment?: string;
-                            /** Format: nullable */
-                            earliest?: string;
-                            /** Format: nullable */
-                            latest?: string;
+                            comment?: string | null;
+                            earliest?: string | null;
+                            latest?: string | null;
                         };
                     }[];
-                };
+                } | null;
             }[];
             type: string;
         };
@@ -678,6 +721,7 @@ export interface components {
         Point: {
             coordinates: components["schemas"]["Position"];
             description?: string;
+            locationId?: string;
             /** @enum {string} */
             shapeType?: "centerpoint";
             title?: string;
@@ -687,6 +731,7 @@ export interface components {
         Polygon: {
             coordinates: components["schemas"]["LinearRing"][];
             description?: string;
+            locationId?: string;
             /** @enum {string} */
             shapeType?: "area" | "shape";
             title?: string;
@@ -697,6 +742,59 @@ export interface components {
         ] | [
             number
         ];
+        PresentationViewModel: {
+            aliases: string[];
+            description: string;
+            externalReferenceSystems?: components["schemas"]["ExternalReferenceModel"][] | null;
+            files?: {
+                creator?: string | null;
+                id: number;
+                license: string | null;
+                licenseHolder?: string | null;
+                mimetype: string;
+                publicShareable?: boolean | null;
+                title: string;
+                url: string;
+            }[] | null;
+            geometries?: {
+                coordinates: number[];
+                description: string;
+                shapeType: string;
+                title: string;
+                type: string;
+            } | null;
+            id: number;
+            relations?: {
+                acquisition?: components["schemas"]["RelatedEntityModel"][];
+                activity?: components["schemas"]["RelatedEntityModel"][];
+                actor_function?: components["schemas"]["RelatedEntityModel"][];
+                actor_relation?: components["schemas"]["RelatedEntityModel"][];
+                appellation?: components["schemas"]["RelatedEntityModel"][];
+                artifact?: components["schemas"]["RelatedEntityModel"][];
+                bibliography?: components["schemas"]["RelatedEntityModel"][];
+                creation?: components["schemas"]["RelatedEntityModel"][];
+                edition?: components["schemas"]["RelatedEntityModel"][];
+                event?: components["schemas"]["RelatedEntityModel"][];
+                external_reference?: components["schemas"]["RelatedEntityModel"][];
+                feature?: components["schemas"]["RelatedEntityModel"][];
+                file?: components["schemas"]["RelatedEntityModel"][];
+                group?: components["schemas"]["RelatedEntityModel"][];
+                human_remains?: components["schemas"]["RelatedEntityModel"][];
+                involvement?: components["schemas"]["RelatedEntityModel"][];
+                modification?: components["schemas"]["RelatedEntityModel"][];
+                move?: components["schemas"]["RelatedEntityModel"][];
+                person?: components["schemas"]["RelatedEntityModel"][];
+                place?: components["schemas"]["RelatedEntityModel"][];
+                production?: components["schemas"]["RelatedEntityModel"][];
+                source?: components["schemas"]["RelatedEntityModel"][];
+                source_translation?: components["schemas"]["RelatedEntityModel"][];
+                stratigraphic_unit?: components["schemas"]["RelatedEntityModel"][];
+            };
+            systemClass: string;
+            title: string;
+            types?: components["schemas"]["EntityTypeModel"][] | null;
+            when?: components["schemas"]["TimeRangeModel"];
+        };
         PropertiesDetailModel: {
             code: string;
             count: number;
@@ -865,6 +963,27 @@ export interface components {
             P98: components["schemas"]["PropertiesDetailModel"];
             P99: components["schemas"]["PropertiesDetailModel"];
         };
+        RelatedEntityModel: {
+            aliases?: string[];
+            description: string;
+            geometries: Record<string, never>;
+            id: number;
+            relationTypesModel?: components["schemas"]["RelationTypeModel"][];
+            standardType?: {
+                id?: number;
+                title?: string;
+            };
+            systemClass: string;
+            title: string;
+            when: components["schemas"]["TimeRangeModel"];
+        } | null;
+        RelationTypeModel: {
+            description?: string | null;
+            property: string;
+            relationTo: number;
+            type?: string | null;
+            when?: components["schemas"]["TimeRangeModel"];
+        } | null;
         SubunitsModel: {
             children: number[];
             created: string;
@@ -884,8 +1003,7 @@ export interface components {
             /** Format: int32 */
             parentId: number;
             properties: {
-                /** Format: nullable */
-                aliases: string;
+                aliases: string | null;
                 description: string;
                 externalReferences: {
                     id: string;
@@ -895,15 +1013,13 @@ export interface components {
                     resolverURL: string;
                     type: string;
                 }[];
-                /** Format: nullable */
-                files: string;
+                files: string | null;
                 name: string;
                 references: {
                     abbreviation: string;
                     /** Format: int32 */
                     id: number;
-                    /** Format: nullable */
-                    pages: string;
+                    pages: string | null;
                     title: string;
                 }[];
                 standardType: {
@@ -943,10 +1059,8 @@ export interface components {
                     path: string;
                     /** Format: int32 */
                     rootId: number;
-                    /** Format: nullable */
-                    unit: string;
-                    /** Format: nullable */
-                    value: string;
+                    unit: string | null;
+                    value: string | null;
                 }[];
             };
             /** Format: int32 */
@@ -987,6 +1101,23 @@ export interface components {
             stratigraphic_unit: number;
             /** Format: int32 */
             type: number;
+        };
+        TimeRangeModel: {
+            end: {
+                comment: string | null;
+                earliest: string | null;
+                latest: string | null;
+            };
+            start: {
+                comment: string | null;
+                earliest: string | null;
+                latest: string | null;
+            };
+        };
+        TypeHierarchyEntryModel: {
+            descriptions?: string | null;
+            identifier: string;
+            label: string;
         };
         TypeOverviewEntryModel: {
             children: components["schemas"]["TypeOverviewEntryModel"][];
@@ -1100,6 +1231,11 @@ export interface components {
         exclude_system_classes: ("acquisition" | "activity" | "administrative_unit" | "appellation" | "artifact" | "bibliography" | "creation" | "edition" | "event" | "external_reference" | "feature" | "file" | "group" | "human_remains" | "move" | "person" | "place" | "production" | "reference_system" | "source" | "source_translation" | "stratigraphic_unit" | "type" | "type_tools")[];
         /** @description Export the entities into either a simple CSV representation or a zip file of CSV's especially designed for network analyses. */
         export: "csv" | "csvNetwork";
+        /**
+         * @description Specific ID of a file entity.
+         * @example 40
+         */
+        fileId: number;
         /** @description Begin results at the given entity id. */
         first: number;
         /**
@@ -1127,9 +1263,9 @@ export interface components {
         /** @description Jump to page number. */
         page: number;
         /** @description Retrieves entities which are connected to the requested entity with the `property` */
-        properties: ("all" | "P43" | "P140" | "P99" | "P112" | "P113" | "P17" | "P104" | "P142" | "P195" | "P164" | "P129" | "P33" | "P53" | "P42" | "P48" | "P37" | "P182" | "P132" | "P56" | "P148" | "P150" | "P100" | "P180" | "P98" | "P74" | "P124" | "P152" | "OA8" | "P20" | "P25" | "P144" | "P2" | "P54" | "P97" | "P34" | "P175" | "P51" | "P123" | "P55" | "P70" | "P8" | "P11" | "P196" | "P126" | "P105" | "P44" | "P109" | "P12" | "P9" | "P156" | "P86" | "P111" | "P4" | "P197" | "P179" | "P128" | "P141" | "P19" | "P65" | "P103" | "P59" | "P183" | "P15" | "P89" | "P184" | "P94" | "P92" | "P110" | "P16" | "P130" | "P72" | "P1" | "P68" | "P188" | "P23" | "P125" | "P93" | "P160" | "P50" | "P95" | "P40" | "P62" | "P198" | "P49" | "P145" | "P139" | "P174" | "P31" | "P28" | "P177" | "P21" | "P26" | "P5" | "P135" | "P22" | "P14" | "P136" | "P189" | "P137" | "P106" | "P166" | "P69" | "P27" | "P101" | "P38" | "P35" | "P10" | "P143" | "P173" | "P75" | "P176" | "P127" | "P108" | "P76" | "P91" | "P24" | "P73" | "P133" | "P29" | "OA9" | "P191" | "P96" | "P71" | "P165" | "P7" | "P67" | "P161" | "P186" | "P107" | "P134" | "P146" | "P13" | "P121" | "P46" | "P185" | "P39" | "P45" | "P32" | "P187" | "P147" | "P157" | "P122" | "P30" | "OA7" | "P52" | "P151" | "P167" | "P102" | "P41" | "P138")[];
+        properties: ("all" | "OA7" | "OA8" | "OA9" | "P1" | "P2" | "P4" | "P5" | "P7" | "P8" | "P9" | "P10" | "P11" | "P12" | "P13" | "P14" | "P15" | "P16" | "P17" | "P19" | "P20" | "P21" | "P22" | "P23" | "P24" | "P25" | "P26" | "P27" | "P28" | "P29" | "P30" | "P31" | "P32" | "P33" | "P34" | "P35" | "P37" | "P38" | "P39" | "P40" | "P41" | "P42" | "P43" | "P44" | "P45" | "P46" | "P48" | "P49" | "P50" | "P51" | "P52" | "P53" | "P54" | "P55" | "P56" | "P59" | "P62" | "P65" | "P67" | "P68" | "P69" | "P70" | "P71" | "P72" | "P73" | "P74" | "P75" | "P76" | "P86" | "P89" | "P91" | "P92" | "P93" | "P94" | "P95" | "P96" | "P97" | "P98" | "P99" | "P100" | "P101" | "P102" | "P103" | "P104" | "P105" | "P106" | "P107" | "P108" | "P109" | "P110" | "P111" | "P112" | "P113" | "P121" | "P122" | "P123" | "P124" | "P125" | "P126" | "P127" | "P128" | "P129" | "P130" | "P132" | "P133" | "P134" | "P135" | "P136" | "P137" | "P138" | "P139" | "P140" | "P141" | "P142" | "P143" | "P144" | "P145" | "P146" | "P147" | "P148" | "P150" | "P151" | "P152" | "P156" | "P157" | "P160" | "P161" | "P164" | "P165" | "P166" | "P167" | "P173" | "P174" | "P175" | "P176" | "P177" | "P179" | "P180" | "P182" | "P183" | "P184" | "P185" | "P186" | "P187" | "P188" | "P189" | "P191" | "P195" | "P196" | "P197" | "P198")[];
         /** @description Displays only connections connected by the selected CIDOC CRM property code. If geometry, types, depictions and/or links is in the show parameter, these properties are also displayed. */
-        relation_type: ("P43" | "P140" | "P99" | "P112" | "P113" | "P17" | "P104" | "P142" | "P195" | "P164" | "P129" | "P33" | "P53" | "P42" | "P48" | "P37" | "P182" | "P132" | "P56" | "P148" | "P150" | "P100" | "P180" | "P98" | "P74" | "P124" | "P152" | "OA8" | "P20" | "P25" | "P144" | "P2" | "P54" | "P97" | "P34" | "P175" | "P51" | "P123" | "P55" | "P70" | "P8" | "P11" | "P196" | "P126" | "P105" | "P44" | "P109" | "P12" | "P9" | "P156" | "P86" | "P111" | "P4" | "P197" | "P179" | "P128" | "P141" | "P19" | "P65" | "P103" | "P59" | "P183" | "P15" | "P89" | "P184" | "P94" | "P92" | "P110" | "P16" | "P130" | "P72" | "P1" | "P68" | "P188" | "P23" | "P125" | "P93" | "P160" | "P50" | "P95" | "P40" | "P62" | "P198" | "P49" | "P145" | "P139" | "P174" | "P31" | "P28" | "P177" | "P21" | "P26" | "P5" | "P135" | "P22" | "P14" | "P136" | "P189" | "P137" | "P106" | "P166" | "P69" | "P27" | "P101" | "P38" | "P35" | "P10" | "P143" | "P173" | "P75" | "P176" | "P127" | "P108" | "P76" | "P91" | "P24" | "P73" | "P133" | "P29" | "OA9" | "P191" | "P96" | "P71" | "P165" | "P7" | "P67" | "P161" | "P186" | "P107" | "P134" | "P146" | "P13" | "P121" | "P46" | "P185" | "P39" | "P45" | "P32" | "P187" | "P147" | "P157" | "P122" | "P30" | "OA7" | "P52" | "P151" | "P167" | "P102" | "P41" | "P138")[];
+        relation_type: ("all" | "OA7" | "OA8" | "OA9" | "P1" | "P2" | "P4" | "P5" | "P7" | "P8" | "P9" | "P10" | "P11" | "P12" | "P13" | "P14" | "P15" | "P16" | "P17" | "P19" | "P20" | "P21" | "P22" | "P23" | "P24" | "P25" | "P26" | "P27" | "P28" | "P29" | "P30" | "P31" | "P32" | "P33" | "P34" | "P35" | "P37" | "P38" | "P39" | "P40" | "P41" | "P42" | "P43" | "P44" | "P45" | "P46" | "P48" | "P49" | "P50" | "P51" | "P52" | "P53" | "P54" | "P55" | "P56" | "P59" | "P62" | "P65" | "P67" | "P68" | "P69" | "P70" | "P71" | "P72" | "P73" | "P74" | "P75" | "P76" | "P86" | "P89" | "P91" | "P92" | "P93" | "P94" | "P95" | "P96" | "P97" | "P98" | "P99" | "P100" | "P101" | "P102" | "P103" | "P104" | "P105" | "P106" | "P107" | "P108" | "P109" | "P110" | "P111" | "P112" | "P113" | "P121" | "P122" | "P123" | "P124" | "P125" | "P126" | "P127" | "P128" | "P129" | "P130" | "P132" | "P133" | "P134" | "P135" | "P136" | "P137" | "P138" | "P139" | "P140" | "P141" | "P142" | "P143" | "P144" | "P145" | "P146" | "P147" | "P148" | "P150" | "P151" | "P152" | "P156" | "P157" | "P160" | "P161" | "P164" | "P165" | "P166" | "P167" | "P173" | "P174" | "P175" | "P176" | "P177" | "P179" | "P180" | "P182" | "P183" | "P184" | "P185" | "P186" | "P187" | "P188" | "P189" | "P191" | "P195" | "P196" | "P197" | "P198")[];
         /** @description Search query for specific results.
          *
          *      **Filterable categories**
@@ -1138,7 +1274,9 @@ export interface components {
          *
          *      **Values**
          *
-         *      Values has to be a list of items. The items can be either a string, an integer or a tuple (see Notes). Strings need to be marked with “” or ‘’, while integers does not allow this.\n *Notes*:
+         *      Values has to be a list of items. The items can be either a string, an integer or a tuple (see Notes). Strings need to be marked with “” or ‘’, while integers does not allow this.
+         *
+         *      *Notes*:
          *      The category valueTypeID can search for values of a type ID. But it takes one or more two valued Tuple as list entry: (x,y). x is the type id and y is the searched value. This can be an int or a float, e.g: `{"operator":"lesserThan","values":[(3142,543.3)],"logicalOperator":"and"}`
          *      The date categories (beginFrom, beginTo, endFrom, endTo) only allow *one* value in the **values** field and it has to be formated the following way: YYYY-MM-DD. Month and day values need to filled up with 0, e.g. 800-01-01
          *
@@ -1154,7 +1292,29 @@ export interface components {
          *
          *     **Logical operators**
          *
-         *     Not mandatory, OR is the default value. Logical operators handles, if the values are treated as OR or AND. */
+         *     Not mandatory, OR is the default value. Logical operators handles, if the values are treated as OR or AND.
+         *
+         *      The following table outlines the supported operations for each field:
+         *
+         *     |                  | equal     | notEqual  | like      | greaterThan | greaterThanEqual | lesserThan | lesserThanEqual |
+         *     |------------------|-----------|-----------|-----------|-------------|------------------|------------|-----------------|
+         *     | entityName       |     x      |     x      |    x       |             |                  |            |                 |
+         *     | entityDescription|      x     |      x     |      x     |             |                  |            |                 |
+         *     | entityAliases    |      x     |      x     |     x      |             |                  |            |                 |
+         *     | entityCidocClass |      x     |      x     |      x     |             |                  |            |                 |
+         *     | entitySystemClass|      x     |      x     |     x      |             |                  |            |                 |
+         *     | typeName         |       x    |      x     |     x      |             |                  |            |                 |
+         *     | entityID         |       x    |      x     |           |             |                  |            |                 |
+         *     | typeID           |      x     |       x    |           |             |                  |            |                 |
+         *     | valueTypeID      |      x     |      x     |           |      x       |    x              |    x        |      x           |
+         *     | typeIDWithSubs   |      x     |       x    |           |             |                  |            |                 |
+         *     | relationToID     |      x     |      x     |           |             |                  |            |                 |
+         *     | beginFrom        |      x     |      x     |           |      x       |        x          |     x       |      x           |
+         *     | beginTo          |      x     |      x     |           |      x       |          x        |      x      |       x          |
+         *     | endFrom          |      x     |      x     |           |       x      |         x         |       x     |       x          |
+         *     | endTo            |      x     |      x     |           |       x      |       x           |       x     |      x           |
+         *
+         *      */
         search: string;
         /** @description Select which keys should not be displayed. This can improve performance */
         show: ("when" | "types" | "relations" | "names" | "links" | "geometry" | "depictions" | "geonames" | "description" | "none")[];
@@ -1167,9 +1327,9 @@ export interface components {
          * @description System class to be requested
          * @example acquisition
          */
-        system_class: "all" | "acquisition" | "activity" | "administrative_unit" | "appellation" | "artifact" | "bibliography" | "creation" | "edition" | "event" | "external_reference" | "feature" | "file" | "group" | "human_remains" | "move" | "object_location" | "person" | "place" | "production" | "reference_system" | "source" | "source_translation" | "stratigraphic_unit" | "type" | "tools";
+        system_class: "all" | "acquisition" | "activity" | "administrative_unit" | "appellation" | "artifact" | "bibliography" | "creation" | "edition" | "event" | "external_reference" | "feature" | "file" | "group" | "human_remains" | "move" | "person" | "place" | "production" | "reference_system" | "source" | "source_translation" | "stratigraphic_unit" | "type" | "tools";
         /** @description System classes to be requested */
-        system_classes: ("all" | "acquisition" | "activity" | "administrative_unit" | "appellation" | "artifact" | "bibliography" | "creation" | "edition" | "event" | "external_reference" | "feature" | "file" | "group" | "human_remains" | "move" | "object_location" | "person" | "place" | "production" | "reference_system" | "source" | "source_translation" | "stratigraphic_unit" | "type" | "tools")[];
+        system_classes: ("all" | "acquisition" | "activity" | "administrative_unit" | "appellation" | "artifact" | "bibliography" | "creation" | "edition" | "event" | "external_reference" | "feature" | "file" | "group" | "human_remains" | "move" | "person" | "place" | "production" | "reference_system" | "source" | "source_translation" | "stratigraphic_unit" | "type" | "tools")[];
         /** @description Show only entities with the given type id or linked to it. */
         type_id: number[];
         /** @description Provide a valid URL, e.g. https://openatlas.eu/. At an IIIF endpoint this will replace the base URL of all annotations. */
@@ -1255,7 +1415,9 @@ export interface operations {
                  *
                  *      **Values**
                  *
-                 *      Values has to be a list of items. The items can be either a string, an integer or a tuple (see Notes). Strings need to be marked with “” or ‘’, while integers does not allow this.\n *Notes*:
+                 *      Values has to be a list of items. The items can be either a string, an integer or a tuple (see Notes). Strings need to be marked with “” or ‘’, while integers does not allow this.
+                 *
+                 *      *Notes*:
                  *      The category valueTypeID can search for values of a type ID. But it takes one or more two valued Tuple as list entry: (x,y). x is the type id and y is the searched value. This can be an int or a float, e.g: `{"operator":"lesserThan","values":[(3142,543.3)],"logicalOperator":"and"}`
                  *      The date categories (beginFrom, beginTo, endFrom, endTo) only allow *one* value in the **values** field and it has to be formated the following way: YYYY-MM-DD. Month and day values need to filled up with 0, e.g. 800-01-01
                  *
@@ -1271,7 +1433,29 @@ export interface operations {
                  *
                  *     **Logical operators**
                  *
-                 *     Not mandatory, OR is the default value. Logical operators handles, if the values are treated as OR or AND. */
+                 *     Not mandatory, OR is the default value. Logical operators handles, if the values are treated as OR or AND.
+                 *
+                 *      The following table outlines the supported operations for each field:
+                 *
+                 *     |                  | equal     | notEqual  | like      | greaterThan | greaterThanEqual | lesserThan | lesserThanEqual |
+                 *     |------------------|-----------|-----------|-----------|-------------|------------------|------------|-----------------|
+                 *     | entityName       |     x      |     x      |    x       |             |                  |            |                 |
+                 *     | entityDescription|      x     |      x     |      x     |             |                  |            |                 |
+                 *     | entityAliases    |      x     |      x     |     x      |             |                  |            |                 |
+                 *     | entityCidocClass |      x     |      x     |      x     |             |                  |            |                 |
+                 *     | entitySystemClass|      x     |      x     |     x      |             |                  |            |                 |
+                 *     | typeName         |       x    |      x     |     x      |             |                  |            |                 |
+                 *     | entityID         |       x    |      x     |           |             |                  |            |                 |
+                 *     | typeID           |      x     |       x    |           |             |                  |            |                 |
+                 *     | valueTypeID      |      x     |      x     |           |      x       |    x              |    x        |      x           |
+                 *     | typeIDWithSubs   |      x     |       x    |           |             |                  |            |                 |
+                 *     | relationToID     |      x     |      x     |           |             |                  |            |                 |
+                 *     | beginFrom        |      x     |      x     |           |      x       |        x          |     x       |      x           |
+                 *     | beginTo          |      x     |      x     |           |      x       |          x        |      x      |       x          |
+                 *     | endFrom          |      x     |      x     |           |       x      |         x         |       x     |       x          |
+                 *     | endTo            |      x     |      x     |           |       x      |       x           |       x     |      x           |
+                 *
+                 *      */
                 search?: components["parameters"]["search"];
                 /** @description Begin results at the given entity id. */
                 first?: components["parameters"]["first"];
@@ -1387,10 +1571,10 @@ export interface operations {
             header?: never;
             path: {
                 /**
-                 * @description Specific entity ID
+                 * @description Specific ID of a file entity.
                  * @example 40
                  */
-                entityId: components["parameters"]["entityId"];
+                fileId: components["parameters"]["fileId"];
             };
             cookie?: never;
         };
@@ -1449,7 +1633,9 @@ export interface operations {
                  *
                  *      **Values**
                  *
-                 *      Values has to be a list of items. The items can be either a string, an integer or a tuple (see Notes). Strings need to be marked with “” or ‘’, while integers does not allow this.\n *Notes*:
+                 *      Values has to be a list of items. The items can be either a string, an integer or a tuple (see Notes). Strings need to be marked with “” or ‘’, while integers does not allow this.
+                 *
+                 *      *Notes*:
                  *      The category valueTypeID can search for values of a type ID. But it takes one or more two valued Tuple as list entry: (x,y). x is the type id and y is the searched value. This can be an int or a float, e.g: `{"operator":"lesserThan","values":[(3142,543.3)],"logicalOperator":"and"}`
                  *      The date categories (beginFrom, beginTo, endFrom, endTo) only allow *one* value in the **values** field and it has to be formated the following way: YYYY-MM-DD. Month and day values need to filled up with 0, e.g. 800-01-01
                  *
@@ -1465,7 +1651,29 @@ export interface operations {
                  *
                  *     **Logical operators**
                  *
-                 *     Not mandatory, OR is the default value. Logical operators handles, if the values are treated as OR or AND. */
+                 *     Not mandatory, OR is the default value. Logical operators handles, if the values are treated as OR or AND.
+                 *
+                 *      The following table outlines the supported operations for each field:
+                 *
+                 *     |                  | equal     | notEqual  | like      | greaterThan | greaterThanEqual | lesserThan | lesserThanEqual |
+                 *     |------------------|-----------|-----------|-----------|-------------|------------------|------------|-----------------|
+                 *     | entityName       |     x      |     x      |    x       |             |                  |            |                 |
+                 *     | entityDescription|      x     |      x     |      x     |             |                  |            |                 |
+                 *     | entityAliases    |      x     |      x     |     x      |             |                  |            |                 |
+                 *     | entityCidocClass |      x     |      x     |      x     |             |                  |            |                 |
+                 *     | entitySystemClass|      x     |      x     |     x      |             |                  |            |                 |
+                 *     | typeName         |       x    |      x     |     x      |             |                  |            |                 |
+                 *     | entityID         |       x    |      x     |           |             |                  |            |                 |
+                 *     | typeID           |      x     |       x    |           |             |                  |            |                 |
+                 *     | valueTypeID      |      x     |      x     |           |      x       |    x              |    x        |      x           |
+                 *     | typeIDWithSubs   |      x     |       x    |           |             |                  |            |                 |
+                 *     | relationToID     |      x     |      x     |           |             |                  |            |                 |
+                 *     | beginFrom        |      x     |      x     |           |      x       |        x          |     x       |      x           |
+                 *     | beginTo          |      x     |      x     |           |      x       |          x        |      x      |       x          |
+                 *     | endFrom          |      x     |      x     |           |       x      |         x         |       x     |       x          |
+                 *     | endTo            |      x     |      x     |           |       x      |       x           |       x     |      x           |
+                 *
+                 *      */
                 search?: components["parameters"]["search"];
                 /** @description Begin results at the given entity id. */
                 first?: components["parameters"]["first"];
@@ -1637,10 +1845,10 @@ export interface operations {
             path: {
                 version: 2;
                 /**
-                 * @description Specific entity ID
+                 * @description Specific ID of a file entity.
                  * @example 40
                  */
-                entityId: components["parameters"]["entityId"];
+                fileId: components["parameters"]["fileId"];
             };
             cookie?: never;
         };
@@ -1697,7 +1905,9 @@ export interface operations {
                  *
                  *      **Values**
                  *
-                 *      Values has to be a list of items. The items can be either a string, an integer or a tuple (see Notes). Strings need to be marked with “” or ‘’, while integers does not allow this.\n *Notes*:
+                 *      Values has to be a list of items. The items can be either a string, an integer or a tuple (see Notes). Strings need to be marked with “” or ‘’, while integers does not allow this.
+                 *
+                 *      *Notes*:
                  *      The category valueTypeID can search for values of a type ID. But it takes one or more two valued Tuple as list entry: (x,y). x is the type id and y is the searched value. This can be an int or a float, e.g: `{"operator":"lesserThan","values":[(3142,543.3)],"logicalOperator":"and"}`
                  *      The date categories (beginFrom, beginTo, endFrom, endTo) only allow *one* value in the **values** field and it has to be formated the following way: YYYY-MM-DD. Month and day values need to filled up with 0, e.g. 800-01-01
                  *
@@ -1713,7 +1923,29 @@ export interface operations {
                  *
                  *     **Logical operators**
                  *
-                 *     Not mandatory, OR is the default value. Logical operators handles, if the values are treated as OR or AND. */
+                 *     Not mandatory, OR is the default value. Logical operators handles, if the values are treated as OR or AND.
+                 *
+                 *      The following table outlines the supported operations for each field:
+                 *
+                 *     |                  | equal     | notEqual  | like      | greaterThan | greaterThanEqual | lesserThan | lesserThanEqual |
+                 *     |------------------|-----------|-----------|-----------|-------------|------------------|------------|-----------------|
+                 *     | entityName       |     x      |     x      |    x       |             |                  |            |                 |
+                 *     | entityDescription|      x     |      x     |      x     |             |                  |            |                 |
+                 *     | entityAliases    |      x     |      x     |     x      |             |                  |            |                 |
+                 *     | entityCidocClass |      x     |      x     |      x     |             |                  |            |                 |
+                 *     | entitySystemClass|      x     |      x     |     x      |             |                  |            |                 |
+                 *     | typeName         |       x    |      x     |     x      |             |                  |            |                 |
+                 *     | entityID         |       x    |      x     |           |             |                  |            |                 |
+                 *     | typeID           |      x     |       x    |           |             |                  |            |                 |
+                 *     | valueTypeID      |      x     |      x     |           |      x       |    x              |    x        |      x           |
+                 *     | typeIDWithSubs   |      x     |       x    |           |             |                  |            |                 |
+                 *     | relationToID     |      x     |      x     |           |             |                  |            |                 |
+                 *     | beginFrom        |      x     |      x     |           |      x       |        x          |     x       |      x           |
+                 *     | beginTo          |      x     |      x     |           |      x       |          x        |      x      |       x          |
+                 *     | endFrom          |      x     |      x     |           |       x      |         x         |       x     |       x          |
+                 *     | endTo            |      x     |      x     |           |       x      |       x           |       x     |      x           |
+                 *
+                 *      */
                 search?: components["parameters"]["search"];
                 /** @description Show only entities with the given type id or linked to it. */
                 type_id?: components["parameters"]["type_id"];
@@ -1815,7 +2047,9 @@ export interface operations {
                  *
                  *      **Values**
                  *
-                 *      Values has to be a list of items. The items can be either a string, an integer or a tuple (see Notes). Strings need to be marked with “” or ‘’, while integers does not allow this.\n *Notes*:
+                 *      Values has to be a list of items. The items can be either a string, an integer or a tuple (see Notes). Strings need to be marked with “” or ‘’, while integers does not allow this.
+                 *
+                 *      *Notes*:
                  *      The category valueTypeID can search for values of a type ID. But it takes one or more two valued Tuple as list entry: (x,y). x is the type id and y is the searched value. This can be an int or a float, e.g: `{"operator":"lesserThan","values":[(3142,543.3)],"logicalOperator":"and"}`
                  *      The date categories (beginFrom, beginTo, endFrom, endTo) only allow *one* value in the **values** field and it has to be formated the following way: YYYY-MM-DD. Month and day values need to filled up with 0, e.g. 800-01-01
                  *
@@ -1831,7 +2065,29 @@ export interface operations {
                  *
                  *     **Logical operators**
                  *
-                 *     Not mandatory, OR is the default value. Logical operators handles, if the values are treated as OR or AND. */
+                 *     Not mandatory, OR is the default value. Logical operators handles, if the values are treated as OR or AND.
+                 *
+                 *      The following table outlines the supported operations for each field:
+                 *
+                 *     |                  | equal     | notEqual  | like      | greaterThan | greaterThanEqual | lesserThan | lesserThanEqual |
+                 *     |------------------|-----------|-----------|-----------|-------------|------------------|------------|-----------------|
+                 *     | entityName       |     x      |     x      |    x       |             |                  |            |                 |
+                 *     | entityDescription|      x     |      x     |      x     |             |                  |            |                 |
+                 *     | entityAliases    |      x     |      x     |     x      |             |                  |            |                 |
+                 *     | entityCidocClass |      x     |      x     |      x     |             |                  |            |                 |
+                 *     | entitySystemClass|      x     |      x     |     x      |             |                  |            |                 |
+                 *     | typeName         |       x    |      x     |     x      |             |                  |            |                 |
+                 *     | entityID         |       x    |      x     |           |             |                  |            |                 |
+                 *     | typeID           |      x     |       x    |           |             |                  |            |                 |
+                 *     | valueTypeID      |      x     |      x     |           |      x       |    x              |    x        |      x           |
+                 *     | typeIDWithSubs   |      x     |       x    |           |             |                  |            |                 |
+                 *     | relationToID     |      x     |      x     |           |             |                  |            |                 |
+                 *     | beginFrom        |      x     |      x     |           |      x       |        x          |     x       |      x           |
+                 *     | beginTo          |      x     |      x     |           |      x       |          x        |      x      |       x          |
+                 *     | endFrom          |      x     |      x     |           |       x      |         x         |       x     |       x          |
+                 *     | endTo            |      x     |      x     |           |       x      |       x           |       x     |      x           |
+                 *
+                 *      */
                 search?: components["parameters"]["search"];
                 /** @description Begin results at the given entity id. */
                 first?: components["parameters"]["first"];
@@ -1998,7 +2254,9 @@ export interface operations {
                  *
                  *      **Values**
                  *
-                 *      Values has to be a list of items. The items can be either a string, an integer or a tuple (see Notes). Strings need to be marked with “” or ‘’, while integers does not allow this.\n *Notes*:
+                 *      Values has to be a list of items. The items can be either a string, an integer or a tuple (see Notes). Strings need to be marked with “” or ‘’, while integers does not allow this.
+                 *
+                 *      *Notes*:
                  *      The category valueTypeID can search for values of a type ID. But it takes one or more two valued Tuple as list entry: (x,y). x is the type id and y is the searched value. This can be an int or a float, e.g: `{"operator":"lesserThan","values":[(3142,543.3)],"logicalOperator":"and"}`
                  *      The date categories (beginFrom, beginTo, endFrom, endTo) only allow *one* value in the **values** field and it has to be formated the following way: YYYY-MM-DD. Month and day values need to filled up with 0, e.g. 800-01-01
                  *
@@ -2014,7 +2272,29 @@ export interface operations {
                  *
                  *     **Logical operators**
                  *
-                 *     Not mandatory, OR is the default value. Logical operators handles, if the values are treated as OR or AND. */
+                 *     Not mandatory, OR is the default value. Logical operators handles, if the values are treated as OR or AND.
+                 *
+                 *      The following table outlines the supported operations for each field:
+                 *
+                 *     |                  | equal     | notEqual  | like      | greaterThan | greaterThanEqual | lesserThan | lesserThanEqual |
+                 *     |------------------|-----------|-----------|-----------|-------------|------------------|------------|-----------------|
+                 *     | entityName       |     x      |     x      |    x       |             |                  |            |                 |
+                 *     | entityDescription|      x     |      x     |      x     |             |                  |            |                 |
+                 *     | entityAliases    |      x     |      x     |     x      |             |                  |            |                 |
+                 *     | entityCidocClass |      x     |      x     |      x     |             |                  |            |                 |
+                 *     | entitySystemClass|      x     |      x     |     x      |             |                  |            |                 |
+                 *     | typeName         |       x    |      x     |     x      |             |                  |            |                 |
+                 *     | entityID         |       x    |      x     |           |             |                  |            |                 |
+                 *     | typeID           |      x     |       x    |           |             |                  |            |                 |
+                 *     | valueTypeID      |      x     |      x     |           |      x       |    x              |    x        |      x           |
+                 *     | typeIDWithSubs   |      x     |       x    |           |             |                  |            |                 |
+                 *     | relationToID     |      x     |      x     |           |             |                  |            |                 |
+                 *     | beginFrom        |      x     |      x     |           |      x       |        x          |     x       |      x           |
+                 *     | beginTo          |      x     |      x     |           |      x       |          x        |      x      |       x          |
+                 *     | endFrom          |      x     |      x     |           |       x      |         x         |       x     |       x          |
+                 *     | endTo            |      x     |      x     |           |       x      |       x           |       x     |      x           |
+                 *
+                 *      */
                 search?: components["parameters"]["search"];
                 /** @description Begin results at the given entity id. */
                 first?: components["parameters"]["first"];
@@ -2125,7 +2405,9 @@ export interface operations {
                  *
                  *      **Values**
                  *
-                 *      Values has to be a list of items. The items can be either a string, an integer or a tuple (see Notes). Strings need to be marked with “” or ‘’, while integers does not allow this.\n *Notes*:
+                 *      Values has to be a list of items. The items can be either a string, an integer or a tuple (see Notes). Strings need to be marked with “” or ‘’, while integers does not allow this.
+                 *
+                 *      *Notes*:
                  *      The category valueTypeID can search for values of a type ID. But it takes one or more two valued Tuple as list entry: (x,y). x is the type id and y is the searched value. This can be an int or a float, e.g: `{"operator":"lesserThan","values":[(3142,543.3)],"logicalOperator":"and"}`
                  *      The date categories (beginFrom, beginTo, endFrom, endTo) only allow *one* value in the **values** field and it has to be formated the following way: YYYY-MM-DD. Month and day values need to filled up with 0, e.g. 800-01-01
                  *
@@ -2141,7 +2423,29 @@ export interface operations {
                  *
                  *     **Logical operators**
                  *
-                 *     Not mandatory, OR is the default value. Logical operators handles, if the values are treated as OR or AND. */
+                 *     Not mandatory, OR is the default value. Logical operators handles, if the values are treated as OR or AND.
+                 *
+                 *      The following table outlines the supported operations for each field:
+                 *
+                 *     |                  | equal     | notEqual  | like      | greaterThan | greaterThanEqual | lesserThan | lesserThanEqual |
+                 *     |------------------|-----------|-----------|-----------|-------------|------------------|------------|-----------------|
+                 *     | entityName       |     x      |     x      |    x       |             |                  |            |                 |
+                 *     | entityDescription|      x     |      x     |      x     |             |                  |            |                 |
+                 *     | entityAliases    |      x     |      x     |     x      |             |                  |            |                 |
+                 *     | entityCidocClass |      x     |      x     |      x     |             |                  |            |                 |
+                 *     | entitySystemClass|      x     |      x     |     x      |             |                  |            |                 |
+                 *     | typeName         |       x    |      x     |     x      |             |                  |            |                 |
+                 *     | entityID         |       x    |      x     |           |             |                  |            |                 |
+                 *     | typeID           |      x     |       x    |           |             |                  |            |                 |
+                 *     | valueTypeID      |      x     |      x     |           |      x       |    x              |    x        |      x           |
+                 *     | typeIDWithSubs   |      x     |       x    |           |             |                  |            |                 |
+                 *     | relationToID     |      x     |      x     |           |             |                  |            |                 |
+                 *     | beginFrom        |      x     |      x     |           |      x       |        x          |     x       |      x           |
+                 *     | beginTo          |      x     |      x     |           |      x       |          x        |      x      |       x          |
+                 *     | endFrom          |      x     |      x     |           |       x      |         x         |       x     |       x          |
+                 *     | endTo            |      x     |      x     |           |       x      |       x           |       x     |      x           |
+                 *
+                 *      */
                 search?: components["parameters"]["search"];
                 /** @description Begin results at the given entity id. */
                 first?: components["parameters"]["first"];
@@ -2284,7 +2588,9 @@ export interface operations {
                  *
                  *      **Values**
                  *
-                 *      Values has to be a list of items. The items can be either a string, an integer or a tuple (see Notes). Strings need to be marked with “” or ‘’, while integers does not allow this.\n *Notes*:
+                 *      Values has to be a list of items. The items can be either a string, an integer or a tuple (see Notes). Strings need to be marked with “” or ‘’, while integers does not allow this.
+                 *
+                 *      *Notes*:
                  *      The category valueTypeID can search for values of a type ID. But it takes one or more two valued Tuple as list entry: (x,y). x is the type id and y is the searched value. This can be an int or a float, e.g: `{"operator":"lesserThan","values":[(3142,543.3)],"logicalOperator":"and"}`
                  *      The date categories (beginFrom, beginTo, endFrom, endTo) only allow *one* value in the **values** field and it has to be formated the following way: YYYY-MM-DD. Month and day values need to filled up with 0, e.g. 800-01-01
                  *
@@ -2300,7 +2606,29 @@ export interface operations {
                  *
                  *     **Logical operators**
                  *
-                 *     Not mandatory, OR is the default value. Logical operators handles, if the values are treated as OR or AND. */
+                 *     Not mandatory, OR is the default value. Logical operators handles, if the values are treated as OR or AND.
+                 *
+                 *      The following table outlines the supported operations for each field:
+                 *
+                 *     |                  | equal     | notEqual  | like      | greaterThan | greaterThanEqual | lesserThan | lesserThanEqual |
+                 *     |------------------|-----------|-----------|-----------|-------------|------------------|------------|-----------------|
+                 *     | entityName       |     x      |     x      |    x       |             |                  |            |                 |
+                 *     | entityDescription|      x     |      x     |      x     |             |                  |            |                 |
+                 *     | entityAliases    |      x     |      x     |     x      |             |                  |            |                 |
+                 *     | entityCidocClass |      x     |      x     |      x     |             |                  |            |                 |
+                 *     | entitySystemClass|      x     |      x     |     x      |             |                  |            |                 |
+                 *     | typeName         |       x    |      x     |     x      |             |                  |            |                 |
+                 *     | entityID         |       x    |      x     |           |             |                  |            |                 |
+                 *     | typeID           |      x     |       x    |           |             |                  |            |                 |
+                 *     | valueTypeID      |      x     |      x     |           |      x       |    x              |    x        |      x           |
+                 *     | typeIDWithSubs   |      x     |       x    |           |             |                  |            |                 |
+                 *     | relationToID     |      x     |      x     |           |             |                  |            |                 |
+                 *     | beginFrom        |      x     |      x     |           |      x       |        x          |     x       |      x           |
+                 *     | beginTo          |      x     |      x     |           |      x       |          x        |      x      |       x          |
+                 *     | endFrom          |      x     |      x     |           |       x      |         x         |       x     |       x          |
+                 *     | endTo            |      x     |      x     |           |       x      |       x           |       x     |      x           |
+                 *
+                 *      */
                 search?: components["parameters"]["search"];
                 /** @description Begin results at the given entity id. */
                 first?: components["parameters"]["first"];
@@ -2383,7 +2711,9 @@ export interface operations {
                  *
                  *      **Values**
                  *
-                 *      Values has to be a list of items. The items can be either a string, an integer or a tuple (see Notes). Strings need to be marked with “” or ‘’, while integers does not allow this.\n *Notes*:
+                 *      Values has to be a list of items. The items can be either a string, an integer or a tuple (see Notes). Strings need to be marked with “” or ‘’, while integers does not allow this.
+                 *
+                 *      *Notes*:
                  *      The category valueTypeID can search for values of a type ID. But it takes one or more two valued Tuple as list entry: (x,y). x is the type id and y is the searched value. This can be an int or a float, e.g: `{"operator":"lesserThan","values":[(3142,543.3)],"logicalOperator":"and"}`
                  *      The date categories (beginFrom, beginTo, endFrom, endTo) only allow *one* value in the **values** field and it has to be formated the following way: YYYY-MM-DD. Month and day values need to filled up with 0, e.g. 800-01-01
                  *
@@ -2399,7 +2729,29 @@ export interface operations {
                  *
                  *     **Logical operators**
                  *
-                 *     Not mandatory, OR is the default value. Logical operators handles, if the values are treated as OR or AND. */
+                 *     Not mandatory, OR is the default value. Logical operators handles, if the values are treated as OR or AND.
+                 *
+                 *      The following table outlines the supported operations for each field:
+                 *
+                 *     |                  | equal     | notEqual  | like      | greaterThan | greaterThanEqual | lesserThan | lesserThanEqual |
+                 *     |------------------|-----------|-----------|-----------|-------------|------------------|------------|-----------------|
+                 *     | entityName       |     x      |     x      |    x       |             |                  |            |                 |
+                 *     | entityDescription|      x     |      x     |      x     |             |                  |            |                 |
+                 *     | entityAliases    |      x     |      x     |     x      |             |                  |            |                 |
+                 *     | entityCidocClass |      x     |      x     |      x     |             |                  |            |                 |
+                 *     | entitySystemClass|      x     |      x     |     x      |             |                  |            |                 |
+                 *     | typeName         |       x    |      x     |     x      |             |                  |            |                 |
+                 *     | entityID         |       x    |      x     |           |             |                  |            |                 |
+                 *     | typeID           |      x     |       x    |           |             |                  |            |                 |
+                 *     | valueTypeID      |      x     |      x     |           |      x       |    x              |    x        |      x           |
+                 *     | typeIDWithSubs   |      x     |       x    |           |             |                  |            |                 |
+                 *     | relationToID     |      x     |      x     |           |             |                  |            |                 |
+                 *     | beginFrom        |      x     |      x     |           |      x       |        x          |     x       |      x           |
+                 *     | beginTo          |      x     |      x     |           |      x       |          x        |      x      |       x          |
+                 *     | endFrom          |      x     |      x     |           |       x      |         x         |       x     |       x          |
+                 *     | endTo            |      x     |      x     |           |       x      |       x           |       x     |      x           |
+                 *
+                 *      */
                 search?: components["parameters"]["search"];
                 /** @description Begin results at the given entity id. */
                 first?: components["parameters"]["first"];
@@ -2542,7 +2894,9 @@ export interface operations {
                  *
                  *      **Values**
                  *
-                 *      Values has to be a list of items. The items can be either a string, an integer or a tuple (see Notes). Strings need to be marked with “” or ‘’, while integers does not allow this.\n *Notes*:
+                 *      Values has to be a list of items. The items can be either a string, an integer or a tuple (see Notes). Strings need to be marked with “” or ‘’, while integers does not allow this.
+                 *
+                 *      *Notes*:
                  *      The category valueTypeID can search for values of a type ID. But it takes one or more two valued Tuple as list entry: (x,y). x is the type id and y is the searched value. This can be an int or a float, e.g: `{"operator":"lesserThan","values":[(3142,543.3)],"logicalOperator":"and"}`
                  *      The date categories (beginFrom, beginTo, endFrom, endTo) only allow *one* value in the **values** field and it has to be formated the following way: YYYY-MM-DD. Month and day values need to filled up with 0, e.g. 800-01-01
                  *
@@ -2558,7 +2912,29 @@ export interface operations {
                  *
                  *     **Logical operators**
                  *
-                 *     Not mandatory, OR is the default value. Logical operators handles, if the values are treated as OR or AND. */
+                 *     Not mandatory, OR is the default value. Logical operators handles, if the values are treated as OR or AND.
+                 *
+                 *      The following table outlines the supported operations for each field:
+                 *
+                 *     |                  | equal     | notEqual  | like      | greaterThan | greaterThanEqual | lesserThan | lesserThanEqual |
+                 *     |------------------|-----------|-----------|-----------|-------------|------------------|------------|-----------------|
+                 *     | entityName       |     x      |     x      |    x       |             |                  |            |                 |
+                 *     | entityDescription|      x     |      x     |      x     |             |                  |            |                 |
+                 *     | entityAliases    |      x     |      x     |     x      |             |                  |            |                 |
+                 *     | entityCidocClass |      x     |      x     |      x     |             |                  |            |                 |
+                 *     | entitySystemClass|      x     |      x     |     x      |             |                  |            |                 |
+                 *     | typeName         |       x    |      x     |     x      |             |                  |            |                 |
+                 *     | entityID         |       x    |      x     |           |             |                  |            |                 |
+                 *     | typeID           |      x     |       x    |           |             |                  |            |                 |
+                 *     | valueTypeID      |      x     |      x     |           |      x       |    x              |    x        |      x           |
+                 *     | typeIDWithSubs   |      x     |       x    |           |             |                  |            |                 |
+                 *     | relationToID     |      x     |      x     |           |             |                  |            |                 |
+                 *     | beginFrom        |      x     |      x     |           |      x       |        x          |     x       |      x           |
+                 *     | beginTo          |      x     |      x     |           |      x       |          x        |      x      |       x          |
+                 *     | endFrom          |      x     |      x     |           |       x      |         x         |       x     |       x          |
+                 *     | endTo            |      x     |      x     |           |       x      |       x           |       x     |      x           |
+                 *
+                 *      */
                 search?: components["parameters"]["search"];
                 /** @description Begin results at the given entity id. */
                 first?: components["parameters"]["first"];

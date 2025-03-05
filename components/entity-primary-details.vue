@@ -2,6 +2,7 @@
 import { CheckIcon, CopyIcon } from "lucide-vue-next";
 
 import CustomPrimaryDetailsActor from "@/components/custom-primary-details-actor.vue";
+import CustomPrimaryDetailsEvent from "@/components/custom-primary-details-event.vue";
 import CustomPrimaryDetailsFeature from "@/components/custom-primary-details-feature.vue";
 import CustomPrimaryDetailsPlace from "@/components/custom-primary-details-place.vue";
 
@@ -42,8 +43,14 @@ const images = computed(() => {
 });
 
 const customPrimaryDetails = computed(() => {
+	if (props.entity.viewClass in entityPrimaryDetailsDictByViewClass)
+		return entityPrimaryDetailsDictByViewClass[props.entity.viewClass];
 	return entityPrimaryDetailsDict[props.entity.systemClass];
 });
+
+const entityPrimaryDetailsDictByViewClass: Record<string, Component> = {
+	event: CustomPrimaryDetailsEvent,
+};
 
 const entityPrimaryDetailsDict: Record<string, Component> = {
 	person: CustomPrimaryDetailsActor,

@@ -16,9 +16,13 @@ const features = computed(() => {
 			<GeoMap
 				v-if="height && width"
 				:features="features"
+				:movements="features"
+				:events="features"
 				:height="height"
 				:width="width"
 				:has-polygons="true"
+				:show-movements="true"
+				:multiple-movements="null"
 			/>
 		</VisualisationContainer>
 	</Card>

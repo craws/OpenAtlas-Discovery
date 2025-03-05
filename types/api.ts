@@ -6,7 +6,7 @@ type LinkedPlacesModelFeature = LinkedPlacesModel["features"][number];
 
 export interface LinkedPlaceFeature extends LinkedPlacesModelFeature {
 	type: "Feature";
-	geometry:
+	geometry?:
 		| components["schemas"]["GeometryCollection"]
 		| components["schemas"]["LineString"]
 		| components["schemas"]["Point"]

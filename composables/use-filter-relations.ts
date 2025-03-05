@@ -1,7 +1,7 @@
 type Relations = Array<NonNullable<EntityFeature["relations"]>[0]>;
 
 export const useFilterRelations = (
-	relations: MaybeRef<Relations> | undefined,
+	relations: MaybeRef<Relations> | null | undefined,
 	filters: MaybeRef<{
 		relationType?: RelationType;
 		systemClass?: EntityFeature["systemClass"];

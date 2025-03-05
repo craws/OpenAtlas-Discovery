@@ -23,7 +23,7 @@ const descriptions = computed(() => {
 <template>
 	<template v-if="descriptions.length > 0">
 		<template v-if="descriptions.length === 1">
-			<p class="text-md">{{ descriptions[0] }}</p>
+			<p class="whitespace-pre-line text-md">{{ descriptions[0] }}</p>
 		</template>
 		<template v-else>
 			<Tabs default-value="0">
