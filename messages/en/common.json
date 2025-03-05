@@ -44,7 +44,13 @@
 		"end-date": "End date",
 		"point": "Locations",
 		"polygon": "Display Areas",
-		"start-date": "Start date"
+		"centerpoint": "Areas",
+		"point": "Locations",
+		"movement": "Movement",
+		"showMovement": "Display Movement"
+	},
+	"DataView": {
+		"nothing-found": "No entries found for this search."
 	},
 	"DataPage": {
 		"meta": {

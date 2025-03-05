@@ -44,7 +44,11 @@
 		"end-date": "End-Datum",
 		"point": "Orte",
 		"polygon": "Flächen anzeigen",
-		"start-date": "Start-Datum"
+		"movement": "Bewegung",
+		"showMovement": "Bewegungen anzeigen"
+	},
+	"DataView": {
+		"nothing-found": "Keine Einträge zu dieser Suche."
 	},
 	"DataPage": {
 		"meta": {
