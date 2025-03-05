@@ -4,7 +4,7 @@
 	"license": "MIT",
 	"type": "module",
 	"engines": {
-		"node": "20.x",
+		"node": "22.x",
 		"pnpm": "9.x"
 	},
 	"packageManager": "pnpm@9.4.0",
@@ -98,7 +98,7 @@
 		"@playwright/test": "^1.45.0",
 		"@tanstack/eslint-plugin-query": "^5.47.0",
 		"@types/geojson": "^7946.0.14",
-		"@types/node": "^20.14.8",
+		"@types/node": "^22.13.4",
 		"axe-core": "^4.9.1",
 		"axe-playwright": "^2.0.1",
 		"ci-info": "^4.0.0",
@@ -112,7 +112,7 @@
 		"lint-staged": "^15.2.7",
 		"npm-run-all2": "^6.2.0",
 		"postcss": "^8.4.38",
-		"prettier": "^3.3.2",
+		"prettier": "^3.5.1",
 		"schema-dts": "^1.1.2",
 		"simple-git-hooks": "^2.11.1",
 		"stylelint": "^16.6.1",

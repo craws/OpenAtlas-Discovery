@@ -1,6 +1,6 @@
 {
 	"name": "Nuxt",
-	"image": "ghcr.io/acdh-oeaw/devcontainer-frontend:20",
+	"image": "ghcr.io/acdh-oeaw/devcontainer-frontend:22",
 	"customizations": {
 		"vscode": {
 			"extensions": [

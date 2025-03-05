@@ -31,7 +31,7 @@ This server will _not_ commit content changes to GitHub, but write to the local 
 
 ### Pre-requisites
 
-- [Node.js v20](https://nodejs.org/en/download)
+- [Node.js v22](https://nodejs.org/en/download)
 - [pnpm](https://pnpm.io/installation)
 
 ### Environment variables
