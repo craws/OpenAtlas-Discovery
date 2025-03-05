@@ -170,7 +170,7 @@
 			"entityDescription": "Description",
 			"entityID": "ID",
 			"entityName": "Name",
-			"entitySystemClass": "System class",
+			"entitySystemClass": "Category",
 			"relationToID": "Relation to ID",
 			"typeID": "Type ID",
 			"typeIDWithSubs": "Type ID with subs",

@@ -11,7 +11,7 @@ export const categories = [
 	"entityDescription",
 	"entityID",
 	"entityName",
-	"typeName",
+	"entitySystemClass",
 ] as const;
 
 export const operatorMap = {
@@ -20,7 +20,7 @@ export const operatorMap = {
 	entityDescription: "like",
 	entityID: "equal",
 	entityName: "like",
-	typeName: "like",
+	entitySystemClass: "like",
 } as const;
 
 /**

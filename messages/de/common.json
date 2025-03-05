@@ -168,7 +168,7 @@
 			"entityDescription": "Beschreibung",
 			"entityID": "ID",
 			"entityName": "Name",
-			"entitySystemClass": "System Klasse",
+			"entitySystemClass": "Kategorie",
 			"relationToID": "Beziehung-ID",
 			"typeID": "Typ-ID",
 			"typeIDWithSubs": "Typ-ID mit Subtypen",
