@@ -52,7 +52,7 @@
 				"stratigraphic_unit",
 				"place"
 			],
-			"furtherSystemClasses": ["files", "externalReferenceSystems"],
+			"furtherSystemClasses": ["files", "externalReferenceSystems", "references"],
 			"affectedSystemClasses": [
 				"acquisition",
 				"activity",
@@ -79,10 +79,30 @@
 			"excludeTypeIds": []
 		}
 	],
+	"footer": {
+		"partner_logos": []
+	},
 	"fullscreen": true,
 	"defaultLocale": "en",
 	"map": {
 		"startPage": false,
-		"mapDisplayedSystemClasses": ["place", "feature"]
+		"mapDisplayedSystemClasses": ["place", "feature"],
+		"customIconConfig": [
+			{
+				"entityType": 22378,
+				"iconName": "Skull",
+				"color": "#2b2b2b"
+			},
+			{
+				"entityType": 5083,
+				"iconName": "Skull",
+				"color": "#2b2b2b"
+			}
+		],
+		"customMovementConfig": {
+			"colorConfig": [],
+			"arcThickness": false
+		},
+		"flyToZoom": 20
 	}
 }

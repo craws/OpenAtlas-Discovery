@@ -46,7 +46,10 @@
 		"point": "Locations",
 		"polygon": "Display Areas",
 		"movement": "Movement",
-		"showMovement": "Display Movement"
+		"showMovement": "Display Movement",
+		"filter": "Filter",
+		"icons": "Icons",
+		"no-icons": "No icons visible on the map."
 	},
 	"DataView": {
 		"nothing-found": "No entries found for this search."
@@ -92,7 +95,11 @@
 		"no-map": "Not visible on the map.",
 		"no-network": "Not visible in the network.",
 		"dateSpan": "Timespan",
-		"dateSpan-to": "until"
+		"dateSpan-to": "until",
+		"license": "License",
+		"creator": "Creator",
+		"licenseHolder": "License Holder",
+		"not-available": "Not provided."
 	},
 	"EntitySidebar": {
 		"NextFeature": "NextFeature",

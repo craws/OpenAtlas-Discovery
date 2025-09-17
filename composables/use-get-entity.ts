@@ -29,8 +29,6 @@ export function useGetEntity(params: MaybeRef<GetEntityParams>) {
 				},
 				signal,
 			});
-
-			console.log("Entity with relations:", entity);
 			return entity;
 		},
 	});

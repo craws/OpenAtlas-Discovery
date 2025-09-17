@@ -6,8 +6,18 @@ import type { LinkedPlaceFeature, PresentationViewModel } from "@/types/api";
 
 export type GeoJsonFeature = Feature<Geometry, { _id: string }>;
 
-interface CustomGeoJsonFeature extends GeoJsonFeature {
+export interface CustomGeoJsonFeature extends GeoJsonFeature {
 	geometry: GeoJsonFeature["geometry"] | NonNullable<LinkedPlaceFeature["geometry"]>;
+
+	properties: {
+		_id: string;
+		color?: string;
+		size?: number;
+		isIcon?: boolean;
+		isDisplayed?: boolean;
+		otherFeatures?: Array<string>;
+		shapeType?: string;
+	};
 }
 
 export function createGeoJsonFeature(

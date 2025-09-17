@@ -2,7 +2,7 @@ import { log } from "@acdh-oeaw/lib";
 import { ColorSpace, getLuminance, HSL, OKLCH, parse, sRGB, to as convert } from "colorjs.io/fn";
 import * as v from "valibot";
 
-import projectConfig from "../project.config.json" assert { type: "json" };
+import projectConfig from "../project.config.json" with { type: "json" };
 
 ColorSpace.register(sRGB);
 ColorSpace.register(HSL);
@@ -50,6 +50,16 @@ const schema = v.object({
 		excludeSystemClasses: v.array(v.string()),
 	}),
 	defaultLocale: v.picklist(["de", "en"]),
+	footer: v.object({
+		partner_logos: v.array(
+			v.object({
+				name: v.string(),
+				url: v.string(),
+				light: v.string(),
+				dark: v.string(),
+			}),
+		),
+	}),
 	fullscreen: v.boolean(),
 	imprint: v.picklist(["acdh-ch", "custom", "none"]),
 	logos: v.object({
@@ -60,7 +70,24 @@ const schema = v.object({
 	}),
 	map: v.object({
 		startPage: v.boolean(),
+		flyToZoom: v.number(),
 		mapDisplayedSystemClasses: v.array(v.string()),
+		customIconConfig: v.array(
+			v.object({
+				entityType: v.number(),
+				iconName: v.string(),
+				color: v.optional(v.string()),
+			}),
+		),
+		customMovementConfig: v.object({
+			colorConfig: v.array(
+				v.object({
+					entityType: v.number(),
+					color: v.string(),
+				}),
+			),
+			arcThickness: v.boolean(),
+		}),
 	}),
 	twitter: v.optional(v.string()),
 });

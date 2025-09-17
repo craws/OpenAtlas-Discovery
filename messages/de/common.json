@@ -46,7 +46,10 @@
 		"point": "Orte",
 		"polygon": "Flächen anzeigen",
 		"movement": "Bewegung",
-		"showMovement": "Bewegungen anzeigen"
+		"showMovement": "Bewegungen anzeigen",
+		"filter": "Filter",
+		"icons": "Symbole",
+		"no-icons": "Keine Symbole auf der Karte vorhanden."
 	},
 	"DataView": {
 		"nothing-found": "Keine Einträge zu dieser Suche."
@@ -93,7 +96,11 @@
 		"no-details": "Keine weiteren Details vorhanden.",
 
 		"dateSpan": "Zeitraum",
-		"dateSpan-to": "bis"
+		"dateSpan-to": "bis",
+		"license": "Lizenz",
+		"creator": "Urheber*in",
+		"licenseHolder": "Lizenzinhaber*in",
+		"not-available": "Nicht angegeben."
 	},
 	"EntitySidebar": {
 		"NextFeature": "Nächste Funktion",

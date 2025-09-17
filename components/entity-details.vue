@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { DownloadIcon } from "lucide-vue-next";
+import { DownloadIcon, InfoIcon } from "lucide-vue-next";
 
 import { project } from "@/config/project.config";
 import type { File, PresentationViewModel } from "@/types/api";
@@ -34,6 +34,9 @@ interface AdditionalInfoType {
 	title: string;
 	id: number;
 	identifier?: string;
+	creator?: string;
+	licenseHolder?: string;
+	license?: string;
 }
 
 const additionalInfo = computed(() => {
@@ -126,7 +129,7 @@ function getFilename(file: unknown) {
 							class="grid grid-cols-[1fr_auto] items-center py-1"
 						>
 							<NavLink
-								v-if="relationType === 'files' && relation?.id"
+								v-if="['files', 'references'].includes(relationType) && relation?.id"
 								class="underline decoration-dotted hover:no-underline"
 								:href="{
 									path: `/${getPath()}`,
@@ -149,13 +152,58 @@ function getFilename(file: unknown) {
 							<span v-else>
 								{{ relationType === "files" ? getFilename(relation) : relation.identifier }}
 							</span>
-							<Button
-								v-if="relationType === 'files'"
-								variant="transparent"
-								class="h-auto p-0 opacity-70 hover:opacity-100"
-								@click="download(relation)"
-								><DownloadIcon :size="16" /><span class="sr-only">Download</span></Button
-							>
+							<div class="inline-flex items-center gap-2 align-middle">
+								<Popover>
+									<PopoverTrigger as-child>
+										<Button
+											v-if="relationType === 'files'"
+											variant="transparent"
+											class="h-auto p-0 opacity-70 hover:opacity-100"
+											><InfoIcon :size="16" /><span class="sr-only">Info</span></Button
+										>
+									</PopoverTrigger>
+									<PopoverContent side="top">
+										<div class="text-sm">
+											<div>
+												<span class="mr-1 text-sm text-muted-foreground"
+													>{{ t("EntityPage.creator") }}:</span
+												>{{ relation.creator ? relation.creator : t("EntityPage.license") }}
+											</div>
+											<div>
+												<span class="mr-1 text-sm text-muted-foreground"
+													>{{ t("EntityPage.licenseHolder") }}:</span
+												>{{
+													relation.licenseHolder ? relation.licenseHolder : t("EntityPage.license")
+												}}
+											</div>
+											<div>
+												<span class="mr-1 text-sm text-muted-foreground"
+													>{{ t("EntityPage.license") }}:</span
+												>
+												<NavLink
+													v-if="relation.license?.startsWith('CC')"
+													:href="'https://creativecommons.org/'"
+													class="underline decoration-dotted hover:no-underline"
+													external
+													target="_blank"
+												>
+													{{ relation.license }}
+												</NavLink>
+												<span v-else>
+													{{ relation.license ? relation.license : t("EntityPage.license") }}
+												</span>
+											</div>
+										</div>
+									</PopoverContent>
+								</Popover>
+								<Button
+									v-if="relationType === 'files'"
+									variant="transparent"
+									class="h-auto p-0 opacity-70 hover:opacity-100"
+									@click="download(relation)"
+									><DownloadIcon :size="16" /><span class="sr-only">Download</span></Button
+								>
+							</div>
 						</li>
 					</ul>
 				</dd>

@@ -16,6 +16,7 @@
 		"generate:crm-messages": "dotenv -c -- tsx ./scripts/generate-crm-locale.ts",
 		"generate:reroute-index": "tsx ./scripts/generate-reroute-index.ts",
 		"generate:server": "nuxt generate --dotenv ./.env.local",
+		"generate:cms-icon-config": "tsx ./scripts/generate-cms-config.ts",
 		"dev": "nuxt dev --dotenv ./.env.local",
 		"dev:cms": "decap-server",
 		"format:check": "prettier . \"!./content/**\" --cache --check --ignore-path ./.gitignore",
@@ -28,7 +29,7 @@
 		"lint:styles:fix": "pnpm run lint:styles:check --fix",
 		"postinstall": "nuxt prepare",
 		"preinstall": "npx only-allow pnpm",
-		"prepare": "run-s setup generate:api-client generate:crm-messages",
+		"prepare": "run-s setup generate:api-client generate:crm-messages generate:cms-icon-config format:fix",
 		"setup": "is-ci || simple-git-hooks",
 		"start": "nuxt preview --dotenv ./.env.local",
 		"sync": "nuxt prepare",
@@ -44,6 +45,7 @@
 	"dependencies": {
 		"@acdh-oeaw/lib": "^0.1.12",
 		"@deck.gl/core": "^9.1.0",
+		"@deck.gl/extensions": "^9.1.14",
 		"@deck.gl/layers": "^9.1.0",
 		"@deck.gl/mapbox": "^9.1.0",
 		"@deck.gl/mesh-layers": "^9.1.0",
@@ -78,6 +80,7 @@
 		"graphology": "^0.25.4",
 		"graphology-layout": "^0.6.1",
 		"graphology-layout-forceatlas2": "^0.10.1",
+		"lucide-static": "^0.536.0",
 		"lucide-vue-next": "^0.471.0",
 		"maplibre-gl": "^4.4.1",
 		"mirador": "^3.4.3",
@@ -85,7 +88,7 @@
 		"nuxt-svgo": "4.0.11",
 		"openapi-typescript": "^7.0.0",
 		"pino-http": "^10.1.0",
-		"pnpm": "^10.3.0",
+		"pnpm": "^9.4.0",
 		"popmotion": "^11.0.5",
 		"radix-vue": "^1.8.5",
 		"satori": "^0.10.13",
@@ -126,6 +129,7 @@
 		"eslint": "^8.57.0",
 		"eslint-plugin-tailwindcss": "^3.17.4",
 		"is-ci": "^3.0.1",
+		"js-yaml": "^4.1.0",
 		"lint-staged": "^15.2.7",
 		"npm-run-all2": "^6.2.0",
 		"postcss": "^8.4.38",
@@ -137,7 +141,8 @@
 		"tsx": "^4.15.7",
 		"typescript": "^5.5.2",
 		"vite": "^5.3.1",
-		"vue-tsc": "^2.0.22"
+		"vue-tsc": "^2.0.22",
+		"yaml": "^2.8.1"
 	},
 	"browserslist": {
 		"development": [

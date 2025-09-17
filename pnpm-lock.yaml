@@ -14,6 +14,9 @@ importers:
       '@deck.gl/core':
         specifier: ^9.1.0
         version: 9.1.0
+      '@deck.gl/extensions':
+        specifier: ^9.1.14
+        version: 9.1.14(@deck.gl/core@9.1.0)(@luma.gl/core@9.1.0)(@luma.gl/engine@9.1.0(@luma.gl/core@9.1.0)(@luma.gl/shadertools@9.1.0(@luma.gl/core@9.1.0)))
       '@deck.gl/layers':
         specifier: ^9.1.0
         version: 9.1.0(@deck.gl/core@9.1.0)(@loaders.gl/core@4.3.3)(@luma.gl/core@9.1.0)(@luma.gl/engine@9.1.0(@luma.gl/core@9.1.0)(@luma.gl/shadertools@9.1.0(@luma.gl/core@9.1.0)))
@@ -116,6 +119,9 @@ importers:
       graphology-layout-forceatlas2:
         specifier: ^0.10.1
         version: 0.10.1(graphology-types@0.24.7)
+      lucide-static:
+        specifier: ^0.536.0
+        version: 0.536.0
       lucide-vue-next:
         specifier: ^0.471.0
         version: 0.471.0(vue@3.5.13(typescript@5.5.2))
@@ -138,8 +144,8 @@ importers:
         specifier: ^10.1.0
         version: 10.1.0
       pnpm:
-        specifier: ^10.3.0
-        version: 10.3.0
+        specifier: ^9.4.0
+        version: 9.15.9
       popmotion:
         specifier: ^11.0.5
         version: 11.0.5
@@ -255,6 +261,9 @@ importers:
       is-ci:
         specifier: ^3.0.1
         version: 3.0.1
+      js-yaml:
+        specifier: ^4.1.0
+        version: 4.1.0
       lint-staged:
         specifier: ^15.2.7
         version: 15.2.7
@@ -291,6 +300,9 @@ importers:
       vue-tsc:
         specifier: ^2.0.22
         version: 2.0.22(typescript@5.5.2)
+      yaml:
+        specifier: ^2.8.1
+        version: 2.8.1
 
 packages:
 
@@ -576,6 +588,13 @@ packages:
 
   '@deck.gl/core@9.1.0':
     resolution: {integrity: sha512-leocNGky9jZ0HUk8xm+HH4f+EL86PKiG8O4REpw4l/K1UbMssekR/L2moYwt7Bx98jSIibcUbhDWOBatKAUaTA==}
+
+  '@deck.gl/extensions@9.1.14':
+    resolution: {integrity: sha512-uPm9Ye/XD8YAYNxT1G6HxyIOBxa2+MBdGLyqobQj3pCnkO/YtgY/fi/BjM+eVOBXX+keBrXEclEvB0Add5eS8Q==}
+    peerDependencies:
+      '@deck.gl/core': ^9.1.0
+      '@luma.gl/core': ~9.1.9
+      '@luma.gl/engine': ~9.1.9
 
   '@deck.gl/layers@9.1.0':
     resolution: {integrity: sha512-0GWZyHk5G48avEuGRbzHk60E0aNpo5h/3lSpzl0BSyqZnVTqsGa1jLJvjS17eaEkR51KIhUBf6NSCyGK1Tp22g==}
@@ -1145,6 +1164,9 @@ packages:
   '@luma.gl/constants@9.1.1':
     resolution: {integrity: sha512-tV53ZUoMvZnHUTHoRXdTdZUKCUKqGeNTE99q8zrs1rg0gBr6d3MGHVvQDLTd4t0GDEY3EXmlZOHSXgPB5ZQxjA==}
 
+  '@luma.gl/constants@9.1.9':
+    resolution: {integrity: sha512-yc9fml04OeTTcwK+7gmDMxoLQ67j4ZiAFXjmYvPomYyBVzS0NZxTDuwcCBmnxjLOiroOZW8FRRrVc/yOiFug2w==}
+
   '@luma.gl/core@9.1.0':
     resolution: {integrity: sha512-HkcqDlxal6gOP7Y6KTRcEjnPuxSFMy+oJYfk623TGIxrEbN3x5uLqvbNgqLMXhV60WWq5Fj0LG1gHs1NyJHrLg==}
 
@@ -1165,6 +1187,11 @@ packages:
     resolution: {integrity: sha512-BRDKnf2g+Xq86f1OK00F2PA2QbmkcKiM8HJ/Iw8wZB3DvPu2jBKBaboHmEoo6gxq46P32vFGyvxso8umai5eJw==}
     peerDependencies:
       '@luma.gl/core': ^9.1.0-beta.1
+
+  '@luma.gl/shadertools@9.1.9':
+    resolution: {integrity: sha512-Uqp2xfgIEunRMLXTeCJ4uEMlWcUGcYMZGJ8GAOrAeDzn4bMKVRKmZDC71vkuTctnaodM3UdrI9W6s1sJlrXsxw==}
+    peerDependencies:
+      '@luma.gl/core': ^9.1.0
 
   '@luma.gl/webgl@9.1.1':
     resolution: {integrity: sha512-w/BoaScUl9riQYGIA0ZIia35Ck6vzJFq1oBpZVOhip7zcyeGcGQY3ImIpUEreYl3eiVomFgwg+R1sOEu86CWWA==}
@@ -5076,6 +5103,9 @@ packages:
   lru-cache@5.1.1:
     resolution: {integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==}
 
+  lucide-static@0.536.0:
+    resolution: {integrity: sha512-sP/CE7WIORRnPcutL0tSm1SiLEQ2g8FYbUUkYNNscCGSmUA3LDHfOXdghEFSzFQuo+6yxaTJ+/xNDUGHKPPD5g==}
+
   lucide-vue-next@0.471.0:
     resolution: {integrity: sha512-ZJyImsuBOR91VF5auILuo1U0m93sSjYs+i/m5ISx8oG4FWMXX7hzuotx24/dTMRp+e8pMWUeVmPBKsNcNSrUzg==}
     peerDependencies:
@@ -5897,8 +5927,8 @@ packages:
     resolution: {integrity: sha512-Nc3IT5yHzflTfbjgqWcCPpo7DaKy4FnpB0l/zCAW0Tc7jxAiuqSxHasntB3D7887LSrA93kDJ9IXovxJYxyLCA==}
     engines: {node: '>=4'}
 
-  pnpm@10.3.0:
-    resolution: {integrity: sha512-7lku2ogVqKKTwga7CRfEuw/ydMUN73y8F74F7GQfwtGwJJDOZgBhNWvQ0Sak1+suyIMOaVn7ikR1ccYx1aJELQ==}
+  pnpm@9.15.9:
+    resolution: {integrity: sha512-aARhQYk8ZvrQHAeSMRKOmvuJ74fiaR1p5NQO7iKJiClf1GghgbrlW1hBjDolO95lpQXsfF+UA+zlzDzTfc8lMQ==}
     engines: {node: '>=18.12'}
     hasBin: true
 
@@ -7755,6 +7785,9 @@ packages:
   wgsl_reflect@1.0.16:
     resolution: {integrity: sha512-OE3urfXXbHMD5lhKZwxOxC9SFYynEGEkWXQmvi7B1gzzr5jb9+drh9A8MeBvVqKqznCoBuh8WOzVuSGSZs4CkQ==}
 
+  wgsl_reflect@1.2.3:
+    resolution: {integrity: sha512-BQWBIsOn411M+ffBxmA6QRLvAOVbuz3Uk4NusxnqC1H7aeQcVLhdA3k2k/EFFFtqVjhz3z7JOOZF1a9hj2tv4Q==}
+
   what-the-diff@0.6.0:
     resolution: {integrity: sha512-8BgQ4uo4cxojRXvCIcqDpH4QHaq0Ksn2P3LYfztylC5LDSwZKuGHf0Wf7sAStjPLTcB8eCB8pJJcPQSWfhZlkg==}
 
@@ -7874,6 +7907,11 @@ packages:
   yaml@2.4.5:
     resolution: {integrity: sha512-aBx2bnqDzVOyNKfsysjA2ms5ZlnjSAW2eG3/L5G/CSujfjLJTJsEw1bGw8kCf04KodQWk1pxlGnZ56CRxiawmg==}
     engines: {node: '>= 14'}
+    hasBin: true
+
+  yaml@2.8.1:
+    resolution: {integrity: sha512-lcYcMxX2PO9XMGvAJkJ3OsNMw+/7FKes7/hgerGUYWIoWu5j/+YQqcZr5JnPZWzOsEBgMbSbiSTn/dv/69Mkpw==}
+    engines: {node: '>= 14.6'}
     hasBin: true
 
   yargs-parser@21.1.1:
@@ -8278,6 +8316,15 @@ snapshots:
       '@types/offscreencanvas': 2019.7.3
       gl-matrix: 3.4.3
       mjolnir.js: 3.0.0
+
+  '@deck.gl/extensions@9.1.14(@deck.gl/core@9.1.0)(@luma.gl/core@9.1.0)(@luma.gl/engine@9.1.0(@luma.gl/core@9.1.0)(@luma.gl/shadertools@9.1.0(@luma.gl/core@9.1.0)))':
+    dependencies:
+      '@deck.gl/core': 9.1.0
+      '@luma.gl/constants': 9.1.9
+      '@luma.gl/core': 9.1.0
+      '@luma.gl/engine': 9.1.0(@luma.gl/core@9.1.0)(@luma.gl/shadertools@9.1.0(@luma.gl/core@9.1.0))
+      '@luma.gl/shadertools': 9.1.9(@luma.gl/core@9.1.0)
+      '@math.gl/core': 4.1.0
 
   '@deck.gl/layers@9.1.0(@deck.gl/core@9.1.0)(@loaders.gl/core@4.3.3)(@luma.gl/core@9.1.0)(@luma.gl/engine@9.1.0(@luma.gl/core@9.1.0)(@luma.gl/shadertools@9.1.0(@luma.gl/core@9.1.0)))':
     dependencies:
@@ -8745,6 +8792,8 @@ snapshots:
 
   '@luma.gl/constants@9.1.1': {}
 
+  '@luma.gl/constants@9.1.9': {}
+
   '@luma.gl/core@9.1.0':
     dependencies:
       '@math.gl/types': 4.1.0
@@ -8777,6 +8826,13 @@ snapshots:
       '@math.gl/core': 4.1.0
       '@math.gl/types': 4.1.0
       wgsl_reflect: 1.0.16
+
+  '@luma.gl/shadertools@9.1.9(@luma.gl/core@9.1.0)':
+    dependencies:
+      '@luma.gl/core': 9.1.0
+      '@math.gl/core': 4.1.0
+      '@math.gl/types': 4.1.0
+      wgsl_reflect: 1.2.3
 
   '@luma.gl/webgl@9.1.1(@luma.gl/core@9.1.0)':
     dependencies:
@@ -14241,6 +14297,8 @@ snapshots:
     dependencies:
       yallist: 3.1.1
 
+  lucide-static@0.536.0: {}
+
   lucide-vue-next@0.471.0(vue@3.5.13(typescript@5.5.2)):
     dependencies:
       vue: 3.5.13(typescript@5.5.2)
@@ -15520,7 +15578,7 @@ snapshots:
 
   pluralize@8.0.0: {}
 
-  pnpm@10.3.0: {}
+  pnpm@9.15.9: {}
 
   point-in-polygon-hao@1.1.0: {}
 
@@ -15601,7 +15659,7 @@ snapshots:
   postcss-load-config@4.0.2(postcss@8.4.38):
     dependencies:
       lilconfig: 3.1.2
-      yaml: 2.4.5
+      yaml: 2.8.1
     optionalDependencies:
       postcss: 8.4.38
 
@@ -17364,7 +17422,7 @@ snapshots:
       pathe: 1.1.2
       scule: 1.3.0
       unplugin: 1.10.1
-      yaml: 2.4.5
+      yaml: 2.8.1
     optionalDependencies:
       vue-router: 4.4.0(vue@3.5.13(typescript@5.5.2))
     transitivePeerDependencies:
@@ -17682,6 +17740,8 @@ snapshots:
 
   wgsl_reflect@1.0.16: {}
 
+  wgsl_reflect@1.2.3: {}
+
   what-the-diff@0.6.0: {}
 
   whatwg-url@5.0.0:
@@ -17805,9 +17865,11 @@ snapshots:
     dependencies:
       eslint-visitor-keys: 3.4.3
       lodash: 4.17.21
-      yaml: 2.4.5
+      yaml: 2.8.1
 
   yaml@2.4.5: {}
+
+  yaml@2.8.1: {}
 
   yargs-parser@21.1.1: {}
 

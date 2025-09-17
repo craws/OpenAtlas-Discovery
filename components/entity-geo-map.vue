@@ -25,6 +25,7 @@ const features = computed(() => {
 				:has-polygons="true"
 				:show-movements="true"
 				:multiple-movements="null"
+				:custom-icons="{}"
 			/>
 		</VisualisationContainer>
 	</Card>

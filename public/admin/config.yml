@@ -16,7 +16,6 @@ backend:
     delete: "content(delete): {{collection}} '{{slug}}'"
     uploadMedia: "content(upload): '{{path}}'"
     deleteMedia: "content(delete): '{{path}}'"
-# publish_mode: editorial_workflow
 media_folder: /public/assets/images
 public_folder: /assets/images
 editor:
@@ -27,7 +26,7 @@ i18n:
     - en
     - de
   default_locale: en
-system_classes: &system_classes
+system_classes: &ref_0
   - acquisition
   - activity
   - actor_function
@@ -50,10 +49,1636 @@ system_classes: &system_classes
   - source
   - source_translation
   - stratigraphic_unit
+icon_names: &icon_names
+  - AArrowDown
+  - AArrowUp
+  - ALargeSmall
+  - Accessibility
+  - Activity
+  - AirVent
+  - Airplay
+  - AlarmClock
+  - AlarmClockCheck
+  - AlarmClockMinus
+  - AlarmClockOff
+  - AlarmClockPlus
+  - AlarmSmoke
+  - Album
+  - AlignCenter
+  - AlignCenterHorizontal
+  - AlignCenterVertical
+  - AlignEndHorizontal
+  - AlignEndVertical
+  - AlignHorizontalDistributeCenter
+  - AlignHorizontalDistributeEnd
+  - AlignHorizontalDistributeStart
+  - AlignHorizontalJustifyCenter
+  - AlignHorizontalJustifyEnd
+  - AlignHorizontalJustifyStart
+  - AlignHorizontalSpaceAround
+  - AlignHorizontalSpaceBetween
+  - AlignJustify
+  - AlignLeft
+  - AlignRight
+  - AlignStartHorizontal
+  - AlignStartVertical
+  - AlignVerticalDistributeCenter
+  - AlignVerticalDistributeEnd
+  - AlignVerticalDistributeStart
+  - AlignVerticalJustifyCenter
+  - AlignVerticalJustifyEnd
+  - AlignVerticalJustifyStart
+  - AlignVerticalSpaceAround
+  - AlignVerticalSpaceBetween
+  - Ambulance
+  - Ampersand
+  - Ampersands
+  - Amphora
+  - Anchor
+  - Angry
+  - Annoyed
+  - Antenna
+  - Anvil
+  - Aperture
+  - AppWindow
+  - AppWindowMac
+  - Apple
+  - Archive
+  - ArchiveRestore
+  - ArchiveX
+  - Armchair
+  - ArrowBigDown
+  - ArrowBigDownDash
+  - ArrowBigLeft
+  - ArrowBigLeftDash
+  - ArrowBigRight
+  - ArrowBigRightDash
+  - ArrowBigUp
+  - ArrowBigUpDash
+  - ArrowDown
+  - ArrowDown-0-1
+  - ArrowDown-1-0
+  - ArrowDownAZ
+  - ArrowDownFromLine
+  - ArrowDownLeft
+  - ArrowDownNarrowWide
+  - ArrowDownRight
+  - ArrowDownToDot
+  - ArrowDownToLine
+  - ArrowDownUp
+  - ArrowDownWideNarrow
+  - ArrowDownZA
+  - ArrowLeft
+  - ArrowLeftFromLine
+  - ArrowLeftRight
+  - ArrowLeftToLine
+  - ArrowRight
+  - ArrowRightFromLine
+  - ArrowRightLeft
+  - ArrowRightToLine
+  - ArrowUp
+  - ArrowUp-0-1
+  - ArrowUp-1-0
+  - ArrowUpAZ
+  - ArrowUpDown
+  - ArrowUpFromDot
+  - ArrowUpFromLine
+  - ArrowUpLeft
+  - ArrowUpNarrowWide
+  - ArrowUpRight
+  - ArrowUpToLine
+  - ArrowUpWideNarrow
+  - ArrowUpZA
+  - ArrowsUpFromLine
+  - Asterisk
+  - AtSign
+  - Atom
+  - AudioLines
+  - AudioWaveform
+  - Award
+  - Axe
+  - Axis-3d
+  - Baby
+  - Backpack
+  - Badge
+  - BadgeAlert
+  - BadgeCent
+  - BadgeCheck
+  - BadgeDollarSign
+  - BadgeEuro
+  - BadgeIndianRupee
+  - BadgeInfo
+  - BadgeJapaneseYen
+  - BadgeMinus
+  - BadgePercent
+  - BadgePlus
+  - BadgePoundSterling
+  - BadgeQuestionMark
+  - BadgeRussianRuble
+  - BadgeSwissFranc
+  - BadgeTurkishLira
+  - BadgeX
+  - BaggageClaim
+  - Ban
+  - Banana
+  - Bandage
+  - Banknote
+  - BanknoteArrowDown
+  - BanknoteArrowUp
+  - BanknoteX
+  - Barcode
+  - Barrel
+  - Baseline
+  - Bath
+  - Battery
+  - BatteryCharging
+  - BatteryFull
+  - BatteryLow
+  - BatteryMedium
+  - BatteryPlus
+  - BatteryWarning
+  - Beaker
+  - Bean
+  - BeanOff
+  - Bed
+  - BedDouble
+  - BedSingle
+  - Beef
+  - Beer
+  - BeerOff
+  - Bell
+  - BellDot
+  - BellElectric
+  - BellMinus
+  - BellOff
+  - BellPlus
+  - BellRing
+  - BetweenHorizontalEnd
+  - BetweenHorizontalStart
+  - BetweenVerticalEnd
+  - BetweenVerticalStart
+  - BicepsFlexed
+  - Bike
+  - Binary
+  - Binoculars
+  - Biohazard
+  - Bird
+  - Bitcoin
+  - Blend
+  - Blinds
+  - Blocks
+  - Bluetooth
+  - BluetoothConnected
+  - BluetoothOff
+  - BluetoothSearching
+  - Bold
+  - Bolt
+  - Bomb
+  - Bone
+  - Book
+  - BookA
+  - BookAlert
+  - BookAudio
+  - BookCheck
+  - BookCopy
+  - BookDashed
+  - BookDown
+  - BookHeadphones
+  - BookHeart
+  - BookImage
+  - BookKey
+  - BookLock
+  - BookMarked
+  - BookMinus
+  - BookOpen
+  - BookOpenCheck
+  - BookOpenText
+  - BookPlus
+  - BookText
+  - BookType
+  - BookUp
+  - BookUp-2
+  - BookUser
+  - BookX
+  - Bookmark
+  - BookmarkCheck
+  - BookmarkMinus
+  - BookmarkPlus
+  - BookmarkX
+  - BoomBox
+  - Bot
+  - BotMessageSquare
+  - BotOff
+  - BottleWine
+  - BowArrow
+  - Box
+  - Boxes
+  - Braces
+  - Brackets
+  - Brain
+  - BrainCircuit
+  - BrainCog
+  - BrickWall
+  - BrickWallFire
+  - Briefcase
+  - BriefcaseBusiness
+  - BriefcaseConveyorBelt
+  - BriefcaseMedical
+  - BringToFront
+  - Brush
+  - BrushCleaning
+  - Bubbles
+  - Bug
+  - BugOff
+  - BugPlay
+  - Building
+  - Building-2
+  - Bus
+  - BusFront
+  - Cable
+  - CableCar
+  - Cake
+  - CakeSlice
+  - Calculator
+  - Calendar
+  - Calendar-1
+  - CalendarArrowDown
+  - CalendarArrowUp
+  - CalendarCheck
+  - CalendarCheck-2
+  - CalendarClock
+  - CalendarCog
+  - CalendarDays
+  - CalendarFold
+  - CalendarHeart
+  - CalendarMinus
+  - CalendarMinus-2
+  - CalendarOff
+  - CalendarPlus
+  - CalendarPlus-2
+  - CalendarRange
+  - CalendarSearch
+  - CalendarSync
+  - CalendarX
+  - CalendarX-2
+  - Camera
+  - CameraOff
+  - Candy
+  - CandyCane
+  - CandyOff
+  - Cannabis
+  - Captions
+  - CaptionsOff
+  - Car
+  - CarFront
+  - CarTaxiFront
+  - Caravan
+  - CardSim
+  - Carrot
+  - CaseLower
+  - CaseSensitive
+  - CaseUpper
+  - CassetteTape
+  - Cast
+  - Castle
+  - Cat
+  - Cctv
+  - ChartArea
+  - ChartBar
+  - ChartBarBig
+  - ChartBarDecreasing
+  - ChartBarIncreasing
+  - ChartBarStacked
+  - ChartCandlestick
+  - ChartColumn
+  - ChartColumnBig
+  - ChartColumnDecreasing
+  - ChartColumnIncreasing
+  - ChartColumnStacked
+  - ChartGantt
+  - ChartLine
+  - ChartNetwork
+  - ChartNoAxesColumn
+  - ChartNoAxesColumnDecreasing
+  - ChartNoAxesColumnIncreasing
+  - ChartNoAxesCombined
+  - ChartNoAxesGantt
+  - ChartPie
+  - ChartScatter
+  - ChartSpline
+  - Check
+  - CheckCheck
+  - CheckLine
+  - ChefHat
+  - Cherry
+  - ChevronDown
+  - ChevronFirst
+  - ChevronLast
+  - ChevronLeft
+  - ChevronRight
+  - ChevronUp
+  - ChevronsDown
+  - ChevronsDownUp
+  - ChevronsLeft
+  - ChevronsLeftRight
+  - ChevronsLeftRightEllipsis
+  - ChevronsRight
+  - ChevronsRightLeft
+  - ChevronsUp
+  - ChevronsUpDown
+  - Chrome
+  - Church
+  - Cigarette
+  - CigaretteOff
+  - Circle
+  - CircleAlert
+  - CircleArrowDown
+  - CircleArrowLeft
+  - CircleArrowOutDownLeft
+  - CircleArrowOutDownRight
+  - CircleArrowOutUpLeft
+  - CircleArrowOutUpRight
+  - CircleArrowRight
+  - CircleArrowUp
+  - CircleCheck
+  - CircleCheckBig
+  - CircleChevronDown
+  - CircleChevronLeft
+  - CircleChevronRight
+  - CircleChevronUp
+  - CircleDashed
+  - CircleDivide
+  - CircleDollarSign
+  - CircleDot
+  - CircleDotDashed
+  - CircleEllipsis
+  - CircleEqual
+  - CircleFadingArrowUp
+  - CircleFadingPlus
+  - CircleGauge
+  - CircleMinus
+  - CircleOff
+  - CircleParking
+  - CircleParkingOff
+  - CirclePause
+  - CirclePercent
+  - CirclePlay
+  - CirclePlus
+  - CirclePoundSterling
+  - CirclePower
+  - CircleQuestionMark
+  - CircleSlash
+  - CircleSlash-2
+  - CircleSmall
+  - CircleStop
+  - CircleUser
+  - CircleUserRound
+  - CircleX
+  - CircuitBoard
+  - Citrus
+  - Clapperboard
+  - Clipboard
+  - ClipboardCheck
+  - ClipboardClock
+  - ClipboardCopy
+  - ClipboardList
+  - ClipboardMinus
+  - ClipboardPaste
+  - ClipboardPen
+  - ClipboardPenLine
+  - ClipboardPlus
+  - ClipboardType
+  - ClipboardX
+  - Clock
+  - Clock-1
+  - Clock-10
+  - Clock-11
+  - Clock-12
+  - Clock-2
+  - Clock-3
+  - Clock-4
+  - Clock-5
+  - Clock-6
+  - Clock-7
+  - Clock-8
+  - Clock-9
+  - ClockAlert
+  - ClockArrowDown
+  - ClockArrowUp
+  - ClockFading
+  - ClockPlus
+  - ClosedCaption
+  - Cloud
+  - CloudAlert
+  - CloudCheck
+  - CloudCog
+  - CloudDownload
+  - CloudDrizzle
+  - CloudFog
+  - CloudHail
+  - CloudLightning
+  - CloudMoon
+  - CloudMoonRain
+  - CloudOff
+  - CloudRain
+  - CloudRainWind
+  - CloudSnow
+  - CloudSun
+  - CloudSunRain
+  - CloudUpload
+  - Cloudy
+  - Clover
+  - Club
+  - Code
+  - CodeXml
+  - Codepen
+  - Codesandbox
+  - Coffee
+  - Cog
+  - Coins
+  - Columns-2
+  - Columns-3
+  - Columns-3Cog
+  - Columns-4
+  - Combine
+  - Command
+  - Compass
+  - Component
+  - Computer
+  - ConciergeBell
+  - Cone
+  - Construction
+  - Contact
+  - ContactRound
+  - Container
+  - Contrast
+  - Cookie
+  - CookingPot
+  - Copy
+  - CopyCheck
+  - CopyMinus
+  - CopyPlus
+  - CopySlash
+  - CopyX
+  - Copyleft
+  - Copyright
+  - CornerDownLeft
+  - CornerDownRight
+  - CornerLeftDown
+  - CornerLeftUp
+  - CornerRightDown
+  - CornerRightUp
+  - CornerUpLeft
+  - CornerUpRight
+  - Cpu
+  - CreativeCommons
+  - CreditCard
+  - Croissant
+  - Crop
+  - Cross
+  - Crosshair
+  - Crown
+  - Cuboid
+  - CupSoda
+  - Currency
+  - Cylinder
+  - Dam
+  - Database
+  - DatabaseBackup
+  - DatabaseZap
+  - DecimalsArrowLeft
+  - DecimalsArrowRight
+  - Delete
+  - Dessert
+  - Diameter
+  - Diamond
+  - DiamondMinus
+  - DiamondPercent
+  - DiamondPlus
+  - Dice-1
+  - Dice-2
+  - Dice-3
+  - Dice-4
+  - Dice-5
+  - Dice-6
+  - Dices
+  - Diff
+  - Disc
+  - Disc-2
+  - Disc-3
+  - DiscAlbum
+  - Divide
+  - Dna
+  - DnaOff
+  - Dock
+  - Dog
+  - DollarSign
+  - Donut
+  - DoorClosed
+  - DoorClosedLocked
+  - DoorOpen
+  - Dot
+  - Download
+  - DraftingCompass
+  - Drama
+  - Dribbble
+  - Drill
+  - Drone
+  - Droplet
+  - DropletOff
+  - Droplets
+  - Drum
+  - Drumstick
+  - Dumbbell
+  - Ear
+  - EarOff
+  - Earth
+  - EarthLock
+  - Eclipse
+  - Egg
+  - EggFried
+  - EggOff
+  - Ellipsis
+  - EllipsisVertical
+  - Equal
+  - EqualApproximately
+  - EqualNot
+  - Eraser
+  - EthernetPort
+  - Euro
+  - Expand
+  - ExternalLink
+  - Eye
+  - EyeClosed
+  - EyeOff
+  - Facebook
+  - Factory
+  - Fan
+  - FastForward
+  - Feather
+  - Fence
+  - FerrisWheel
+  - Figma
+  - File
+  - FileArchive
+  - FileAudio
+  - FileAudio-2
+  - FileAxis-3d
+  - FileBadge
+  - FileBadge-2
+  - FileBox
+  - FileChartColumn
+  - FileChartColumnIncreasing
+  - FileChartLine
+  - FileChartPie
+  - FileCheck
+  - FileCheck-2
+  - FileClock
+  - FileCode
+  - FileCode-2
+  - FileCog
+  - FileDiff
+  - FileDigit
+  - FileDown
+  - FileHeart
+  - FileImage
+  - FileInput
+  - FileJson
+  - FileJson-2
+  - FileKey
+  - FileKey-2
+  - FileLock
+  - FileLock-2
+  - FileMinus
+  - FileMinus-2
+  - FileMusic
+  - FileOutput
+  - FilePen
+  - FilePenLine
+  - FilePlay
+  - FilePlus
+  - FilePlus-2
+  - FileQuestionMark
+  - FileScan
+  - FileSearch
+  - FileSearch-2
+  - FileSliders
+  - FileSpreadsheet
+  - FileStack
+  - FileSymlink
+  - FileTerminal
+  - FileText
+  - FileType
+  - FileType-2
+  - FileUp
+  - FileUser
+  - FileVideoCamera
+  - FileVolume
+  - FileVolume-2
+  - FileWarning
+  - FileX
+  - FileX-2
+  - Files
+  - Film
+  - Fingerprint
+  - FireExtinguisher
+  - Fish
+  - FishOff
+  - FishSymbol
+  - Flag
+  - FlagOff
+  - FlagTriangleLeft
+  - FlagTriangleRight
+  - Flame
+  - FlameKindling
+  - Flashlight
+  - FlashlightOff
+  - FlaskConical
+  - FlaskConicalOff
+  - FlaskRound
+  - FlipHorizontal
+  - FlipHorizontal-2
+  - FlipVertical
+  - FlipVertical-2
+  - Flower
+  - Flower-2
+  - Focus
+  - FoldHorizontal
+  - FoldVertical
+  - Folder
+  - FolderArchive
+  - FolderCheck
+  - FolderClock
+  - FolderClosed
+  - FolderCode
+  - FolderCog
+  - FolderDot
+  - FolderDown
+  - FolderGit
+  - FolderGit-2
+  - FolderHeart
+  - FolderInput
+  - FolderKanban
+  - FolderKey
+  - FolderLock
+  - FolderMinus
+  - FolderOpen
+  - FolderOpenDot
+  - FolderOutput
+  - FolderPen
+  - FolderPlus
+  - FolderRoot
+  - FolderSearch
+  - FolderSearch-2
+  - FolderSymlink
+  - FolderSync
+  - FolderTree
+  - FolderUp
+  - FolderX
+  - Folders
+  - Footprints
+  - Forklift
+  - Forward
+  - Frame
+  - Framer
+  - Frown
+  - Fuel
+  - Fullscreen
+  - Funnel
+  - FunnelPlus
+  - FunnelX
+  - GalleryHorizontal
+  - GalleryHorizontalEnd
+  - GalleryThumbnails
+  - GalleryVertical
+  - GalleryVerticalEnd
+  - Gamepad
+  - Gamepad-2
+  - Gauge
+  - Gavel
+  - Gem
+  - GeorgianLari
+  - Ghost
+  - Gift
+  - GitBranch
+  - GitBranchPlus
+  - GitCommitHorizontal
+  - GitCommitVertical
+  - GitCompare
+  - GitCompareArrows
+  - GitFork
+  - GitGraph
+  - GitMerge
+  - GitPullRequest
+  - GitPullRequestArrow
+  - GitPullRequestClosed
+  - GitPullRequestCreate
+  - GitPullRequestCreateArrow
+  - GitPullRequestDraft
+  - Github
+  - Gitlab
+  - GlassWater
+  - Glasses
+  - Globe
+  - GlobeLock
+  - Goal
+  - Gpu
+  - GraduationCap
+  - Grape
+  - Grid-2x2
+  - Grid-2x2Check
+  - Grid-2x2Plus
+  - Grid-2x2X
+  - Grid-3x2
+  - Grid-3x3
+  - Grip
+  - GripHorizontal
+  - GripVertical
+  - Group
+  - Guitar
+  - Ham
+  - Hamburger
+  - Hammer
+  - Hand
+  - HandCoins
+  - HandFist
+  - HandGrab
+  - HandHeart
+  - HandHelping
+  - HandMetal
+  - HandPlatter
+  - Handbag
+  - Handshake
+  - HardDrive
+  - HardDriveDownload
+  - HardDriveUpload
+  - HardHat
+  - Hash
+  - HatGlasses
+  - Haze
+  - HdmiPort
+  - Heading
+  - Heading-1
+  - Heading-2
+  - Heading-3
+  - Heading-4
+  - Heading-5
+  - Heading-6
+  - HeadphoneOff
+  - Headphones
+  - Headset
+  - Heart
+  - HeartCrack
+  - HeartHandshake
+  - HeartMinus
+  - HeartOff
+  - HeartPlus
+  - HeartPulse
+  - Heater
+  - Hexagon
+  - Highlighter
+  - History
+  - Hop
+  - HopOff
+  - Hospital
+  - Hotel
+  - Hourglass
+  - House
+  - HousePlug
+  - HousePlus
+  - HouseWifi
+  - IceCreamBowl
+  - IceCreamCone
+  - IdCard
+  - IdCardLanyard
+  - Image
+  - ImageDown
+  - ImageMinus
+  - ImageOff
+  - ImagePlay
+  - ImagePlus
+  - ImageUp
+  - ImageUpscale
+  - Images
+  - Import
+  - Inbox
+  - IndentDecrease
+  - IndentIncrease
+  - IndianRupee
+  - Infinity
+  - Info
+  - InspectionPanel
+  - Instagram
+  - Italic
+  - IterationCcw
+  - IterationCw
+  - JapaneseYen
+  - Joystick
+  - Kanban
+  - Key
+  - KeyRound
+  - KeySquare
+  - Keyboard
+  - KeyboardMusic
+  - KeyboardOff
+  - Lamp
+  - LampCeiling
+  - LampDesk
+  - LampFloor
+  - LampWallDown
+  - LampWallUp
+  - LandPlot
+  - Landmark
+  - Languages
+  - Laptop
+  - LaptopMinimal
+  - LaptopMinimalCheck
+  - Lasso
+  - LassoSelect
+  - Laugh
+  - Layers
+  - Layers-2
+  - LayoutDashboard
+  - LayoutGrid
+  - LayoutList
+  - LayoutPanelLeft
+  - LayoutPanelTop
+  - LayoutTemplate
+  - Leaf
+  - LeafyGreen
+  - Lectern
+  - LetterText
+  - Library
+  - LibraryBig
+  - LifeBuoy
+  - Ligature
+  - Lightbulb
+  - LightbulbOff
+  - LineSquiggle
+  - Link
+  - Link-2
+  - Link-2Off
+  - Linkedin
+  - List
+  - ListCheck
+  - ListChecks
+  - ListCollapse
+  - ListEnd
+  - ListFilter
+  - ListFilterPlus
+  - ListMinus
+  - ListMusic
+  - ListOrdered
+  - ListPlus
+  - ListRestart
+  - ListStart
+  - ListTodo
+  - ListTree
+  - ListVideo
+  - ListX
+  - Loader
+  - LoaderCircle
+  - LoaderPinwheel
+  - Locate
+  - LocateFixed
+  - LocateOff
+  - Lock
+  - LockKeyhole
+  - LockKeyholeOpen
+  - LockOpen
+  - LogIn
+  - LogOut
+  - Logs
+  - Lollipop
+  - Luggage
+  - Magnet
+  - Mail
+  - MailCheck
+  - MailMinus
+  - MailOpen
+  - MailPlus
+  - MailQuestionMark
+  - MailSearch
+  - MailWarning
+  - MailX
+  - Mailbox
+  - Mails
+  - Map
+  - MapMinus
+  - MapPin
+  - MapPinCheck
+  - MapPinCheckInside
+  - MapPinHouse
+  - MapPinMinus
+  - MapPinMinusInside
+  - MapPinOff
+  - MapPinPen
+  - MapPinPlus
+  - MapPinPlusInside
+  - MapPinX
+  - MapPinXInside
+  - MapPinned
+  - MapPlus
+  - Mars
+  - MarsStroke
+  - Martini
+  - Maximize
+  - Maximize-2
+  - Medal
+  - Megaphone
+  - MegaphoneOff
+  - Meh
+  - MemoryStick
+  - Menu
+  - Merge
+  - MessageCircle
+  - MessageCircleCode
+  - MessageCircleDashed
+  - MessageCircleHeart
+  - MessageCircleMore
+  - MessageCircleOff
+  - MessageCirclePlus
+  - MessageCircleQuestionMark
+  - MessageCircleReply
+  - MessageCircleWarning
+  - MessageCircleX
+  - MessageSquare
+  - MessageSquareCode
+  - MessageSquareDashed
+  - MessageSquareDiff
+  - MessageSquareDot
+  - MessageSquareHeart
+  - MessageSquareLock
+  - MessageSquareMore
+  - MessageSquareOff
+  - MessageSquarePlus
+  - MessageSquareQuote
+  - MessageSquareReply
+  - MessageSquareShare
+  - MessageSquareText
+  - MessageSquareWarning
+  - MessageSquareX
+  - MessagesSquare
+  - Mic
+  - MicOff
+  - MicVocal
+  - Microchip
+  - Microscope
+  - Microwave
+  - Milestone
+  - Milk
+  - MilkOff
+  - Minimize
+  - Minimize-2
+  - Minus
+  - Monitor
+  - MonitorCheck
+  - MonitorCog
+  - MonitorDot
+  - MonitorDown
+  - MonitorOff
+  - MonitorPause
+  - MonitorPlay
+  - MonitorSmartphone
+  - MonitorSpeaker
+  - MonitorStop
+  - MonitorUp
+  - MonitorX
+  - Moon
+  - MoonStar
+  - Mountain
+  - MountainSnow
+  - Mouse
+  - MouseOff
+  - MousePointer
+  - MousePointer-2
+  - MousePointerBan
+  - MousePointerClick
+  - Move
+  - Move-3d
+  - MoveDiagonal
+  - MoveDiagonal-2
+  - MoveDown
+  - MoveDownLeft
+  - MoveDownRight
+  - MoveHorizontal
+  - MoveLeft
+  - MoveRight
+  - MoveUp
+  - MoveUpLeft
+  - MoveUpRight
+  - MoveVertical
+  - Music
+  - Music-2
+  - Music-3
+  - Music-4
+  - Navigation
+  - Navigation-2
+  - Navigation-2Off
+  - NavigationOff
+  - Network
+  - Newspaper
+  - Nfc
+  - NonBinary
+  - Notebook
+  - NotebookPen
+  - NotebookTabs
+  - NotebookText
+  - NotepadText
+  - NotepadTextDashed
+  - Nut
+  - NutOff
+  - Octagon
+  - OctagonAlert
+  - OctagonMinus
+  - OctagonPause
+  - OctagonX
+  - Omega
+  - Option
+  - Orbit
+  - Origami
+  - Package
+  - Package-2
+  - PackageCheck
+  - PackageMinus
+  - PackageOpen
+  - PackagePlus
+  - PackageSearch
+  - PackageX
+  - PaintBucket
+  - PaintRoller
+  - Paintbrush
+  - PaintbrushVertical
+  - Palette
+  - Panda
+  - PanelBottom
+  - PanelBottomClose
+  - PanelBottomDashed
+  - PanelBottomOpen
+  - PanelLeft
+  - PanelLeftClose
+  - PanelLeftDashed
+  - PanelLeftOpen
+  - PanelRight
+  - PanelRightClose
+  - PanelRightDashed
+  - PanelRightOpen
+  - PanelTop
+  - PanelTopClose
+  - PanelTopDashed
+  - PanelTopOpen
+  - PanelsLeftBottom
+  - PanelsRightBottom
+  - PanelsTopLeft
+  - Paperclip
+  - Parentheses
+  - ParkingMeter
+  - PartyPopper
+  - Pause
+  - PawPrint
+  - PcCase
+  - Pen
+  - PenLine
+  - PenOff
+  - PenTool
+  - Pencil
+  - PencilLine
+  - PencilOff
+  - PencilRuler
+  - Pentagon
+  - Percent
+  - PersonStanding
+  - PhilippinePeso
+  - Phone
+  - PhoneCall
+  - PhoneForwarded
+  - PhoneIncoming
+  - PhoneMissed
+  - PhoneOff
+  - PhoneOutgoing
+  - Pi
+  - Piano
+  - Pickaxe
+  - PictureInPicture
+  - PictureInPicture-2
+  - PiggyBank
+  - Pilcrow
+  - PilcrowLeft
+  - PilcrowRight
+  - Pill
+  - PillBottle
+  - Pin
+  - PinOff
+  - Pipette
+  - Pizza
+  - Plane
+  - PlaneLanding
+  - PlaneTakeoff
+  - Play
+  - Plug
+  - Plug-2
+  - PlugZap
+  - Plus
+  - Pocket
+  - PocketKnife
+  - Podcast
+  - Pointer
+  - PointerOff
+  - Popcorn
+  - Popsicle
+  - PoundSterling
+  - Power
+  - PowerOff
+  - Presentation
+  - Printer
+  - PrinterCheck
+  - Projector
+  - Proportions
+  - Puzzle
+  - Pyramid
+  - QrCode
+  - Quote
+  - Rabbit
+  - Radar
+  - Radiation
+  - Radical
+  - Radio
+  - RadioReceiver
+  - RadioTower
+  - Radius
+  - RailSymbol
+  - Rainbow
+  - Rat
+  - Ratio
+  - Receipt
+  - ReceiptCent
+  - ReceiptEuro
+  - ReceiptIndianRupee
+  - ReceiptJapaneseYen
+  - ReceiptPoundSterling
+  - ReceiptRussianRuble
+  - ReceiptSwissFranc
+  - ReceiptText
+  - ReceiptTurkishLira
+  - RectangleCircle
+  - RectangleEllipsis
+  - RectangleGoggles
+  - RectangleHorizontal
+  - RectangleVertical
+  - Recycle
+  - Redo
+  - Redo-2
+  - RedoDot
+  - RefreshCcw
+  - RefreshCcwDot
+  - RefreshCw
+  - RefreshCwOff
+  - Refrigerator
+  - Regex
+  - RemoveFormatting
+  - Repeat
+  - Repeat-1
+  - Repeat-2
+  - Replace
+  - ReplaceAll
+  - Reply
+  - ReplyAll
+  - Rewind
+  - Ribbon
+  - Rocket
+  - RockingChair
+  - RollerCoaster
+  - Rotate-3d
+  - RotateCcw
+  - RotateCcwKey
+  - RotateCcwSquare
+  - RotateCw
+  - RotateCwSquare
+  - Route
+  - RouteOff
+  - Router
+  - Rows-2
+  - Rows-3
+  - Rows-4
+  - Rss
+  - Ruler
+  - RulerDimensionLine
+  - RussianRuble
+  - Sailboat
+  - Salad
+  - Sandwich
+  - Satellite
+  - SatelliteDish
+  - SaudiRiyal
+  - Save
+  - SaveAll
+  - SaveOff
+  - Scale
+  - Scale-3d
+  - Scaling
+  - Scan
+  - ScanBarcode
+  - ScanEye
+  - ScanFace
+  - ScanHeart
+  - ScanLine
+  - ScanQrCode
+  - ScanSearch
+  - ScanText
+  - School
+  - Scissors
+  - ScissorsLineDashed
+  - ScreenShare
+  - ScreenShareOff
+  - Scroll
+  - ScrollText
+  - Search
+  - SearchCheck
+  - SearchCode
+  - SearchSlash
+  - SearchX
+  - Section
+  - Send
+  - SendHorizontal
+  - SendToBack
+  - SeparatorHorizontal
+  - SeparatorVertical
+  - Server
+  - ServerCog
+  - ServerCrash
+  - ServerOff
+  - Settings
+  - Settings-2
+  - Shapes
+  - Share
+  - Share-2
+  - Sheet
+  - Shell
+  - Shield
+  - ShieldAlert
+  - ShieldBan
+  - ShieldCheck
+  - ShieldEllipsis
+  - ShieldHalf
+  - ShieldMinus
+  - ShieldOff
+  - ShieldPlus
+  - ShieldQuestionMark
+  - ShieldUser
+  - ShieldX
+  - Ship
+  - ShipWheel
+  - Shirt
+  - ShoppingBag
+  - ShoppingBasket
+  - ShoppingCart
+  - Shovel
+  - ShowerHead
+  - Shredder
+  - Shrimp
+  - Shrink
+  - Shrub
+  - Shuffle
+  - Sigma
+  - Signal
+  - SignalHigh
+  - SignalLow
+  - SignalMedium
+  - SignalZero
+  - Signature
+  - Signpost
+  - SignpostBig
+  - Siren
+  - SkipBack
+  - SkipForward
+  - Skull
+  - Slack
+  - Slash
+  - Slice
+  - SlidersHorizontal
+  - SlidersVertical
+  - Smartphone
+  - SmartphoneCharging
+  - SmartphoneNfc
+  - Smile
+  - SmilePlus
+  - Snail
+  - Snowflake
+  - SoapDispenserDroplet
+  - Sofa
+  - Soup
+  - Space
+  - Spade
+  - Sparkle
+  - Sparkles
+  - Speaker
+  - Speech
+  - SpellCheck
+  - SpellCheck-2
+  - Spline
+  - SplinePointer
+  - Split
+  - Spool
+  - Spotlight
+  - SprayCan
+  - Sprout
+  - Square
+  - SquareActivity
+  - SquareArrowDown
+  - SquareArrowDownLeft
+  - SquareArrowDownRight
+  - SquareArrowLeft
+  - SquareArrowOutDownLeft
+  - SquareArrowOutDownRight
+  - SquareArrowOutUpLeft
+  - SquareArrowOutUpRight
+  - SquareArrowRight
+  - SquareArrowUp
+  - SquareArrowUpLeft
+  - SquareArrowUpRight
+  - SquareAsterisk
+  - SquareBottomDashedScissors
+  - SquareChartGantt
+  - SquareCheck
+  - SquareCheckBig
+  - SquareChevronDown
+  - SquareChevronLeft
+  - SquareChevronRight
+  - SquareChevronUp
+  - SquareCode
+  - SquareDashed
+  - SquareDashedBottom
+  - SquareDashedBottomCode
+  - SquareDashedKanban
+  - SquareDashedMousePointer
+  - SquareDashedTopSolid
+  - SquareDivide
+  - SquareDot
+  - SquareEqual
+  - SquareFunction
+  - SquareKanban
+  - SquareLibrary
+  - SquareM
+  - SquareMenu
+  - SquareMinus
+  - SquareMousePointer
+  - SquareParking
+  - SquareParkingOff
+  - SquarePause
+  - SquarePen
+  - SquarePercent
+  - SquarePi
+  - SquarePilcrow
+  - SquarePlay
+  - SquarePlus
+  - SquarePower
+  - SquareRadical
+  - SquareRoundCorner
+  - SquareScissors
+  - SquareSigma
+  - SquareSlash
+  - SquareSplitHorizontal
+  - SquareSplitVertical
+  - SquareSquare
+  - SquareStack
+  - SquareStop
+  - SquareTerminal
+  - SquareUser
+  - SquareUserRound
+  - SquareX
+  - SquaresExclude
+  - SquaresIntersect
+  - SquaresSubtract
+  - SquaresUnite
+  - Squircle
+  - SquircleDashed
+  - Squirrel
+  - Stamp
+  - Star
+  - StarHalf
+  - StarOff
+  - StepBack
+  - StepForward
+  - Stethoscope
+  - Sticker
+  - StickyNote
+  - Store
+  - StretchHorizontal
+  - StretchVertical
+  - Strikethrough
+  - Subscript
+  - Sun
+  - SunDim
+  - SunMedium
+  - SunMoon
+  - SunSnow
+  - Sunrise
+  - Sunset
+  - Superscript
+  - SwatchBook
+  - SwissFranc
+  - SwitchCamera
+  - Sword
+  - Swords
+  - Syringe
+  - Table
+  - Table-2
+  - TableCellsMerge
+  - TableCellsSplit
+  - TableColumnsSplit
+  - TableOfContents
+  - TableProperties
+  - TableRowsSplit
+  - Tablet
+  - TabletSmartphone
+  - Tablets
+  - Tag
+  - Tags
+  - Tally-1
+  - Tally-2
+  - Tally-3
+  - Tally-4
+  - Tally-5
+  - Tangent
+  - Target
+  - Telescope
+  - Tent
+  - TentTree
+  - Terminal
+  - TestTube
+  - TestTubeDiagonal
+  - TestTubes
+  - Text
+  - TextCursor
+  - TextCursorInput
+  - TextQuote
+  - TextSearch
+  - TextSelect
+  - Theater
+  - Thermometer
+  - ThermometerSnowflake
+  - ThermometerSun
+  - ThumbsDown
+  - ThumbsUp
+  - Ticket
+  - TicketCheck
+  - TicketMinus
+  - TicketPercent
+  - TicketPlus
+  - TicketSlash
+  - TicketX
+  - Tickets
+  - TicketsPlane
+  - Timer
+  - TimerOff
+  - TimerReset
+  - ToggleLeft
+  - ToggleRight
+  - Toilet
+  - ToolCase
+  - Tornado
+  - Torus
+  - Touchpad
+  - TouchpadOff
+  - TowerControl
+  - ToyBrick
+  - Tractor
+  - TrafficCone
+  - TrainFront
+  - TrainFrontTunnel
+  - TrainTrack
+  - TramFront
+  - Transgender
+  - Trash
+  - Trash-2
+  - TreeDeciduous
+  - TreePalm
+  - TreePine
+  - Trees
+  - Trello
+  - TrendingDown
+  - TrendingUp
+  - TrendingUpDown
+  - Triangle
+  - TriangleAlert
+  - TriangleDashed
+  - TriangleRight
+  - Trophy
+  - Truck
+  - TruckElectric
+  - TurkishLira
+  - Turntable
+  - Turtle
+  - Tv
+  - TvMinimal
+  - TvMinimalPlay
+  - Twitch
+  - Twitter
+  - Type
+  - TypeOutline
+  - Umbrella
+  - UmbrellaOff
+  - Underline
+  - Undo
+  - Undo-2
+  - UndoDot
+  - UnfoldHorizontal
+  - UnfoldVertical
+  - Ungroup
+  - University
+  - Unlink
+  - Unlink-2
+  - Unplug
+  - Upload
+  - Usb
+  - User
+  - UserCheck
+  - UserCog
+  - UserLock
+  - UserMinus
+  - UserPen
+  - UserPlus
+  - UserRound
+  - UserRoundCheck
+  - UserRoundCog
+  - UserRoundMinus
+  - UserRoundPen
+  - UserRoundPlus
+  - UserRoundSearch
+  - UserRoundX
+  - UserSearch
+  - UserStar
+  - UserX
+  - Users
+  - UsersRound
+  - Utensils
+  - UtensilsCrossed
+  - UtilityPole
+  - Variable
+  - Vault
+  - VectorSquare
+  - Vegan
+  - VenetianMask
+  - Venus
+  - VenusAndMars
+  - Vibrate
+  - VibrateOff
+  - Video
+  - VideoOff
+  - Videotape
+  - View
+  - Voicemail
+  - Volleyball
+  - Volume
+  - Volume-1
+  - Volume-2
+  - VolumeOff
+  - VolumeX
+  - Vote
+  - Wallet
+  - WalletCards
+  - WalletMinimal
+  - Wallpaper
+  - Wand
+  - WandSparkles
+  - Warehouse
+  - WashingMachine
+  - Watch
+  - Waves
+  - WavesLadder
+  - Waypoints
+  - Webcam
+  - Webhook
+  - WebhookOff
+  - Weight
+  - Wheat
+  - WheatOff
+  - WholeWord
+  - Wifi
+  - WifiCog
+  - WifiHigh
+  - WifiLow
+  - WifiOff
+  - WifiPen
+  - WifiSync
+  - WifiZero
+  - Wind
+  - WindArrowDown
+  - Wine
+  - WineOff
+  - Workflow
+  - Worm
+  - WrapText
+  - Wrench
+  - X
+  - Youtube
+  - Zap
+  - ZapOff
+  - ZoomIn
+  - ZoomOut
 collections:
   - name: config
     label: Config
-    # description: Config
     files:
       - name: project_config
         label: Project config
@@ -61,101 +1686,105 @@ collections:
         fields:
           - name: colors
             label: Colors
-            # hint: Colors
             widget: object
             fields:
               - name: brand
                 label: Brand
-                # hint: Brand color
                 widget: color
                 allowInput: true
-
               - name: geojsonPoints
                 label: GeoJSON Location Points
-                # hint: GeoJSON points color
                 widget: color
                 allowInput: true
-
               - name: geojsonAreaCenterPoints
                 label: GeoJSON Areas and their Centers
-                # hint: GeoJSON areas color
                 widget: color
                 allowInput: true
-
               - name: geojsonMovement
                 label: GeoJSON Movement Points
-                # hint: GeoJSON areas color
                 widget: color
                 allowInput: true
-
           - name: logos
             label: Logos
-            # hint: Logos
             widget: object
             fields:
               - name: light
                 label: Logo (light mode)
                 hint: Logo in light mode
                 widget: image
-
               - name: dark
                 label: Logo (dark mode)
                 hint: Logo in dark mode
                 widget: image
-
               - name: withTextLight
                 label: Logo with text (light mode)
                 hint: Logo with text in light mode
                 widget: image
-
               - name: withTextDark
                 label: Logo with text (dark mode)
                 hint: Logo with text in dark mode
                 widget: image
+          - name: footer
+            label: Footer
+            widget: object
+            fields:
+              - name: partner_logos
+                label: Partner logos
+                widget: list
+                default: []
+                fields:
+                  - name: name
+                    label: Institution Name
+                  - name: url
+                    label: URL
+                  - name: light
+                    label: Logo (light mode)
+                    hint: Logo in light mode
+                    widget: image
+                  - name: dark
+                    label: Logo (dark mode)
+                    hint: Logo in dark mode
+                    widget: image
 
           - name: defaultLocale
             label: Default locale
-            # hint: Default locale
             widget: select
             options:
               - value: en
                 label: English
               - value: de
                 label: German
-
           - name: fullscreen
             label: Make the Website's Data Visualization Fullscreen per Default
-            # hint: Make the Website's Data Visualization Fullscreen per Default
             widget: boolean
             default: false
-
           - name: detailView
             label: Detail view configuration
-            # hint: Detail view configuration
             widget: list
             summary: Custom config for {{fields.affectedSystemClasses}}
             label_singular: Add new custom detail view
             default: []
             fields:
               - name: affectedSystemClasses
-                label: Which system classes should this custom configuration apply to?
-                hint:
+                label: >-
+                  Which system classes should this custom configuration apply to?
+                hint: >-
                   If none is selected, this config will affect all system classes that do not have a
                   dedicated config
                 widget: select
                 multiple: true
-                options: *system_classes
+                options: *ref_0
                 default: []
-
               - name: primarySystemClasses
-                label: Configure which system classes should be highlighted in the detail view
+                label: >-
+                  Configure which system classes should be highlighted in the detail view
                 widget: select
                 multiple: true
-                options: *system_classes
-                default: *system_classes
-
+                options: *ref_0
+                default: *ref_0
               - name: customOrdering
-                label: Which system classes should be at the top of the highlighted list?
+                label: >-
+                  Which system classes should be at the top of the highlighted list?
                 widget: list
                 label_singular: Add a system class
                 summary: "{{ fields.systemClass }}"
@@ -165,82 +1794,111 @@ collections:
                   label: Select a system class
                   widget: select
                   multiple: false
-                  options: *system_classes
+                  options: *ref_0
                   required: true
-
               - name: furtherSystemClasses
-                label: Configure which system classes should be displayed in a simple list
+                label: >-
+                  Configure which system classes should be displayed in a simple list
                 widget: select
                 multiple: true
-                options: *system_classes
+                options: *ref_0
                 required: false
-                default: ["files", "references"]
-
+                default:
+                  - files
+                  - references
               - name: excludeTypeIds
-                label: Configure which type ids should be excluded from the detail view
+                label: >-
+                  Configure which type ids should be excluded from the detail view
                 widget: list
                 default: []
-
           - name: map
             label: Map Configuration
-            # hint: Map Configuration
             widget: object
             fields:
               - name: startPage
                 label: Make the Map the Start Page of the Website
-                # hint: Make the Map the Start Page of the Website
                 widget: boolean
                 default: false
-
               - name: mapDisplayedSystemClasses
-                label: Configure which system classes with coordinates are displayed on the map
-                # hint: Consider which are relevant for your research, the more you select, the map will take longer to load
+                label: >-
+                  Configure which system classes with coordinates are displayed on the map
                 widget: select
                 multiple: true
                 options:
-                  [
-                    "place",
-                    "feature",
-                    "move",
-                    "stratigraphic_unit",
-                    "artifact",
-                    "person",
-                    "group",
-                    "event",
-                    "acquisition",
-                    "human_remains",
-                    "activity",
-                  ]
-                default: ["place"]
-
+                  - place
+                  - feature
+                  - move
+                  - stratigraphic_unit
+                  - artifact
+                  - person
+                  - group
+                  - event
+                  - acquisition
+                  - human_remains
+                  - activity
+                default:
+                  - place
+              - name: flyToZoom
+                label: Configure to which zoom level the camera should fly to focused points
+                widget: number
+                min: 1
+                max: 100
+                default: 10
+              - name: customIconConfig
+                label: Configure custom icons for certain entity types
+                widget: list
+                fields:
+                  - name: entityType
+                    widget: number
+                    hint: ID of the Type
+                  - name: iconName
+                    widget: select
+                    options: *icon_names
+                  - name: color
+                    widget: color
+                    required: false
+              - name: customMovementConfig
+                label: Configure the movement visualization
+                widget: object
+                fields:
+                  - name: colorConfig
+                    label: Configure movements display for certain entity types
+                    widget: list
+                    fields:
+                      - name: entityType
+                        widget: number
+                        hint: ID of the Type
+                      - name: color
+                        label: Color of the arc
+                        widget: color
+                  - name: arcThickness
+                    label: >-
+                      Configure if overlaying arcs should be displayed with thicker lines
+                    widget: boolean
+                    default: false
           - name: network
             label: Network Configuration
-            # hint: Network Configuration
             widget: object
             fields:
               - name: excludeSystemClasses
-                label: Configure which system classes should be excluded from the network
-                # hint: Configure which system classes are not displayed in the network
+                label: >-
+                  Configure which system classes should be excluded from the network
                 widget: select
                 multiple: true
-                options: *system_classes
+                options: *ref_0
                 default:
-                  [
-                    "type",
-                    "reference_system",
-                    "file",
-                    "source_translation",
-                    "source",
-                    "bibliography",
-                    "external_reference",
-                    "administrative_unit",
-                    "edition",
-                    "type_tools",
-                  ]
-
+                  - type
+                  - reference_system
+                  - file
+                  - source_translation
+                  - source
+                  - bibliography
+                  - external_reference
+                  - administrative_unit
+                  - edition
+                  - type_tools
           - name: imprint
             label: Imprint
-            # hint: Imprint page
             widget: select
             options:
               - value: none
@@ -249,19 +1907,12 @@ collections:
                 label: Use custom imprint page
               - value: acdh-ch
                 label: Use ACDH-CH imprint
-
           - name: twitter
             label: Twitter
-            # hint: Twitter handle
             required: false
-
   - name: metadata
     label: Metadata
-    # description: Metadata
     i18n: true
-    # currently file collections only support the "single_file" i18n structure,
-    # so we create a folder collection with a single entry, and disallow creating
-    # new entries.
     folder: messages
     identifier_field: __cms__
     format: json
@@ -274,33 +1925,24 @@ collections:
     fields:
       - name: __cms__
         widget: hidden
-
       - name: Metadata
         label: Metadata
         i18n: true
-        # hint: Metadata
         widget: object
         fields:
           - name: name
             label: Title
             i18n: true
-            # hint: The website title
-
           - name: shortName
             label: Short title
             i18n: true
-            # hint: The website short title
-
           - name: description
             label: Description
             i18n: true
-            # hint: The website description
             widget: text
-
   - name: systemPages
     label: System pages
     label_singular: System page
-    # description: System pages
     i18n: true
     folder: content/system-pages
     create: false
@@ -309,47 +1951,34 @@ collections:
       - name: title
         label: Title
         i18n: true
-        # hint: The title
-
       - name: navigation
         label: Navigation
         i18n: true
-        # hint: The navigation
         widget: object
         fields:
           - name: title
             label: Title
             i18n: true
-            # hint: The navigation title
-
       - name: image
         label: Hero image
         i18n: true
-        # hint: Hero image
         widget: object
         required: false
         fields:
           - name: light
             label: Hero image (light mode)
             i18n: true
-            # hint: Hero image (light mode)
             widget: image
-
           - name: dark
             label: Hero image (dark mode)
             i18n: true
-            # hint: Hero image (dark mode)
             widget: image
-
       - name: leadIn
         label: Hero lead-in
         i18n: true
-        # hint: Hero lead-in
         widget: markdown
         modes:
-          # - raw
           - rich_text
-
       - name: links
         label: Links
         i18n: true
@@ -360,63 +1989,44 @@ collections:
           - name: label
             label: label
             i18n: true
-            # hint: The link label
-
           - name: href
             label: URL
             i18n: duplicate
             hint: The pathname, e.g. "/about"
-
       - name: body
         label: Content
         i18n: true
-        # hint: The content
         widget: markdown
         modes:
-          # - raw
           - rich_text
-
   - name: pages
     label: Pages
     label_singular: Page
-    # description: Pages
     i18n: true
     folder: content/pages
     create: true
     delete: true
-    # nested:
-    #   depth: 3
-    # meta: { path: { widget: string, label: 'Path', index_file: 'index' } }
     fields:
       - name: title
         label: Title
         i18n: true
-        # hint: The title
-
       - name: navigation
         label: Navigation
         i18n: true
-        # hint: The navigation
         widget: object
         fields:
           - name: title
             label: Title
             i18n: true
-            # hint: The navigation title
-
       - name: body
         label: Content
         i18n: true
-        # hint: The content
         widget: markdown
         modes:
-          # - raw
           - rich_text
-
   - name: team
     label: Team
     label_singular: Team member
-    # description: Team
     i18n: true
     folder: content/team
     media_folder: /public/assets/images/team
@@ -430,32 +2040,22 @@ collections:
       - name: firstName
         label: First name
         i18n: duplicate
-        # hint: The first name
         required: false
-
       - name: lastName
         label: Last name
         i18n: duplicate
-        # hint: The last name
-
       - name: academicTitle
         label: Title
         i18n: duplicate
-        # hint: The academic title
         required: false
-
       - name: image
         label: Image
         i18n: duplicate
-        # hint: The image
         widget: image
         required: false
-
       - name: body
         label: Short biography
         i18n: true
-        # hint: The short biography
         widget: markdown
         modes:
-          # - raw
           - rich_text

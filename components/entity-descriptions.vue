@@ -80,7 +80,8 @@ watch(
 			<p class="whitespace-pre-line text-md">
 				<template v-for="(part, index) in processedNodes" :key="index">
 					<template v-if="typeof part === 'string'">
-						{{ part }}
+						<br v-if="part === ''" />
+						<span> {{ part }}</span>
 					</template>
 					<template v-else>
 						<span v-if="part.meta.entityId != null">

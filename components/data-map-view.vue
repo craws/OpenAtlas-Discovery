@@ -2,12 +2,15 @@
 import { assert, keyByToMap } from "@acdh-oeaw/lib";
 import * as turf from "@turf/turf";
 import type { Feature } from "geojson";
+import * as LucideIcons from "lucide-static";
+import { FilterIcon } from "lucide-vue-next";
 import type { MapGeoJSONFeature } from "maplibre-gl";
 import * as v from "valibot";
 
 import type { SearchFormData } from "@/components/search-form.vue";
 import type { EntityFeature } from "@/composables/use-create-entity";
 import { categories, operatorMap } from "@/composables/use-get-search-results";
+import type { CustomIconEntry } from "@/types/api";
 import type { GeoJsonFeature } from "@/utils/create-geojson-feature";
 
 import { project } from "../config/project.config";
@@ -56,6 +59,7 @@ function onChangeSearchFilters(values: SearchFormData) {
 
 onMounted(() => {
 	setMovementId({ id: selection.value as unknown as string });
+	visibleIcons.value = Object.keys(customIconEntries.value);
 });
 
 const { data, isPending, isPlaceholderData } = useGetSearchResults(
@@ -71,7 +75,7 @@ const { data, isPending, isPlaceholderData } = useGetSearchResults(
 				search.length > 0
 					? [{ [category]: [{ operator: operator, values: [search], logicalOperator: "and" }] }]
 					: [],
-			show: ["geometry", "when", "relations"],
+			show: ["geometry", "when", "relations", "types"],
 			centroid: true,
 			relation_type: ["P26", "P27"],
 			system_classes: project.map.mapDisplayedSystemClasses,
@@ -128,13 +132,98 @@ const mode = computed(() => {
  * because `maplibre-gl` will serialize geojson features when sending them to the webworker.
  */
 const features = computed(() => {
-	return entities.value
+	const mappedFeatures = entities.value
 		.filter((entity) => {
+			if (!entity.geometry) return false;
+
 			return entity.geometry;
 		})
 		.map((entity) => {
-			return createGeoJsonFeature(entity);
+			const feature = createGeoJsonFeature(entity);
+
+			const customConfig = Object.entries(project.map.customIconConfig).findLast((entry) => {
+				return entity.types?.find((type) => {
+					return getUnprefixedId(type.identifier ?? "") === String(entry[1].entityType);
+				});
+			});
+			if (customConfig != null) {
+				feature.properties.color = customConfig[1].color;
+				feature.properties.size = 10;
+				feature.properties.isIcon = true;
+				feature.properties.isDisplayed = true;
+			}
+			return feature;
 		});
+
+	mappedFeatures.forEach((feature, index, self) => {
+		let foundIcon;
+
+		// For GeometryCollections such as areas
+		if (feature.geometry.type === "GeometryCollection") {
+			feature.geometry.geometries.forEach((geo) => {
+				if (geo.type === "Polygon" && "shapeType" in geo)
+					feature.properties.shapeType = geo.shapeType;
+				if (geo.type !== "Point") return;
+				const coords = geo.coordinates.join(",");
+				const matchingCoordinatesFeatures = self.filter((f) => {
+					if (f.geometry.type !== "Point") return false;
+					return f.geometry.coordinates.join(",") === coords;
+				});
+				if (
+					matchingCoordinatesFeatures.some((f) => {
+						return f.properties.isIcon;
+					})
+				)
+					foundIcon = true;
+			});
+		}
+
+		// For single points
+		if (feature.geometry.type === "Point") {
+			const coords = feature.geometry.coordinates.join(",");
+			const matchingCoordinatesFeatures = self.filter((f) => {
+				if (f.geometry.type !== "Point") return false;
+				return f.geometry.coordinates.join(",") === coords;
+			});
+			foundIcon = matchingCoordinatesFeatures.some((f) => {
+				return f.properties.isIcon;
+			});
+		}
+
+		if (foundIcon) {
+			feature.properties.isDisplayed = false;
+		} else {
+			feature.properties.isDisplayed = true;
+		}
+	});
+
+	//find other features with the same polygons to prevent overlapping
+	mappedFeatures.forEach((feature, featureIdx) => {
+		if (feature.geometry.type === "GeometryCollection") {
+			const foundIdx = mappedFeatures.findIndex((f) => {
+				//if (f.properties._id == feature.properties._id) return false;
+				if (f.geometry.type === "GeometryCollection") {
+					return f.geometry.geometries.some((geo) => {
+						assert(feature.geometry.type === "GeometryCollection");
+						return (
+							geo.type === "Polygon" &&
+							feature.geometry.geometries.find((g) => {
+								return (
+									g.type === "Polygon" && g.coordinates.join(",") === geo.coordinates.join(",")
+								);
+							})
+						);
+					});
+				}
+				return false;
+			});
+			if (foundIdx !== featureIdx) {
+				feature.properties.isDisplayed = false;
+			} else feature.properties.isDisplayed = true;
+		}
+	});
+
+	return mappedFeatures;
 });
 
 const movements = computed(() => {
@@ -195,6 +284,16 @@ const movements = computed(() => {
 	return move.map((entity) => {
 		let feature = createGeoJsonFeature(entity);
 
+		const customConfig = Object.entries(project.map.customMovementConfig.colorConfig).findLast(
+			(entry) => {
+				return entity.types?.find((type) => {
+					return getUnprefixedId(type.identifier ?? "") === String(entry[1].entityType);
+				});
+			},
+		);
+		if (customConfig != null) {
+			feature.properties.color = customConfig[1].color;
+		}
 		return feature;
 	});
 });
@@ -202,10 +301,17 @@ const movements = computed(() => {
 const events = computed(() => {
 	const event = entities.value
 		.filter((event) => {
-			return event.viewClass === "event" && event.systemClass !== "move";
+			return event.viewClass === "event";
 		})
 		.filter((feature) => {
 			return feature.geometry && "geometries" in feature.geometry;
+		})
+		.filter((feature) => {
+			return !feature.types?.find((type) => {
+				return project.map.customIconConfig.find((config) => {
+					return String(config.entityType) === getUnprefixedId(type.identifier ?? "");
+				});
+			});
 		})
 		.map((feature) => {
 			assert(feature.geometry, "Feature has no geometry");
@@ -226,9 +332,64 @@ const events = computed(() => {
 			return featureClone;
 		});
 
-	return event.map((entity) => {
+	const mappedEvents = event.map((entity) => {
 		let feature = createGeoJsonFeature(entity);
+		const customConfig = Object.entries(project.map.customMovementConfig.colorConfig).findLast(
+			(entry) => {
+				return entity.types?.find((type) => {
+					return getUnprefixedId(type.identifier ?? "") === String(entry[1].entityType);
+				});
+			},
+		);
+		if (customConfig != null) {
+			feature.properties.color = customConfig[1].color;
+		}
 		return feature;
+	});
+	mappedEvents.forEach((feature) => {
+		if (feature.geometry.type !== "GeometryCollection") {
+			return;
+		}
+		const eventPoint = feature.geometry.geometries[0];
+		if (!eventPoint || eventPoint.type !== "Point") return;
+		const coords = eventPoint.coordinates.join(",");
+
+		const matchingCoordinatesFeatures = features.value.filter((f) => {
+			if (f.geometry.type !== "Point") return false;
+			return f.geometry.coordinates.join(",") === coords;
+		});
+
+		const foundIcon = matchingCoordinatesFeatures.some((f) => {
+			return f.properties.isIcon;
+		});
+
+		if (foundIcon) {
+			feature.properties.isDisplayed = false;
+		} else {
+			feature.properties.isDisplayed = true;
+		}
+
+		const matchingCoordinatesEvents = mappedEvents.filter((e) => {
+			if (e.geometry.type !== "GeometryCollection" || e.properties._id === feature.properties._id)
+				return false;
+			return e.geometry.geometries.find((g) => {
+				return (
+					g.type === "Point" &&
+					"geometries" in feature.geometry &&
+					feature.geometry.geometries.find((geo) => {
+						if ("coordinates" in geo) return g.coordinates.join(",") === geo.coordinates.join(",");
+						return false;
+					})
+				);
+			});
+		});
+
+		feature.properties.otherFeatures = matchingCoordinatesEvents.map((f) => {
+			return f.properties._id;
+		});
+	});
+	return mappedEvents.toSorted((a, b) => {
+		return Number(Boolean(b.properties.color)) - Number(Boolean(a.properties.color));
 	});
 });
 
@@ -252,6 +413,7 @@ interface onLayerClickParams {
 }
 
 function onLayerClick({ features, targetCoordinates }: onLayerClickParams) {
+	console.log("Layer click", features);
 	const entitiesMap = new Map<string, EntityFeature>();
 
 	features.forEach((feature) => {
@@ -342,12 +504,12 @@ function setCoordinates(entity: EntityFeature, coordinates: Ref<[number, number]
 
 watchEffect(() => {
 	if (mode.value && selection.value) {
-		console.log("mode & selection set", selection.value);
+		// console.log("mode & selection set", selection.value);
 		const entity = entities.value.find((feature) => {
 			const id = getUnprefixedId(feature["@id"]);
 			return id === selection.value;
 		});
-		console.log("Entity: ", entity, entities.value);
+		// console.log("Entity: ", entity, entities.value);
 
 		if (entity) {
 			setCoordinates(entity, selectionCoordinates);
@@ -364,7 +526,7 @@ watchEffect(() => {
 				};
 			}
 
-			console.log(detailOnMap.value);
+			// console.log(detailOnMap.value);
 			detailSelectionCoordinates.value = undefined;
 			if (detailOnMap.value) {
 				const detailEntity = entities.value.find((feature) => {
@@ -378,12 +540,12 @@ watchEffect(() => {
 					// eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
 					if (detailSelectionCoordinates.value === undefined) return;
 
-					console.log(
-						"Detail Coordinates: ",
-						detailSelectionCoordinates,
-						popover.value,
-						detailEntity,
-					);
+					// console.log(
+					// 	"Detail Coordinates: ",
+					// 	detailSelectionCoordinates,
+					// 	popover.value,
+					// 	detailEntity,
+					// );
 					popover.value = {
 						coordinates: detailSelectionCoordinates.value,
 						entities: [detailEntity],
@@ -410,7 +572,7 @@ const movementDetails = computed(() => {
 });
 
 const linkedMovements = computed(() => {
-	if (movementDetails.value?.id == null) {
+	if (movementId.value == null || movementDetails.value?.id == null) {
 		return null;
 	}
 
@@ -441,6 +603,69 @@ const multipleMovements = useGetChainedEvents(
 function setMovementId({ id }: { id: string | null }) {
 	return (movementId.value = id ? parseInt(id) : null);
 }
+
+const customIconEntries = computed(() => {
+	const entries: Record<string, CustomIconEntry> = {};
+	entities.value.forEach((entity) => {
+		const foundType = entity.types?.findLast((type) => {
+			return project.map.customIconConfig.find((config) => {
+				return String(config.entityType) === getUnprefixedId(type.identifier ?? "");
+			});
+		});
+		const unprefixedType = getUnprefixedId(foundType?.identifier ?? "");
+		if (foundType) {
+			if (!(unprefixedType in entries)) {
+				const configEntry = project.map.customIconConfig.find((config) => {
+					return String(config.entityType) === unprefixedType;
+				});
+				const customEntry: CustomIconEntry = {
+					type: foundType,
+					icon: configEntry?.iconName,
+					color: configEntry?.color,
+					entities: [],
+				};
+				entries[unprefixedType] = customEntry;
+			}
+			if (entity.geometry) {
+				const feature = createGeoJsonFeature(entity);
+				const customConfig = Object.entries(project.map.customIconConfig).findLast((entry) => {
+					return entity.types?.find((type) => {
+						return getUnprefixedId(type.identifier ?? "") === String(entry[1].entityType);
+					});
+				});
+				if (customConfig != null) {
+					feature.properties.color = customConfig[1].color;
+					feature.properties.size = 10;
+					feature.properties.isIcon = true;
+				}
+
+				entries[unprefixedType]?.entities.push(feature);
+			}
+		}
+	});
+	console.log("custom entries: ", entries);
+	console.log("LucideIcons: ", LucideIcons);
+	return entries;
+});
+
+const visibleIcons = ref<Array<string>>([]);
+function toggleIcon(key: string) {
+	if (visibleIcons.value.includes(key))
+		visibleIcons.value = visibleIcons.value.filter((i) => {
+			return i !== key;
+		});
+	else {
+		visibleIcons.value.push(key);
+	}
+}
+
+const filteredCustomIconEntries = computed(() => {
+	return Object.fromEntries(
+		Object.entries(customIconEntries.value).filter(([key, _]) => {
+			return visibleIcons.value.length === 0 || visibleIcons.value.includes(key);
+		}),
+	);
+});
 </script>
 
 <template>
@@ -471,7 +696,9 @@ function setMovementId({ id }: { id: string | null }) {
 				<div
 					class="max-h-72 gap-2 overflow-y-auto overflow-x-hidden rounded-md border-2 border-transparent bg-white/90 p-2 text-sm font-medium shadow-md dark:bg-neutral-900"
 				>
-					<div class="grid grid-cols-[auto_auto_auto_auto_1fr] items-center gap-3 align-middle">
+					<div
+						class="grid grid-cols-[auto_auto_auto_auto_1fr_auto] items-center gap-3 align-middle"
+					>
 						<div class="grid grid-cols-[auto_1fr] gap-1">
 							<span
 								class="m-1.5 size-2 rounded-full"
@@ -503,6 +730,57 @@ function setMovementId({ id }: { id: string | null }) {
 								{{ $t("DataMapView.showMovement") }}
 							</Toggle>
 						</div>
+						<div v-if="project.map.customIconConfig && project.map.customIconConfig.length > 0">
+							<Popover>
+								<PopoverTrigger>
+									<TooltipProvider>
+										<Tooltip :disabled="Object.keys(customIconEntries).length > 0">
+											<TooltipTrigger>
+												<Button
+													variant="iiif"
+													class="group"
+													:disabled="Object.keys(customIconEntries).length === 0"
+													><FilterIcon :size="16"></FilterIcon> {{ $t("DataMapView.filter") }}
+													<Badge v-if="visibleIcons.length" variant="groupOutline">{{
+														visibleIcons.length
+													}}</Badge></Button
+												>
+											</TooltipTrigger>
+											<TooltipContent>{{ $t("DataMapView.no-icons") }}</TooltipContent>
+										</Tooltip>
+									</TooltipProvider>
+								</PopoverTrigger>
+								<PopoverContent side="top" class="w-auto">
+									<div class="">
+										<div class="text-xs text-muted-foreground">
+											{{ $t("DataMapView.icons") }}
+										</div>
+										<Toggle
+											v-for="[key, entry] in Object.entries(customIconEntries).sort(
+												(a, b) => a[1].type?.label?.localeCompare(b[1].type?.label ?? '') ?? 0,
+											)"
+											:key="entry.type?.identifier"
+											:pressed="visibleIcons.includes(key)"
+											class="group my-2 flex min-w-0 items-center text-left"
+											variant="iiif"
+											@click="() => toggleIcon(key)"
+										>
+											<div
+												v-if="entry.icon != null"
+												class="mr-2 size-6 scale-[0.7]"
+												v-html="LucideIcons[entry.icon as keyof typeof LucideIcons]"
+											></div>
+											<span
+												>{{ entry.type?.label
+												}}<Badge variant="groupOutline" class="ml-4">{{
+													entry.entities.length
+												}}</Badge></span
+											>
+										</Toggle>
+									</div>
+								</PopoverContent>
+							</Popover>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -512,6 +790,7 @@ function setMovementId({ id }: { id: string | null }) {
 				:features="features"
 				:movements="movements"
 				:events="events"
+				:custom-icons="filteredCustomIconEntries"
 				:height="height"
 				:width="width"
 				:has-polygons="show"

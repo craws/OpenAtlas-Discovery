@@ -378,7 +378,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/search/{system_class}/{term}": {
+    "/search/{system_class}": {
         parameters: {
             query?: never;
             header?: never;
@@ -2648,6 +2648,8 @@ export interface operations {
     GetSearchEntities: {
         parameters: {
             query?: {
+                /** @description Search term */
+                term?: string;
                 /** @description Limits the number of entities returned in the response. A lower value may improve performance. The default is 20. Set to 0 to return all available entities. */
                 limit?: components["parameters"]["limit"];
                 /** @description Specifies the page number to retrieve in a paginated result set. */
@@ -2660,8 +2662,6 @@ export interface operations {
                  * @example acquisition
                  */
                 system_class: components["parameters"]["system_class"];
-                /** @description Search term */
-                term: string;
             };
             cookie?: never;
         };

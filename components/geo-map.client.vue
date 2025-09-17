@@ -3,10 +3,12 @@ import "maplibre-gl/dist/maplibre-gl.css";
 
 import { assert } from "@acdh-oeaw/lib";
 import type * as deck from "@deck.gl/core";
-import { ArcLayer } from "@deck.gl/layers";
+import { FillStyleExtension } from "@deck.gl/extensions";
+import { ArcLayer, GeoJsonLayer } from "@deck.gl/layers";
 import * as mapbox from "@deck.gl/mapbox";
 import * as turf from "@turf/turf";
 import type { Point } from "geojson";
+import * as LucideIcons from "lucide-static";
 import {
 	FullscreenControl,
 	type GeoJSONSource,
@@ -23,7 +25,8 @@ import { type GeoMapContext, geoMapContextKey } from "@/components/geo-map.conte
 import { initialViewState } from "@/config/geo-map.config";
 import { project } from "@/config/project.config";
 import type { components } from "@/lib/api-client/api";
-import type { GeoJsonFeature } from "@/utils/create-geojson-feature";
+import type { CustomIconEntry } from "@/types/api";
+import type { CustomGeoJsonFeature, GeoJsonFeature } from "@/utils/create-geojson-feature";
 
 const vsDeclaration = `
 	in float instanceCoefficient;
@@ -71,6 +74,7 @@ interface CurvedMovementLine {
 	id: Array<string> | string;
 	coordinates: [deck.Position, deck.Position];
 	color: deck.Color;
+	thickness?: number;
 }
 
 interface MultipleMovementType {
@@ -80,9 +84,11 @@ interface MultipleMovementType {
 
 const overlay = ref<mapbox.MapboxOverlay | null>(null);
 const supportOverlay = ref<mapbox.MapboxOverlay | null>(null);
+const polygonOverlay = ref<mapbox.MapboxOverlay | null>(null);
 const props = defineProps<{
-	features: Array<GeoJsonFeature>;
-	movements: Array<GeoJsonFeature>;
+	features: Array<CustomGeoJsonFeature>;
+	customIcons: Record<string, CustomIconEntry>;
+	movements: Array<CustomGeoJsonFeature>;
 	events: Array<GeoJsonFeature>;
 	height: number;
 	width: number;
@@ -166,6 +172,70 @@ async function create() {
 	console.log("created", props);
 }
 
+function initializeCustomIconLayer(key: string) {
+	assert(context.map != null);
+	const map = context.map;
+	const sourceCustomIconId = `custom-icon-data-${key}`;
+	if (!map.getSource(sourceCustomIconId))
+		map.addSource(sourceCustomIconId, {
+			type: "geojson",
+			data: createFeatureCollection([]),
+			cluster: true,
+			clusterMaxZoom: 14,
+			clusterRadius: 10,
+		});
+
+	//@ts-expect-error ensure iconName is a valid Lucide Icon
+	// eslint-disable-next-line import-x/namespace
+	const iconSVG = LucideIcons[props.customIcons[key].icon];
+
+	const div = document.createElement("div");
+	div.innerHTML = iconSVG;
+
+	div.querySelector("svg")?.setAttribute("viewBox", "-4 -4 32 32");
+	div.querySelector("svg")?.setAttribute("stroke", props.customIcons[key]?.color ?? "#000000");
+
+	// convert the blob object to a dedicated URL
+	const url = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(div.innerHTML)}`;
+
+	if (map.hasImage(`custom-icon-image-${key}`)) {
+		return;
+	}
+
+	// load the SVG blob to a flesh image object
+	const img = new Image();
+	img.addEventListener("load", () => {
+		if (map.hasImage(`custom-icon-image-${key}`) || map.getLayer(`customIconLayer-${key}`)) return;
+		map.addImage(`custom-icon-image-${key}`, img);
+
+		map.addLayer({
+			id: `customIconLayer-${key}`,
+			type: "symbol",
+			source: sourceCustomIconId,
+			filter: ["==", "$type", "Point"],
+			layout: {
+				"icon-image": `custom-icon-image-${key}`,
+				"icon-allow-overlap": true,
+			},
+		});
+
+		//
+
+		map.on("mouseenter", `customIconLayer-${key}`, () => {
+			map.getCanvas().classList.add("!cursor-pointer");
+		});
+
+		//
+
+		map.on("mouseleave", `customIconLayer-${key}`, () => {
+			map.getCanvas().classList.remove("!cursor-pointer");
+		});
+
+		updateScopeOfCustomIconLayers();
+	});
+	img.src = url;
+}
+
 function init() {
 	assert(context.map != null);
 	const map = context.map;
@@ -191,23 +261,14 @@ function init() {
 	const sourcePolygonsId = "polygon-data";
 	const sourceCenterPointsId = "centerpoints-data";
 	const sourceEventPointsId = "event-points-data";
-	map.addSource(sourcePointsId, { type: "geojson", data: createFeatureCollection([]) });
+
+	map.addSource(sourcePointsId, {
+		type: "geojson",
+		data: createFeatureCollection([]),
+	});
 	map.addSource(sourcePolygonsId, { type: "geojson", data: createFeatureCollection([]) });
 	map.addSource(sourceCenterPointsId, { type: "geojson", data: createFeatureCollection([]) });
 	map.addSource(sourceEventPointsId, { type: "geojson", data: createFeatureCollection([]) });
-
-	//
-
-	map.addLayer({
-		id: "points",
-		type: "circle",
-		source: sourcePointsId,
-		filter: ["==", "$type", "Point"],
-		paint: {
-			"circle-color": colors.points,
-			"circle-radius": 6,
-		},
-	});
 
 	//
 
@@ -218,6 +279,20 @@ function init() {
 		filter: ["==", "$type", "Point"],
 		paint: {
 			"circle-color": colors.areaCenterPoints,
+			"circle-opacity": ["case", ["==", ["get", "isDisplayed"], true], 1, 0],
+			"circle-radius": 6,
+		},
+	});
+	//
+
+	map.addLayer({
+		id: "points",
+		type: "circle",
+		source: sourcePointsId,
+		filter: ["all", ["==", "$type", "Point"], ["!has", "isIcon"]],
+		paint: {
+			"circle-color": colors.points,
+			"circle-opacity": ["case", ["==", ["get", "isDisplayed"], true], 1, 0],
 			"circle-radius": 6,
 		},
 	});
@@ -231,28 +306,30 @@ function init() {
 		filter: ["==", "$type", "Point"],
 		paint: {
 			"circle-color": hoveredMovementId.value
-				? ["match", ["get", "id"], hoveredMovementId.value, colors.movement, "#808080"]
-				: colors.movement,
+				? [
+						"match",
+						["get", "id"],
+						hoveredMovementId.value,
+						["coalesce", ["get", "color"], colors.movement],
+						"#808080",
+					]
+				: ["coalesce", ["get", "color"], colors.movement],
 			"circle-radius": 6,
+			"circle-opacity": [
+				"case",
+				// if isDisplayed is false -> 0
+				["==", ["get", "isDisplayed"], false],
+				0,
+				// else if hoveredMovementIds is inside otherFeatures (= another event in the same
+				// location is hovered) -> 0
+				hoveredMovementId.value && hoveredMovementId.value.length > 0
+					? ["in", hoveredMovementId.value[0] ?? "", ["get", "otherFeatures"]]
+					: ["!=", true, true],
+				0,
+				// else -> 1
+				1,
+			],
 		},
-	});
-
-	//
-
-	map.on("click", "points", (event) => {
-		emit("layer-click", {
-			features: (event.features ?? []) as Array<
-				MapGeoJSONFeature & Pick<GeoJsonFeature, "properties">
-			>,
-		});
-	});
-
-	map.on("click", "centerpoints", (event) => {
-		emit("layer-click", {
-			features: (event.features ?? []) as Array<
-				MapGeoJSONFeature & Pick<GeoJsonFeature, "properties">
-			>,
-		});
 	});
 
 	//
@@ -262,6 +339,12 @@ function init() {
 	});
 
 	map.on("mouseenter", "centerpoints", () => {
+		map.getCanvas().classList.add("!cursor-pointer");
+	});
+	map.on("mouseenter", "polygons", () => {
+		map.getCanvas().classList.add("!cursor-pointer");
+	});
+	map.on("mouseenter", "polygon-lines", () => {
 		map.getCanvas().classList.add("!cursor-pointer");
 	});
 
@@ -278,8 +361,52 @@ function init() {
 	map.on("mouseleave", "polygons", () => {
 		map.getCanvas().classList.remove("!cursor-pointer");
 	});
+	map.on("mouseleave", "polygon-lines", () => {
+		map.getCanvas().classList.remove("!cursor-pointer");
+	});
 
-	//
+	Object.keys(props.customIcons).forEach((key) => {
+		initializeCustomIconLayer(key);
+	});
+
+	map.on("click", (event) => {
+		const layersToQuery = [
+			"points",
+			"centerpoints",
+			"events",
+			...Object.keys(props.customIcons).map((key) => {
+				return `customIconLayer-${key}`;
+			}),
+		];
+
+		if (props.hasPolygons) {
+			layersToQuery.push("polygons");
+			layersToQuery.push("polygon-lines");
+		}
+
+		// query all visible features at the click point
+		const features = map.queryRenderedFeatures(event.point, { layers: layersToQuery });
+
+		const preciseFeatures = features.filter((f) => {
+			if (f.geometry.type !== "Point") return true;
+
+			const [lng, lat] = f.geometry.coordinates;
+			if (lng == null || lat == null) return false;
+			const screenPoint = map.project([lng, lat]);
+
+			const dx = event.point.x - screenPoint.x;
+			const dy = event.point.y - screenPoint.y;
+			const dist = Math.sqrt(dx * dx + dy * dy);
+
+			return dist <= 6;
+		});
+
+		if (preciseFeatures.length > 0) {
+			emit("layer-click", {
+				features: preciseFeatures as Array<MapGeoJSONFeature & Pick<GeoJsonFeature, "properties">>,
+			});
+		}
+	});
 
 	updateScope();
 	updatePolygons();
@@ -294,7 +421,6 @@ watch(
 		return props.currentSelectionCoordinates;
 	},
 	() => {
-		console.log("selection changed: ", props.currentSelectionCoordinates, props.selectionBounds);
 		if (!props.selectionBounds && props.currentSelectionCoordinates)
 			flyToSelection(props.currentSelectionCoordinates);
 	},
@@ -310,6 +436,17 @@ watch(
 	},
 
 	{ immediate: true },
+);
+
+watch(
+	() => {
+		return props.currentSelectionId;
+	},
+	(newVal, oldVal) => {
+		if (newVal === "undefined" && oldVal != null) {
+			hoveredMovementId.value = null;
+		}
+	},
 );
 
 // watch(
@@ -371,8 +508,22 @@ watch(
 					type: "circle",
 					source: { type: "geojson", data: createFeatureCollection(source) },
 					paint: {
-						"circle-color": colors.movement,
+						"circle-color": ["coalesce", ["get", "color"], colors.movement],
 						"circle-radius": 6,
+						"circle-opacity": [
+							"case",
+							// if isDisplayed is false -> 0
+							["==", ["get", "isDisplayed"], false],
+							0,
+							// else if hoveredMovementIds is inside otherFeatures (= another event in the same
+							// location is hovered) -> 0
+							hoveredMovementId.value && hoveredMovementId.value.length > 0
+								? ["in", hoveredMovementId.value[0] ?? "", ["get", "otherFeatures"]]
+								: ["!=", true, true],
+							0,
+							// else -> 1
+							1,
+						],
 					},
 				});
 			}
@@ -401,6 +552,50 @@ watch(
 	{ immediate: true },
 );
 
+watch(
+	() => {
+		return props.customIcons;
+	},
+	() => {
+		updateScopeOfCustomIconLayers();
+	},
+);
+
+function updateScopeOfCustomIconLayers() {
+	assert(context.map != null);
+	const map = context.map;
+	for (const key in props.customIcons) {
+		if (!map.hasImage(`custom-icon-image-${key}`)) {
+			initializeCustomIconLayer(key);
+			continue;
+		}
+
+		const validFeatures =
+			props.customIcons[key]?.entities.filter((feature) => {
+				if (feature.geometry.type === "GeometryCollection") return false;
+				return /* feature.geometry.coordinates && */ Array.isArray(feature.geometry.coordinates);
+			}) ?? [];
+
+		const geojsonCustomIconData = createFeatureCollection(validFeatures);
+		const sourceCustomIconsId = `custom-icon-data-${key}`;
+		const sourceCustomIconData = map.getSource(sourceCustomIconsId) as GeoJSONSource | undefined;
+
+		sourceCustomIconData?.setData(geojsonCustomIconData);
+
+		if (map.getLayer(`customIconLayer-${key}`)) {
+			map.moveLayer(`customIconLayer-${key}`);
+		}
+	}
+	map.getLayersOrder().forEach((layer) => {
+		if (!layer.startsWith("customIconLayer-")) return;
+		if (!(layer.replace("customIconLayer-", "") in props.customIcons)) {
+			map.setPaintProperty(layer, "icon-opacity", 0);
+		} else {
+			map.setPaintProperty(layer, "icon-opacity", 1);
+		}
+	});
+}
+
 function updateScope() {
 	assert(context.map != null);
 
@@ -410,13 +605,14 @@ function updateScope() {
 	const sourcePolygonsId = "polygon-data";
 	const sourceCenterPointsId = "centerpoints-data";
 	const sourceEventPointsId = "event-points-data";
+
 	const sourcePoints = map.getSource(sourcePointsId) as GeoJSONSource | undefined;
 	const sourcePolygons = map.getSource(sourcePolygonsId) as GeoJSONSource | undefined;
 	const sourceCenterpoints = map.getSource(sourceCenterPointsId) as GeoJSONSource | undefined;
 	const sourceEventPoints = map.getSource(sourceEventPointsId) as GeoJSONSource | undefined;
 
 	const points = props.features.filter((point) => {
-		return point.geometry.type === "Point";
+		return point.geometry.type === "Point" && !point.properties.isIcon;
 	});
 
 	const polygons = props.features.filter((polygon) => {
@@ -439,6 +635,8 @@ function updateScope() {
 	sourceCenterpoints?.setData(geojsonCenterPoints);
 	sourceEventPoints?.setData(geojsonEventPoints);
 
+	updateScopeOfCustomIconLayers();
+
 	if (props.selectionBounds) {
 		zoomToSelection(props.selectionBounds);
 	} else if (props.currentSelectionCoordinates) {
@@ -452,23 +650,93 @@ function updateScope() {
 	}
 }
 
+const polygonData = computed(() => {
+	return createFeatureCollection(
+		props.features.filter((polygon) => {
+			return polygon.geometry.type === "GeometryCollection" || polygon.geometry.type === "Polygon";
+		}),
+	);
+});
 function updatePolygons() {
 	assert(context.map != null);
 	const sourcePolygonsId = "polygon-data";
+	if (polygonOverlay.value === null)
+		polygonOverlay.value = new mapbox.MapboxOverlay({ interleaved: true });
 
 	if (props.hasPolygons) {
+		let polygonLayer = new GeoJsonLayer<CustomGeoJsonFeature>({
+			id: "deck-polygons",
+			data: polygonData.value.features.filter((f) => {
+				return f.properties.shapeType === "area";
+			}),
+			// props from GeoJsonLayer
+			getFillColor: hexToRgb(colors.areaCenterPoints) ?? [0, 0, 0],
+			getLineColor: [0, 0, 0, 0],
+			getLineWidth: 10,
+
+			//@ts-expect-error these properties are introduced by FillStyleExtension
+			fillPatternAtlas:
+				"https://raw.githubusercontent.com/visgl/deck.gl/master/examples/layer-browser/data/pattern.png",
+			fillPatternMapping:
+				"https://raw.githubusercontent.com/visgl/deck.gl/master/examples/layer-browser/data/pattern.json",
+			getFillPattern: () => {
+				return "hatch-1x";
+			},
+			getFillPatternScale: (d: CustomGeoJsonFeature) => {
+				if (d.geometry.type === "GeometryCollection") {
+					const polygon = d.geometry.geometries.find((geo) => {
+						return geo.type === "Polygon";
+					});
+					if (polygon) {
+						const area = turf.area(polygon);
+						let scale = 0.2 * Math.log10(area) - 0.5;
+						if (area > 10 ** 6) scale = Math.log10(area) * 0.5;
+						return Math.max(scale, 0.05);
+					}
+				}
+				return 0.5;
+			},
+			getFillPatternOffset: [0, 0],
+
+			// Define extensions
+			extensions: [new FillStyleExtension({ pattern: true })],
+		});
+
+		// Add/update the layer
+		polygonOverlay.value.setProps({
+			layers: [polygonLayer],
+		});
+		context.map.addControl(polygonOverlay.value);
+
 		context.map.addLayer({
 			id: "polygons",
+			filter: ["all", ["!=", "$type", "LineString"], ["==", "shapeType", "shape"]],
 			type: "fill",
 			source: sourcePolygonsId,
 			paint: {
 				"fill-color": colors.areaCenterPoints,
-				"fill-opacity": 0.35,
+				"fill-opacity": ["case", ["==", ["get", "isDisplayed"], false], 0, 0.35],
 			},
 		});
-	}
-	if (!props.hasPolygons && context.map.getLayer("polygons")) {
-		context.map.removeLayer("polygons");
+
+		context.map.addLayer({
+			id: "polygon-lines",
+			type: "line",
+			filter: ["==", "$type", "LineString"],
+			source: sourcePolygonsId,
+			paint: {
+				"line-color": colors.areaCenterPoints,
+				"line-opacity": 0.35,
+				"line-width": 5,
+			},
+		});
+
+		context.map.moveLayer("polygons", "points");
+	} else {
+		polygonOverlay.value.finalize();
+		context.map.removeControl(polygonOverlay.value);
+		if (context.map.getLayer("polygon-lines")) context.map.removeLayer("polygon-lines");
+		if (context.map.getLayer("polygons")) context.map.removeLayer("polygons");
 	}
 }
 
@@ -489,12 +757,43 @@ function zoomToSelection(bounds: Array<[number, number]> | undefined) {
 }
 function flyToSelection(selection: [number, number] | undefined) {
 	if (selection) {
-		context.map?.flyTo({ center: selection, zoom: 10 });
+		context.map?.flyTo({ center: selection, zoom: project.map.flyToZoom });
 	}
 }
 
-function pointsToMapKey(startPoint: Point, endPoint: Point) {
-	return `${String(startPoint.coordinates[0])}-${String(startPoint.coordinates[1])}-${String(endPoint.coordinates[0])}-${String(endPoint.coordinates[1])}`;
+function mapThicknessToRange(arcs: number) {
+	if (curvedMovements.value == null || curvedMovements.value.length === 0) return 3;
+
+	const inMin = Math.min(
+		...curvedMovements.value.map((move) => {
+			return move.thickness ?? 1;
+		}),
+	);
+	const inMax = Math.max(
+		...curvedMovements.value.map((move) => {
+			return move.thickness ?? 1;
+		}),
+	);
+
+	const outMin = 3;
+	const outMax = 10;
+
+	const clamped = Math.max(Math.min(arcs, inMax), Math.max(inMin, 1e-6));
+
+	if (inMax === inMin) return (outMin + outMax) / 2;
+
+	// logarithmic scaling
+	const logMin = Math.log(inMin);
+	const logMax = Math.log(inMax);
+	const logVal = Math.log(clamped);
+
+	const scaled = outMin + ((logVal - logMin) / (logMax - logMin)) * (outMax - outMin);
+
+	return scaled;
+}
+
+function pointsToMapKey(startPoint: Point, endPoint: Point, color: string) {
+	return `${String(startPoint.coordinates[0])}-${String(startPoint.coordinates[1])}-${String(endPoint.coordinates[0])}-${String(endPoint.coordinates[1])}-${color}`;
 }
 
 function checkHighlight(d: CurvedMovementLine) {
@@ -520,9 +819,29 @@ function colorEvents(movements: Array<string> | null | undefined) {
 		"events",
 		"circle-color", // The paint property
 		movements != null && movements.length > 0
-			? ["case", ["in", ["get", "_id"], ["literal", movements]], colors.movement, "#808080"]
-			: colors.movement, // If no movement is hovered, use the default color for all
+			? [
+					"case",
+					["in", ["get", "_id"], ["literal", movements]],
+					["coalesce", ["get", "color"], colors.movement],
+					"#808080",
+				]
+			: ["coalesce", ["get", "color"], colors.movement], // If no movement is hovered, use the default color for all
 	);
+
+	context.map.setPaintProperty("events", "circle-opacity", [
+		"case",
+		// if isDisplayed is false -> 0
+		["==", ["get", "isDisplayed"], false],
+		0,
+		// else if hoveredMovementIds is inside otherFeatures (= another event in the same
+		// location is hovered) -> 0
+		hoveredMovementId.value && hoveredMovementId.value.length > 0
+			? ["in", hoveredMovementId.value[0] ?? "", ["get", "otherFeatures"]]
+			: ["!=", true, true],
+		0,
+		// else -> 1
+		1,
+	]);
 }
 
 function getCoef(d: CurvedMovementLine) {
@@ -539,7 +858,6 @@ function getCoef(d: CurvedMovementLine) {
 }
 
 function updateMovements() {
-	console.log("multipleMovements: ", props.multipleMovements);
 	const groupedMovements = new Map<string, Array<CurvedMovementLine>>();
 	// Process the GeoJSON movements array to create curved lines
 
@@ -565,15 +883,24 @@ function updateMovements() {
 				if (!startPoint?.coordinates.length || !endPoint.coordinates.length) return;
 
 				if (Array.isArray(startPoint.coordinates) && Array.isArray(endPoint.coordinates)) {
-					if (!groupedMovements.has(pointsToMapKey(startPoint, endPoint))) {
-						groupedMovements.set(pointsToMapKey(startPoint, endPoint), []);
+					if (
+						!groupedMovements.has(
+							pointsToMapKey(startPoint, endPoint, movement.properties.color ?? colors.movement),
+						)
+					) {
+						groupedMovements.set(
+							pointsToMapKey(startPoint, endPoint, movement.properties.color ?? colors.movement),
+							[],
+						);
 					}
-					groupedMovements.get(pointsToMapKey(startPoint, endPoint))?.push({
-						id: movement.properties._id,
-						// @ts-expect-error - coordinates are not typed correctly due to a bug in openapi-typescript (https://github.com/openapi-ts/openapi-typescript/issues/2048)
-						coordinates: [startPoint.coordinates, endPoint.coordinates],
-						color: hexToRgb(colors.movement) ?? [0, 0, 0],
-					});
+					groupedMovements
+						.get(pointsToMapKey(startPoint, endPoint, movement.properties.color ?? colors.movement))
+						?.push({
+							id: movement.properties._id,
+							// @ts-expect-error - coordinates are not typed correctly due to a bug in openapi-typescript (https://github.com/openapi-ts/openapi-typescript/issues/2048)
+							coordinates: [startPoint.coordinates, endPoint.coordinates],
+							color: hexToRgb(movement.properties.color ?? colors.movement) ?? [0, 0, 0],
+						});
 				}
 			});
 		}
@@ -589,6 +916,7 @@ function updateMovements() {
 
 			coordinates: group[0].coordinates,
 			color: group[0].color,
+			thickness: group.length,
 		};
 	});
 
@@ -751,7 +1079,11 @@ function renderArcs() {
 					: 0.3;
 			return opacity;
 		},
-		getWidth: 3,
+		getWidth: (d: CurvedMovementLine) => {
+			return project.map.customMovementConfig.arcThickness
+				? mapThicknessToRange(d.thickness ?? 0)
+				: 3;
+		},
 		updateTriggers: {
 			getSourceColor: coefficient.value,
 			getTargetColor: coefficient.value,
@@ -785,15 +1117,11 @@ function renderArcs() {
 		},
 		onClick: (info) => {
 			if (info.object != null) {
-				console.log("Clicked Arc:", info.object);
-
 				const clickedIds = info.object.id.flat();
 
 				const clickedMovements = props.movements.filter((movement) => {
 					return clickedIds.includes(movement.properties._id);
 				});
-
-				console.log(clickedMovements);
 
 				if (clickedMovements.length > 0) {
 					const targetCoordinates = info.object.coordinates.map(

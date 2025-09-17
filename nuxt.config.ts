@@ -25,7 +25,11 @@ export default defineNuxtConfig({
 		defaultLocale,
 		locales: Object.keys(localesMap),
 	},
-	css: ["@fontsource-variable/inter/slnt.css", "tailwindcss/tailwind.css", "@/styles/index.css"],
+	css: [
+		"@fontsource-variable/inter/standard.css",
+		"tailwindcss/tailwind.css",
+		"@/styles/index.css",
+	],
 	devtools: {
 		enabled: true,
 	},

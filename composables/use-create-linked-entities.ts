@@ -1,6 +1,6 @@
 import type { LinkedPlace } from "@/types/api";
 
-export type GetEntityResponse = LinkedPlace;
+// export type GetEntityResponse = LinkedPlace;
 
 export function useCreateLinkedEntities() {
 	const { getUnprefixedId } = useIdPrefix();
