@@ -1,12 +1,12 @@
-site_url: https://openatlas-discovery-demo.acdh-dev.oeaw.ac.at
+site_url: https://discovery-demo.openatlas.eu
 logo_url: /icon.svg
 load_config_file: true
 local_backend: true
 backend:
   name: github
   repo: acdh-oeaw/openatlas-discovery
-  branch: develop
-  base_url: https://openatlas-discovery-demo.acdh-dev.oeaw.ac.at
+  branch: main
+  base_url: https://discovery-demo.openatlas.eu
   auth_endpoint: /api/oauth/authorize
   auth_scope: repo
   squash_merges: true
